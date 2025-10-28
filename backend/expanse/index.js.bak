@@ -1,0 +1,21 @@
+/**
+ * Expanse Module Entry
+ * --------------------
+ * Consolidates and mounts all Council-related routes.
+ * Loaded into server.js via:
+ *    app.use('/api/expanse', require('./expanse'));
+ */
+
+import express from "express";
+const router = express.Router();
+
+// Attach sub-routes
+const councilRoutes = require('./routes/council');
+router.use('/council', councilRoutes);
+
+// Health check endpoint for testing
+router.get('/', (req, res) => {
+  res.json({ message: 'Expanse API root active', endpoints: ['/council'] });
+});
+
+export default router;

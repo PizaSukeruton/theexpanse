@@ -1,0 +1,20 @@
+DOSSIER LOGIN BACKUP NOTES
+===========================
+Date: $(date)
+File: dossier-login.html
+
+CHANGES MADE:
+- Removed hardcoded "Agent 001/Operations/Level 5" text
+- Added new info: "Multiverse Reaper/Expanse Research Team/Unknown"
+- Added typing animation effect for dossier fields
+- Fields now animate in sequence when dossier opens
+
+ANIMATION TIMING:
+- Name starts at 100ms
+- Entity starts at 500ms  
+- Department starts at 900ms
+- Security starts at 1400ms
+- Summary starts at 1800ms
+
+TO RESTORE:
+cp public/dossier-login.html.backup-[timestamp] public/dossier-login.html

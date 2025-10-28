@@ -1,0 +1,109 @@
+// backend/TSE/helpers/CodeResponseGenerator.js
+// A more dynamic, self-contained generative model for a closed-loop system.
+
+class CodeResponseGenerator {
+    constructor() {
+        console.log('[TSE-CODING] CodeResponseGenerator initialized');
+    }
+
+    /**
+     * Generate a code response based on the instruction
+     * @param {Object} instruction - The coding instruction from teacher
+     * @returns {Object} Generated code response with code, processingTime, etc.
+     */
+    generateResponse(instruction) {
+        const startTime = Date.now();
+        
+        try {
+            // Construct the full prompt from instruction
+            let prompt = this.buildPrompt(instruction);
+            
+            const language = instruction.language || 'html';
+            const difficulty = instruction.difficulty || 'beginner';
+            
+            let code = '';
+            
+            // Check if it's a yes/no question format
+            if (prompt.includes('yes/no questions') || instruction.type === 'quiz') {
+                const questionCount = this.extractQuestionCount(prompt) || instruction.questionCount || 1;
+                const concepts = instruction.keyConcepts?.[0] || 'basics';
+                code = this.generateBooleanAnswers(language, concepts, questionCount);
+            } else {
+                // This is the core logic for generating code internally.
+                code = this.generateCode(language, difficulty, instruction);
+            }
+            
+            console.log('[TSE-CODING] Generated response of length:', code.length);
+            
+            return {
+                code: code,
+                processingTime: Date.now() - startTime,
+                hintsUsed: [],
+                metadata: {
+                    generatedBy: 'TSE-Internal-CodeGen',
+                    language: language,
+                    difficulty: difficulty
+                }
+            };
+            
+        } catch (error) {
+            console.error('[TSE-CODING] Error generating response:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Generate actual code based on language, difficulty, and instruction
+     * This is where your self-contained generative algorithm would go.
+     */
+    generateCode(language, difficulty, instruction) {
+        const task = instruction.prompt || '';
+        let generatedCode = '';
+
+        if (language === 'javascript') {
+            // New JavaScript logic for a simple for loop based on the instruction
+            if (task.includes('iterate from')) {
+                const parts = task.match(/from (\d+) to (\d+)/);
+                if (parts && parts.length === 3) {
+                    const start = parts[1];
+                    const end = parts[2];
+                    generatedCode = `
+// A simple for loop based on the instruction
+for (let i = ${start}; i <= ${end}; i++) {
+    console.log(i);
+}
+`;
+                }
+            }
+            // Add more JavaScript generative logic here for other tasks.
+        } else if (language === 'html') {
+            // NEW: HTML generation logic
+            if (task.includes('create a list of')) {
+                const listItems = instruction.keyConcepts || ['Item 1', 'Item 2', 'Item 3'];
+                let listHtml = '<ul>\n';
+                listItems.forEach(item => {
+                    listHtml += `  <li>${item}</li>\n`;
+                });
+                listHtml += '</ul>';
+                
+                generatedCode = `
+<!-- Simple HTML list based on the instruction -->
+${listHtml}
+`;
+            }
+            // Add more HTML generative logic here for other tasks.
+        }
+
+        // Default fallback
+        if (!generatedCode) {
+            return `// No specific generative algorithm found for this task.\n// Your internal logic would go here.`;
+        }
+
+        return generatedCode;
+    }
+    
+    // ... (rest of the methods like buildPrompt remain unchanged) ...
+}
+
+module.exports = CodeResponseGenerator;
+

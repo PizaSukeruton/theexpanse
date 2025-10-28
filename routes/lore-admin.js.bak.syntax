@@ -1,0 +1,47 @@
+import crypto from 'crypto';
+import express from 'express';
+import pool from '../backend/db/pgPool.js';
+
+const router = express.Router();
+
+// Get all story arcs
+  }
+});
+
+// Create story arc
+router.post('/arcs', async (req, res) => {
+  try {
+    const { title, summary, tags, keywords } = req.body;
+    const hexId = () => '#' + crypto.randomBytes(3).toString('hex').toUpperCase();
+    const arc_id = hexId();
+    
+    const result = await pool.query(
+      'INSERT INTO story_arcs (arc_id, title, summary, tags, keywords) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [arc_id, title, summary, tags?.split(','), keywords?.split(',')]
+    );
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get('/arcs', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit ?? "50", 10), 200);
+    const offset = Math.max(parseInt(req.query.offset ?? "0", 10), 0);
+    const order = (req.query.order || "desc").toLowerCase() === "asc" ? "ASC" : "DESC";
+    const q = `SELECT arc_id, title, summary, tags, keywords, created_at FROM story_arcs ORDER BY created_at ${order} LIMIT $1 OFFSET $2`;
+    const r = await pool.query(q, [limit, offset]);
+    res.json({ items: r.rows, limit, offset, order });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+export default router;
+
+// Test route
+router.get('/test', (req, res) => {
+  res.json({ message: 'Lore routes working!' });
+});
+

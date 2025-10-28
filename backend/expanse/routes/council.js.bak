@@ -1,0 +1,33 @@
+/**
+ * Council Routes
+ * ---------------
+ * Primary endpoints for The Council of the Wise system.
+ * Provides test and placeholder logic until database models are wired in.
+ */
+
+const express = require('express');
+const router = express.Router();
+
+// Example: GET /api/expanse/council
+router.get('/', (req, res) => {
+  res.json({
+    message: 'Council module active.',
+    available_routes: [
+      '/files',
+      '/events',
+      '/characters',
+    ],
+  });
+});
+
+// Example: GET /api/expanse/council/files
+router.get('/files', (req, res) => {
+  res.json({
+    files: [
+      { id: 1, name: 'File A: The Cheese Wars', status: 'classified' },
+      { id: 2, name: 'File B: The Birth of Cheese Fang', status: 'restricted' },
+    ],
+  });
+});
+
+export default router;

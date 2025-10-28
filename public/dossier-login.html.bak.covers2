@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C_O_T_W Dossier System — Council Of The Wise</title>
+  <style>
+    /* ==========================
+       C_O_T_W Dossier UI (Standalone)
+       Theme: Retro CRT neon green on black
+       ========================== */
+
+    :root {
+      --bg: #000000;
+      --fg: #00ff00;
+      --fg-dim: var(--accent);
+      --accent: #00ff75;
+      --danger: #ff266e;
+      --warning: #ffae00;
+      --shadow: 0 0 24px rgba(0,255,0,0.2), 0 0 64px rgba(0,255,0,0.06);
+      --radius: 16px;
+      --gap: 16px;
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--accent);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+    }
+
+    /* Subtle CRT feel */
+    .crt {
+      position: relative;
+      filter: contrast(1.05) saturate(1.1);
+      text-shadow: 0 0 1px rgba(0,255,0,0.45), 0 0 8px rgba(0,255,0,0.12);
+    }
+    .crt::after {
+      content: "";
+      pointer-events: none;
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 255, 0, 0.04),
+        rgba(0, 255, 0, 0.04) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      mix-blend-mode: screen;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: var(--gap);
+      height: 100vh;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .panel {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      background: rgba(0, 32, 0, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel h2 {
+      margin: 0 0 12px 0;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .left-panel { display: grid; grid-template-rows: auto auto 1fr auto; gap: 12px; }
+
+    .portrait {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--accent);
+      box-shadow: var(--shadow);
+      background: radial-gradient(120% 80% at 50% 20%, rgba(0,255,0,0.08), transparent 60%),
+                  linear-gradient(180deg, rgba(0,255,0,0.06), rgba(0,0,0,0.3));
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    .info-box, .notes-box, .chat-log {
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(0,16,0,0.25);
+      box-shadow: var(--shadow);
+    }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .info-k {  }
+    .info-v { font-weight: bold; }
+
+    .summary { margin-top: 10px;  }
+
+    .locked {   }
+    .unlocked { opacity: 1; }
+
+    .notes-box textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--accent);
+      font: inherit;
+      line-height: 1.35;
+    }
+
+    .right-panel { display: grid; grid-template-rows: auto 1fr auto; gap: 12px; }
+
+    .chat-log {
+      overflow-y: auto;
+      padding-bottom: 32px;
+    }
+    .line { white-space: pre-wrap; word-break: break-word; margin: 6px 0; }
+    .line .tag {  margin-right: 6px; }
+    .line.user .tag { color: var(--accent); }
+    .line.system .tag { color: var(--warning); }
+    .line.bot .tag { color: var(--accent); }
+    .line.alert { color: var(--danger); }
+    .line.granted { color: var(--accent); font-weight: bold; }
+
+    .chat-input-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    input[type="text"], input[type="password"] {
+      background: rgba(0, 16, 0, 0.25);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      outline: none;
+      color: var(--accent);
+      padding: 12px 14px;
+      font: inherit;
+      box-shadow: var(--shadow);
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 80ms ease, background 120ms ease;
+    }
+    button:hover { transform: translateY(-1px); background: rgba(0,255,0,0.06); }
+
+    .blink-caret { display: inline-block; width: 10px; height: 1.2em; background: var(--fg); animation: blink 1s steps(2, start) infinite; vertical-align: baseline; }
+    @keyframes blink { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+    /* Header strip */
+    .hud {
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--accent);
+      background: linear-gradient(180deg, rgba(0,255,0,0.04), rgba(0,0,0,0));
+      font-weight: 600;
+    }
+    .hud small {  font-weight: 400; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .app { grid-template-columns: 1fr; overflow-y: auto; height: auto; min-height: 100vh; }
+      body { overflow: auto; }
+    }
+    @media (max-width: 480px) {
+      :root { --gap: 12px; }
+      .panel { padding: 12px; }
+      .portrait { height: 180px; }
+      input, button { font-size: 14px; }
+    }
+    /* ---- Overlay fix: keep HUD in flow ---- */
+  .hud{position:static}
+  /* small breathing room below HUD */
+  .chat-log{margin-top:4px}
+</style>
+</head>
+<body>
+  <div class="app crt" id="app">
+
+    <!-- DOSSIER PANEL (LEFT) -->
+    <section class="panel left-panel locked" id="dossier-panel" aria-live="polite">
+      <div class="hud">C_O_T_W :: DOSSIER <small>v0.1</small></div>
+
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1940&auto=format&fit=crop" alt="Agent Portrait" class="portrait" id="agent-portrait" />
+
+      <div class="info-box">
+        <div class="info-grid">
+          <div class="info-k">NAME</div><div class="info-v"></div>
+          <div class="info-k">ENTITY</div><div class="info-v"></div>
+          <div class="info-k">DEPARTMENT</div><div class="info-v"></div>
+          <div class="info-k">SECURITY LEVEL</div><div class="info-v" id="sec-level"></div>
+        </div>
+        <div class="summary" id="summary">
+          Summary: 
+        </div>
+      </div>
+
+      <!-- Unlocked-only intel (hidden while locked) -->
+      <div class="info-box" id="intel" style="display:none">
+        <strong>LIVE INTEL</strong>
+        <ul>
+          <li>Primary Adversary: Pineaple Yurei (Vengeful Pineapple Ghost)</li>
+          <li>Guide/Narrator: Claude the Tanuki</li>
+          <li>Quest: Stabilize the Piza Sukeruton Multiverse nexus.</li>
+        </ul>
+      </div>
+
+      <div class="notes-box" id="notes" style="display:none">
+        <strong>FIELD NOTES</strong>
+        <textarea placeholder="> Type encrypted notes here…"></textarea>
+      </div>
+    </section>
+
+    <!-- CHAT PANEL (RIGHT) -->
+    <section class="panel right-panel" id="chat-panel">
+      <div class="hud">TERMINAL :: CHAT <small>AUTH + COMMAND</small></div>
+
+      <div class="info-box chat-log" id="chat-log" role="log" aria-live="polite"></div>
+
+      <div class="chat-input-bar">
+        <input id="chat-input" type="text" placeholder="> Enter username" autocomplete="username" autofocus />
+        <button id="send-btn" type="button">Send</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    /* ==========================
+       C_O_T_W Dossier UI Logic
+       - States: username -> password -> command
+       - Hardcoded demo creds: pizasukeruton / ctw-secret
+       ========================== */
+
+    const logEl = document.getElementById('chat-log');
+    const inputEl = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+    const dossierPanel = document.getElementById('dossier-panel');
+    const intelEl = document.getElementById('intel');
+    const notesEl = document.getElementById('notes');
+    const secLevelEl = document.getElementById('sec-level');
+    const summaryEl = document.getElementById('summary');
+
+    const DEMO_USER = 'pizasukeruton';
+    const DEMO_PASS = 'ctw-secret';
+
+    let state = 'username'; // 'password' | 'command'
+    let cacheUser = '';
+
+    function appendLine(type, text, opts = {}) {
+      const line = document.createElement('div');
+      line.className = \`line \${type}\` + (opts.alert ? ' alert' : '') + (opts.granted ? ' granted' : '');
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.textContent = type.toUpperCase();
+      const span = document.createElement('span');
+      span.textContent = ' ' + text;
+      line.append(tag, span);
+      logEl.appendChild(line);
+      logEl.scrollTop = logEl.scrollHeight;
+      return line;
+    }
+
+    function promptLine(promptText) {
+      const wrap = document.createElement('div');
+      wrap.className = 'line system';
+      wrap.innerHTML = \`<span class="tag">SYSTEM</span> \${promptText} <span class="blink-caret" aria-hidden="true"></span>\`;
+      logEl.appendChild(wrap);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function setLocked(locked) {
+      dossierPanel.classList.toggle('locked', locked);
+      dossierPanel.classList.toggle('unlocked', !locked);
+      intelEl.style.display = locked ? 'none' : 'block';
+      notesEl.style.display = locked ? 'none' : 'block';
+      secLevelEl.textContent = locked ? '' : 'LEVEL 3';
+      if (!locked) {
+        summaryEl.textContent = 'Summary: Live dossier access granted. Intel updating…';
+      }
+    }
+
+    function boot() {
+      appendLine('system', 'C_O_T_W Secure Terminal v0.1');
+      appendLine('system', 'Enter valid credentials to unlock dossier.');
+      promptLine('> USERNAME:');
+      inputEl.placeholder = '> Enter username';
+      inputEl.type = 'text';
+      inputEl.focus();
+    }
+
+    function handleUsername(value) {
+      cacheUser = String(value || '').trim();
+      appendLine('user', value || '');
+      if (!cacheUser) {
+        appendLine('system', 'Username cannot be empty.', { alert: true });
+        promptLine('> USERNAME:');
+        return;
+      }
+      state = 'password';
+      promptLine('> PASSWORD:');
+      inputEl.placeholder = '> Enter password';
+      inputEl.type = 'password';
+      inputEl.value = '';
+      inputEl.focus();
+    }
+
+    function handlePassword(value) {
+      const pass = String(value || '').trim();
+      appendLine('user', '********');
+      if (cacheUser === DEMO_USER && pass === DEMO_PASS) {
+        appendLine('system', 'ACCESS GRANTED', { granted: true });
+        setLocked(false);
+        state = 'command';
+        promptLine('> COMMAND MODE — try: "help"');
+        inputEl.placeholder = '> Enter command';
+        inputEl.type = 'text';
+        inputEl.value = '';
+        inputEl.focus();
+      } else {
+        appendLine('system', 'ACCESS DENIED', { alert: true });
+        setLocked(true);
+        state = 'username';
+        promptLine('> USERNAME:');
+        inputEl.placeholder = '> Enter username';
+        inputEl.type = 'text';
+        inputEl.value = '';
+        inputEl.focus();
+      }
+    }
+
+    function commandRouter(q) {
+      const text = String(q || '').trim();
+      appendLine('user', text);
+      if (!text) return;
+      const lower = text.toLowerCase();
+
+      if (lower === 'help' || lower === 'commands') {
+        appendLine('bot', 'Available: help, who is <name>, status, clear');
+        return;
+      }
+      if (lower.startsWith('who is ')) {
+        const who = text.slice(7).trim();
+        if (/^piza\\s+sukeruton$/i.test(who)) {
+          appendLine('bot', 'Piza Sukeruton — Multiverse Skeleton, nexus stabilizer. Primary adversary: Pineaple Yurei. Guide: Claude the Tanuki.');
+        } else if (/^claude(\\s+the\\s+tanuki)?$/i.test(who)) {
+          appendLine('bot', 'Claude the Tanuki — narrator/guide; mischievous but reliable intelligence source.');
+        } else if (/^pineap(le|ple)\\s+yurei$/i.test(who)) {
+          appendLine('bot', 'Pineaple Yurei — vengeful pineapple ghost; anomalous interference across timelines.');
+        } else {
+          appendLine('bot', \`No dossier entry found for: \${who}\`);
+        }
+        return;
+      }
+      if (lower === 'status') {
+        appendLine('bot', 'Dossier channel: ONLINE. Intel stream: STABLE. Security: LEVEL 3.');
+        return;
+      }
+      if (lower === 'clear') {
+        logEl.innerHTML = '';
+        appendLine('system', 'Console cleared.');
+        promptLine('> COMMAND MODE');
+        return;
+      }
+
+      appendLine('system', 'Command not recognized. Type "help".', { alert: true });
+    }
+
+    function onSend() {
+      const value = inputEl.value;
+      if (state === 'username') return handleUsername(value);
+      if (state === 'password') return handlePassword(value);
+      if (state === 'command') return commandRouter(value);
+    }
+
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        onSend();
+        inputEl.value = '';
+      }
+    });
+    sendBtn.addEventListener('click', () => { onSend(); inputEl.value = ''; });
+
+    // Boot
+    setLocked(true);
+    boot();
+
+    // Demo hint
+    setTimeout(() => {
+      appendLine('system', 'Hint: username "pizasukeruton"');
+    }, 600);
+  </script>
+
+  <!--
+  ============================
+  FILE INTEGRATION NOTES
+  ============================
+  • Split-view layout: left dossier (locked -> unlocked), right chat terminal.
+  • Hardcoded demo auth: username "pizasukeruton", password "ctw-secret".
+  • After success: panel unlocks (opacity 1), additional intel + notes unlocked, LEVEL 3.
+  • Commands: help, who is Piza Sukeruton, status, clear.
+  • Responsive: panels stack vertically under ~1000px.
+  • To split into files under /public:
+    - /public/css/ctw.css  ← move <style> block
+    - /public/js/ctw.js    ← move <script> block
+    - /public/dossier-template.html  ← view-only dossier (remove chat panel)
+    - /public/dossier-login.html ← keep both panels (this file)
+    - /public/terminal.html ← terminal-first layout; reuse chat panel
+  • Backend integration: point commandRouter() to fetch('/api/council/command', { ... })
+    mirroring /backend/expanse/routes/council.js when ready.
+  -->
+</body>
+</html>

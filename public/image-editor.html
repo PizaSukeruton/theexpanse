@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRT Image Editor</title>
+<style>
+  body { background: black; color: #00ff00; font-family: "Courier New", monospace; display: flex; flex-direction: column; align-items: center; padding: 18px; }
+  h1 { text-shadow: 0 0 8px #00ff00; }
+  .control-bar { margin-bottom: 12px; }
+  label { margin: 0 12px 0 0; }
+  input, select, button { margin: 6px; padding: 7px 13px; font-family: "Courier New", monospace; border: 1px solid #00ff00; background: #111; color: #90ff90; }
+  canvas { margin: 16px 0 10px 0; border: 2px solid #00ff00; box-shadow: 0 0 20px #00ff00; }
+  #gallery { margin-top:25px; width: 100%; min-height:100px; }
+  .gallery-thumb { border: 1px solid #00ff00; margin: 6px; width: 88px; height: 88px; object-fit:cover; box-shadow:0 0 7px #00ff00; }
+</style>
+</head>
+<body>
+<h1>🖼️ CRT Image Editor</h1>
+<div class="control-bar">
+  <label>Width:</label>
+  <input type="number" id="outW" value="640" min="64" max="2048" style="width:60px;">
+  <label>Height:</label>
+  <input type="number" id="outH" value="480" min="64" max="2048" style="width:60px;">
+  <label>File Name:</label>
+  <input type="text" id="imgName" value="crt_image.png" style="width: 140px;">
+</div>
+<input type="file" id="fileInput" accept="image/*">
+<canvas id="crtCanvas" width="640" height="480"></canvas><br>
+<button id="downloadBtn" disabled>Download Image</button>
+<button id="saveToGalleryBtn" disabled>Save to Gallery</button>
+<h2>Gallery</h2>
+<div id="gallery"></div>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const canvas = document.getElementById('crtCanvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const downloadBtn = document.getElementById('downloadBtn');
+const saveBtn = document.getElementById('saveToGalleryBtn');
+const galleryDiv = document.getElementById('gallery');
+const outW = document.getElementById('outW');
+const outH = document.getElementById('outH');
+const imgNameInput = document.getElementById('imgName');
+let img = new window.Image();
+
+function updateCanvas() {
+  canvas.width = Math.max(64, parseInt(outW.value)||640);
+  canvas.height = Math.max(64, parseInt(outH.value)||480);
+  if (img.src) processCRT();
+}
+
+fileInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = event => { img.src = event.target.result; };
+  reader.readAsDataURL(file);
+});
+outW.addEventListener('change', updateCanvas); outH.addEventListener('change', updateCanvas);
+
+img.onload = ()=> processCRT();
+function processCRT() {
+  // Center-fit scale 
+  const scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+  const w = img.width * scale, h = img.height * scale;
+  ctx.fillStyle = "#000"; ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.drawImage(img, (canvas.width-w)/2, (canvas.height-h)/2, w, h);
+
+  // CRT effect
+  const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+  const data = imageData.data;
+  for(let i=0;i<data.length;i+=4){
+    const avg=(data[i]+data[i+1]+data[i+2])/3;
+    data[i]=avg*0.3; data[i+1]=avg*1.2; data[i+2]=avg*0.3;
+  }
+  ctx.putImageData(imageData,0,0);
+
+  for(let y=0;y<canvas.height;y+=4){
+    ctx.fillStyle="rgba(0,0,0,0.22)";
+    ctx.fillRect(0,y,canvas.width,1);
+  }
+  downloadBtn.disabled = false; saveBtn.disabled = false;
+}
+
+downloadBtn.addEventListener('click',()=>{
+  const link = document.createElement('a');
+  let name = imgNameInput.value.trim() || 'crt_image.png';
+  if (!name.endsWith('.png')) name += '.png';
+  link.download = name;
+  link.href=canvas.toDataURL();
+  link.click();
+});
+
+saveBtn.addEventListener('click',()=>{
+  const name = imgNameInput.value.trim() || 'crt_image.png';
+  const url = canvas.toDataURL();
+  let gallery = JSON.parse(localStorage.getItem('crt_gallery')||'[]');
+  gallery.push({name, url, w: canvas.width, h: canvas.height, date: Date.now()});
+  localStorage.setItem('crt_gallery', JSON.stringify(gallery));
+  renderGallery();
+});
+
+function renderGallery() {
+  let gallery = JSON.parse(localStorage.getItem('crt_gallery')||'[]');
+  galleryDiv.innerHTML = '';
+  gallery.slice(-20).reverse().forEach(item=>{
+    const thumb = document.createElement('img');
+    thumb.src = item.url;
+    thumb.className = 'gallery-thumb';
+    thumb.title = item.name+' ('+item.w+'x'+item.h+')';
+    thumb.onclick = ()=>loadFromGallery(item);
+    galleryDiv.appendChild(thumb);
+  });
+}
+function loadFromGallery(item) {
+  imgNameInput.value = item.name;
+  outW.value = item.w; outH.value = item.h;
+  img.src = item.url;
+}
+
+renderGallery();
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C_O_T_W Dossier System — Council Of The Wise</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --accent: #00ff75;        /* unified neon */
+      --fg: #00ff75;
+      --shadow: 0 0 24px rgba(0,255,0,0.25), 0 0 64px rgba(0,255,0,0.1);
+      --radius: 16px;
+      --gap: 16px;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+    }
+
+    .crt { position: relative; filter: contrast(1.05) saturate(1.1); text-shadow: 0 0 1px rgba(0,255,0,0.45), 0 0 8px rgba(0,255,0,0.12); }
+    .crt::after { content:""; pointer-events:none; position:absolute; inset:0;
+      background: repeating-linear-gradient(to bottom, rgba(0,255,0,0.06) 0 2px, transparent 2px 4px);
+      mix-blend-mode: screen;
+    }
+
+    .app { display:grid; grid-template-columns:1fr 1.1fr; gap:var(--gap); height:100vh; padding:16px; box-sizing:border-box; }
+
+    .panel {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      background: rgba(0,32,0,0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left stack */
+    .left-panel { display:grid; grid-template-rows:auto 1fr auto; gap:12px; }
+    .dossier-stack { display:grid; grid-template-rows:auto auto; gap:12px; position:relative; }
+
+    .panel-box { position: relative; border: 1px solid var(--accent); border-radius: 12px; padding: 0; box-shadow: var(--shadow); background: rgba(0,16,0,0.25); }
+    .portrait-wrap { height: 220px; }
+    .portrait { width: 100%; height:100%; object-fit: cover; border-radius: 12px; filter: grayscale(20%) contrast(1.05); }
+
+    .info-box { padding:12px; }
+    .info-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .info-k {}
+    .info-v { font-weight: bold; }
+    .summary { margin-top: 10px; }
+
+    .notes-box { border:1px solid var(--accent); border-radius:12px; padding:12px; background: rgba(0,16,0,0.25); box-shadow: var(--shadow); }
+    .notes-box textarea { width:100%; min-height:120px; resize:vertical; background:transparent; border:none; outline:none; color:var(--fg); font:inherit; line-height:1.35; }
+
+    /* Right/chat */
+    .right-panel { display:grid; grid-template-rows:auto 1fr auto; gap:12px; }
+    .hud { /* keep in flow to avoid overlay issues */ position: static; padding:10px 14px; border:1px solid var(--accent); border-radius:12px; background: rgba(0,255,0,0.04); font-weight:600; }
+    .hud small { font-weight:400; opacity:1; }
+
+    .chat-log { border:1px solid var(--accent); border-radius:12px; padding:12px; background: rgba(0,16,0,0.25); box-shadow: var(--shadow); overflow-y:auto; padding-bottom:32px; }
+    .line { white-space: pre-wrap; word-break: break-word; margin: 6px 0; }
+    .line .tag { margin-right: 6px; }
+    .line.granted { font-weight: bold; }
+
+    .chat-input-bar { display:grid; grid-template-columns: 1fr auto; gap:8px; align-items:center; }
+    input[type="text"], input[type="password"] {
+      background: rgba(0,16,0,0.25); border:1px solid var(--accent); border-radius:12px; outline:none; color:var(--fg); padding:12px 14px; font:inherit; box-shadow: var(--shadow);
+    }
+    button { background:transparent; border:1px solid var(--accent); color:var(--fg); padding:10px 14px; border-radius:12px; font:inherit; cursor:pointer; box-shadow:var(--shadow); transition: transform 80ms ease, background 120ms ease; }
+    button:hover { transform: translateY(-1px); background: rgba(0,255,0,0.06); }
+
+    .blink-caret { display:inline-block; width:10px; height:1.2em; background:var(--fg); animation: blink 1s steps(2,start) infinite; vertical-align:baseline; }
+    @keyframes blink { 0%{opacity:0} 50%{opacity:1} 100%{opacity:0} }
+
+    /* FULL dossier cover (stronger shading) */
+    .dossier-cover {
+      position:absolute; inset:16px; /* respect panel padding */
+      display:grid; place-items:center;
+      pointer-events:auto;
+      background:
+        linear-gradient(180deg, rgba(0,14,0,0.98), rgba(0,0,0,1)),
+        radial-gradient(90% 60% at 50% 35%, rgba(0,255,0,0.10), transparent 60%);
+      border:2px solid var(--accent);
+      border-radius:12px;
+      box-shadow:
+        0 0 22px rgba(0,255,117,0.28),
+        inset 0 0 18px rgba(0,255,117,0.18);
+      transform: translateY(0);
+      transition: transform .7s ease-in-out;
+      z-index: 9;
+    }
+    .dossier-cover::before {
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(to bottom, rgba(0,255,0,0.18) 0 2px, rgba(0,0,0,0.0) 2px 4px),
+        linear-gradient(180deg, rgba(0,255,0,0.10), rgba(0,0,0,0) 35%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0.9) 100%);
+      mix-blend-mode: screen;
+      border-radius:12px;
+      pointer-events:none;
+    }
+    .dossier-cover.open { transform: translateY(-104%); pointer-events:none; }
+
+    .cover-inner { text-align:center; padding: 28px 18px; }
+    .cover-title { font-weight: 900; font-size: 28px; letter-spacing: 2px; }
+    .cover-sub   { margin-top: 8px;  font-weight: 800; font-size: 18px; }
+    .cover-instr { margin-top: 20px; font-weight: 800; font-size: 14px; line-height: 1.5; }
+
+    @media (max-width: 1000px) {
+      .app { grid-template-columns:1fr; overflow-y:auto; height:auto; min-height:100vh; }
+      body { overflow:auto; }
+    }
+    @media (max-width: 480px) {
+      .panel { padding:12px; }
+      .dossier-cover { inset:12px; }
+      .portrait-wrap { height:180px; }
+      input, button { font-size:14px; }
+      .cover-title { font-size:22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app crt" id="app">
+
+    <!-- LEFT: DOSSIER -->
+    <section class="panel left-panel" id="dossier-panel" aria-live="polite">
+      <div class="dossier-stack">
+        <!-- Portrait -->
+        <div class="panel-box portrait-wrap">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1940&auto=format&fit=crop" alt="Agent Portrait" class="portrait" id="agent-portrait" />
+        </div>
+
+        <!-- Fields -->
+        <div class="panel-box">
+          <div class="info-box">
+            <div class="info-grid">
+              <div class="info-k">NAME</div><div class="info-v" id="f-name"></div>
+              <div class="info-k">ENTITY</div><div class="info-v" id="f-entity"></div>
+              <div class="info-k">DEPARTMENT</div><div class="info-v" id="f-dept"></div>
+              <div class="info-k">SECURITY LEVEL</div><div class="info-v" id="f-sec"></div>
+            </div>
+            <div class="summary" id="summary">Summary:</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Single full dossier cover -->
+      <div id="dossier-cover" class="dossier-cover" aria-hidden="false">
+        <div class="cover-inner">
+          <div class="cover-title">COUNCIL OF THE WISE</div>
+          <div class="cover-sub">EYES ONLY</div>
+          <div class="cover-instr">AUTHENTICATE CREDENTIALS<br>TO ACCESS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: TERMINAL -->
+    <section class="panel right-panel" id="chat-panel">
+      <div class="hud">TERMINAL :: CHAT <small>AUTH + COMMAND</small></div>
+      <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
+      <div class="chat-input-bar">
+        <input id="chat-input" type="text" placeholder="> Enter username" autocomplete="username" autofocus />
+        <button id="send-btn" type="button">Send</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const logEl = document.getElementById('chat-log');
+    const inputEl = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    const cover = document.getElementById('dossier-cover');
+
+    const fName = document.getElementById('f-name');
+    const fEntity = document.getElementById('f-entity');
+    const fDept = document.getElementById('f-dept');
+    const fSec = document.getElementById('f-sec');
+    const summaryEl = document.getElementById('summary');
+
+    const DEMO_USER = 'pizasukeruton';
+    const DEMO_PASS = 'ctw-secret';
+
+    let state = 'username'; // 'password' | 'command'
+    let cacheUser = '';
+
+    function appendLine(type, text, opts = {}) {
+      const line = document.createElement('div');
+      line.className = `line ${type}` + (opts.granted ? ' granted' : '');
+      const tag = document.createElement('span'); tag.className = 'tag'; tag.textContent = type.toUpperCase();
+      const span = document.createElement('span'); span.textContent = ' ' + text;
+      line.append(tag, span); logEl.appendChild(line); logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function boot() {
+      appendLine('system', 'C_O_T_W Secure Terminal v0.2');
+      appendLine('system', 'Enter valid credentials to unlock terminal.');
+      // (Removed duplicate top-right “USERNAME” prompt)
+      inputEl.placeholder = '> Enter username';
+      inputEl.type = 'text';
+      inputEl.focus();
+      // Ensure cover starts closed
+      cover.classList.remove('open');
+      cover.setAttribute('aria-hidden','false');
+    }
+
+    function handleUsername(value) {
+      cacheUser = String(value || '').trim();
+      appendLine('user', value || '');
+      if (!cacheUser) { appendLine('system', 'Username cannot be empty.'); return; }
+      state = 'password';
+      inputEl.placeholder = '> Enter password';
+      inputEl.type = 'password';
+      inputEl.value = '';
+      inputEl.focus();
+    }
+
+    function handlePassword(value) {
+      const pass = String(value || '').trim();
+      appendLine('user', '********');
+      if (cacheUser === DEMO_USER && pass === DEMO_PASS) {
+        appendLine('system', 'ACCESS GRANTED', { granted: true });
+        state = 'command';
+        inputEl.placeholder = '> Enter command';
+        inputEl.type = 'text';
+        inputEl.value = '';
+        inputEl.focus();
+        // Slide cover away on successful login
+        cover.classList.add('open');
+        cover.setAttribute('aria-hidden','true');
+      } else {
+        appendLine('system', 'ACCESS DENIED');
+        state = 'username';
+        inputEl.placeholder = '> Enter username';
+        inputEl.type = 'text';
+        inputEl.value = '';
+        inputEl.focus();
+        cover.classList.remove('open');
+        cover.setAttribute('aria-hidden','false');
+      }
+    }
+
+    
+function coverInnerText(show){ const inner=document.querySelector(".cover-inner"); if(!inner)return; inner.style.opacity= show?1:0; }
+function commandRouter(q){
+      const text = String(q || '').trim();
+      appendLine('user', text);
+      if (!text) return;
+      const lower = text.toLowerCase();
+
+      if (lower === 'help' || lower === 'commands') {
+        appendLine('bot', 'Available: help, who is <name>, status, clear');
+        return;
+      }
+      if (lower.startsWith('who is ')) {
+        const who = text.slice(7).trim();
+        if (/^piza\\s+sukeruton$/i.test(who)) {
+          fName.textContent = 'Piza Sukeruton';
+          fEntity.textContent = 'Multiverse Reaper';
+          fDept.textContent = 'Psi Division';
+          fSec.textContent = 'LEVEL 3';
+          summaryEl.textContent = 'Summary: Nexus stabilizer. Adversary: Pineaple Yurei. Guide: Claude the Tanuki.';
+        } else {
+          fName.textContent = who;
+          fEntity.textContent = '';
+          fDept.textContent = '';
+          fSec.textContent = '';
+          summaryEl.textContent = 'Summary:';
+        }
+        appendLine('bot', `Dossier opened for ${who}.`);
+        return;
+      }
+      if (lower === 'status') {
+        appendLine('bot', 'Dossier channel: ONLINE. Intel stream: STABLE. Security: LEVEL 3.');
+        return;
+      }
+      if (lower === 'clear') {
+        logEl.innerHTML = '';
+        appendLine('system', 'Console cleared.');
+        return;
+      }
+      appendLine('system', 'Command not recognized. Type "help".');
+    }
+
+    function onSend() {
+      const value = inputEl.value;
+      if (state === 'username') return handleUsername(value);
+      if (state === 'password') return handlePassword(value);
+      if (state === 'command') return commandRouter(value);
+    }
+    inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); onSend(); inputEl.value = ''; } });
+    sendBtn.addEventListener('click', () => { onSend(); inputEl.value = ''; });
+
+    boot();
+  </script>
+</body>
+</html>

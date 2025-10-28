@@ -1,0 +1,321 @@
+// File: backend/TSE/EvaluationComponent.js
+// TASK 11/61: TSE EvaluationComponent.js (Complete Rewrite)
+// AUTHORITY: Gemini Implementation (Data-Aligned)
+// DESCRIPTION: Performs mathematical learning analysis by comparing Teacher predictions vs.
+// Student outcomes using verified, real-world JSONB data structures.
+
+/**
+ * @class EvaluationComponent
+ * @description Analyzes TSE learning cycles, scores performance, and generates
+ * optimization data. This version is aligned with the actual production database schema
+ * and JSONB field structures as of 2025-07-14.
+ */
+class EvaluationComponent {
+    /**
+     * Initializes the component with a database pool.
+     * @param {object} pool - The PostgreSQL connection pool (e.g., app.locals.pool).
+     */
+    constructor(pool) {
+        this.pool = pool;
+        this.hexCounter = null; // Initialized by async call to initializeCounters()
+    }
+
+    /**
+     * Initializes the hex counter by querying the database for the last used
+     * record ID in the Analytics & Research range (#E00000+) to ensure uniqueness.
+     */
+    async initializeCounters() {
+        const query = `
+            SELECT record_id FROM tse_evaluation_records 
+            WHERE record_id LIKE '#E%'
+            ORDER BY record_id DESC LIMIT 1
+        `;
+        try {
+            const result = await this.pool.query(query);
+            if (result.rows.length > 0) {
+                this.hexCounter = parseInt(result.rows[0].record_id.substring(2), 16) + 1;
+            } else {
+                this.hexCounter = 0xE00000; // Start of the #E range
+            }
+            console.log(`EvaluationComponent: Counter initialized for #E range. Next ID hex: 0x${this.hexCounter.toString(16).toUpperCase()}`);
+        } catch (error) {
+            console.error('EvaluationComponent: CRITICAL - Failed to initialize hex counters from database.', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Main orchestration method. Performs the full analysis for a given learning cycle.
+     * @param {string} cycle_id - The ID of the learning cycle to evaluate.
+     * @returns {Promise<object>} The final, recorded evaluation data object from the database.
+     */
+    async performAnalysis(cycle_id) {
+        try {
+            const cycleData = await this._getCycleData(cycle_id);
+            if (!cycleData.teacher_record || !cycleData.student_record) {
+                throw new Error(`Analysis halted: Incomplete data for cycle_id ${cycle_id}. Missing teacher or student record.`);
+            }
+
+            const analysisScores = {
+                effectiveness_score: await this.calculateEffectivenessScore(cycleData),
+                efficiency_score: await this.calculateEfficiencyScore(cycleData),
+                innovation_score: await this.calculateInnovationScore(cycleData),
+                cultural_score: await this.calculateCulturalScore(cycleData),
+            };
+
+            const recommendations = await this.generateOptimizationRecommendations(cycleData, analysisScores);
+
+            const evaluationRecord = await this.recordEvaluationResults({
+                cycle_id,
+                teacher_record_id: cycleData.teacher_record.record_id,
+                student_record_id: cycleData.student_record.record_id,
+                ...analysisScores,
+                ...recommendations
+            });
+
+            await this.applyLearningAdjustments(recommendations);
+
+            console.log(`EvaluationComponent: Successfully completed analysis for cycle ${cycle_id}. Record ${evaluationRecord.record_id} created.`);
+            return evaluationRecord;
+
+        } catch (error) {
+            console.error(`EvaluationComponent: Full analysis failed for cycle ${cycle_id}.`, error);
+            throw error;
+        }
+    }
+
+    /**
+     * Calculates effectiveness by comparing predictions to outcomes using REAL data fields.
+     * @param {object} cycleData - Contains teacher and student records.
+     * @returns {Promise<number>} A weighted score between 0.0 and 1.0.
+     */
+    async calculateEffectivenessScore(cycleData) {
+        const teacher = cycleData.teacher_record;
+        const student = cycleData.student_record;
+        
+        // CORRECTED: Maps to actual JSONB keys from the live database.
+        const successAccuracy = this._comparePredictionAccuracy(
+            teacher.predicted_outcomes?.user_satisfaction_predicted || 0.5,
+            student.real_world_outcome?.user_satisfaction || 0.0
+        );
+        
+        // CORRECTED: Maps to actual JSONB keys for engagement.
+        const engagementAccuracy = this._comparePredictionAccuracy(
+            teacher.predicted_outcomes?.conversation_continuation_likely || 0.5,
+            student.user_engagement?.recommendation_score || 0.0
+        );
+        
+        const similarityAccuracy = student.character_similarity_accuracy || 0.0; // This was correct.
+        const confidenceCorrelation = teacher.confidence_score || 0.0; // This was also correct.
+
+        let effectivenessScore = (successAccuracy * 0.40) +
+                                 (engagementAccuracy * 0.30) +
+                                 (similarityAccuracy * 0.20) +
+                                 (confidenceCorrelation * 0.10);
+        
+        return Math.max(0.0, Math.min(1.0, effectivenessScore));
+    }
+
+    /**
+     * Calculates efficiency. CORRECTED to use response length as a proxy for complexity
+     * since the 'steps' field does not exist.
+     * @param {object} cycleData - Contains teacher and student records.
+     * @returns {Promise<number>} A score between 0.0 and 1.0.
+     */
+    async calculateEfficiencyScore(cycleData) {
+        const responseLength = cycleData.teacher_record.algorithm_decision?.response_generated?.length || 100;
+        // Normalize length to a 0-20 scale where longer is more "complex".
+        const decisionComplexity = Math.min(20, responseLength / 50);
+        
+        const complexityScore = Math.max(0, 1 - (decisionComplexity / 20)); // Lower complexity is better.
+        const actualSuccess = cycleData.student_record.real_world_outcome?.user_satisfaction || 0;
+        
+        const efficiencyScore = (complexityScore * 0.6) + (actualSuccess * 0.4);
+        return Math.max(0.0, Math.min(1.0, efficiencyScore));
+    }
+
+    /**
+     * Calculates innovation. CORRECTED to use the actual data fields for comparison.
+     * @param {object} cycleData - Contains teacher and student records.
+     * @returns {Promise<number>} A score between 0.0 and 1.0.
+     */
+    async calculateInnovationScore(cycleData) {
+        const teacher = cycleData.teacher_record;
+        const student = cycleData.student_record;
+
+        // CORRECTED: Maps to user_satisfaction fields.
+        const successDifference = (student.real_world_outcome?.user_satisfaction || 0) - 
+                                (teacher.predicted_outcomes?.user_satisfaction_predicted || 0);
+
+        // CORRECTED: Maps to recommendation_score and conversation_continuation fields.
+        const engagementDifference = (student.user_engagement?.recommendation_score || 0) - 
+                                     (teacher.predicted_outcomes?.conversation_continuation_likely || 0);
+        
+        const innovationScore = (Math.max(0, successDifference) + Math.max(0, engagementDifference)) / 2;
+        
+        return Math.max(0.0, Math.min(1.0, innovationScore));
+    }
+
+    /**
+     * Calculates cultural alignment. CORRECTED to use the 'overall_compliance' number
+     * directly from the 'cultural_compliance' object.
+     * @param {object} cycleData - Contains teacher and student records.
+     * @returns {Promise<number>} A score between 0.0 and 1.0.
+     */
+    async calculateCulturalScore(cycleData) {
+        const compliance = cycleData.teacher_record.cultural_compliance;
+        if (!compliance || typeof compliance.overall_compliance !== 'number') {
+            // If the field is missing or not a number, assume perfect compliance to avoid penalizing.
+            return 1.0;
+        }
+        return Math.max(0.0, Math.min(1.0, compliance.overall_compliance));
+    }
+
+    /**
+     * Generates actionable optimization recommendations based on the analysis scores.
+     * (This logic remains the same as it is score-dependent, not field-dependent).
+     * @param {object} cycleData - The data used for analysis.
+     * @param {object} analysisScores - The calculated scores.
+     * @returns {Promise<object>} An object containing structured recommendations.
+     */
+    async generateOptimizationRecommendations(cycleData, analysisScores) {
+        const recommendations = {
+            algorithm_optimizations: [],
+            weight_adjustments: {},
+            philosophy_improvements: {},
+            learning_recommendations: []
+        };
+        if (analysisScores.effectiveness_score < 0.7) {
+            recommendations.algorithm_optimizations.push({
+                type: 'prediction_improvement',
+                priority: 'high',
+                description: 'Improve prediction accuracy algorithms.'
+            });
+        }
+        if (analysisScores.efficiency_score < 0.8) {
+            recommendations.weight_adjustments.resource_usage = 'reduce_computational_overhead';
+        }
+        if (analysisScores.innovation_score > 0.8) {
+            recommendations.learning_recommendations.push({
+                type: 'pattern_discovery',
+                insight: 'High innovation score indicates successful new approaches.',
+                action: 'Incorporate successful patterns into base algorithm.'
+            });
+        }
+        if (analysisScores.cultural_score < 0.95) {
+            recommendations.philosophy_improvements.seven_commandments = 'strengthen_cultural_alignment';
+        }
+        return recommendations;
+    }
+
+    /**
+     * Simulates the application of learning adjustments to the live system.
+     * @param {object} recommendations - The optimization recommendations.
+     */
+    async applyLearningAdjustments(recommendations) {
+        console.log("EvaluationComponent: Applying learning adjustments...");
+        if (Object.keys(recommendations.weight_adjustments).length > 0) {
+            console.log(" -> Simulating weight adjustments:", recommendations.weight_adjustments);
+        }
+        if (recommendations.algorithm_optimizations.length > 0) {
+            console.log(" -> Flagging algorithms for review:", recommendations.algorithm_optimizations.map(o => o.type));
+        }
+    }
+
+    /**
+     * Atomically records the complete evaluation analysis into the database.
+     * @param {object} evalData - The complete data for the new evaluation record.
+     * @returns {Promise<object>} The newly created record from the database.
+     */
+    async recordEvaluationResults(evalData) {
+        if (this.hexCounter === null) {
+            throw new Error("Hex counter not initialized. Call initializeCounters() before recording results.");
+        }
+        
+        const client = await this.pool.connect();
+        try {
+            await client.query('BEGIN');
+
+            const seqResult = await client.query(
+                `SELECT COALESCE(MAX(evaluation_sequence), 0) + 1 as next_seq FROM tse_evaluation_records WHERE cycle_id = $1`,
+                [evalData.cycle_id]
+            );
+            const evaluation_sequence = seqResult.rows[0].next_seq;
+
+            const record_id = '#E' + this.hexCounter.toString(16).toUpperCase().padStart(5, '0');
+            this.hexCounter++;
+
+            const insertQuery = `
+                INSERT INTO tse_evaluation_records (
+                    record_id, cycle_id, teacher_record_id, student_record_id,
+                    evaluation_sequence, effectiveness_score, efficiency_score,
+                    innovation_score, cultural_score, variance_analysis,
+                    pattern_identification, correlation_insights,
+                    algorithm_optimizations, weight_adjustments,
+                    philosophy_improvements, learning_recommendations
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+                RETURNING *;
+            `;
+            const values = [
+                record_id, evalData.cycle_id, evalData.teacher_record_id, evalData.student_record_id,
+                evaluation_sequence, evalData.effectiveness_score, evalData.efficiency_score,
+                evalData.innovation_score, evalData.cultural_score,
+                JSON.stringify(evalData.variance_analysis || {}),
+                JSON.stringify(evalData.pattern_identification || {}),
+                JSON.stringify(evalData.correlation_insights || {}),
+                JSON.stringify(evalData.algorithm_optimizations || []),
+                JSON.stringify(evalData.weight_adjustments || {}),
+                JSON.stringify(evalData.philosophy_improvements || {}),
+                JSON.stringify(evalData.learning_recommendations || [])
+            ];
+
+            const result = await client.query(insertQuery, values);
+            await client.query('COMMIT');
+            
+            return result.rows[0];
+
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error('EvaluationComponent: Database transaction failed. Rolling back.', error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
+    // --- PRIVATE HELPER METHODS ---
+
+    /**
+     * Fetches teacher and student records for a cycle directly from the database.
+     * @private
+     * @param {string} cycle_id - The learning cycle ID.
+     * @returns {Promise<object>} An object { teacher_record, student_record }.
+     */
+    async _getCycleData(cycle_id) {
+        const teacherQuery = 'SELECT * FROM tse_teacher_records WHERE cycle_id = $1 ORDER BY created_at DESC LIMIT 1';
+        const studentQuery = 'SELECT * FROM tse_student_records WHERE cycle_id = $1 ORDER BY created_at DESC LIMIT 1';
+        
+        const [teacherResult, studentResult] = await Promise.all([
+            this.pool.query(teacherQuery, [cycle_id]),
+            this.pool.query(studentQuery, [cycle_id])
+        ]);
+
+        return {
+            teacher_record: teacherResult.rows[0] || null,
+            student_record: studentResult.rows[0] || null,
+        };
+    }
+    
+    /**
+     * Helper to calculate prediction accuracy based on the inverse of absolute difference.
+     * @private
+     * @param {number} predicted - The predicted value.
+     * @param {number} actual - The actual value.
+     * @returns {number} A score from 0.0 to 1.0.
+     */
+    _comparePredictionAccuracy(predicted, actual) {
+        return Math.max(0.0, 1.0 - Math.abs(predicted - actual));
+    }
+}
+
+module.exports = EvaluationComponent;

@@ -1,0 +1,374 @@
+ hex_color |         trait_name         |  category   
+-----------+----------------------------+-------------
+ #000096   | Self-Control               | Behavioral
+ #000097   | Impulse Management         | Behavioral
+ #000098   | Habit Formation            | Behavioral
+ #000099   | Routine Adherence          | Behavioral
+ #00009A   | Discipline                 | Behavioral
+ #00009B   | Time Management            | Behavioral
+ #00009C   | Energy Management          | Behavioral
+ #00009D   | Focus Maintenance          | Behavioral
+ #00009E   | Procrastination Control    | Behavioral
+ #00009F   | Priority Setting           | Behavioral
+ #0000A0   | Self-Regulation            | Behavioral
+ #0000A1   | Behavioral Control         | Behavioral
+ #0000A2   | Response Inhibition        | Behavioral
+ #0000A3   | Delay of Gratification     | Behavioral
+ #0000A4   | Temptation Resistance      | Behavioral
+ #0000A5   | Behavioral Flexibility     | Behavioral
+ #0000A6   | Adaptive Behavior          | Behavioral
+ #0000A7   | Goal Orientation           | Behavioral
+ #0000A8   | Achievement Motivation     | Behavioral
+ #0000A9   | Persistence                | Behavioral
+ #0000AA   | Perseverance               | Behavioral
+ #0000AB   | Grit                       | Behavioral
+ #0000AC   | Determination              | Behavioral
+ #0000AD   | Follow-through             | Behavioral
+ #0000AE   | Goal Commitment            | Behavioral
+ #0000AF   | Consistency                | Behavioral
+ #0000B0   | Progress Monitoring        | Behavioral
+ #0000B1   | Adaptability               | Behavioral
+ #0000B2   | Flexibility                | Behavioral
+ #0000B3   | Resilience                 | Behavioral
+ #0000B4   | Coping Strategies          | Behavioral
+ #0000B5   | Stress Response            | Behavioral
+ #0000B6   | Change Tolerance           | Behavioral
+ #0000B7   | Recovery Ability           | Behavioral
+ #0000B8   | Adjustment Capacity        | Behavioral
+ #0000B9   | Bounce-back                | Behavioral
+ #0000BA   | Environmental Adaptation   | Behavioral
+ #0000BB   | Risk Taking                | Behavioral
+ #0000BC   | Risk Aversion              | Behavioral
+ #0000BD   | Behavioral Risk Assessment | Behavioral
+ #0000BE   | Risk Assessment            | Behavioral
+ #0000BF   | Caution                    | Behavioral
+ #0000C0   | Prudence                   | Behavioral
+ #0000C1   | Adventure Seeking          | Behavioral
+ #0000C2   | Thrill Seeking             | Behavioral
+ #0000C3   | Security Seeking           | Behavioral
+ #0000C4   | Safety Orientation         | Behavioral
+ #0000C5   | Innovation Adoption        | Behavioral
+ #0000C6   | Tradition Respect          | Behavioral
+ #0000C7   | Change Leadership          | Behavioral
+ #0000C8   | Status Quo Challenge       | Behavioral
+ #0000C9   | Progressive Thinking       | Behavioral
+ #0000CA   | Conservative Approach      | Behavioral
+ #0000CB   | Experimental Behavior      | Behavioral
+ #0000CC   | Routine Preference         | Behavioral
+ #0000CD   | Novelty Seeking            | Behavioral
+ #0000CE   | Familiarity Preference     | Behavioral
+ #0000CF   | Growth Mindset             | Behavioral
+ #0000D0   | Fixed Mindset              | Behavioral
+ #0000D1   | Learning Orientation       | Behavioral
+ #00015E   | Blank Slot 1               | Blank Slot
+ #00015F   | Blank Slot 2               | Blank Slot
+ #000160   | Blank Slot 3               | Blank Slot
+ #000161   | Blank Slot 4               | Blank Slot
+ #000162   | Blank Slot 5               | Blank Slot
+ #000163   | Blank Slot 6               | Blank Slot
+ #000164   | Blank Slot 7               | Blank Slot
+ #000165   | Blank Slot 8               | Blank Slot
+ #000166   | Blank Slot 9               | Blank Slot
+ #000167   | Blank Slot 10              | Blank Slot
+ #000168   | Blank Slot 11              | Blank Slot
+ #000169   | Blank Slot 12              | Blank Slot
+ #00016A   | Blank Slot 13              | Blank Slot
+ #00016B   | Blank Slot 14              | Blank Slot
+ #00016C   | Blank Slot 15              | Blank Slot
+ #00016D   | Blank Slot 16              | Blank Slot
+ #00016E   | Blank Slot 17              | Blank Slot
+ #00016F   | Blank Slot 18              | Blank Slot
+ #000170   | Blank Slot 19              | Blank Slot
+ #000171   | Blank Slot 20              | Blank Slot
+ #00001E   | Working Memory             | Cognitive
+ #00001F   | Long-term Memory           | Cognitive
+ #000020   | Episodic Memory            | Cognitive
+ #000021   | Semantic Memory            | Cognitive
+ #000022   | Procedural Memory          | Cognitive
+ #000023   | Autobiographical Memory    | Cognitive
+ #000024   | Prospective Memory         | Cognitive
+ #000025   | Memory Consolidation       | Cognitive
+ #000026   | Memory Retrieval           | Cognitive
+ #000027   | Memory Encoding            | Cognitive
+ #000028   | Information Retention      | Cognitive
+ #000029   | Skill Acquisition          | Cognitive
+ #00002A   | Transfer Learning          | Cognitive
+ #00002B   | Metacognition              | Cognitive
+ #00002C   | Learning Strategy          | Cognitive
+ #00002D   | Curiosity Drive            | Cognitive
+ #00002E   | Knowledge Integration      | Cognitive
+ #00002F   | Concept Formation          | Cognitive
+ #000030   | Pattern Learning           | Cognitive
+ #000031   | Adaptive Learning          | Cognitive
+ #000032   | Logical Reasoning          | Cognitive
+ #000033   | Abstract Thinking          | Cognitive
+ #000034   | Critical Thinking          | Cognitive
+ #000035   | Analytical Skills          | Cognitive
+ #000036   | Deductive Reasoning        | Cognitive
+ #000037   | Inductive Reasoning        | Cognitive
+ #000038   | Analogical Reasoning       | Cognitive
+ #000039   | Creative Problem Solving   | Cognitive
+ #00003A   | Strategic Thinking         | Cognitive
+ #00003B   | Systems Thinking           | Cognitive
+ #00003C   | Decision Making Speed      | Cognitive
+ #00003D   | Decision Quality           | Cognitive
+ #00003E   | Cognitive Risk Assessment  | Cognitive
+ #00003F   | Judgment Accuracy          | Cognitive
+ #000040   | Intuitive Decision Making  | Cognitive
+ #000041   | Deliberative Processing    | Cognitive
+ #000042   | Uncertainty Handling       | Cognitive
+ #000043   | Bias Recognition           | Cognitive
+ #000044   | Evidence Evaluation        | Cognitive
+ #000045   | Conclusion Drawing         | Cognitive
+ #000046   | Processing Speed           | Cognitive
+ #000047   | Attention Span             | Cognitive
+ #000048   | Concentration              | Cognitive
+ #000049   | Focus Control              | Cognitive
+ #00004A   | Divided Attention          | Cognitive
+ #00004B   | Selective Attention        | Cognitive
+ #00004C   | Sustained Attention        | Cognitive
+ #00004D   | Executive Function         | Cognitive
+ #00004E   | Cognitive Flexibility      | Cognitive
+ #00004F   | Mental Agility             | Cognitive
+ #000050   | Creativity                 | Cognitive
+ #000051   | Innovation                 | Cognitive
+ #000052   | Imagination                | Cognitive
+ #000053   | Originality                | Cognitive
+ #000054   | Artistic Expression        | Cognitive
+ #000055   | Creative Synthesis         | Cognitive
+ #000056   | Divergent Thinking         | Cognitive
+ #000057   | Convergent Thinking        | Cognitive
+ #000058   | Creative Confidence        | Cognitive
+ #000059   | Aesthetic Sensitivity      | Cognitive
+ #000000   | Anxiety Management         | Emotional
+ #000001   | Depression Resilience      | Emotional
+ #000002   | Emotional Regulation       | Emotional
+ #000003   | Stress Management          | Emotional
+ #000004   | Mood Stabilization         | Emotional
+ #000005   | Panic Control              | Emotional
+ #000006   | Anger Management           | Emotional
+ #000007   | Frustration Tolerance      | Emotional
+ #000008   | Irritability Control       | Emotional
+ #000009   | Overwhelm Management       | Emotional
+ #00000A   | Self-Awareness             | Emotional
+ #00000B   | Emotional Recognition      | Emotional
+ #00000C   | Empathy Development        | Emotional
+ #00000D   | Emotional Expression       | Emotional
+ #00000E   | Emotional Processing       | Emotional
+ #00000F   | Intuitive Understanding    | Emotional
+ #000010   | Emotional Boundaries       | Emotional
+ #000011   | Social Anxiety             | Emotional
+ #000012   | Performance Anxiety        | Emotional
+ #000013   | General Anxiety            | Emotional
+ #000014   | Phobia Management          | Emotional
+ #000015   | Separation Anxiety         | Emotional
+ #000016   | Health Anxiety             | Emotional
+ #000017   | Decision Anxiety           | Emotional
+ #000018   | Future Anxiety             | Emotional
+ #000019   | Past Trauma Processing     | Emotional
+ #00001A   | Uncertainty Tolerance      | Emotional
+ #00001B   | Change Anxiety             | Emotional
+ #00001C   | Loss Processing            | Emotional
+ #00001D   | Grief Management           | Emotional
+ #00010E   | Custom Object Slot 1       | Inventory
+ #00010F   | Custom Object Slot 2       | Inventory
+ #000110   | Custom Object Slot 3       | Inventory
+ #000111   | Custom Object Slot 4       | Inventory
+ #000112   | Custom Object Slot 5       | Inventory
+ #000113   | Custom Object Slot 6       | Inventory
+ #000114   | Custom Object Slot 7       | Inventory
+ #000115   | Custom Object Slot 8       | Inventory
+ #000116   | Custom Object Slot 9       | Inventory
+ #000117   | Custom Object Slot 10      | Inventory
+ #000118   | Custom Object Slot 11      | Inventory
+ #000119   | Custom Object Slot 12      | Inventory
+ #00011A   | Custom Object Slot 13      | Inventory
+ #00011B   | Custom Object Slot 14      | Inventory
+ #00011C   | Custom Object Slot 15      | Inventory
+ #00011D   | Custom Object Slot 16      | Inventory
+ #00011E   | Custom Object Slot 17      | Inventory
+ #00011F   | Custom Object Slot 18      | Inventory
+ #000120   | Custom Object Slot 19      | Inventory
+ #000121   | Custom Object Slot 20      | Inventory
+ #000122   | Custom Object Slot 21      | Inventory
+ #000123   | Custom Object Slot 22      | Inventory
+ #000124   | Custom Object Slot 23      | Inventory
+ #000125   | Custom Object Slot 24      | Inventory
+ #000126   | Custom Object Slot 25      | Inventory
+ #000127   | Custom Object Slot 26      | Inventory
+ #000128   | Custom Object Slot 27      | Inventory
+ #000129   | Custom Object Slot 28      | Inventory
+ #00012A   | Custom Object Slot 29      | Inventory
+ #00012B   | Custom Object Slot 30      | Inventory
+ #00012C   | Knowledge Domain 1         | Knowledge
+ #00012D   | Knowledge Domain 2         | Knowledge
+ #00012E   | Knowledge Domain 3         | Knowledge
+ #00012F   | Knowledge Domain 4         | Knowledge
+ #000130   | Knowledge Domain 5         | Knowledge
+ #000131   | Knowledge Domain 6         | Knowledge
+ #000132   | Knowledge Domain 7         | Knowledge
+ #000133   | Knowledge Domain 8         | Knowledge
+ #000134   | Knowledge Domain 9         | Knowledge
+ #000135   | Knowledge Domain 10        | Knowledge
+ #000136   | Knowledge Domain 11        | Knowledge
+ #000137   | Knowledge Domain 12        | Knowledge
+ #000138   | Knowledge Domain 13        | Knowledge
+ #000139   | Knowledge Domain 14        | Knowledge
+ #00013A   | Knowledge Domain 15        | Knowledge
+ #00013B   | Knowledge Domain 16        | Knowledge
+ #00013C   | Knowledge Domain 17        | Knowledge
+ #00013D   | Knowledge Domain 18        | Knowledge
+ #00013E   | Knowledge Domain 19        | Knowledge
+ #00013F   | Knowledge Domain 20        | Knowledge
+ #000140   | Knowledge Domain 21        | Knowledge
+ #000141   | Knowledge Domain 22        | Knowledge
+ #000142   | Knowledge Domain 23        | Knowledge
+ #000143   | Knowledge Domain 24        | Knowledge
+ #000144   | Knowledge Domain 25        | Knowledge
+ #000145   | Knowledge Domain 26        | Knowledge
+ #000146   | Knowledge Domain 27        | Knowledge
+ #000147   | Knowledge Domain 28        | Knowledge
+ #000148   | Knowledge Domain 29        | Knowledge
+ #000149   | Knowledge Domain 30        | Knowledge
+ #00014A   | Knowledge Domain 31        | Knowledge
+ #00014B   | Knowledge Domain 32        | Knowledge
+ #00014C   | Knowledge Domain 33        | Knowledge
+ #00014D   | Knowledge Domain 34        | Knowledge
+ #00014E   | Knowledge Domain 35        | Knowledge
+ #00014F   | Knowledge Domain 36        | Knowledge
+ #000150   | Knowledge Domain 37        | Knowledge
+ #000151   | Knowledge Domain 38        | Knowledge
+ #000152   | Knowledge Domain 39        | Knowledge
+ #000153   | Knowledge Domain 40        | Knowledge
+ #000154   | Knowledge Domain 41        | Knowledge
+ #000155   | Knowledge Domain 42        | Knowledge
+ #000156   | Knowledge Domain 43        | Knowledge
+ #000157   | Knowledge Domain 44        | Knowledge
+ #000158   | Knowledge Domain 45        | Knowledge
+ #000159   | Knowledge Domain 46        | Knowledge
+ #00015A   | Knowledge Domain 47        | Knowledge
+ #00015B   | Knowledge Domain 48        | Knowledge
+ #00015C   | Knowledge Domain 49        | Knowledge
+ #00015D   | Knowledge Domain 50        | Knowledge
+ #00005A   | Social Communication       | Social
+ #00005B   | Active Listening           | Social
+ #00005C   | Verbal Expression          | Social
+ #00005D   | Non-verbal Communication   | Social
+ #00005E   | Written Communication      | Social
+ #00005F   | Public Speaking            | Social
+ #000060   | Storytelling               | Social
+ #000061   | Persuasion                 | Social
+ #000062   | Negotiation                | Social
+ #000063   | Conflict Resolution        | Social
+ #000064   | Trust Building             | Social
+ #000065   | Relationship Formation     | Social
+ #000066   | Intimacy Development       | Social
+ #000067   | Attachment Security        | Social
+ #000068   | Boundary Setting           | Social
+ #000069   | Support Giving             | Social
+ #00006A   | Support Receiving          | Social
+ #00006B   | Loyalty                    | Social
+ #00006C   | Commitment                 | Social
+ #00006D   | Forgiveness                | Social
+ #00006E   | Emotional Support          | Social
+ #00006F   | Social Support             | Social
+ #000070   | Companionship              | Social
+ #000071   | Romance                    | Social
+ #000072   | Friendship                 | Social
+ #000073   | Family Bonds               | Social
+ #000074   | Professional Relationships | Social
+ #000075   | Relationship Maintenance   | Social
+ #000076   | Partnership                | Social
+ #000077   | Collaboration              | Social
+ #000078   | Mutual Support             | Social
+ #000079   | Relationship Building      | Social
+ #00007A   | Social Bonding             | Social
+ #00007B   | Connection Depth           | Social
+ #00007C   | Social Perception          | Social
+ #00007D   | Cultural Sensitivity       | Social
+ #00007E   | Social Norms Understanding | Social
+ #00007F   | Perspective Taking         | Social
+ #000080   | Social Context Reading     | Social
+ #000081   | Emotional Intelligence     | Social
+ #000082   | Social Intuition           | Social
+ #000083   | Group Dynamics             | Social
+ #000084   | Social Awareness           | Social
+ #000085   | Cultural Awareness         | Social
+ #000086   | Diversity Appreciation     | Social
+ #000087   | Social Sensitivity         | Social
+ #000088   | Interpersonal Awareness    | Social
+ #000089   | Social Learning            | Social
+ #00008A   | Community Awareness        | Social
+ #00008B   | Social Understanding       | Social
+ #00008C   | Social Skills              | Social
+ #00008D   | Group Participation        | Social
+ #00008E   | Social Engagement          | Social
+ #00008F   | Networking                 | Social
+ #000090   | Social Leadership          | Social
+ #000091   | Team Interaction           | Social
+ #000092   | Social Influence           | Social
+ #000093   | Peer Interaction           | Social
+ #000094   | Social Competence          | Social
+ #000095   | Social Facilitation        | Social
+ #0000D2   | Leadership Ability         | Specialized
+ #0000D3   | Followership               | Specialized
+ #0000D4   | Authority Recognition      | Specialized
+ #0000D5   | Influence Tactics          | Specialized
+ #0000D6   | Power Management           | Specialized
+ #0000D7   | Team Building              | Specialized
+ #0000D8   | Vision Setting             | Specialized
+ #0000D9   | Strategic Planning         | Specialized
+ #0000DA   | Decision Authority         | Specialized
+ #0000DB   | Delegation Skills          | Specialized
+ #0000DC   | Performance Management     | Specialized
+ #0000DD   | Career Development         | Specialized
+ #0000DE   | Skill Development          | Specialized
+ #0000DF   | Professional Growth        | Specialized
+ #0000E0   | Work Ethic                 | Specialized
+ #0000E1   | Quality Standards          | Specialized
+ #0000E2   | Professional Identity      | Specialized
+ #0000E3   | Expertise Development      | Specialized
+ #0000E4   | Continuous Learning        | Specialized
+ #0000E5   | Professional Networking    | Specialized
+ #0000E6   | Creative Expression        | Specialized
+ #0000E7   | Artistic Vision            | Specialized
+ #0000E8   | Aesthetic Judgment         | Specialized
+ #0000E9   | Creative Process           | Specialized
+ #0000EA   | Innovation Skills          | Specialized
+ #0000EB   | Design Thinking            | Specialized
+ #0000EC   | Creative Collaboration     | Specialized
+ #0000ED   | Artistic Technique         | Specialized
+ #0000EE   | Creative Risk Taking       | Specialized
+ #0000EF   | Creative Persistence       | Specialized
+ #0000F0   | Life Transitions           | Specialized
+ #0000F1   | Transition Handling        | Specialized
+ #0000F2   | Life Adjustment            | Specialized
+ #0000F3   | Phase Transition           | Specialized
+ #0000F4   | Developmental Growth       | Specialized
+ #0000F5   | Milestone Navigation       | Specialized
+ #0000F6   | Stage Progression          | Specialized
+ #0000F7   | Evolution Capacity         | Specialized
+ #0000F8   | Transformation             | Specialized
+ #0000F9   | Metamorphosis              | Specialized
+ #0000FA   | Self-Identity              | Specialized
+ #0000FB   | Personal Style             | Specialized
+ #0000FC   | Individuality              | Specialized
+ #0000FD   | Unique Expression          | Specialized
+ #0000FE   | Personal Brand             | Specialized
+ #0000FF   | Character Traits           | Specialized
+ #000100   | Personality Patterns       | Specialized
+ #000101   | Individual Differences     | Specialized
+ #000102   | Personal Preferences       | Specialized
+ #000103   | Distinctive Qualities      | Specialized
+ #000104   | Analytical Thinking        | Specialized
+ #000105   | Problem-Solving Skills     | Specialized
+ #000106   | Research Abilities         | Specialized
+ #000107   | Investigation Skills       | Specialized
+ #000108   | Data Analysis              | Specialized
+ #000109   | Technical Skills           | Specialized
+ #00010A   | Digital Literacy           | Specialized
+ #00010B   | Specialised Communication  | Specialized
+ #00010C   | Leadership Skills          | Specialized
+ #00010D   | Teamwork Skills            | Specialized
+(370 rows)
+

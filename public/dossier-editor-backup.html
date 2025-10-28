@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>C_O_T_W Dossier Editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {background: black; color: #00ff00; font-family: "Courier New", monospace; margin:0;}
+header, footer {background: #001100; text-align: center; padding:10px; border-bottom: 1px solid #00ff00;}
+h1[contenteditable="true"] {margin: 0;text-shadow: 0 0 6px #00ff00; display:inline-block;}
+main {display: flex; flex-direction: row; gap:25px; padding: 20px;}
+.left-panel {flex:1;border-right: 1px solid #00ff00; padding-right:20px;}
+.right-panel {flex:1.5; display:flex; flex-direction:column; padding-left: 20px;}
+.portrait {width:100%; max-width:280px; border:3px solid #00ff00; box-shadow:0 0 25px #00ff00; margin-bottom:20px;}
+.info-box {border:1px solid #00ff00; padding:10px; margin-bottom:20px; line-height:1.5; box-shadow:inset 0 0 10px #00ff00;}
+.editable[contenteditable="true"] {outline: 1px dashed #00ff00; min-height:1.1em; padding:2px;}
+.editable[contenteditable="true"]:focus {outline:1.5px solid #80ff80; background:rgba(0,255,0,0.03);}
+ul {margin:0 0 0 10px;padding:0;}
+li {margin:2px 0;}
+button {background: #00ff00; color: black; border: none; padding: 6px 16px; font-family:"Courier New",monospace; cursor:pointer;margin-top:15px;}
+button:hover {background:#88ff88;}
+a {color:#00ff00;text-decoration:underline;}
+footer {border-top:1px solid #00ff00;font-size:.9em;}
+</style>
+</head>
+<body>
+<header>
+  <h1 class="editable" contenteditable="true" spellcheck="false">📁 C_O_T_W_ DOSSIER : CLASSIFIED</h1>
+</header>
+<main>
+  <div class="left-panel">
+    <input type="file" id="uploadPortrait" accept="image/*" style="margin-bottom:6px;">
+    <img src="image.jpg" alt="Agent Portrait" class="portrait" id="agentPortrait">
+    <div class="info-box">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>NAME:</b> Agent Placeholder</div>
+      <div class="editable" contenteditable="true" spellcheck="false"><b>ALIAS:</b> Codename Placeholder</div>
+      <div class="editable" contenteditable="true" spellcheck="false"><b>DEPARTMENT:</b> Psi Division</div>
+      <div class="editable" contenteditable="true" spellcheck="false"><b>SECURITY LEVEL:</b> LEVEL 3</div>
+    </div>
+    <div class="info-box">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>Summary:</b><br>This agent is part of the Council intelligence network. Field status: ACTIVE.</div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="info-box">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>Incident Notes:</b><br>Detailed mission or background information goes here.</div>
+    </div>
+    <div class="info-box">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>File Attachments:</b><br>
+        <ul>
+          <li>📎 <span class="editable" contenteditable="true" spellcheck="false">Image File Reference 1</span></li>
+          <li>📎 <span class="editable" contenteditable="true" spellcheck="false">Audio Log 17-A</span></li>
+          <li>📎 <span class="editable" contenteditable="true" spellcheck="false">Transcript File</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>Embed Hyperlink (optional):</b><br>
+        <a href="#" class="editable" contenteditable="true" spellcheck="false">Paste hyperlink here...</a>
+      </div>
+    </div>
+    <div class="info-box" style="background:rgba(0,50,0,0.22)">
+      <div class="editable" contenteditable="true" spellcheck="false"><b>Chat Window Slot (embed/chatbot API ready)</b><br>
+        [This window will embed your ChatBot or another iframe/API feed here.]
+      </div>
+    </div>
+    <button onclick="saveDossier()">Download Dossier Blank</button>
+  </div>
+</main>
+<footer>
+  <div contenteditable="true" spellcheck="false" class="editable">Council Of The Wise | Archive Reference: CTW-001 | <a href="index.html">Return to Directory</a></div>
+</footer>
+<script>
+document.getElementById('uploadPortrait').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      document.getElementById('agentPortrait').src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+function saveDossier() {
+  const page = document.documentElement.outerHTML;
+  const blob = new Blob([page], {type:"text/html"});
+  const link = document.createElement('a');
+  link.href=URL.createObjectURL(blob);
+  link.download='dossier-blank.html';
+  link.click();
+}
+</script>
+</body>
+</html>
+<div class="info-box">
+  <b>Embed Hyperlink (optional):</b>
+  <div style="margin-top:8px;">
+    <input id="linkName" type="text" value="Spotify: Epic Arrival Track" placeholder="Name for this link" style="width:220px;">
+    <input id="linkUrl" type="text" value="https://open.spotify.com/track/0vd9a3LgTn8VFlvKQwU0Y1" placeholder="Paste URL here" style="width:320px;">
+  </div>
+  <div id="linkPreview" style="margin-top:12px;"></div>
+  <div contenteditable="true" spellcheck="false" class="editable" style="margin-top:8px;">
+    This Track was found online and points to the Folklore of Piza Sukeruton's arrival within our Realm.
+  </div>
+</div>
+<script>
+function updateLinkPreview() {
+  const lbl = document.getElementById('linkName').value || 'Embedded Link';
+  const url = document.getElementById('linkUrl').value || '#';
+  document.getElementById('linkPreview').innerHTML =
+    `<a href="${url}" target="_blank" rel="noopener noreferrer">${lbl} <span style="font-size:0.95em; opacity:0.7;">&#8599;</span></a>`;
+}
+document.getElementById('linkName').addEventListener('input', updateLinkPreview);
+document.getElementById('linkUrl').addEventListener('input', updateLinkPreview);
+updateLinkPreview();
+</script>
+<!-- Replace the existing save/download button with this -->
+<button onclick="commitDossier()">Commit to Library</button>
+<script>
+function commitDossier() {
+  const dossierHTML = document.documentElement.outerHTML;
+  fetch('/save-dossier', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      fileName: prompt('Dossier file name? (e.g. agent_smith.html)', 'agent_smith.html'),
+      content: dossierHTML
+    })
+  })
+  .then(res => res.ok ? alert('✅ Dossier committed to library!') : alert('❌ Commit failed.'))
+  .catch(() => alert('❌ Commit failed.'));  
+}
+</script>
