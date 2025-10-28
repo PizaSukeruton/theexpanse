@@ -1,0 +1,9 @@
+node_modules/
+*.tar.gz
+backups/
+backup-*.tar.gz
+expanse-db-backup-*/
+project-backup-*/
+dossiers/
+db/
+.DS_Store
