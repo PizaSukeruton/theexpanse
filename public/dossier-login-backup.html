@@ -47,7 +47,7 @@
 
     .panel-box { position: relative; border: 1px solid var(--accent); border-radius: 12px; padding: 0; box-shadow: var(--shadow); background: rgba(0,16,0,0.25); }
     .portrait-wrap { height: 220px; }
-    .portrait { width: 100%; height:100%; object-fit: cover; border-radius: 12px; filter: grayscale(20%) contrast(1.05); }
+    .portrait { width: 100%; height:100%; object-fit: contain; object-position: center 30%; border-radius: 12px; filter: grayscale(20%) contrast(1.05); }
 
     .info-box { padding:12px; }
     .info-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
@@ -165,7 +165,7 @@
       <div class="hud">TERMINAL :: CHAT <small>AUTH + COMMAND</small></div>
       <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
       <div class="chat-input-bar">
-        <input id="chat-input" type="text" placeholder="> Enter username" autocomplete="off" data-lpignore="true" data-bwignore="true" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" data-1p-ignore="true" />
+        <input type="text" name="decoy-user" autocomplete="username" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;" /><input type="password" name="decoy-pass" autocomplete="current-password" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;" /><input id="chat-input" name="terminal-entry" autocomplete="off" readonly type="text" placeholder="> Enter username" autocomplete="off" data-lpignore="true" data-bwignore="true" data-1p-ignore="true" data-lpignore="true" data-bwignore="true" data-1p-ignore="true" />
         <button id="send-btn" type="button">Send</button>
       </div>
     </section>
@@ -176,10 +176,10 @@
 </html>
 <!-- Simple Gallery Section -->
 <div id="gallery">
-  <img src="/gallery/pizasukerutonprofile.png" alt="Agent 001" style="max-width: 100%; margin: 10px; border-radius: 8px;">
+  <img src="/gallery/pizasukerutonprofile.png" alt="" style="max-width: 100%; margin: 10px; border-radius: 8px;">
 </div>
 <div id="gallery" style="margin-top: 20px;">
-  <img src="/gallery/pizasukerutonprofile.png" alt="Piza Sukeruton Profile" style="max-width: 300px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,255,117,0.3);">
+  <img src="/gallery/pizasukerutonprofile.png" alt=" Profile" style="max-width: 300px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,255,117,0.3);">
   input.setAttribute('autocomplete', 'off');
   
   // Toggle input type to prevent autofill detection
@@ -217,7 +217,7 @@
 .portrait {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Scales image to fill container while preserving aspect ratio, crops if needed */
+  object-fit: contain; object-position: center 30%; /* Scales image to fill container while preserving aspect ratio, crops if needed */
   object-position: center; /* Centers the image focus */
   display: block;
   transition: transform 0.3s ease, filter 0.3s ease; /* Smooth loading/zoom */
@@ -262,47 +262,331 @@
 <script>
 const input = document.getElementById('chat-input');
 const button = document.getElementById('send-btn');
+const chatLog = document.getElementById('chat-log');
+const cover = document.getElementById('dossier-cover');
 
 const DEMO_USER = "pizasukeruton";
 const DEMO_PASS = "ctw-secret";
 let loginState = "username";
 
+function addLine(text, cls = "") {
+  const line = document.createElement('div');
+  line.className = 'line ' + cls;
+  line.textContent = text;
+  chatLog.appendChild(line);
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
 function handleUsername(value) {
   if (loginState === "username") {
-    if (!value.trim()) {
-      alert("Username cannot be empty");
-      return;
-    }
+    addLine("> " + value);
     if (value === DEMO_USER) {
       loginState = "password";
       input.type = "password";
       input.placeholder = "> Enter password";
       input.value = "";
     } else {
-      alert("Unknown user");
+      addLine("SYSTEM: Unknown user", "error");
       input.value = "";
     }
   } else if (loginState === "password") {
+    addLine("> ********");
     if (value === DEMO_PASS) {
-      alert("ACCESS GRANTED");
-      window.location.href = "/dossier-main.html";
+      addLine("SYSTEM: ACCESS GRANTED", "granted");
+      loginState = "command";
+      input.type = "text";
+      input.placeholder = "> Enter command";
+      input.value = "";
     } else {
-      alert("ACCESS DENIED - Try again");
+      addLine("SYSTEM: ACCESS DENIED", "error");
       loginState = "username";
       input.type = "text";
       input.placeholder = "> Enter username";
       input.value = "";
     }
+  } else if (loginState === "command") {
+    addLine("> " + value);
+    handleCommand(value);
+    input.value = "";
   }
+}
+
+function handleCommand(cmd) {
+  const lower = cmd.toLowerCase().trim();
+  if (lower.startsWith("who is")) {
+    const name = lower.replace("who is", "").trim().replace(/\?/g, "");
+    if (name === "piza sukeruton") {
+      addLine("SYSTEM: Opening dossier for " + name + "...");
+      cover.classList.add('open');
+      populateDossier();
+    } else {
+      addLine("SYSTEM: No record found for " + name);
+    }
+  } else {
+    addLine("SYSTEM: Unknown command");
+  }
+}
+
+function populateDossier() {
+  document.getElementById('f-name').textContent = '';
+  document.getElementById('f-entity').textContent = '';
+  document.getElementById('f-dept').textContent = '';
+  document.getElementById('f-sec').textContent = '';
+  document.getElementById('summary').textContent = 'Summary: ';
 }
 
 function submitInput() {
-  if (typeof handleUsername === 'function') {
-    handleUsername(input.value);
-    input.value = '';
+  const val = input.value.trim();
+  if (val) handleUsername(val);
+}
+
+input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitInput(); });
+button.addEventListener('click', submitInput);
+</script>
+</body>
+</html>
+<script>
+(function(){
+  const inp = document.getElementById('chat-input');
+  if (!inp) return;
+  inp.name = 'term-' + Math.random().toString(36).slice(2,8);
+  function unlock() {
+    setTimeout(() => inp.removeAttribute('readonly'), 50);
+    inp.removeEventListener('focus', unlock);
+  }
+  inp.addEventListener('focus', unlock);
+})();
+</script>
+
+<script>
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  const outputDiv = document.querySelector('.terminal-output') || document.body;
+  const userMsg = document.createElement('div');
+  userMsg.style.color = '#00ff00';
+  userMsg.textContent = '> ' + message;
+  outputDiv.appendChild(userMsg);
+  
+  input.value = '';
+  
+  try {
+    const response = await fetch('/api/expanse/council/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    
+    const data = await response.json();
+    
+    const botMsg = document.createElement('div');
+    botMsg.style.color = '#ffaa00';
+    botMsg.style.marginTop = '10px';
+    botMsg.textContent = data.text || 'No response';
+    outputDiv.appendChild(botMsg);
+    
+  } catch (error) {
+    console.error('Chat error:', error);
+    const errorMsg = document.createElement('div');
+    errorMsg.style.color = '#ff0000';
+    errorMsg.textContent = 'ERROR: Could not connect to Council';
+    outputDiv.appendChild(errorMsg);
   }
 }
 
-if (input) input.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitInput(); });
-if (button) button.addEventListener('click', submitInput);
+document.getElementById('chat-input').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendChatMessage();
+});
 </script>
+# EOF Patch: Update  Dossier Details
+sed -i '' \
+  -e "s|<div class=\"info-k\">ENTITY</div><div class=\"info-v\">.*</div>|<div class=\"info-k\">ENTITY</div><div class=\"info-v\">Multiverse Reaper</div>|" \
+  -e "s|<div class=\"info-k\">DEPARTMENT</div><div class=\"info-v\">.*</div>|<div class=\"info-k\">DEPARTMENT</div><div class=\"info-v\">Expanse Team</div>|" \
+  -e "s|<div class=\"info-k\">SECURITY LEVEL</div><div class=\"info-v\" id=\"sec-level\">.*</div>|<div class=\"info-k\">SECURITY LEVEL</div><div class=\"info-v\" id=\"sec-level\">Level 0 - Use Extreme Caution</div>|" \
+  public/dossier-login.html
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('f-entity').textContent = 'Multiverse Reaper';
+  document.getElementById('f-dept').textContent = 'Expanse Team';
+  document.getElementById('f-sec').textContent = 'Level 0 - Use Extreme Caution';
+});
+</script>
+<script>
+// Typing animation for dossier fields
+function typeText(elementId, text, delay = 50) {
+  const elem = document.getElementById(elementId);
+  elem.textContent = '';
+  let index = 0;
+  
+  function addChar() {
+    if (index < text.length) {
+      elem.textContent += text[index];
+      index++;
+      setTimeout(addChar, delay);
+    }
+  }
+  addChar();
+}
+
+function populateDossier() {
+  setTimeout(() => typeText('f-name', 'Piza Sukeruton', 60), 100);
+  setTimeout(() => typeText('f-entity', 'Multiverse Reaper', 60), 500);
+  setTimeout(() => typeText('f-dept', 'Expanse Research Team', 60), 900);
+  setTimeout(() => typeText('f-sec', 'Unknown', 60), 1400);
+  setTimeout(() => typeText('summary', 'Summary: [CLASSIFIED]', 60), 1800);
+}
+</script>
+<script>
+// Typing animation for dossier fields
+function typeText(elementId, text, delay = 50) {
+  const elem = document.getElementById(elementId);
+  elem.textContent = '';
+  let index = 0;
+  
+  function addChar() {
+    if (index < text.length) {
+      elem.textContent += text[index];
+      index++;
+      setTimeout(addChar, delay);
+    }
+  }
+  addChar();
+}
+
+function populateDossier() {
+  setTimeout(() => typeText('f-name', 'Piza Sukeruton', 60), 100);
+  setTimeout(() => typeText('f-entity', 'Multiverse Reaper', 60), 500);
+  setTimeout(() => typeText('f-dept', 'Expanse Research Team', 60), 900);
+  setTimeout(() => typeText('f-sec', 'Unknown', 60), 1400);
+  setTimeout(() => typeText('summary', 'Summary: [CLASSIFIED]', 60), 1800);
+}
+</script>
+<script>
+// Enhanced chat handler that connects to your tmbot3000 backend
+document.addEventListener('DOMContentLoaded', function() {
+  const input = document.getElementById('chat-input');
+  const chatLog = document.getElementById('chat-log');
+  let authenticated = false;
+
+  async function sendToBot(message) {
+    // Add user message to chat log
+    const userLine = document.createElement('div');
+    userLine.className = 'line';
+    userLine.innerHTML = '<span class="tag">[USER]</span>' + message;
+    chatLog.appendChild(userLine);
+    
+    try {
+      // Send to your tmbot3000 API endpoint
+      const response = await fetch('/api/tmbot/chat', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          message: message,
+          userId: 'dossier-user',
+          context: 'expanse'
+        })
+      });
+
+      if (!response.ok) throw new Error('API error');
+      
+      const data = await response.json();
+      
+      // Add bot response to chat log
+      const botLine = document.createElement('div');
+      botLine.className = 'line granted';
+      botLine.innerHTML = '<span class="tag">[SYSTEM]</span>' + (data.response || data.text || 'No response');
+      chatLog.appendChild(botLine);
+      
+    } catch (error) {
+      console.error('Chat error:', error);
+      const errorLine = document.createElement('div');
+      errorLine.className = 'line error';
+      errorLine.innerHTML = '<span class="tag">[ERROR]</span>Failed to connect to Council';
+      chatLog.appendChild(errorLine);
+    }
+    
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  // Override the command handler to enable chat after "who is" command
+  window.handleCommand = function(cmd) {
+    const lower = cmd.toLowerCase().trim();
+    if (lower.startsWith("who is")) {
+      const name = lower.replace("who is", "").trim().replace(/\?/g, "");
+      if (name === "piza sukeruton") {
+        addLine("SYSTEM: Opening dossier for " + name + "...");
+        cover.classList.add('open');
+        populateDossier();
+        
+        // Enable chat mode after dossier opens
+        setTimeout(() => {
+          authenticated = true;
+          input.placeholder = "> Chat with Council";
+          addLine("SYSTEM: Secure channel established. You may now communicate.");
+        }, 2500);
+      } else {
+        addLine("SYSTEM: No record found for " + name);
+      }
+    } else if (authenticated) {
+      // Send regular chat messages to bot
+      sendToBot(cmd);
+    } else {
+      addLine("SYSTEM: Authentication required. Use 'who is [name]' first.");
+    }
+  };
+});
+</script>
+<script>
+// Override the existing handleCommand to enable chat after dossier opens
+(function() {
+  let chatEnabled = false;
+  const originalHandleCommand = window.handleCommand;
+  
+  window.handleCommand = async function(cmd) {
+    const lower = cmd.toLowerCase().trim();
+    
+    if (lower.startsWith("who is")) {
+      const name = lower.replace("who is", "").trim().replace(/\?/g, "");
+      if (name === "piza sukeruton") {
+        addLine("SYSTEM: Opening dossier for " + name + "...");
+        document.getElementById('dossier-cover').classList.add('open');
+        populateDossier();
+        
+        // Enable chat mode after dossier opens
+        setTimeout(() => {
+          chatEnabled = true;
+          document.getElementById('chat-input').placeholder = "> Chat with Council";
+          addLine("SYSTEM: Secure channel established. You may now communicate.");
+        }, 2500);
+      }
+    } else if (chatEnabled) {
+      // Send to backend API
+      try {
+        const response = await fetch('/api/tmbot/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            message: cmd, 
+            userId: 'agent-001',
+            context: 'expanse' 
+          })
+        });
+        
+        const data = await response.json();
+        addLine("COUNCIL: " + data.response);
+      } catch (err) {
+        addLine("ERROR: Connection lost");
+      }
+    } else {
+      addLine("SYSTEM: Authenticate first with 'who is piza sukeruton'");
+    }
+  };
+})();
+</script>
+<script src="terminal-integration.js"></script>
+<script src="terminal-fix.js"></script>
