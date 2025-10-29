@@ -116,3 +116,5 @@ app.get('/admin', (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
+import authRoutes from './routes/auth.js';
+app.use('/api/auth', authRoutes);
