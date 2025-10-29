@@ -1,9 +1,12 @@
 node_modules/
 *.tar.gz
+*.backup
+*.bak
 backups/
-backup-*.tar.gz
-expanse-db-backup-*/
-project-backup-*/
-dossiers/
-db/
+*.broken
+temp_*.js
+test*.js
+*_traits.txt
 .DS_Store
+*.log
+
