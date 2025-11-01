@@ -1,7 +1,7 @@
 // © 2025-07-21 – Piza Sukeruton Multiverse Project
 // PersonalityEngine.js – Trait-to-tone and personality logic
 
-import { getTraitVector  } from './TraitManager';
+import TraitManager from './TraitManager.js';
 
 // 🧠 Utility to calculate tone scores from a trait vector
 function calculateToneScores(traitVector) {
@@ -33,7 +33,7 @@ function pickDominantTone(toneScores) {
 
 // 🚀 Main export: getToneFromTraits(character_id)
 async function getToneFromTraits(character_id) {
-    const traitVector = await getTraitVector(character_id);
+    const traitVector = await TraitManager.getTraitVector(character_id);
     const toneScores = calculateToneScores(traitVector);
     const selectedTone = pickDominantTone(toneScores);
 

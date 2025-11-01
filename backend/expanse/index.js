@@ -7,10 +7,10 @@ import councilChatRouter from './routes/councilChat.js';
 
 router.use('/council', councilRoutes);
 router.use('/events', eventsRoutes);
-router.use('/council', councilChatRouter);
+router.use('/council/chat', councilChatRouter);
 
 router.get('/', (req, res) => {
-  res.json({ message: 'Expanse API root active', endpoints: ['/council'] });
+  res.json({ message: 'Expanse API root active', endpoints: ['/council', '/council/chat', '/events'] });
 });
 
 export default router;

@@ -31,7 +31,7 @@ router.get('/files', (req, res) => {
 });
 
 
-import pool from '../../db/pgPool.js';
+import pool from '../../db/pool.js';
 
 router.get('/users-demo', async (req, res) => {
   try {

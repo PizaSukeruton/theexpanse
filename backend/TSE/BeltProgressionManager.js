@@ -1,6 +1,6 @@
 // backend/TSE/BeltProgressionManager.js
 
-import { validateHexId  } from '../utils/hexUtils'; // For hex ID validation
+import { validateHexId  } from '../utils/hexUtils.js'; // For hex ID validation
 import generateAokHexId from '../utils/hexIdGenerator.js'; // Our AOK-specific hex ID generator
 
 // Belt Advancement Criteria Definitions

@@ -1,8 +1,8 @@
-// backend/utils/hexIdGenerator.js
-import pool from '../db/pgPool.js';
+import pool from '../db/pool.js';
 
-// Define the AOK Hex ID ranges
-const AOK_RANGES = {
+const HEX_RANGES = {
+    character_id: { start: 0x700000, end: 0x70FFFF },
+    user_id: { start: 0xD00000, end: 0xD0FFFF },
     multiverse_event_id: { start: 0xC90000, end: 0xC9FFFF },
     aok_entry: { start: 0x600000, end: 0x6003E7 },
     aok_category: { start: 0x601000, end: 0x601063 },
@@ -31,12 +31,13 @@ const AOK_RANGES = {
     tse_coding_progress: { start: 0xC70000, end: 0xC7FFFF },
     tse_coding_challenge: { start: 0xC80000, end: 0xC8FFFF },
     
-    story_arc_id: { start: 0x301000, end: 0x301FFF }
+    story_arc_id: { start: 0x301000, end: 0x301FFF },
+    terminal_log_id: { start: 0xE00000, end: 0xE0FFFF }
 };
 
-async function generateAokHexId(idType) {
-    if (!AOK_RANGES[idType]) {
-        throw new Error(`Invalid AOK ID type: ${idType}. Must be one of: ${Object.keys(AOK_RANGES).join(', ')}`);
+async function generateHexId(idType) {
+    if (!HEX_RANGES[idType]) {
+        throw new Error(`Invalid ID type: ${idType}. Must be one of: ${Object.keys(HEX_RANGES).join(', ')}`);
     }
 
     const client = await pool.connect();
@@ -50,7 +51,7 @@ async function generateAokHexId(idType) {
         let newHexId;
         
         if (result.rows.length === 0) {
-            currentCounterValue = AOK_RANGES[idType].start;
+            currentCounterValue = HEX_RANGES[idType].start;
             newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
             
             const insertQuery = `
@@ -61,9 +62,9 @@ async function generateAokHexId(idType) {
         } else {
             currentCounterValue = parseInt(result.rows[0].current_value, 10) + 1;
             
-            if (currentCounterValue > AOK_RANGES[idType].end) {
+            if (currentCounterValue > HEX_RANGES[idType].end) {
                 await client.query('ROLLBACK');
-                throw new Error(`Hex ID range for ${idType} exhausted. Max: #${AOK_RANGES[idType].end.toString(16).toUpperCase().padStart(6, '0')}`);
+                throw new Error(`Hex ID range for ${idType} exhausted. Max: #${HEX_RANGES[idType].end.toString(16).toUpperCase().padStart(6, '0')}`);
             }
             
             newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
@@ -81,11 +82,29 @@ async function generateAokHexId(idType) {
         
     } catch (error) {
         await client.query('ROLLBACK');
-        console.error(`Error generating new AOK hex ID for type ${idType}:`, error.message);
+        console.error(`Error generating hex ID for type ${idType}:`, error.message);
         throw error;
     } finally {
         client.release();
     }
 }
 
-export default generateAokHexId;
+export default generateHexId;
+
+export function isValidHexId(hexId) {
+    return /^#[0-9A-Fa-f]{6}$/.test(hexId);
+}
+
+export function getIdType(hexId) {
+    if (!isValidHexId(hexId)) return null;
+    
+    const num = parseInt(hexId.slice(1), 16);
+    
+    for (const [type, range] of Object.entries(HEX_RANGES)) {
+        if (num >= range.start && num <= range.end) {
+            return type;
+        }
+    }
+    
+    return 'unknown';
+}

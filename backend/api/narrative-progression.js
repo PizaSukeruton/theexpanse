@@ -1,7 +1,7 @@
 // backend/api/narrative-progression.js
 
 import narrativeEngine from '../utils/narrativeEngine.js';
-import { validateHexId, sendJsonResponse  } from '../utils/hexUtils';
+import { validateHexId, sendJsonResponse  } from '../utils/hexUtils.js';
 
 /**
  * Helper to extract hex ID from URL path.

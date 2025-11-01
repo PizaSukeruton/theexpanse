@@ -1,9 +1,12 @@
-const fs = require('fs').promises;
-const path = require('path');
-const { parse } = require('csv-parse');
-const { stringify } = require('csv-stringify');
+import { promises as fs } from 'fs';
+import path from 'path';
+import { parse } from 'csv-parse';
+import { stringify } from 'csv-stringify';
 
-class ExpanseEventManager {
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);class ExpanseEventManager {
   constructor(dataDir) {
     this.dataDir = dataDir || path.join(__dirname, '..', '..', 'data');
     this.eventsFile = path.join(this.dataDir, 'multiverse_events.csv');
@@ -113,4 +116,4 @@ class ExpanseEventManager {
   }
 }
 
-module.exports = ExpanseEventManager;
+export default ExpanseEventManager;

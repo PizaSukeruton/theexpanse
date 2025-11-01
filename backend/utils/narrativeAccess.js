@@ -2,7 +2,7 @@
 
 import pool from '../db/pool.js'; // PostgreSQL connection pool
 import generateAokHexId from './hexIdGenerator.js'; // Our AOK-specific hex ID generator
-import { validateHexId  } from './hexUtils'; // Shared hex ID validator
+import { validateHexId  } from './hexUtils.js'; // Shared hex ID validator
 
 // ---------- helpers ----------
 
@@ -468,3 +468,23 @@ export {
   listNarrativePaths,
 };
 
+
+// Add default export
+export default {
+  // multimedia
+  createMultimediaAsset,
+  getMultimediaAssetById,
+  listMultimediaAssets,
+  // locations
+  createLocation,
+  getLocationById,
+  listLocations,
+  // segments
+  createNarrativeSegment,
+  getNarrativeSegmentById,
+  listNarrativeSegments,
+  // paths
+  createNarrativePath,
+  getNarrativePathById,
+  listNarrativePaths,
+};

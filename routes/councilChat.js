@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import pool from '../../db/pgPool.js';
+import pool from '../backend/db/pool.js';
 
 const extractId = (text, prefixRegex) => {
   const m = text.match(prefixRegex);

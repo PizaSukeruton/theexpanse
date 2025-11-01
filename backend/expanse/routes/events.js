@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
 
     const event_id = await generateAokHexId("multiverse_event_id");
     try {
-      const pool = (await import("../../db/pgPool.js")).default;
+      const pool = (await import("../../db/pool.js")).default;
       await pool.query(
         `INSERT INTO multiverse_events
          (event_id, timestamp, realm, location, coords, event_type, threat_level, involved_characters, outcome, access_level, narrative_arc_id, notes)
@@ -108,7 +108,7 @@ router.get("/by-arc/:arc_id", async (req, res) => {
     if (!/^#[0-9A-F]{6}$/i.test(arc_id)) {
       return res.status(400).json({ error: "invalid_arc_id" });
     }
-    const pool = (await import("../../db/pgPool.js")).default;
+    const pool = (await import("../../db/pool.js")).default;
     const { rows } = await pool.query(
       `SELECT event_id, timestamp, realm, location, coords, event_type, threat_level,
               involved_characters, outcome, access_level, narrative_arc_id, notes
@@ -131,7 +131,7 @@ router.get("/:event_id", async (req, res) => {
     if (!/^#[0-9A-F]{6}$/i.test(event_id)) {
       return res.status(400).json({ error: "invalid_event_id" });
     }
-    const pool = (await import("../../db/pgPool.js")).default;
+    const pool = (await import("../../db/pool.js")).default;
     const { rows } = await pool.query(
       `SELECT event_id, timestamp, realm, location, coords, event_type, threat_level,
               involved_characters, outcome, access_level, narrative_arc_id, notes

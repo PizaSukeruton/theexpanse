@@ -1,9 +1,9 @@
 // backend/utils/narrativeEngine.js
 
 import pool from '../db/pool.js';
-import { validateHexId  } from './hexUtils';
+import { validateHexId  } from './hexUtils.js';
 import generateAokHexId from './hexIdGenerator.js'; // For initializing characters_in_narrative
-import { getMultimediaAssetById  } from './narrativeAccess';
+import { getMultimediaAssetById  } from './narrativeAccess.js';
 
 // --- Helper Functions (re-used from narrativeAccess or similar) ---
 
@@ -495,3 +495,16 @@ export {
     getMultimediaAssetById,
 };
 
+
+// Add default export
+export default {
+    initializeCharacterNarrative,
+    getCharacterCurrentNarrativeState,
+    getNextNarrativeStep,
+    processUserChoice,
+    applyConsequences,
+    queryNarrativeLore,
+    getNarrativeSegmentById,
+    getOutgoingNarrativePaths,
+    getMultimediaAssetById,
+};

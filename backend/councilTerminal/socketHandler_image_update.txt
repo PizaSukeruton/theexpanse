@@ -1,0 +1,16 @@
+// Add to the intent handling section:
+if (intent.type === 'SHOW_IMAGE') {
+  const charQuery = await pool.query(
+    'SELECT * FROM character_profiles WHERE LOWER(character_name) LIKE LOWER($1)',
+    [`%${intent.entity}%`]
+  );
+  
+  if (charQuery.rows.length > 0 && charQuery.rows[0].image_url) {
+    return {
+      output: `Showing image of ${charQuery.rows[0].character_name}`,
+      image: charQuery.rows[0].image_url
+    };
+  }
+  
+  return { output: `No image available for: ${intent.entity}` };
+}

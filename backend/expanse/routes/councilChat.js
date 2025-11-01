@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import pool from '../../db/pgPool.js';
+import pool from '../../db/pool.js';
 
 const stripArticles = (s) => s.replace(/\b(the|a|an)\b/gi, ' ').replace(/\s+/g, ' ').trim();
 

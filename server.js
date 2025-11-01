@@ -8,18 +8,23 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import expanseRoutes from './backend/expanse/index.js';
-
-dotenv.config();
-
+import { registerRoute } from './backend/utils/routeLogger.js';import characterRouter from './backend/api/character.js';
+import characterKnowledgeRouter from './backend/api/character-knowledge.js';
+import generateAokHexId from './backend/utils/hexIdGenerator.js';
+import narrativeRouter from './backend/api/narrative-router.js';
+import authRoutes from './routes/auth.js';
 const __filename = fileURLToPath(import.meta.url);
+import adminRoutes from './routes/admin.js';
+import adminCharactersRoutes from './routes/adminCharacters.js';
 const __dirname = dirname(__filename);
 
 const app = express();
 import loreAdminRoutes from "./routes/lore-admin.js";
-import terminalRoutes from "./routes/terminal.js";
+import tseRouter from './backend/TSE/index.js';import terminalRoutes from "./routes/terminal.js";
 const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
+import traitsRouter from './backend/traits/index.js';
+import { createServer } from "http";
+import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -56,8 +61,21 @@ app.get("/admin", (req, res) => {
   res.sendFile(join(__dirname, "public", "admin.html"));
 });
 app.use("/api/lore", loreAdminRoutes);
+registerRoute("/api/lore", "Lore Admin");
 app.use("/api/expanse", expanseRoutes);
-app.use("/api/terminal", terminalRoutes);
+registerRoute("/api/expanse", "Expanse API");
+app.use('/api/character', characterRouter);
+registerRoute("/api/character", "Character API");
+app.use('/api/character', characterKnowledgeRouter);
+registerRoute("/api/character/:id/knowledge", "Knowledge API");
+app.use('/api/narrative', narrativeRouter);
+registerRoute("/api/narrative", "Narrative System");app.use("/api/terminal", terminalRoutes);
+app.use('/api/auth', authRoutes); registerRoute("/api/auth", "Authentication");registerRoute("/api/terminal", "Terminal API");
+app.use('/api/admin', adminRoutes); registerRoute("/api/admin", "Admin API");
+app.use('/api/admin/characters', adminCharactersRoutes); registerRoute("/api/admin/characters", "Admin Characters");
+
+app.use('/api/tse', tseRouter); registerRoute("/api/tse", "TSE Pipeline");
+app.use('/api/traits', traitsRouter); registerRoute("/api/traits", "Traits System");
 
 app.post('/save-dossier', express.json({limit: '2mb'}), (req, res) => {
   const { fileName, content } = req.body;
@@ -84,37 +102,15 @@ fs.writeFileSync(filePath, cleanContent);
 // Chat endpoint for dossier terminal
 
 // Working chat endpoint for dossier terminal
-app.post('/api/tmbot/chat', async (req, res) => {
-  const { message, userId, context } = req.body;
-  
-  // Simple response for now (no tmMessageProcessor dependency)
-  const responses = {
-    "hello": "Greetings, Agent. How may I assist you?",
-    "who are you": "I am the Council interface.",
-    "status": "All systems operational. Expanse project active.",
-    "help": "Available commands: status, mission, intel, logout"
-  };
-  
-  const lowerMsg = message.toLowerCase();
-  let response = responses[lowerMsg];
-  
-  if (!response) {
-    // Default response
-    response = `Acknowledged: "${message}". Processing through secure channels...`;
-  }
-  
-  res.json({ 
-    response: response,
-    timestamp: new Date().toISOString(),
-    userId: userId
-  });
-});
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-app.listen(PORT, () => {
+
+const httpServer = createServer(app);
+const io = initializeWebSocket(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(`🔌 WebSocket server initialized`);
 });
-import authRoutes from './routes/auth.js';
-app.use('/api/auth', authRoutes);

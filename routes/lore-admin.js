@@ -1,6 +1,6 @@
 import express from 'express';
 import crypto from 'crypto';
-import pool from '../backend/db/pgPool.js';
+import pool from '../backend/db/pool.js';
 
 const router = express.Router();
 const hexId = () => '#' + crypto.randomBytes(3).toString('hex').toUpperCase();

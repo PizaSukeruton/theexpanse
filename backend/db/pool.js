@@ -1,20 +1,12 @@
-// © 2025 Piza Sukeruton Multiverse Project
-// backend/db/pool.js — PostgreSQL Pool Connector
-
-require('dotenv').config({ path: __dirname + '/../.env' });
-console.log('📦 Loaded DATABASE_URL from .env:', process.env.DATABASE_URL);
-
+import dotenv from "dotenv";
+dotenv.config();
 import pkg from 'pg';
 const { Pool  } = pkg;
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-// ✅ Connection sanity check
+  ssl: { rejectUnauthorized: false }
+});// ✅ Connection sanity check
 (async () => {
   try {
     const client = await pool.connect();

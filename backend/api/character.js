@@ -33,3 +33,56 @@ router.get('/', async (req, res) => {
 });
 
 export default router;
+
+// Admin endpoints for character management
+// GET /api/character/all - Get all characters for admin panel
+router.get('/all', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT character_id, character_name, category, description
+            FROM character_profiles
+            ORDER BY character_id
+        `);
+        
+        return res.json({ 
+            success: true,
+            characters: result.rows 
+        });
+    } catch (err) {
+        console.error('Error fetching all characters:', err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});
+
+// POST /api/character - Create new character
+router.post('/', async (req, res) => {
+    const { character_name, category, description } = req.body;
+    
+    try {
+        // Generate next hex ID
+        const countResult = await pool.query(
+            "SELECT COUNT(*) FROM character_profiles WHERE character_id LIKE '#70%'"
+        );
+        const count = parseInt(countResult.rows[0].count);
+        const newId = `#70${String(count).padStart(4, '0')}`;
+        
+        const result = await pool.query(`
+            INSERT INTO character_profiles (character_id, character_name, category, description)
+            VALUES ($1, $2, $3, $4) RETURNING *
+        `, [newId, character_name, category, description]);
+        
+        return res.json({ 
+            success: true,
+            character: result.rows[0] 
+        });
+    } catch (err) {
+        console.error('Error creating character:', err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});

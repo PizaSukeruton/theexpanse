@@ -1,4 +1,4 @@
-import pool from './backend/db/pgPool.js';
+import pool from './backend/db/pool.js';
 import generateHexId from './backend/utils/hexIdGenerator.js';
 
 async function createCouncilTerminal() {

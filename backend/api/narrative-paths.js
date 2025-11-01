@@ -1,7 +1,7 @@
 // backend/api/narrative-paths.js
 
 import narrativeAccess from '../utils/narrativeAccess.js';
-import { validateHexId, sendJsonResponse  } from '../utils/hexUtils';
+import { validateHexId, sendJsonResponse  } from '../utils/hexUtils.js';
 
 /**
  * Helper to extract hex ID from URL path.
