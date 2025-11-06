@@ -1,0 +1,138 @@
+import re
+import hashlib
+import spacy
+from spacy.lang.en.stop_words import STOP_WORDS
+
+_nlp_small = None
+
+def get_nlp():
+    global _nlp_small
+    if _nlp_small is None:
+        _nlp_small = spacy.load("en_core_web_sm", disable=["parser","ner","textcat"])
+    return _nlp_small
+
+def generate_temp_id(text):
+    h = hashlib.blake2s(text.encode('utf-8'), digest_size=3).hexdigest().upper()
+    return f"#TEMP_{h}"
+
+def prefilter(text):
+    triggers = r'\b(is|are|was|were|founded|created|released|owned|consists?|includes?|comprises?|originated?|called|dubbed|evolved?)\b'
+    has_trigger = bool(re.search(triggers, text, re.IGNORECASE))
+    has_entity = bool(re.search(r'[A-Z][a-z]+', text))
+    has_number = bool(re.search(r'\d', text))
+    return has_trigger and (has_entity or has_number) and len(text.split()) > 5
+
+def be_form_for_question(subj_tok, verb_tok):
+    verb_text = verb_tok.text.lower()
+    
+    if verb_text in ("are", "were"):
+        return verb_text
+    elif verb_text in ("is", "was"):
+        return verb_text
+    
+    tense = (verb_tok.morph.get("Tense") or ["Pres"])[0]
+    num = (subj_tok.morph.get("Number") or verb_tok.morph.get("Number") or ["Sing"])[0]
+    
+    if tense == "Past":
+        return "were" if num == "Plur" else "was"
+    return "are" if num == "Plur" else "is"
+
+def subject_head(token):
+    return getattr(getattr(token, "root", None), "head", token) or token
+
+def np_text_with_modifiers(head):
+    import string
+    PUNCT = set(string.punctuation)
+    
+    tokens = set(t for t in head.subtree)
+    
+    for conj in head.conjuncts:
+        tokens.update(conj.subtree)
+        if conj.head.dep_ == "cc":
+            tokens.add(conj.head)
+    
+    if not tokens:
+        return head.text
+    
+    start = min(t.i for t in tokens)
+    end = max(t.i for t in tokens) + 1
+    span = head.doc[start:end]
+    
+    trimmed = [t for t in span if not (t.is_space or t.text in PUNCT)]
+    if not trimmed:
+        return span.text
+    start_i = trimmed[0].i
+    end_i = trimmed[-1].i + 1
+    return head.doc[start_i:end_i].text
+
+def span_text(doc):
+    if hasattr(doc, 'text'):
+        return doc.text
+    return str(doc)
+
+def is_yes_no(question):
+    return question.strip().startswith(('Is ', 'Are ', 'Was ', 'Were ', 'Do ', 'Does ', 'Did ', 'Can ', 'Could ', 'Will ', 'Would '))
+
+def has_vague_ref(question):
+    vague = r'\b(it|they|this|that|these|those)\b'
+    words = question.lower().split()
+    if len(words) < 4:
+        return False
+    return bool(re.search(vague, question.lower()))
+
+def count_independent_clauses(text):
+    return text.count(' and ') + text.count(' or ') + text.count(', and ') + text.count(', or ') + 1
+
+def _norm(s):
+    return re.sub(r"\s+", " ", s.strip().lower())
+
+def content_lemmas(s):
+    nlp = get_nlp()
+    doc = nlp(s)
+    return {t.lemma_.lower() for t in doc if not (t.is_punct or t.is_space or t.lower_ in STOP_WORDS)}
+
+def answer_in_evidence(answer, evidence, expect_type=None):
+    if not evidence or not answer:
+        return False
+    a = _norm(answer)
+    e = _norm(evidence)
+    
+    if a in e:
+        return True
+    
+    A = content_lemmas(answer)
+    E = content_lemmas(evidence)
+    if A:
+        overlap = len(A & E) / len(A)
+        if overlap >= 0.85:
+            return True
+    
+    if expect_type == "date":
+        return a.replace(",", "") in e.replace(",", "")
+    if expect_type == "number":
+        na = re.sub(r"[,\s]", "", a)
+        ne = re.sub(r"[,\s]", "", e)
+        return na in ne
+    
+    return False
+
+def ner_pass(texts):
+    nlp_ner = spacy.load("en_core_web_sm", disable=["tagger", "parser", "lemmatizer"])
+    return list(nlp_ner.pipe(texts, batch_size=200))
+
+def first_date_text(doc):
+    for ent in doc.ents:
+        if ent.label_ == "DATE":
+            return ent.text
+    return None
+
+def extract_quants(doc):
+    nums = []
+    for token in doc:
+        if token.like_num or token.pos_ == "NUM":
+            next_noun = next((t for t in doc[token.i+1:] if t.pos_ == "NOUN"), None)
+            if next_noun:
+                nums.append(f"{token.text} {next_noun.text}")
+            else:
+                nums.append(token.text)
+    return nums

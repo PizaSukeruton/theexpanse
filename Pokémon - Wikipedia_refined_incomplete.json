@@ -1,0 +1,4269 @@
+[
+  {
+    "id": 0,
+    "text": "International franchise logo, designed by Chris Maple in 1998[1] Created by Satoshi Tajiri Original work Pocket Monsters Red and Pocket Monsters Green (1996)",
+    "para_id": 0,
+    "sent_num": 0,
+    "word_count": 23,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 1,
+    "text": "Owners Nintendo Creatures Game Freak[2] Years 1996\u2013present Print publications Comics See list of Pok\u00e9mon manga Films and television Film(s)",
+    "para_id": 0,
+    "sent_num": 1,
+    "word_count": 19,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 2,
+    "text": "See list of Pok\u00e9mon films Animated series Pok\u00e9mon (1997\u2013present)",
+    "para_id": 0,
+    "sent_num": 2,
+    "word_count": 9,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 3,
+    "text": "Games Traditional Pok\u00e9mon Trading Card Game Video game(s) Pok\u00e9mon video game series Official website Official hub (https://www.portal-pokemon.com/)",
+    "para_id": 0,
+    "sent_num": 3,
+    "word_count": 17,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 21,
+    "text": "As a noun, it is identical in both the singular and plural, as is every individual species name;[17]",
+    "para_id": 4,
+    "sent_num": 3,
+    "word_count": 18,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 48,
+    "text": "[52][53] Ishihara was also the general director of the world's first gaming encyclopedia: TV Games: Encyclopedia of Video Games (\u30c6\u30ec\u30d3\u30b2\u30fc\u30e0\u2014\u96fb\u8996 \u904a\u622f\u5927\u5168, Terebig\u0113mu \u2014 Denshi Y\u016bgi Taizen).[54][55] Journalist Kenji Hatakeyama wrote that, at the time, Ishihara was probably the most well-connected man in the industry.[56] Masakazu Kubo, who would later play a vital role in Pokemon, wrote that Ishihara possessed a knowledge of games that was \"beyond comparison\".[57] Ishihara was also interested in playing cards,[58][59] and contributed to the development of at least three simple card games designed by Itoi and published by Ape.[d]",
+    "para_id": 10,
+    "sent_num": 1,
+    "word_count": 93,
+    "score": 50,
+    "issues": [
+      "too_long",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 77,
+    "text": "General Affairs Department and was also a manager at Ape.[58][94]",
+    "para_id": 17,
+    "sent_num": 0,
+    "word_count": 10,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 112,
+    "text": "\"It was an identity problem.",
+    "para_id": 22,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 118,
+    "text": "1996.",
+    "para_id": 24,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 126,
+    "text": "a slimmer and improved version of the Game Boy, released in Japan on 21 July 1996.[134]",
+    "para_id": 25,
+    "sent_num": 1,
+    "word_count": 16,
+    "score": 30,
+    "issues": [
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 132,
+    "text": "Written and 1996\u20131998: Rise in Japan Release of Red and Green CoroCoro manga, Mew lottery",
+    "para_id": 26,
+    "sent_num": 3,
+    "word_count": 15,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 150,
+    "text": "[d] At the time, Ishihara was particularly interested in Magic:",
+    "para_id": 29,
+    "sent_num": 1,
+    "word_count": 10,
+    "score": 30,
+    "issues": [
+      "no_verb",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 219,
+    "text": "if they 1998\u20132000: International expansion North America",
+    "para_id": 46,
+    "sent_num": 2,
+    "word_count": 7,
+    "score": 30,
+    "issues": [
+      "no_verb",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 240,
+    "text": "At the time,",
+    "para_id": 50,
+    "sent_num": 7,
+    "word_count": 3,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 241,
+    "text": "anime had not yet found mainstream popularity in the West.",
+    "para_id": 51,
+    "sent_num": 0,
+    "word_count": 10,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 246,
+    "text": "as the English equivalent to the Japanese Pokemon GETTO daze~!",
+    "para_id": 52,
+    "sent_num": 2,
+    "word_count": 10,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 263,
+    "text": "dominance in the home console market, with the Nintendo 64 being outsold by Sony's PlayStation.[313][314][315]",
+    "para_id": 55,
+    "sent_num": 0,
+    "word_count": 15,
+    "score": 30,
+    "issues": [
+      "no_verb",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 273,
+    "text": "and officially renamed in October 2000.[343][350]",
+    "para_id": 57,
+    "sent_num": 0,
+    "word_count": 6,
+    "score": 30,
+    "issues": [
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 283,
+    "text": "It's dead!'.\"[364]",
+    "para_id": 59,
+    "sent_num": 0,
+    "word_count": 2,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "too_short",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 291,
+    "text": "Wizard's former art director, senior graphic designer, business manager, events marketing director, project management director, and two vice presidents.",
+    "para_id": 60,
+    "sent_num": 6,
+    "word_count": 19,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 294,
+    "text": "As considerable time 2001\u20132006:",
+    "para_id": 61,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 295,
+    "text": "End of the craze, business reforms",
+    "para_id": 61,
+    "sent_num": 3,
+    "word_count": 6,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 296,
+    "text": "and concept and expressed them using modern hardware, such as replacing the original Pok\u00e9Gear feature for the enhanced versions BuzzNav and DexNav to more effectively provide information enabled by the games' hardware capabilities.",
+    "para_id": 62,
+    "sent_num": 0,
+    "word_count": 33,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 313,
+    "text": "month.[419] The same month, Sensor Tower reported that the game had passed more than $200\u00a0million in worldwide revenue, beating every existing record set by Clash of Clans and Candy Crush by a wide margin.[420] The average daily usage of the app on Android devices in July 2016 exceeded that of Snapchat, Tinder, Twitter, Instagram, and Facebook.[421] By 2 September 2016, Pok\u00e9mon Go had generated more than $440\u00a0million in worldwide revenue, according to Sensor Tower.[422] By 30 September, it had received 500 million downloads and grossed $470\u00a0million in 80 days, according to market research firm Newzoo.[423] Pok\u00e9mon Go reached the milestone of $600\u00a0million in revenue after only 90 days on the market, becoming the fastest mobile game ever to do so.[424]",
+    "para_id": 67,
+    "sent_num": 0,
+    "word_count": 124,
+    "score": 50,
+    "issues": [
+      "too_long",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 331,
+    "text": "an",
+    "para_id": 70,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 341,
+    "text": "2025.",
+    "para_id": 72,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 365,
+    "text": "New Zealand,[493] and European countries.[482][494][495]",
+    "para_id": 76,
+    "sent_num": 3,
+    "word_count": 5,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 412,
+    "text": "POH-k\u0259-mon, US also /\u02c8po\u028akim\u0252n/ POH-kee-mon.",
+    "para_id": 86,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 413,
+    "text": "b. Japanese: \u30dd\u30b1\u30e2\u30f3, Hepburn: Pokemon c.",
+    "para_id": 86,
+    "sent_num": 3,
+    "word_count": 6,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 418,
+    "text": "e.",
+    "para_id": 86,
+    "sent_num": 8,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 420,
+    "text": "Mysterious Candy.",
+    "para_id": 88,
+    "sent_num": 0,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 426,
+    "text": "h.",
+    "para_id": 89,
+    "sent_num": 1,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 429,
+    "text": "Of these, 208 people were actually hospitalized.[228]",
+    "para_id": 89,
+    "sent_num": 4,
+    "word_count": 7,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 431,
+    "text": "i.",
+    "para_id": 90,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 438,
+    "text": "k.",
+    "para_id": 90,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 442,
+    "text": "4. Tomisawa, Akihito (1 September 2000).",
+    "para_id": 91,
+    "sent_num": 0,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 443,
+    "text": "\u30b2\u30fc\u30e0\u30d5\u30ea\u30fc\u30af: \u3073\u306e \u3092 \u308a",
+    "para_id": 91,
+    "sent_num": 1,
+    "word_count": 4,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 444,
+    "text": "\u3048\u308b\u30af\u30ea\u30a8 \u30a4\u30c6\u30a3\u30d6",
+    "para_id": 91,
+    "sent_num": 2,
+    "word_count": 2,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 445,
+    "text": "[Game Freak: A Creative Group That Redefines the Global Standard for Gaming].",
+    "para_id": 91,
+    "sent_num": 3,
+    "word_count": 12,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 446,
+    "text": "Media Factory.",
+    "para_id": 91,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 447,
+    "text": "pp.\u00a0138\u2013139.",
+    "para_id": 91,
+    "sent_num": 5,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 448,
+    "text": "ISBN\u00a0978-4840101189.",
+    "para_id": 91,
+    "sent_num": 6,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 450,
+    "text": "5. Mcfarland, Melanie; Parvaz, D.H. (11 April 1999).",
+    "para_id": 92,
+    "sent_num": 0,
+    "word_count": 8,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 451,
+    "text": "\"Are Your Children Nuts About Little Cartoon Creatures From Japan?",
+    "para_id": 92,
+    "sent_num": 1,
+    "word_count": 10,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 454,
+    "text": "The Seattle Times.",
+    "para_id": 92,
+    "sent_num": 4,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 457,
+    "text": "12.",
+    "para_id": 93,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 458,
+    "text": "Hatakeyama, Kenji; Kubo, Masakazu (10 December 2000).",
+    "para_id": 93,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 459,
+    "text": "\u30dd\u30b1\u30e2\u30f3\u30fb\u30b9\u30c8\u30fc\u30ea\u30fc",
+    "para_id": 93,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 460,
+    "text": "[Pokemon Story].",
+    "para_id": 93,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 461,
+    "text": "Nikkei BP.",
+    "para_id": 93,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 462,
+    "text": "pp.\u00a0474\u2013475.",
+    "para_id": 93,
+    "sent_num": 5,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 463,
+    "text": "ISBN\u00a0978-4822241995.",
+    "para_id": 93,
+    "sent_num": 6,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 464,
+    "text": "\"\u3053\u3046\u3057\u305f \u306b \u3044\u30b7\u30b9\u30c6\u30e0\u306f\u3001 \u306f \u30ad\u30e3\u30e9\u30af\u30bf\u30fc\u3067\u306f\u305d\u308c\u307b\u3069 \u306a\u30b7\u30b9\u30c6\u30e0\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002(...)",
+    "para_id": 93,
+    "sent_num": 7,
+    "word_count": 6,
+    "score": 30,
+    "issues": [
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 465,
+    "text": "\u3044\u307e\u3001 \u30ad\u30e3\u30e9 \u30af\u30bf\u30fc\u306e \u3067\u3001 \u304c1 \u3082\u3057\u304f\u306f1",
+    "para_id": 93,
+    "sent_num": 8,
+    "word_count": 6,
+    "score": 30,
+    "issues": [
+      "no_verb",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 467,
+    "text": "(...)",
+    "para_id": 93,
+    "sent_num": 10,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 469,
+    "text": "20.",
+    "para_id": 94,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 470,
+    "text": "Ruby and Emerald Pok\u00e9dex entries on Pikachu: Game Freak, Creatures (19 March 2003).",
+    "para_id": 94,
+    "sent_num": 1,
+    "word_count": 13,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 471,
+    "text": "Pok\u00e9mon Ruby (Game Boy Advance).",
+    "para_id": 94,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 472,
+    "text": "Nintendo.",
+    "para_id": 94,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 473,
+    "text": "\"No 156 - PIKACHU - MOUSE POK\u00c9MON.",
+    "para_id": 94,
+    "sent_num": 4,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 476,
+    "text": "Game Freak, Creatures (1 May 2005).",
+    "para_id": 94,
+    "sent_num": 7,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 477,
+    "text": "Pok\u00e9mon Emerald (Game Boy Advance).",
+    "para_id": 94,
+    "sent_num": 8,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 478,
+    "text": "Nintendo.",
+    "para_id": 94,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 479,
+    "text": "\"No 156 - PIKACHU - MOUSE POK\u00c9MON.",
+    "para_id": 94,
+    "sent_num": 10,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 481,
+    "text": "23.",
+    "para_id": 95,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 482,
+    "text": "Liu, Caitlin (10 May 1999).",
+    "para_id": 95,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 483,
+    "text": "\"Pokemon Is One Powerful Drawing Card\" (https://www.latimes.co m/archives/la-xpm-1999-may-10-me-35763-story.html).",
+    "para_id": 95,
+    "sent_num": 2,
+    "word_count": 8,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 484,
+    "text": "Los Angeles Times.",
+    "para_id": 95,
+    "sent_num": 3,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 487,
+    "text": "24.",
+    "para_id": 96,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 488,
+    "text": "Graeber, Laurel (29 August 1999).",
+    "para_id": 96,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 489,
+    "text": "\"Masters of the Universe, Youth Division\" (https://www.nytim es.com/1999/08/29/tv/cover-story-masters-of-the-universe-youth-division.html).",
+    "para_id": 96,
+    "sent_num": 2,
+    "word_count": 8,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 490,
+    "text": "The New York Times.",
+    "para_id": 96,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 491,
+    "text": "p.\u00a04.",
+    "para_id": 96,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 494,
+    "text": "26.",
+    "para_id": 97,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 495,
+    "text": "Mallory, Michael (12 October 2001).",
+    "para_id": 97,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 496,
+    "text": "\"Kids' Anime Hits Critical Mass\" (https://www.latimes.com/ archives/la-xpm-2001-oct-12-ca-56238-story.html).",
+    "para_id": 97,
+    "sent_num": 2,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 497,
+    "text": "Los Angeles Times.",
+    "para_id": 97,
+    "sent_num": 3,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 498,
+    "text": "p.\u00a0F18.",
+    "para_id": 97,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 502,
+    "text": "27.",
+    "para_id": 98,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 503,
+    "text": "Chua-Eoan, Howard; Larimer, Tim (22 November 1999).",
+    "para_id": 98,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 504,
+    "text": "\"Beware of the Poke Mania\" (https://c ontent.time.com/time/subscriber/printout/0,8816,992625,00.html).",
+    "para_id": 98,
+    "sent_num": 2,
+    "word_count": 7,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 505,
+    "text": "Time.",
+    "para_id": 98,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 506,
+    "text": "Vol.\u00a0154, no.\u00a021.",
+    "para_id": 98,
+    "sent_num": 4,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 507,
+    "text": "pp.\u00a080\u201386.",
+    "para_id": 98,
+    "sent_num": 5,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 512,
+    "text": "28.",
+    "para_id": 99,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 513,
+    "text": "Plotz, David (12 November 1999).",
+    "para_id": 99,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 514,
+    "text": "\"Pok\u00e9mon.",
+    "para_id": 99,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 515,
+    "text": "Little.",
+    "para_id": 99,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 516,
+    "text": "Yellow.",
+    "para_id": 99,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 517,
+    "text": "Different.",
+    "para_id": 99,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 518,
+    "text": "Better\" (https://slate.com/ news-and-politics/1999/11/pokemon.html).",
+    "para_id": 99,
+    "sent_num": 6,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 519,
+    "text": "Slate.",
+    "para_id": 99,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 525,
+    "text": "41.",
+    "para_id": 100,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 526,
+    "text": "Sato, Tetsur\u014d (30 March 1998).",
+    "para_id": 100,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 527,
+    "text": "\"\u300c\u30dd\u30b1\u30e2\u30f3\u300d \" [The Birth of Pokemon].",
+    "para_id": 100,
+    "sent_num": 2,
+    "word_count": 6,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 528,
+    "text": "In Ohtsuki, Takahiro (ed.).",
+    "para_id": 100,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 529,
+    "text": "\u30dd\u30b1\u30e2\u30f3\u306e",
+    "para_id": 100,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 530,
+    "text": "[The Magic of Pokemon].",
+    "para_id": 100,
+    "sent_num": 5,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 531,
+    "text": "Mainichi Newspapers.",
+    "para_id": 100,
+    "sent_num": 6,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 532,
+    "text": "p.\u00a0131.",
+    "para_id": 100,
+    "sent_num": 7,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 533,
+    "text": "45.",
+    "para_id": 101,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 536,
+    "text": "46.",
+    "para_id": 102,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 537,
+    "text": "Sato, Tetsur\u014d.",
+    "para_id": 102,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 538,
+    "text": "\"The Birth of Pokemon\".",
+    "para_id": 102,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 539,
+    "text": "In Ohtsuki (1998), p.\u00a0133. \"",
+    "para_id": 102,
+    "sent_num": 3,
+    "word_count": 6,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 542,
+    "text": "57.",
+    "para_id": 103,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 543,
+    "text": "Hatakeyama & Kubo (2000), p.\u00a080. 58.",
+    "para_id": 103,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 544,
+    "text": "\"\u30dd\u30b1\u30e2\u30f3 !!",
+    "para_id": 103,
+    "sent_num": 2,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 545,
+    "text": "\u3055\u3093\uff08 \u30a4\u30f3\u30bf\u30d3\u30e5\u30fc\" (https://web.archive.org/we b/20021216011425/http://www.nintendo.co.jp/nom/0007/kawaguti/page01.html)",
+    "para_id": 103,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 547,
+    "text": "Interview with Takashi Kawaguchi (Nintendo)].",
+    "para_id": 103,
+    "sent_num": 5,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 548,
+    "text": "Nintendo Online Magazine.",
+    "para_id": 103,
+    "sent_num": 6,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 549,
+    "text": "nintendo.co.jp.",
+    "para_id": 103,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 550,
+    "text": "July 2000.",
+    "para_id": 103,
+    "sent_num": 8,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 552,
+    "text": "jp/nom/0007/kawaguti/page01.html)",
+    "para_id": 103,
+    "sent_num": 10,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 553,
+    "text": "on 16 December 2002. 59. \"",
+    "para_id": 103,
+    "sent_num": 11,
+    "word_count": 6,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 554,
+    "text": "\u304c \u308b\u3001\u30b2\u30fc\u30e0\u30d5\u30ea\u30fc\u30af\u304c \u3067 \u3058\u308b \u306b\u306a\u308b\u307e\u3067\" (https://lavacutcontent.com/ masuda-game-freak-history/)",
+    "para_id": 103,
+    "sent_num": 12,
+    "word_count": 7,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 556,
+    "text": "Sh\u016bkan Famits\u016b. 23",
+    "para_id": 104,
+    "sent_num": 0,
+    "word_count": 3,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 557,
+    "text": "May 2019.",
+    "para_id": 104,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 558,
+    "text": "pp.\u00a082\u201386.",
+    "para_id": 104,
+    "sent_num": 2,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 562,
+    "text": "(...)",
+    "para_id": 104,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 564,
+    "text": "77.",
+    "para_id": 105,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 567,
+    "text": "101.",
+    "para_id": 106,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 568,
+    "text": "Pokemon Business Study Group (1998), p.\u00a043.",
+    "para_id": 106,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 569,
+    "text": "102.",
+    "para_id": 106,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 571,
+    "text": "ABC News.",
+    "para_id": 106,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 572,
+    "text": "ABC News.",
+    "para_id": 106,
+    "sent_num": 5,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 573,
+    "text": "8 February 2000.",
+    "para_id": 106,
+    "sent_num": 6,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 575,
+    "text": "\"Exeggutor is my favorite.",
+    "para_id": 106,
+    "sent_num": 8,
+    "word_count": 4,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 577,
+    "text": "130.",
+    "para_id": 107,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 578,
+    "text": "Frank, Allegra (28 September 2018).",
+    "para_id": 107,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 580,
+    "text": "Polygon.",
+    "para_id": 107,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 585,
+    "text": "That's kind of what the atmosphere was like in Japan at the time.\"",
+    "para_id": 108,
+    "sent_num": 2,
+    "word_count": 13,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 586,
+    "text": "140.",
+    "para_id": 109,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 587,
+    "text": "Hatakeyama & Kubo (2000), p.\u00a0204. 141.",
+    "para_id": 109,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 589,
+    "text": "CoroCoro Comic.",
+    "para_id": 109,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 590,
+    "text": "15 April 1996.",
+    "para_id": 109,
+    "sent_num": 4,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 591,
+    "text": "pp.",
+    "para_id": 109,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 592,
+    "text": "59\u201360.",
+    "para_id": 109,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 593,
+    "text": "(Translation (https://ar chive.today/20250207173209/https://lavacutcontent.com/corocoro-comic-pokemon-blue/)) 142.",
+    "para_id": 109,
+    "sent_num": 7,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 594,
+    "text": "\"Just Making The Last Train\" (https://iwataasks.nintendo.com/interviews/ds/pokemon/0/0/) (Interview).",
+    "para_id": 109,
+    "sent_num": 8,
+    "word_count": 7,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 595,
+    "text": "Iwata Asks.",
+    "para_id": 109,
+    "sent_num": 9,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 598,
+    "text": "144.",
+    "para_id": 110,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 601,
+    "text": "145.",
+    "para_id": 111,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 602,
+    "text": "Tomisawa (2000), p.\u00a014: \" \u3068\u3008 \u304c \u3055\u308c\u305f\u3042\u3068\u3082\u3001 \u3055\u308c\u3066\u3044\u305f\u30d0\u30b0\u3092 \u308a \u304f \u3084\u3001 \u306e \u306a\u3069\u306e \u3082 \u3081\u3066\u3001 \u3092 \u3057\u305f\u30b2\u30fc \u30d5\u30ea\u30fc\u30af\u306e \u3067 \u306b \u3089\u308c\u3066\u3044\u305f\u3082\u306e\u3060\u3063\u305f\u306e\u3060\u3002\u3057\u304b\u3057\u3001\u30b0\u30e9\u30d5\u30a3\u30c3\u30af \u304b\u3089\u306e \u3067\u3001\u30dd\u30b1\u30e2\u30f3\u305f\u3061\u306e \u3092 \u3057\u304f \u304d \u3053\u3059\u306a\u3069\u3057\u3066\u3044\u308b\u3046\u3061\u306b\u3001",
+    "para_id": 111,
+    "sent_num": 1,
+    "word_count": 28,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 603,
+    "text": "\u3008 \u30d0\u30fc\u30b8\u30e7\u30f3\u3009\u306f\u304b\u306a\u308a \u306e \u3044\u3082\u306e\u306b\u306a\u3063 \u3066\u304d\u305f\u3002\"",
+    "para_id": 111,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 30,
+    "issues": [
+      "no_verb",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 606,
+    "text": "].",
+    "para_id": 111,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 607,
+    "text": "152.",
+    "para_id": 112,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 612,
+    "text": "153.",
+    "para_id": 113,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 613,
+    "text": "Broug\u00e8re, Gilles (5 February 2004).",
+    "para_id": 113,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 614,
+    "text": "\"Pok\u00e9mon in France\".",
+    "para_id": 113,
+    "sent_num": 2,
+    "word_count": 3,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 615,
+    "text": "In Tobin, Joseph (ed.).",
+    "para_id": 113,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 616,
+    "text": "Pikachu's Global Adventure: The Rise and Fall of Pok\u00e9mon.",
+    "para_id": 113,
+    "sent_num": 4,
+    "word_count": 9,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 617,
+    "text": "Duke University Press.",
+    "para_id": 113,
+    "sent_num": 5,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 618,
+    "text": "p.\u00a0197.",
+    "para_id": 113,
+    "sent_num": 6,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 619,
+    "text": "ISBN\u00a0978- 0822332879. 154.",
+    "para_id": 113,
+    "sent_num": 7,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 620,
+    "text": "\"Pyramid Review: Pokemon Trading Card Game\" (http://www.sjgames.com/pyramid/sample.ht ml?id=571).",
+    "para_id": 113,
+    "sent_num": 8,
+    "word_count": 8,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 621,
+    "text": "Pyramid. SJGames.com.",
+    "para_id": 113,
+    "sent_num": 9,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 622,
+    "text": "29 January 1999.",
+    "para_id": 113,
+    "sent_num": 10,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 623,
+    "text": "Archived (https://web.archive.org/web/ 20201021223225/http://www.sjgames.com/pyramid/sample.html?id=571) from the original on",
+    "para_id": 113,
+    "sent_num": 11,
+    "word_count": 7,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 624,
+    "text": "162.",
+    "para_id": 114,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 626,
+    "text": "(...)",
+    "para_id": 114,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 628,
+    "text": "189.",
+    "para_id": 115,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 629,
+    "text": "Yoshida, Toshifumi; Flanagan, Bill (July 1999).",
+    "para_id": 115,
+    "sent_num": 1,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 630,
+    "text": "\"Animerica interview: Takemoto Mori\" (https://w ww.animenostalgiabomb.com/1st-pokemon-cover-pikachu-and-ash-ketchum-animerica-july-19 99/).",
+    "para_id": 115,
+    "sent_num": 2,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 631,
+    "text": "Animerica.",
+    "para_id": 115,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 632,
+    "text": "Vol.\u00a07.",
+    "para_id": 115,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 633,
+    "text": "pp.\u00a028 + 30.",
+    "para_id": 115,
+    "sent_num": 5,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 637,
+    "text": "\"",
+    "para_id": 115,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 638,
+    "text": "223.",
+    "para_id": 116,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 639,
+    "text": "\"An Interim Report from the \"Study Group on Broadcasting and Audio-Visual Sensory Perception\" (https://web.archive.org/web/20081023122526/http://www.soumu.go.jp/joho_tsusi n/policyreports/english/group/broadcasting/interim_rep.html).",
+    "para_id": 116,
+    "sent_num": 1,
+    "word_count": 15,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 640,
+    "text": "Ministry of Posts and Telecommunications.",
+    "para_id": 116,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 641,
+    "text": "April 1998.",
+    "para_id": 116,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 643,
+    "text": "224.",
+    "para_id": 116,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 645,
+    "text": "Gizmodo.",
+    "para_id": 116,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 646,
+    "text": "15 December 2022.",
+    "para_id": 116,
+    "sent_num": 8,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 647,
+    "text": "Archived (https://web.archive.org/web/20230925173836/https://gizmodo.com/ pokemon-porygon-seizures-pikachu-shock-25th-anniversary-1849900785) from the original on",
+    "para_id": 116,
+    "sent_num": 9,
+    "word_count": 7,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 649,
+    "text": "\"Pocket Monsters TV Cartoon Show Seizures News Coverage, Page 1\" (https://www.virtualpet.",
+    "para_id": 117,
+    "sent_num": 1,
+    "word_count": 11,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 650,
+    "text": "com/vp/farm/pmonster/seizures/pmnews1.htm).",
+    "para_id": 117,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 651,
+    "text": "virtualpet.com.",
+    "para_id": 117,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 653,
+    "text": "230.",
+    "para_id": 117,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 654,
+    "text": "\"Pocket Monsters TV Cartoon Show Seizures News Coverage, Page 2\" (https://www.virtualpet.",
+    "para_id": 117,
+    "sent_num": 6,
+    "word_count": 11,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 655,
+    "text": "com/vp/farm/pmonster/seizures/pmnews2.htm).",
+    "para_id": 117,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 656,
+    "text": "virtualpet.com.",
+    "para_id": 117,
+    "sent_num": 8,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 658,
+    "text": "234.",
+    "para_id": 118,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 659,
+    "text": "Hatakeyama & Kubo (2000), p.\u00a0389-390. 235.",
+    "para_id": 118,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 660,
+    "text": "\"WORLD DATELINES\" (https://www.chron.com/news/article/WORLD-DATELINES-3097306.ph p).",
+    "para_id": 118,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 661,
+    "text": "Houston Chronicle.",
+    "para_id": 118,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 662,
+    "text": "1 April 1998.",
+    "para_id": 118,
+    "sent_num": 4,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 665,
+    "text": "236. \"",
+    "para_id": 118,
+    "sent_num": 7,
+    "word_count": 2,
+    "score": -30,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 666,
+    "text": "10 \u2014 1998 1 12 \" (https://web.a rchive.org/web/20100613064628/http://eiren.org/toukei/1998.html)",
+    "para_id": 118,
+    "sent_num": 8,
+    "word_count": 8,
+    "score": 0,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 667,
+    "text": "[Top films with past distribution revenues (films with distribution revenues of 1 billion yen or more) \u2014 1998 (January to December)].",
+    "para_id": 118,
+    "sent_num": 9,
+    "word_count": 21,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 668,
+    "text": "eiren.org. Motion Pictures Producers Association of Japan.",
+    "para_id": 118,
+    "sent_num": 10,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 670,
+    "text": "237.",
+    "para_id": 119,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 671,
+    "text": "Wolf, Michael.",
+    "para_id": 119,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 672,
+    "text": "\"Pokemon Movie Frenzy\" (https://web.archive.org/web/20000613055906/http:// www.dailyradar.com/features/game_feature_page_31_1.html).",
+    "para_id": 119,
+    "sent_num": 2,
+    "word_count": 5,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 673,
+    "text": "Daily Radar.",
+    "para_id": 119,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 677,
+    "text": "Hokkaido Shimbun, morning edition (South Hokkaido).",
+    "para_id": 119,
+    "sent_num": 7,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 678,
+    "text": "19 December 1997.",
+    "para_id": 119,
+    "sent_num": 8,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 681,
+    "text": "Minami-Nihon Shimbun, morning edition.",
+    "para_id": 120,
+    "sent_num": 1,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 682,
+    "text": "19 December 1997.",
+    "para_id": 120,
+    "sent_num": 2,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 684,
+    "text": "\"\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30d7\u30ec\u30bc\u30f3\u30c8\u306f?\"",
+    "para_id": 120,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 685,
+    "text": "[What are your Christmas presents?].",
+    "para_id": 120,
+    "sent_num": 5,
+    "word_count": 5,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 686,
+    "text": "Asahi Shimbun, morning edition.",
+    "para_id": 120,
+    "sent_num": 6,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 687,
+    "text": "24 December 1997.",
+    "para_id": 120,
+    "sent_num": 7,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 689,
+    "text": "November 1999.",
+    "para_id": 121,
+    "sent_num": 0,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 690,
+    "text": "p.\u00a0171.",
+    "para_id": 121,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 692,
+    "text": "\"",
+    "para_id": 121,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 693,
+    "text": "264.",
+    "para_id": 122,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 694,
+    "text": "Margot Adler (reporter), Brooke Gladstone (host) (6 March 1999).",
+    "para_id": 122,
+    "sent_num": 1,
+    "word_count": 9,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 695,
+    "text": "Pokemon Fever: Pokemon TV & Video Game Enthralls (https://web.archive.org/web/20240413110631/https://www.youtub e.com/watch?v=qbszbUK5U90) (Radio broadcast).",
+    "para_id": 122,
+    "sent_num": 2,
+    "word_count": 12,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 696,
+    "text": "Washington DC, United States: National Public Radio, Weekend Edition.",
+    "para_id": 122,
+    "sent_num": 3,
+    "word_count": 9,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 699,
+    "text": "youtube.com/watch?v=qbszbUK5U90)",
+    "para_id": 122,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 700,
+    "text": "on 13 April 2024.",
+    "para_id": 122,
+    "sent_num": 7,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 702,
+    "text": "(entry on website (https://web.archive.or g/web/20221012081706/https://www.npr.org/1999/03/06/1046502/pokemon-fever))",
+    "para_id": 122,
+    "sent_num": 9,
+    "word_count": 5,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 703,
+    "text": "274.",
+    "para_id": 123,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 704,
+    "text": "Van Luling, Todd (2 June 2017).",
+    "para_id": 123,
+    "sent_num": 1,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 705,
+    "text": "\"Before 'Gotta Catch 'Em All:' The Creation Of The Pok\u00e9mon Theme\" (https://www.huffpost.com/entry/pokemon-theme-catch-em-if-you-can_n_592f3495e4b 0540ffc84324a).",
+    "para_id": 123,
+    "sent_num": 2,
+    "word_count": 13,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 706,
+    "text": "HuffPost.",
+    "para_id": 123,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 707,
+    "text": "Archived (https://web.archive.org/web/20230121064144/https://ww w.huffpost.com/entry/pokemon-theme-catch-em-if-you-can_n_592f3495e4b0540ffc84324a) from the original on 21 January 2023. \"",
+    "para_id": 123,
+    "sent_num": 4,
+    "word_count": 11,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 709,
+    "text": "309.",
+    "para_id": 124,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 710,
+    "text": "Schaefer, Gary (27 May 1999).",
+    "para_id": 124,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 712,
+    "text": "National Post.",
+    "para_id": 124,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 713,
+    "text": "p.",
+    "para_id": 124,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 714,
+    "text": "C11.",
+    "para_id": 124,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 715,
+    "text": "ProQuest\u00a0329405610 (htt ps://www.proquest.com/docview/329405610).",
+    "para_id": 124,
+    "sent_num": 6,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 716,
+    "text": "310.",
+    "para_id": 124,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 717,
+    "text": "\"Week of November 8\u201314, 1999\" (https://web.archive.org/web/20021003082227/http://www.ga masutra.com/newswire/news/index19991108.htm).",
+    "para_id": 124,
+    "sent_num": 8,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 718,
+    "text": "Gamasutra.",
+    "para_id": 124,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 721,
+    "text": "330.",
+    "para_id": 125,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 722,
+    "text": "Breen, Peter (January 2000).",
+    "para_id": 125,
+    "sent_num": 1,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 723,
+    "text": "\"Monster Marketing:",
+    "para_id": 125,
+    "sent_num": 2,
+    "word_count": 2,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 725,
+    "text": "But will it be evergreen?\"",
+    "para_id": 125,
+    "sent_num": 4,
+    "word_count": 5,
+    "score": 40,
+    "issues": [
+      "no_verb",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 726,
+    "text": "(https://web.archive.org/web/20040618111725/http://promomagazine.com/mag/m arketing_monster_marketing_pokemon/).",
+    "para_id": 125,
+    "sent_num": 5,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 727,
+    "text": "PROMO Magazine.",
+    "para_id": 125,
+    "sent_num": 6,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 728,
+    "text": "Archived from the original (http:// promomagazine.com/mag/marketing_monster_marketing_pokemon/) on 18 June 2004. \"",
+    "para_id": 125,
+    "sent_num": 7,
+    "word_count": 11,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 730,
+    "text": "(...)",
+    "para_id": 125,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 732,
+    "text": "344.",
+    "para_id": 126,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 734,
+    "text": "345.",
+    "para_id": 126,
+    "sent_num": 2,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 735,
+    "text": "\"Official Shop List\" (https://www.pokemon.co.jp/shop/en/).",
+    "para_id": 126,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 736,
+    "text": "pokemon.co.jp.",
+    "para_id": 126,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 739,
+    "text": "346.",
+    "para_id": 126,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 742,
+    "text": "Pok\u00e9mon USA. 1 November 2001.",
+    "para_id": 126,
+    "sent_num": 10,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 743,
+    "text": "358.",
+    "para_id": 127,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 744,
+    "text": "Barnes, Julian E. (20 January 2001).",
+    "para_id": 127,
+    "sent_num": 1,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 745,
+    "text": "\"Pokemon's House of Cards; Market Crash Holds Lessons for Young Traders\" (https://www.nytimes.com/2001/01/20/business/pokemon-s-house- of-cards-market-crash-holds-lessons-for-young-traders.html).",
+    "para_id": 127,
+    "sent_num": 2,
+    "word_count": 13,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 746,
+    "text": "The New York Times.",
+    "para_id": 127,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 747,
+    "text": "p.\u00a0C1.",
+    "para_id": 127,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 749,
+    "text": "359.",
+    "para_id": 127,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 750,
+    "text": "\"Pokemon popularity wanes among children\" (https://web.archive.org/web/20020220161536/htt p://www.ananova.com/news/story/sm_337185.html).",
+    "para_id": 127,
+    "sent_num": 7,
+    "word_count": 7,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 751,
+    "text": "Ananova.",
+    "para_id": 127,
+    "sent_num": 8,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 754,
+    "text": "369.",
+    "para_id": 128,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 755,
+    "text": "Huebner, Chuck (28 April 2003).",
+    "para_id": 128,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 756,
+    "text": "\"RE: Future Pok\u00e9mon TCG Releases by Wizards of the Coast\" (https://web.archive.org/web/20061205062126/http://ww2.wizards.com/Company/Misc/I ndex.aspx?doc=pr_20030428a).",
+    "para_id": 128,
+    "sent_num": 2,
+    "word_count": 12,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 757,
+    "text": "wizards.com.",
+    "para_id": 128,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 758,
+    "text": "Wizards of the Coast.",
+    "para_id": 128,
+    "sent_num": 4,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 760,
+    "text": "370.",
+    "para_id": 128,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 761,
+    "text": "\"Pokemon USA, Inc. and Wizards of the Coast, Inc.",
+    "para_id": 128,
+    "sent_num": 7,
+    "word_count": 9,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 762,
+    "text": "Resolve Dispute\" (https://web.archive.org/ web/20130319163917/http://www.businesswire.com/news/home/20031229005065/en/Pokemo n-USA-Wizards-Coast-Resolve-Dispute) (Press release).",
+    "para_id": 128,
+    "sent_num": 8,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 763,
+    "text": "Nintendo and Wizards of the Coast.",
+    "para_id": 128,
+    "sent_num": 9,
+    "word_count": 6,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 764,
+    "text": "388.",
+    "para_id": 129,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 765,
+    "text": "Christopher, Michael (3 November 2020).",
+    "para_id": 129,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 767,
+    "text": "TheGamer.",
+    "para_id": 129,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 769,
+    "text": "389.",
+    "para_id": 129,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 770,
+    "text": "\"Iwata Asks \u2013 Pok\u00e9mon HeartGold Version & Pok\u00e9mon SoulSilver Version\" (https://www.ninten do.co.uk/NOE/en_GB/news/iwata/iwata_asks_-_pokmon_heartgold_version__soulsilver_versio n_16288_16289.html#top).",
+    "para_id": 129,
+    "sent_num": 6,
+    "word_count": 13,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 771,
+    "text": "Nintendo.",
+    "para_id": 129,
+    "sent_num": 7,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 773,
+    "text": "Retrieved",
+    "para_id": 129,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": 10,
+    "issues": [
+      "no_subject",
+      "too_short",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 774,
+    "text": "404.",
+    "para_id": 130,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 775,
+    "text": "Farokhmanesh, Megan (2 October 2014).",
+    "para_id": 130,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 777,
+    "text": "Polygon.",
+    "para_id": 130,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 779,
+    "text": "405.",
+    "para_id": 130,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 781,
+    "text": "Eurogamer.net. 10 June 2014.",
+    "para_id": 130,
+    "sent_num": 7,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 783,
+    "text": "406.",
+    "para_id": 130,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 784,
+    "text": "\"Pok\u00e9mon Omega Ruby and Pok\u00e9mon Alpha Sapphire\" (https://www.pokemon.com/us/pokemo n-video-games/pokemon-omega-ruby-and-pokemon-alpha-sapphire/).",
+    "para_id": 130,
+    "sent_num": 10,
+    "word_count": 9,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 785,
+    "text": "www.pokemon.com.",
+    "para_id": 130,
+    "sent_num": 11,
+    "word_count": 1,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 786,
+    "text": "409.",
+    "para_id": 131,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 787,
+    "text": "Tumbokon, Karen (17 November 2016).",
+    "para_id": 131,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 789,
+    "text": "(https://www.ibtimes.com/pokemon-sun-moon-nintendo-3ds-rele ase-date-gameplay-trailers-2447587).",
+    "para_id": 131,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 790,
+    "text": "International Business Times.",
+    "para_id": 131,
+    "sent_num": 4,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 792,
+    "text": "410.",
+    "para_id": 131,
+    "sent_num": 6,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 794,
+    "text": "Time. 19 October 2016.",
+    "para_id": 131,
+    "sent_num": 8,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 796,
+    "text": "411.",
+    "para_id": 131,
+    "sent_num": 10,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 797,
+    "text": "\"Learn all about Pok\u00e9mon Sun and Pok\u00e9mon Moon in our in-depth interview\" (https://www.nint endo.co.uk/News/2016/October/Learn-all-about-Pokemon-Sun-and-Pokemon-Moon-in-our-in-d epth-interview-1149779.html).",
+    "para_id": 131,
+    "sent_num": 11,
+    "word_count": 15,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 799,
+    "text": "412.",
+    "para_id": 131,
+    "sent_num": 13,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 801,
+    "text": "417.",
+    "para_id": 132,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 802,
+    "text": "Takahashi, Dean (16 December 2015).",
+    "para_id": 132,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 804,
+    "text": "VentureBeat.",
+    "para_id": 132,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 806,
+    "text": "418.",
+    "para_id": 132,
+    "sent_num": 5,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 808,
+    "text": "Sensor Tower App Marketing Blog.",
+    "para_id": 132,
+    "sent_num": 7,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 810,
+    "text": "419.",
+    "para_id": 132,
+    "sent_num": 9,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 811,
+    "text": "\"Pok\u00e9mon GO:",
+    "para_id": 132,
+    "sent_num": 10,
+    "word_count": 2,
+    "score": -40,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 813,
+    "text": "App Annie.",
+    "para_id": 132,
+    "sent_num": 12,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 814,
+    "text": "29 July 2016.",
+    "para_id": 132,
+    "sent_num": 13,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 816,
+    "text": "420.",
+    "para_id": 132,
+    "sent_num": 15,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 818,
+    "text": "Sensor Tower App Marketing Blog.",
+    "para_id": 132,
+    "sent_num": 17,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 819,
+    "text": "539.",
+    "para_id": 133,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 821,
+    "text": "Archived (https://archive.today/20230405220008/https://www.wsj.com/articles/SB89614026767 2665000) from the original on 5 April 2023.",
+    "para_id": 134,
+    "sent_num": 0,
+    "word_count": 10,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 825,
+    "text": "541.",
+    "para_id": 135,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 827,
+    "text": "550.",
+    "para_id": 136,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 828,
+    "text": "Iwabuchi, Koichi.",
+    "para_id": 136,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 829,
+    "text": "\"How \"Japanese\" Is Pok\u00e9mon?\".",
+    "para_id": 136,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 830,
+    "text": "In Tobin (2004), pp.",
+    "para_id": 136,
+    "sent_num": 3,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 831,
+    "text": "59\u201361.",
+    "para_id": 136,
+    "sent_num": 4,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 834,
+    "text": "552.",
+    "para_id": 137,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 835,
+    "text": "Iwabuchi, Koichi.",
+    "para_id": 137,
+    "sent_num": 1,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 836,
+    "text": "\"How \"Japanese\" Is Pok\u00e9mon?\".",
+    "para_id": 137,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 837,
+    "text": "In Tobin (2004), p.\u00a064.",
+    "para_id": 137,
+    "sent_num": 3,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 839,
+    "text": "557.",
+    "para_id": 138,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 840,
+    "text": "Yoon, Andrew (9 June 2007).",
+    "para_id": 138,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 841,
+    "text": "\"Review: Spectrobes\" (https://www.animenewsnetwork.com/revie w/nintendo-ds/spectrobes).",
+    "para_id": 138,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 842,
+    "text": "Anime News Network.",
+    "para_id": 138,
+    "sent_num": 3,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 845,
+    "text": "560.",
+    "para_id": 139,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 846,
+    "text": "Solomon, Charles (30 April 2012).",
+    "para_id": 139,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 848,
+    "text": "The Baltimore Sun.",
+    "para_id": 139,
+    "sent_num": 3,
+    "word_count": 3,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 849,
+    "text": "p.\u00a0C1.",
+    "para_id": 139,
+    "sent_num": 4,
+    "word_count": 2,
+    "score": -20,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 850,
+    "text": "ProQuest\u00a01011048151 (https://www.proquest.com/d ocview/1011048151).",
+    "para_id": 139,
+    "sent_num": 5,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 852,
+    "text": "562.",
+    "para_id": 140,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 853,
+    "text": "Bremner, Brian; Tashiro, Hiroko (19 March 2007).",
+    "para_id": 140,
+    "sent_num": 1,
+    "word_count": 7,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 854,
+    "text": "\"Anime Fantasy Is Big-Biz Reality\" (https://w eb.archive.org/web/20070328191657/http://www.businessweek.com/globalbiz/content/mar200 7/gb20070319_620018.htm).",
+    "para_id": 140,
+    "sent_num": 2,
+    "word_count": 8,
+    "score": 50,
+    "issues": [
+      "no_verb",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 855,
+    "text": "BusinessWeek.com.",
+    "para_id": 140,
+    "sent_num": 3,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 856,
+    "text": "Archived from the original (http://www.busin essweek.com/globalbiz/content/mar2007/gb20070319_620018.htm) on 28 March 2007. \"",
+    "para_id": 140,
+    "sent_num": 4,
+    "word_count": 11,
+    "score": 40,
+    "issues": [
+      "no_subject",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 859,
+    "text": "579.",
+    "para_id": 141,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 860,
+    "text": "Gillett, Nick (27 November 2009).",
+    "para_id": 141,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 861,
+    "text": "\"Invizimals, PSP\" (https://www.theguardian.com/technology/ 2009/nov/28/games-previews-nintendo-playstation).",
+    "para_id": 141,
+    "sent_num": 2,
+    "word_count": 4,
+    "score": 10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 862,
+    "text": "The Guardian.",
+    "para_id": 141,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 865,
+    "text": "\"Move over Pokemon ... 'Invizimals' tries to take over your PSP\" (https://www.nydailynews.co m/2010/11/07/move-over-pokemon-invizimals-tries-to-take-over-your-psp/).",
+    "para_id": 141,
+    "sent_num": 6,
+    "word_count": 13,
+    "score": 50,
+    "issues": [
+      "no_subject",
+      "no_capital"
+    ]
+  },
+  {
+    "id": 866,
+    "text": "New York Daily News.",
+    "para_id": 141,
+    "sent_num": 7,
+    "word_count": 4,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 867,
+    "text": "7",
+    "para_id": 141,
+    "sent_num": 8,
+    "word_count": 1,
+    "score": -30,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short",
+      "no_punctuation"
+    ]
+  },
+  {
+    "id": 868,
+    "text": "November 2010.",
+    "para_id": 141,
+    "sent_num": 9,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 871,
+    "text": "583.",
+    "para_id": 142,
+    "sent_num": 0,
+    "word_count": 1,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 872,
+    "text": "Wood, Austin (11 April 2018).",
+    "para_id": 142,
+    "sent_num": 1,
+    "word_count": 5,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  },
+  {
+    "id": 874,
+    "text": "PC Gamer.",
+    "para_id": 142,
+    "sent_num": 3,
+    "word_count": 2,
+    "score": -10,
+    "issues": [
+      "no_verb",
+      "no_subject",
+      "too_short"
+    ]
+  },
+  {
+    "id": 875,
+    "text": "Archived (https://web.archive.org/web/20200803051413/https://www.pc gamer.com/monster-breeding-rpg-monster-crown-looks-like-build-a-pokemon/) from the original on 3 August 2020.",
+    "para_id": 142,
+    "sent_num": 4,
+    "word_count": 10,
+    "score": 20,
+    "issues": [
+      "no_verb",
+      "no_subject"
+    ]
+  }
+]

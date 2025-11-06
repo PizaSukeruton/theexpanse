@@ -7,8 +7,10 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import pool from './backend/db/pool.js';
 import expanseRoutes from './backend/expanse/index.js';
-import { registerRoute } from './backend/utils/routeLogger.js';import characterRouter from './backend/api/character.js';
+import { registerRoute } from './backend/utils/routeLogger.js';
+import characterRouter from './backend/api/character.js';
 import characterKnowledgeRouter from './backend/api/character-knowledge.js';
 import generateAokHexId from './backend/utils/hexIdGenerator.js';
 import narrativeRouter from './backend/api/narrative-router.js';
@@ -16,15 +18,19 @@ import authRoutes from './routes/auth.js';
 const __filename = fileURLToPath(import.meta.url);
 import adminRoutes from './routes/admin.js';
 import adminCharactersRoutes from './routes/adminCharacters.js';
+import qaExtractorRouter from './backend/api/qa-extractor.js';
 const __dirname = dirname(__filename);
 
 const app = express();
 import loreAdminRoutes from "./routes/lore-admin.js";
-import tseRouter from './backend/TSE/index.js';import terminalRoutes from "./routes/terminal.js";
+import tseRouter from './backend/TSE/index.js';
+import terminalRoutes from "./routes/terminal.js";
 const PORT = process.env.PORT || 3000;
 import traitsRouter from './backend/traits/index.js';
 import { createServer } from "http";
-import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";app.use(express.json());
+import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -55,11 +61,10 @@ app.get('/', (req, res) => {
   res.send('<h1 style="font-family: Courier New; color: #00ff00; background: black; text-align:center; padding: 50px;">🖥️ THE EXPANSE SERVER RUNNING</h1>');
 });
 
-
-
 app.get("/admin", (req, res) => {
   res.sendFile(join(__dirname, "public", "admin.html"));
 });
+
 app.use("/api/lore", loreAdminRoutes);
 registerRoute("/api/lore", "Lore Admin");
 app.use("/api/expanse", expanseRoutes);
@@ -69,13 +74,22 @@ registerRoute("/api/character", "Character API");
 app.use('/api/character', characterKnowledgeRouter);
 registerRoute("/api/character/:id/knowledge", "Knowledge API");
 app.use('/api/narrative', narrativeRouter);
-registerRoute("/api/narrative", "Narrative System");app.use("/api/terminal", terminalRoutes);
-app.use('/api/auth', authRoutes); registerRoute("/api/auth", "Authentication");registerRoute("/api/terminal", "Terminal API");
-app.use('/api/admin', adminRoutes); registerRoute("/api/admin", "Admin API");
-app.use('/api/admin/characters', adminCharactersRoutes); registerRoute("/api/admin/characters", "Admin Characters");
+registerRoute("/api/narrative", "Narrative System");
+app.use("/api/terminal", terminalRoutes);
+app.use('/api/auth', authRoutes);
+registerRoute("/api/auth", "Authentication");
+registerRoute("/api/terminal", "Terminal API");
+app.use('/api/admin', adminRoutes);
+registerRoute("/api/admin", "Admin API");
+app.use('/api/admin/characters', adminCharactersRoutes);
+registerRoute("/api/admin/characters", "Admin Characters");
 
-app.use('/api/tse', tseRouter); registerRoute("/api/tse", "TSE Pipeline");
-app.use('/api/traits', traitsRouter); registerRoute("/api/traits", "Traits System");
+app.use('/api/tse', tseRouter);
+registerRoute("/api/tse", "TSE Pipeline");
+app.use('/api/traits', traitsRouter);
+app.use('/api/qa', qaExtractorRouter);
+registerRoute("/api/qa", "Q&A Extractor");
+registerRoute("/api/traits", "Traits System");
 
 app.post('/save-dossier', express.json({limit: '2mb'}), (req, res) => {
   const { fileName, content } = req.body;
@@ -83,34 +97,42 @@ app.post('/save-dossier', express.json({limit: '2mb'}), (req, res) => {
   const filePath = path.join(__dirname, 'dossiers', fileName.replace(/[^a-zA-Z0-9\-_\.]/g, '_'));
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   
-// Clean undesirable editor sections before saving
-const cleanContent = content
-  .replace(/<input[^>]*type=["']file["'][^>]*>/gi, "")
-  .replace(/<button[^>]*id=["']commitBtn["'][^>]*>.*?<\/button>/gis, "")
-  .replace(/<div[^>]*class=["']editor-only["'][^>]*>.*?<\/div>/gis, "");
-fs.writeFileSync(filePath, cleanContent);
+  const cleanContent = content
+    .replace(/<input[^>]*type=["']file["'][^>]*>/gi, "")
+    .replace(/<button[^>]*id=["']commitBtn["'][^>]*>.*?<\/button>/gis, "")
+    .replace(/<div[^>]*class=["']editor-only["'][^>]*>.*?<\/div>/gis, "");
+  fs.writeFileSync(filePath, cleanContent);
 
   res.send('ok');
 });
 
-// --- Expanse API integration ---
-// --- End Expanse API integration ---
-
-
-
-
-// Chat endpoint for dossier terminal
-
-// Working chat endpoint for dossier terminal
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
+async function loadAllCharacters() {
+  try {
+    const result = await pool.query(`
+      SELECT character_id, character_name, category 
+      FROM character_profiles 
+      ORDER BY character_id
+    `);
+    
+    console.log(`\n👥 Characters loaded (${result.rows.length}):`);
+    result.rows.forEach(char => {
+      console.log(`   ${char.character_id} - ${char.character_name}`);
+    });
+    console.log('');
+  } catch (error) {
+    console.error('❌ Failed to load characters:', error.message);
+  }
+}
 
 const httpServer = createServer(app);
 const io = initializeWebSocket(httpServer);
 
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, async () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
   console.log(`🔌 WebSocket server initialized`);
+  await loadAllCharacters();
 });

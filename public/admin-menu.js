@@ -1,10 +1,8 @@
 // Clean collapsible admin menu
 function initAdminPanel() {
-  const currentUser = localStorage.getItem('terminal_user');
-  if (currentUser !== 'Cheese Fang') return;
-  
   const leftPanel = document.getElementById('dossier-panel');
-  if (!leftPanel) return;
+  console.log("initAdminPanel called, currentUser:", currentUser);
+  if (currentUser === "Cheese Fang") console.log("User is Cheese Fang, showing admin panel");  if (!leftPanel) return;
   
   leftPanel.innerHTML = `
     <div class="admin-panel" style="padding: 15px; height: 100%; overflow-y: auto;">
@@ -50,7 +48,7 @@ function buildMenu() {
     },
     {
       title: 'MEDIA',
-      items: ['Upload New', 'View Gallery']
+      items: ['Image Editor']
     },
     {
       title: 'SYSTEM',
@@ -165,7 +163,7 @@ async function loadCharacters() {
   content.innerHTML = '<div style="color: #00ff00;">Loading...</div>';
   
   try {
-    const response = await fetch('/api/character/all', {
+    const response = await fetch('/api/admin/characters', {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('admin_token')}` }
     });
     
@@ -175,7 +173,11 @@ async function loadCharacters() {
         <h3 style="color: #00ff00;">Characters (${data.characters.length})</h3>
         <div style="max-height: 300px; overflow-y: auto;">
           ${data.characters.map(char => `
-            <div style="padding: 8px; border-bottom: 1px solid rgba(0,255,0,0.2);">
+            <div class="character-row" 
+                 style="padding: 8px; border-bottom: 1px solid rgba(0,255,0,0.2); cursor: pointer; transition: background 0.3s;"
+                 onmouseover="this.style.background='rgba(0,255,0,0.1)'"
+                 onmouseout="this.style.background='transparent'"
+                 onclick='createEditModal(${JSON.stringify(char).replace(/'/g, "&apos;")})'> 
               <strong>${char.character_id}</strong>: ${char.character_name}
               <span style="float: right; color: rgba(0,255,0,0.6);">${char.category}</span>
             </div>
@@ -216,7 +218,7 @@ window.saveChar = async function() {
   if (!name) return;
   
   try {
-    const response = await fetch('/api/character/all', {
+    const response = await fetch('/api/character', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -340,10 +342,9 @@ async function getAuthToken() {
 }
 
 // Initialize
-setTimeout(initAdminPanel, 1000);
 
 // Character Edit Modal Functions
-function createEditModal(character) {
+window.createEditModal = function(character) {
   const modal = document.createElement('div');
   modal.className = 'character-edit-modal';
   modal.innerHTML = `
@@ -368,67 +369,130 @@ function createEditModal(character) {
     </div>
   `;
   document.body.appendChild(modal);
-  
+
   document.getElementById('edit-character-form').onsubmit = (e) => {
     e.preventDefault();
-    saveCharacterChanges(character.character_id);
+    window.saveCharacterChanges(character.character_id);
   };
-}
+};
 
-function closeEditModal() {
+window.closeEditModal = function() {
   const modal = document.querySelector('.character-edit-modal');
   if (modal) modal.remove();
-}
+};
 
-async function saveCharacterChanges(characterId) {
+window.saveCharacterChanges = async function(characterId) {
+  const cleanId = String(characterId).replace("#", "");
   const updates = {
-    character_name: document.getElementById('edit-name').value,
-    category: document.getElementById('edit-category').value,
-    description: document.getElementById('edit-description').value
+    character_name: document.getElementById("edit-name").value,
+    category: document.getElementById("edit-category").value,
+    description: document.getElementById("edit-description").value
   };
-  
+
   try {
-    const response = await fetch(`/api/character/${characterId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch(`/api/character/${cleanId}`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("admin_token")}`
+      },
       body: JSON.stringify(updates)
     });
-    
+
     if (response.ok) {
-      alert('Character updated successfully!');
-      closeEditModal();
-      document.querySelector('[data-action="view-all-characters"]').click();
+      alert("Character updated successfully!");
+      window.closeEditModal();
+      window.handleAction("CHARACTERS", "View All");
+    } else {
+      const err = await response.text();
+      alert("Failed to update character: " + err);
     }
   } catch (error) {
-    alert('Failed to update character');
+    alert("Failed to update character: " + error.message);
   }
-}
+};
 
-async function deleteCharacter(characterId) {
+window.deleteCharacter = async function(characterId) {
   if (!confirm(`Delete character ${characterId}?`)) return;
-  
+
   try {
-    const response = await fetch(`/api/character/${characterId}`, {
-      method: 'DELETE'
+    const response = await fetch(`/api/character/${String(characterId).replace("#","")}`, {
+      method: 'DELETE',
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("admin_token")}`
+      }
     });
-    
+
     if (response.ok) {
       alert('Character deleted');
-      closeEditModal();
-      document.querySelector('[data-action="view-all-characters"]').click();
+      window.closeEditModal();
+      window.handleAction("CHARACTERS", "View All");
+    } else {
+      const err = await response.text();
+      alert('Failed to delete character: ' + err);
     }
   } catch (error) {
-    alert('Failed to delete character');
+    alert('Failed to delete character: ' + error.message);
   }
-}
-
-// Make character rows clickable
-window.makeCharactersClickable = function() {
-  document.querySelectorAll('.character-row').forEach(row => {
-    row.style.cursor = 'pointer';
-    row.onclick = () => {
-      const character = JSON.parse(row.dataset.character);
-      createEditModal(character);
-    };
-  });
 };
+
+// Add Modal Styles
+const modalStyles = document.createElement('style');
+modalStyles.textContent = `
+  .character-edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+  }
+  .modal-content {
+    background: #000;
+    border: 2px solid #00ff00;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0 0 20px #00ff00;
+  }
+  .modal-content h2 {
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+    margin-bottom: 15px;
+  }
+  .modal-content label {
+    color: #00ff00;
+    display: block;
+    margin-top: 10px;
+  }
+  .modal-content input, .modal-content textarea {
+    width: 100%;
+    background: #111;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 5px;
+    margin: 5px 0;
+  }
+  .modal-buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  .modal-buttons button {
+    flex: 1;
+    padding: 8px;
+    background: #00ff00;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .modal-buttons .delete-btn {
+    background: #ff0000;
+    color: #fff;
+  }
+`;
+document.head.appendChild(modalStyles);

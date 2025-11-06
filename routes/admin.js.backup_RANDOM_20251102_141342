@@ -1,0 +1,132 @@
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import pool from '../backend/db/pool.js';
+import { generateToken, verifyToken } from '../backend/utils/jwtUtil.js';
+
+const router = express.Router();
+
+router.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    
+    const result = await pool.query(
+      'SELECT user_id, username, password_hash, access_level FROM users WHERE username = $1',
+      [username]
+    );
+    
+    if (result.rows.length === 0 || !await bcrypt.compare(password, result.rows[0].password_hash)) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      });
+    }
+    
+    const user = result.rows[0];
+    
+    if (user.access_level < 5) {
+      return res.status(403).json({ 
+        success: false, 
+        message: 'Admin access required (level 5+)' 
+      });
+    }
+    
+    const token = generateToken(user);
+    
+    res.json({
+      success: true,
+      token,
+      user: {
+        user_id: user.user_id,
+        username: user.username,
+        access_level: user.access_level
+      }
+    });
+    
+  } catch (error) {
+    console.error('Admin login error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Authentication failed' 
+    });
+  }
+});
+
+router.get('/verify', async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ 
+        success: false, 
+        message: 'No token provided' 
+      });
+    }
+    
+    const decoded = verifyToken(token);
+    res.json({ success: true, user: decoded });
+    
+  } catch (error) {
+    res.status(401).json({ 
+      success: false, 
+      message: error.message 
+    });
+  }
+});
+
+
+// Media upload configuration
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, "../public/uploads");
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }
+});
+
+// Media Gallery endpoints
+router.post("/media", upload.single("image"), async (req, res) => {
+  try {
+    const { title = "Untitled" } = req.body;
+    const image_id = "#" + Math.random().toString(16).substr(2, 6).toUpperCase();
+    const file_path = req.file ? `/uploads/${req.file.filename}` : null;
+    
+    const result = await pool.query(
+      "INSERT INTO uploaded_images (filename, original_name, title, file_size, file_path, image_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [req.file.filename, req.file.originalname, title, req.file.size, file_path, image_id]
+    );
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get("/media", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM uploaded_images ORDER BY upload_date DESC");
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+export default router;

@@ -3,63 +3,45 @@
 import knowledgeConfig from '../../config/knowledgeConfig.js';
 import MemoryDecayCalculator from './MemoryDecayCalculator.js';
 
-/**
- * @module SpacedRepetitionScheduler
- * @description Implements the FSRS algorithm for optimal review scheduling,
- * adapting intervals based on character performance and traits.
- */
 class SpacedRepetitionScheduler {
     constructor() {
         this.memoryDecayCalculator = new MemoryDecayCalculator();
-        // FSRS weights (learned parameters) from config
         this.w = knowledgeConfig.fsrs.weights;
+        
+        console.log(`[SpacedRepetitionScheduler] Mode: ${knowledgeConfig.fsrs.mode}`);
+        console.log(`[SpacedRepetitionScheduler] Trait modifiers: ${knowledgeConfig.fsrs.traitModifiers.enabled ? 'ENABLED' : 'DISABLED'}`);
     }
 
-    /**
-     * Calculates the next review interval and updates Stability (S) and Difficulty (D)
-     * based on the FSRS algorithm and character's trait modifiers.
-     *
-     * @param {number} currentStability - Current Stability (S) of the knowledge item.
-     * @param {number} currentDifficulty - Current Difficulty (D) of the knowledge item.
-     * @param {number} currentRetrievability - Current Retrievability (R) of the knowledge item (from decay calc).
-     * @param {number} grade - User's self-rating (1=Forgot, 2=Hard, 3=Good, 4=Easy).
-     * @param {Object} characterTraitScores - Map of trait_hex_id to score (0-100).
-     * @returns {{newStability: number, newDifficulty: number, newIntervalDays: number}}
-     */
-    calculateFSRSUpdate(currentStability, currentDifficulty, currentRetrievability, grade, characterTraitScores) {
-        // Normalize grade to FSRS scale (e.g., 0-3 or 1-4)
-        // Assuming grade 1-4: 1=Forgot, 2=Hard, 3=Good, 4=Easy
-        // FSRS typically uses 0-3: 0=Forgot, 1=Hard, 2=Good, 3=Easy
+    calculateFSRSUpdate(currentStability, currentDifficulty, currentRetrievability, grade, learningProfile = null) {
         const fsrsGrade = grade - 1;
 
-        // Apply trait modifiers to FSRS parameters or their impact
-        const traitModifiedDifficulty = this._applyTraitModifiersToDifficulty(currentDifficulty, characterTraitScores);
-        const traitModifiedStability = this._applyTraitModifiersToStability(currentStability, characterTraitScores);
+        let traitModifiedDifficulty = currentDifficulty;
+        let traitModifiedStability = currentStability;
+
+        if (knowledgeConfig.fsrs.mode === 'trait-modified' && learningProfile) {
+            traitModifiedDifficulty = this._applyTraitModifiersToDifficulty(currentDifficulty, learningProfile);
+            traitModifiedStability = this._applyTraitModifiersToStability(currentStability, learningProfile);
+        }
 
         let newStability, newDifficulty;
 
-        if (fsrsGrade === 0) { // Forgot
-            newStability = this.w[0]; // Reset stability to initial value
-            newDifficulty = traitModifiedDifficulty + this.w[1] * (1 - currentRetrievability); // Increase difficulty
+        if (fsrsGrade === 0) {
+            newStability = this.w[0];
+            newDifficulty = traitModifiedDifficulty + this.w[1] * (1 - currentRetrievability);
         } else {
-            // Calculate new difficulty (FSRS formula)
-            newDifficulty = traitModifiedDifficulty + this.w[2] * (1 - fsrsGrade / 3); // Adjust difficulty based on grade
-            newDifficulty = Math.min(10, Math.max(1, newDifficulty)); // Clamp difficulty between 1 and 10
+            newDifficulty = traitModifiedDifficulty + this.w[2] * (1 - fsrsGrade / 3);
+            newDifficulty = Math.min(10, Math.max(1, newDifficulty));
 
-            // Calculate new stability (FSRS formula)
-            // Initial stability calculation (if it's the first successful review)
-            if (currentStability <= 0.4) { // Heuristic for initial learning phase
+            if (currentStability <= 0.4) {
                 newStability = this.w[3] * Math.exp(this.w[4] * (fsrsGrade - 1) + this.w[5] * (newDifficulty - 5));
             } else {
                 newStability = traitModifiedStability * (1 + Math.exp(this.w[6] * (fsrsGrade - 1) + this.w[7] * (newDifficulty - 5)));
             }
         }
 
-        // Clamp new stability to prevent unrealistically high values
         newStability = Math.min(knowledgeConfig.fsrs.maxStability, Math.max(knowledgeConfig.fsrs.minStability, newStability));
 
-        // Calculate next interval based on new stability
-        const newIntervalDays = newStability * knowledgeConfig.fsrs.intervalMultiplier; // Simple multiplier for interval
+        const newIntervalDays = newStability * knowledgeConfig.fsrs.intervalMultiplier;
 
         return {
             newStability: newStability,
@@ -68,68 +50,43 @@ class SpacedRepetitionScheduler {
         };
     }
 
-    /**
-     * Calculates the initial next review interval for a newly acquired knowledge item.
-     * @param {number} initialStability - The initial stability.
-     * @param {number} initialDifficulty - The initial difficulty.
-     * @param {number} initialRetrievability - The initial retrievability.
-     * @param {number} initialIntervalDays - The base initial interval in days.
-     * @returns {number} - The calculated initial interval in days.
-     */
     calculateNextReviewInterval(initialStability, initialDifficulty, initialRetrievability, initialIntervalDays) {
-        // For a new item, the first interval might be short.
-        // This can be a fixed value or slightly adjusted by initial strength.
-        // For FSRS, the first interval is often based on default stability.
-        return initialIntervalDays; // Use the configured initial interval
+        return initialIntervalDays;
     }
 
+    _applyTraitModifiersToDifficulty(baseDifficulty, learningProfile) {
+        if (!knowledgeConfig.fsrs.traitModifiers.enabled) {
+            return baseDifficulty;
+        }
 
-    /**
-     * Applies trait modifiers to the difficulty parameter.
-     * High Neuroticism might increase perceived difficulty.
-     * High Conscientiousness might decrease perceived difficulty.
-     * @param {number} baseDifficulty - The base difficulty.
-     * @param {Object} characterTraitScores - Map of trait_hex_id to score (0-100).
-     * @returns {number} - The trait-modified difficulty.
-     */
-    _applyTraitModifiersToDifficulty(baseDifficulty, characterTraitScores) {
         let modifiedDifficulty = baseDifficulty;
 
-        const neuroticismScore = characterTraitScores[knowledgeConfig.traits.neuroticismHex] || 50;
-        const conscientiousnessScore = characterTraitScores[knowledgeConfig.traits.conscientiousnessHex] || 50;
+        const anxietyScore = learningProfile.emotional?.anxiety || 50;
+        const disciplineScore = learningProfile.behavioral?.discipline || 50;
 
-        // Neuroticism: increases perceived difficulty (e.g., due to anxiety, self-doubt)
-        modifiedDifficulty += (neuroticismScore / 100) * knowledgeConfig.fsrs.neuroticismDifficultyImpact;
+        modifiedDifficulty += (anxietyScore / 100) * knowledgeConfig.fsrs.traitModifiers.anxietyDifficultyImpact;
+        modifiedDifficulty -= (disciplineScore / 100) * knowledgeConfig.fsrs.traitModifiers.disciplineDifficultyReduction;
 
-        // Conscientiousness: decreases perceived difficulty (e.g., due to focus, diligence)
-        modifiedDifficulty -= (conscientiousnessScore / 100) * knowledgeConfig.fsrs.conscientiousnessDifficultyImpact;
-
-        return Math.min(10, Math.max(1, modifiedDifficulty)); // Clamp difficulty
+        return Math.min(10, Math.max(1, modifiedDifficulty));
     }
 
-    /**
-     * Applies trait modifiers to the stability parameter.
-     * High Conscientiousness might increase stability (slower decay).
-     * High Neuroticism might decrease stability (faster decay).
-     * @param {number} baseStability - The base stability.
-     * @param {Object} characterTraitScores - Map of trait_hex_id to score (0-100).
-     * @returns {number} - The trait-modified stability.
-     */
-    _applyTraitModifiersToStability(baseStability, characterTraitScores) {
+    _applyTraitModifiersToStability(baseStability, learningProfile) {
+        if (!knowledgeConfig.fsrs.traitModifiers.enabled) {
+            return baseStability;
+        }
+
         let modifiedStability = baseStability;
 
-        const conscientiousnessScore = characterTraitScores[knowledgeConfig.traits.conscientiousnessHex] || 50;
-        const neuroticismScore = characterTraitScores[knowledgeConfig.traits.neuroticismHex] || 50;
+        const disciplineScore = learningProfile.behavioral?.discipline || 50;
+        const anxietyScore = learningProfile.emotional?.anxiety || 50;
+        const emotionalStabilityScore = learningProfile.emotional?.emotionalStability || 50;
 
-        // Conscientiousness: increases stability (better retention)
-        modifiedStability *= (1 + (conscientiousnessScore / 100) * knowledgeConfig.fsrs.conscientiousnessStabilityBonus);
+        modifiedStability *= (1 + (disciplineScore / 100) * knowledgeConfig.fsrs.traitModifiers.disciplineStabilityBonus);
+        modifiedStability *= (1 - (anxietyScore / 100) * knowledgeConfig.fsrs.traitModifiers.anxietyStabilityPenalty);
+        modifiedStability *= (1 + (emotionalStabilityScore / 100) * knowledgeConfig.fsrs.traitModifiers.emotionalStabilityBonus);
 
-        // Neuroticism: decreases stability (worse retention)
-        modifiedStability *= (1 - (neuroticismScore / 100) * knowledgeConfig.fsrs.neuroticismStabilityPenalty);
-
-        return Math.min(knowledgeConfig.fsrs.maxStability, Math.max(knowledgeConfig.fsrs.minStability, modifiedStability)); // Clamp stability
+        return Math.min(knowledgeConfig.fsrs.maxStability, Math.max(knowledgeConfig.fsrs.minStability, modifiedStability));
     }
 }
 
 export default SpacedRepetitionScheduler;
-

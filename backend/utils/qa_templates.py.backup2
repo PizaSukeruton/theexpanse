@@ -1,0 +1,128 @@
+from qa_utils import span_text, be_form_for_question, subject_head, first_date_text, extract_quants
+
+TEMPLATES = {
+    "definition": {
+        "question": "What {verb} {subject}?",
+        "answer_short": "{attribute}",
+        "answer_sentence": "{subject} {verb} {attribute}."
+    },
+    "founding": {
+        "question": "Who founded {subject}?",
+        "answer_short": "{agent}",
+        "answer_sentence": "{subject} was founded by {agent}."
+    },
+    "creation": {
+        "question": "Who created {subject}?",
+        "answer_short": "{agent}",
+        "answer_sentence": "{subject} was created by {agent}."
+    },
+    "ownership": {
+        "question": "Who owns {subject}?",
+        "answer_short": "{owner}",
+        "answer_sentence": "{subject} is owned by {owner}."
+    },
+    "date_release": {
+        "question": "When was {subject} released?",
+        "answer_short": "{date}",
+        "answer_sentence": "{subject} was released on {date}."
+    },
+    "quantity": {
+        "question": "How many {noun} are there?",
+        "answer_short": "{number}",
+        "answer_sentence": "There are {number} {noun}."
+    }
+}
+
+def realize_qa(fact):
+    try:
+        if fact["type"] == "definition":
+            subj = fact["subject_full"]
+            attr = fact["attribute_full"]
+            q_verb = be_form_for_question(subject_head(fact["subject"]), fact["root"])
+            
+            return {
+                "question": TEMPLATES["definition"]["question"].format(verb=q_verb, subject=subj),
+                "answer_short": attr,
+                "answer_sentence": TEMPLATES["definition"]["answer_sentence"].format(subject=subj, verb=q_verb, attribute=attr),
+                "evidence_span": span_text(fact["doc"]),
+                "question_type": "what",
+                "fact_type": "definition"
+            }
+        
+        elif fact["type"] == "svo":
+            subj = fact["subject_full"]
+            verb = fact["verb"].lemma_
+            obj = fact["object_full"]
+            
+            if verb in ["create", "make", "develop", "design"]:
+                return {
+                    "question": TEMPLATES["creation"]["question"].format(subject=obj),
+                    "answer_short": subj,
+                    "answer_sentence": TEMPLATES["creation"]["answer_sentence"].format(subject=obj, agent=subj),
+                    "evidence_span": span_text(fact["doc"]),
+                    "question_type": "who",
+                    "fact_type": "creation"
+                }
+            
+            elif verb in ["found", "establish", "start"]:
+                return {
+                    "question": TEMPLATES["founding"]["question"].format(subject=obj),
+                    "answer_short": subj,
+                    "answer_sentence": TEMPLATES["founding"]["answer_sentence"].format(subject=obj, agent=subj),
+                    "evidence_span": span_text(fact["doc"]),
+                    "question_type": "who",
+                    "fact_type": "founding"
+                }
+        
+        elif fact["type"] == "ownership":
+            subj = fact["subject_full"]
+            owner = fact["owner"]
+            
+            return {
+                "question": TEMPLATES["ownership"]["question"].format(subject=subj),
+                "answer_short": owner,
+                "answer_sentence": TEMPLATES["ownership"]["answer_sentence"].format(subject=subj, owner=owner),
+                "evidence_span": span_text(fact["doc"]),
+                "question_type": "who",
+                "fact_type": "ownership"
+            }
+        
+        elif fact["type"] == "date_release":
+            doc = fact["doc"]
+            subj = fact["subject_full"]
+            date_txt = first_date_text(doc) or fact["time_mod"].text
+            
+            return {
+                "question": TEMPLATES["date_release"]["question"].format(subject=subj),
+                "answer_short": date_txt,
+                "answer_sentence": TEMPLATES["date_release"]["answer_sentence"].format(subject=subj, date=date_txt),
+                "evidence_span": span_text(doc),
+                "question_type": "when",
+                "fact_type": "date_release",
+                "expect_type": "date"
+            }
+        
+        elif fact["type"] == "quantity":
+            text = fact["doc"].text
+            quants = extract_quants(fact["doc"])
+            if not quants:
+                return None
+            
+            number_str = quants[0]
+            doc = fact["doc"]
+            noun = next((t.text for t in reversed(doc) if t.pos_=="NOUN" and t.tag_ in ("NNS","NNPS")), "items")
+            
+            return {
+                "question": TEMPLATES["quantity"]["question"].format(noun=noun),
+                "answer_short": number_str,
+                "answer_sentence": TEMPLATES["quantity"]["answer_sentence"].format(number=number_str, noun=noun),
+                "evidence_span": span_text(doc),
+                "question_type": "how_many",
+                "fact_type": "quantity",
+                "expect_type": "number"
+            }
+        
+        return None
+        
+    except Exception as e:
+        return None

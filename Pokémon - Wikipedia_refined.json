@@ -1,0 +1,1861 @@
+[
+  {
+    "text": "International franchise logo, designed by Chris Maple in 1998[1] Created by Satoshi Tajiri Original work Pocket Monsters Red and Pocket Monsters Green (1996) Owners Nintendo Creatures Game Freak[2] Years 1996\u2013present Print publications Comics See list of Pok\u00e9mon manga Films and television Film(s) See list of Pok\u00e9mon films Animated series Pok\u00e9mon (1997\u2013present) Games Traditional Pok\u00e9mon Trading Card Game Video game(s) Pok\u00e9mon video game series Official website Official hub (https://www.portal-pokemon.com/)",
+    "id": 0,
+    "original_id": 0,
+    "split_id": 0,
+    "page": 1,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 68,
+      "sentence_count": 2,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Pok\u00e9mon[a][b] is a Japanese media franchise consisting of video games, animated series and films, a trading card game, and other related media. The franchise takes place in a shared universe in which humans co-exist with creatures known as Pok\u00e9mon, a large variety of species endowed with special powers. The franchise's primary target audience is children aged 5 to 12,[3] but it is known to attract people of all ages.[I] Pok\u00e9mon is estimated to be the world's highest-grossing media franchise and is one of the best-selling video game franchises.",
+    "id": 1,
+    "original_id": 1,
+    "split_id": 0,
+    "page": 1,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 88,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "The franchise originated as a pair of role-playing games developed by Game Freak, from an original concept by its founder, Satoshi Tajiri. Released on the Game Boy on 27 February 1996, the games became sleeper hits and were followed by manga series, a trading card game, and anime series and films. From 1998 to 2000, Pok\u00e9mon was exported to the rest of the world, creating an unprecedented global phenomenon dubbed \"Pok\u00e9mania\". By 2002, the craze had ended, after which Pok\u00e9mon became a fixture in popular culture, with new products releasing to this day. In the summer of 2016, the franchise spawned a second craze with the release of Pok\u00e9mon Go, an augmented reality game developed by Niantic.",
+    "id": 2,
+    "original_id": 2,
+    "split_id": 0,
+    "page": 1,
+    "score": 100.0,
+    "metadata": {
+      "word_count": 117,
+      "sentence_count": 5,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Unlike most IPs, which are owned by one company,[12] Pok\u00e9mon is jointly owned by three: Nintendo, Game Freak, and Creatures.[2] Game Freak develops the core series RPGs, which are published by Nintendo exclusively for their consoles, while Creatures manages the trading card game and related merchandise, occasionally developing spin-off titles. The three companies established The Pok\u00e9mon Company (TPC) in 1998 to manage the Pok\u00e9mon property within Asia. The Pok\u00e9mon anime series and films are co-owned by Shogakukan. Since 2009, The Pok\u00e9mon Company International (TPCi), a subsidiary of TPC, has managed the franchise in all regions outside Asia.[13][14]",
+    "id": 3,
+    "original_id": 3,
+    "split_id": 0,
+    "page": 1,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 97,
+      "sentence_count": 5,
+      "is_split": false
+    }
+  },
+  {
+    "text": "The original full name of the franchise is Pocket Monsters ( \u30dd\u30b1\u30c3\u30c8\u30e2\u30f3\u30b9\u30bf\u30fc, Poketto Monsut\u0101), which has been commonly abbreviated to Pokemon (\u30dd\u30b1\u30e2\u30f3) since its launch. When the franchise was released internationally, the short form of the title was used, with an acute accent (\u00b4) over the e to aid in pronunciation.[15] As a Japanese word composed of English loanwords, the word Pok\u00e9mon is an example of a wasei-eigo.[16]:\u200a30 Pok\u00e9mon refers to both the franchise itself and the creatures within its fictional universe. As a noun, it is identical in both the singular and plural, as is every individual species name;[17] it is grammatically correct to say \"one Pok\u00e9mon\" and \"many Pok\u00e9mon\", as well as \"one Pikachu\" and \"many Pikachu\".[18] The Pok\u00e9mon franchise takes place in a shared universe in which humans co-exist with creatures known as Pok\u00e9mon.",
+    "id": 4,
+    "original_id": 5,
+    "split_id": 0,
+    "page": 2,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 138,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "The original pair of games contain 151 Pok\u00e9mon species, with new ones being added in subsequent games; as of January 2024, 1,025 Pok\u00e9mon species have been introduced.[c] Most Pok\u00e9mon are based on real-life animals or mythical creatures from folklore.[19] For example, Pikachu are a yellow, mouse-like species with tails shaped as lightning bolts, able to blast powerful electric jolts through the air.[20][21][22] The player character takes the role of a Pok\u00e9mon Trainer. The Trainer has three primary goals: travel and explore the Pok\u00e9mon world; discover and catch a specimen of each Pok\u00e9mon species in order to complete their Pok\u00e9dex; and train a team of Pok\u00e9mon and have them engage in battles.",
+    "id": 5,
+    "original_id": 5,
+    "split_id": 1,
+    "page": 2,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 111,
+      "sentence_count": 5,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Most Pok\u00e9mon can be caught with spherical devices known as Pok\u00e9 Balls. Once the opposing Pok\u00e9mon is sufficiently weakened, the Trainer throws the Pok\u00e9 Ball against the Pok\u00e9mon, which is then transformed into a form of energy and transported into the device. If the catch is successful, the Pok\u00e9mon is tamed and under the Trainer's command from then on. If the Pok\u00e9 Ball is thrown again, the Pok\u00e9mon re-materializes into its original state. The Trainer's Pok\u00e9mon can engage in battles against opposing Pok\u00e9mon, including those in the wild or owned by other Trainers. Because the franchise is aimed at children, these battles are never presented as overtly violent and contain no blood or gore.[II] Pok\u00e9mon never die in battle \u2013 they faint upon being defeated, and can then be rejuvenated at a Pok\u00e9mon Center.[III] When a Pok\u00e9mon wins a battle, it gains experience points.[31] After gaining a certain amount of them, the Pok\u00e9mon levels up, and its statistics rise.",
+    "id": 6,
+    "original_id": 6,
+    "split_id": 0,
+    "page": 2,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 159,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "As its level increases, the Pok\u00e9mon learns new offensive and defensive moves to use in battle.[32][33] Furthermore, many species can undergo a form of spontaneous metamorphosis called Pok\u00e9mon evolution, and transform into stronger forms.[34] Most Pok\u00e9mon will evolve at a certain level, while others evolve through different means, such as exposure to a certain item or trading with another trainer.[35]",
+    "id": 7,
+    "original_id": 6,
+    "split_id": 1,
+    "page": 2,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 60,
+      "sentence_count": 3,
+      "is_split": true
+    }
+  },
+  {
+    "text": "The main idea behind Pok\u00e9mon was conceived by Satoshi Tajiri. Tajiri was born on 28 August 1965,[36] and grew up in Machida, a suburb of Tokyo.[37] As a child, he enjoyed discovering and catching insects and other small creatures in the various ponds and fields that surrounded his town.[38][39] During Japan's economic miracle, many cities, including Machida, were significantly expanded. As a consequence, Machida's nature was largely destroyed. In his second year of junior high school,[40][41] an arcade hall opened in Tajiri's neighborhood, introducing him to video games.",
+    "id": 8,
+    "original_id": 9,
+    "split_id": 0,
+    "page": 3,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 88,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "While studying electrical engineering at Tokyo College of Technology, Tajiri began publishing a doujinshi magazine titled Game Freak. The title was inspired by the 1932 film Freaks, which Tajiri was fascinated with at the time.[42] He self-published the first issue of the magazine in March 1983, at the age of 17.[43][44] At the time, magazines specializing in video games did not yet exist in Japan, allowing Game Freak to fill a gap in the market.[45][46] Sometime later, Tajiri was contacted by aspiring manga artist Ken Sugimori, who became Game Freak's illustrator.[47] Game Freak folded in the late 1980s,[43] by which point Tajiri had become a respected game journalist in Japan's fledgling video game industry.[48] Tajiri's knowledge of video games brought him into contact with Tsunekazu Ishihara. Ishihara had studied Arts and Science at Tsukuba University, and was trained in CGI.",
+    "id": 9,
+    "original_id": 9,
+    "split_id": 1,
+    "page": 3,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 140,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "After working in advertising for two years, Ishihara joined a company named Sedic in 1983, which created video graphics and software,[49] including one video game, Otocky (1987).[50][51] As video games grew in popularity, Sedic also produced a number of game-related television shows for Fuji Television's late-night slot.[49] In his job as a TV producer, Ishihara befriended Tajiri, as well as Shigesato Itoi, who would later become CEO of Ape, Inc. [52][53] Ishihara was also the general director of the world's first gaming encyclopedia: TV Games: Encyclopedia of Video Games (\u30c6\u30ec\u30d3\u30b2\u30fc\u30e0\u2014\u96fb\u8996 \u904a\u622f\u5927\u5168, Terebig\u0113mu \u2014 Denshi Y\u016bgi Taizen).[54][55] Journalist Kenji Hatakeyama wrote that, at the time, Ishihara was probably the most well-connected man in the industry.[56] Masakazu Kubo, who would later play a vital role in Pokemon, wrote that Ishihara possessed a knowledge of games that was \"beyond comparison\".[57] Ishihara was also interested in playing cards,[58][59] and contributed to the development of at least three simple card games designed by Itoi and published by Ape.[d] In 1986, Tajiri, Sugimori, and a few other enthusiasts started an informal development team called Game Freak, named after the magazine it grew out of.",
+    "id": 10,
+    "original_id": 9,
+    "split_id": 2,
+    "page": 3,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 188,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Over the next few years, they independently developed the puzzle game Quinty, working on it alongside school or their regular jobs.[66] However, no one within the group knew how to make the game's music. After consulting all his contacts, Tajiri got in touch with Junichi Masuda, who became the group's composer.[67] Quinty was finished in 1989, and published by Namco.[68] Tajiri officially incorporated Game Freak Co. , Ltd. on 26 April 1989.[69] Tajiri started to think of what was to become Pok\u00e9mon while completing Quinty, and before he officially founded Game Freak. Around this time, Nintendo announced the upcoming release of the Game Boy, a handheld console that would revolutionize the gaming industry. Tajiri learned that",
+    "id": 11,
+    "original_id": 9,
+    "split_id": 3,
+    "page": 3,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 116,
+      "sentence_count": 9,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Two original Game Boys connected with a Game Link Cable Gashapon capsules have been cited as an inspiration for Pokemon.",
+    "id": 12,
+    "original_id": 12,
+    "split_id": 0,
+    "page": 4,
+    "score": 70.0,
+    "metadata": {
+      "word_count": 20,
+      "sentence_count": 1,
+      "is_split": false
+    }
+  },
+  {
+    "text": "the device would have a link port, and with the corresponding Game Link Cable, two Game Boys could be linked together.[70] Sometime later, Tajiri remembered an incident while playing Dragon Quest II (1987), a role- playing game (RPG) for the Famicom (NES). The game features randomly appearing items of varying rarity, including an extremely rare item called Mysterious Hat.[e] Tajiri did not encounter any, while Ken Sugimori, who was also playing the game, encountered two. Upon recalling this experience, Tajiri realized that the cable now made it possible to transfer things from one cartridge to another.[IV] He noted that, until then, the Game Link Cable was only used for competing, but not for something else.[75] Combining this inspiration with his memories of catching insects and other small species, Tajiri's idea would eventually evolve into a virtual recreation of his boyhood experiences,[76] and an attempt to \"regain the world that he had lost\".[77] He would later state that the game represents \"the story of a boy's summer day\".[78] Tajiri and his Game Freak staff began pondering over a game centered on capturing creatures of differing rarity.",
+    "id": 13,
+    "original_id": 13,
+    "split_id": 0,
+    "page": 4,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 185,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Since the Game Boy is a portable device, these creatures could then be exchanged with other players in real life using the link cable. Once the player has caught a creature in-game, it was to be stored in miniaturized form in a special capsule. This facet of the game was inspired by Ultraseven, a tokusatsu show that Tajiri had enjoyed as a child.[79] The series' titular character owns a number of capsules containing miniaturized kaiju (monsters), which come out and return to their original sizes when the capsule is thrown into mid-air.",
+    "id": 14,
+    "original_id": 14,
+    "split_id": 0,
+    "page": 4,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 92,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Kaiju media in general were an important influence on Pokemon, as many Game Freak staff members had grown up with them.[72][80] Other influences that have been cited by Tajiri include: gashapon, capsules with toy figures in them that can be drawn from vending machines;[81][82] collectible cards, such as baseball cards, Ultraman cards and menko;[V] The Final Fantasy Legend (1989), the first RPG for the Game Boy;[87] and petting in Japan, with Tajiri noting that having Pokemon is similar to having pets.[88] Tajiri initially named his project Capsule Monsters, which GF's staff commonly shortened to Capumon.[89] However, it later turned out that the term Capsule Monsters could not be trademarked, and it was subsequently decided to call the game Pocket Monsters, which became Pokemon. Former GF staff member Akihito Tomisawa wrote that the phrase \"Capsule Monsters\" was already registered.[89] According to journalist Kenji Hatakeyama, the word \"capsule\" could not be used in the trademark.[90] Tomisawa wrote that the Game Freak staff then came up with several alternatives, before someone within the team suggested \"Pocket Monsters\".[89] In March 1989, Nintendo co-founded Ape, Inc. with Itoi.",
+    "id": 15,
+    "original_id": 14,
+    "split_id": 1,
+    "page": 4,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 183,
+      "sentence_count": 9,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Ape's principal work was Mother (1989), a role-playing game written by Itoi, but it was also founded with the intent to give outside talent a chance to pitch new, innovative games.[53][58] At the time, Ape was housed in the same Kanda- Sudach\u014d office building as Nintendo, located in Tokyo.[91] Ishihara, a friend of both Itoi and Tajiri, was involved with Ape's management (and would become its vice-president in 1991).[53][56] Tajiri's relationship with Ishihara prompted Tajiri to present his idea for Pocket Monsters at Ape's office.[92][93] Present during Tajiri's pitch was Takashi Kawaguchi, who worked at Nintendo's",
+    "id": 16,
+    "original_id": 14,
+    "split_id": 2,
+    "page": 4,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 96,
+      "sentence_count": 4,
+      "is_split": true
+    }
+  },
+  {
+    "text": "General Affairs Department and was also a manager at Ape.[58][94] Kawaguchi brought the idea to Nintendo president Hiroshi Yamauchi, who reportedly said: \"This is it. This is the idea I've been waiting for.\"[95] By pure coincidence, Ishihara had come up with an idea for a game similar to that of Tajiri, and around the same time was discussing it with Ape. This game, Toto, involved \"using the Game Boy as an insect cage\". Ishihara emphasized, however, that the idea of trading creatures with the link cable was Tajiri's. GF and Ape agreed to merge their projects together.[96] According to Tajiri, the two teams initially collaborated on the game, but the work proved difficult, one of the reasons being that Ape was busy developing EarthBound.[97][98] Tajiri eventually figured that \"rather than working with Ape, we had to do something on our own, or the project would never get finished\".[97] Ape, Inc. is not credited on the final product.",
+    "id": 17,
+    "original_id": 16,
+    "split_id": 0,
+    "page": 5,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 157,
+      "sentence_count": 11,
+      "is_split": false
+    }
+  },
+  {
+    "text": "The development contract was signed at the beginning of 1990, with a planned delivery of the game in October.[99] Tajiri directed the project, working under Ishihara.[100] Ishihara was the producer \u2013 he managed the budget, staff, and work schedule, monitored the game's overall progress, and served as a liaison between Game Freak and Nintendo.[96][101] Ishihara also contributed ideas to the development,[59] and helped with debugging.[102][103] Sugimori was in charge of the graphics and character design.[104] Masuda created all music and sound effects, and did part of the programming.[105] The budget that Nintendo granted to Game Freak was low;[99] thus, Pocket Monsters was initially planned as a small, compact game, based primarily around Tajiri's core idea of exchanging.[87][106] However, as development progressed, GF's ideas and ambitions for Pokemon grew.[87] They soon realized that the game they were beginning to envision would not be easy to make. Sugimori admitted that, at the time, no one at GF had much knowledge of RPGs. \"We thought we could handle it, but as we began working, we realized it was going to be tough\", he acknowledged.[107] Pocket Monsters was suspended indefinitely, and GF turned their focus on other titles (see Game Freak \u00a7\u00a0Games).",
+    "id": 18,
+    "original_id": 17,
+    "split_id": 0,
+    "page": 5,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 199,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "After the game's initial development phase in 1990 and 1991,[108] the staff \"tinkered with it from time to time\", as Sugimori put it.[109] For instance, by October 1992, a large number of Pokemon had been designed, and a poll was held that month among all staff members to gauge the popularity of the different species. Several more such votes followed to determine collectively which Pokemon should be included.[110] Still, development had mostly come to a halt until the summer of 1994, after the release of the platform game Pulseman, upon which Tajiri decided it was time to make a serious effort towards finishing Pocket Monsters.[111] By this point, Game Freak's experience had grown considerably. Over the years, a number of new staff members had been added to the company. One of them was Atsuko Nishida, a graphic artist who created Pikachu, among others.[112][113][114] Ishihara used his knowledge of card games to add more depth to the battle system, and among other things suggested Pokemon types.",
+    "id": 19,
+    "original_id": 18,
+    "split_id": 0,
+    "page": 5,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 165,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Ishihara also came up with the idea of the Pokedex, a portable encyclopedic device which players can use to keep track of the Pokemon they caught.[59] Throughout the years, Tajiri had several conversations with Shigeru Miyamoto,[115] Nintendo's top game designer who Tajiri described as a mentor figure.[79] Although, in a 2018 retrospect, Miyamoto downplayed his role in advising Tajiri, and stated that his contributions to Pokemon were in fact limited.[116] Miyamoto did, however, suggest the use of different colored cartridges for the game, in response to Tajiri's and Ishihara's musings about making each playthrough slightly different, as to 'individualize' the player's experience.[117] According to Tajiri, \"five or seven colors\" were considered,[118] but they eventually settled on two versions of the game: a Red version and a Green version. Otherwise identical, each had Pokemon not found in the other, encouraging players to socialize and trade to complete their collection.[117]",
+    "id": 20,
+    "original_id": 18,
+    "split_id": 1,
+    "page": 5,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 148,
+      "sentence_count": 6,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Ishihara aspired to create video games of his own.[119] As Pocket Monsters Red and Green were nearing completion, Ishihara founded Creatures, Inc. on 8 November 1995. Upon founding, the company was housed in the same office building as Nintendo in Tokyo.[120] Co-ownership of the Pokemon property, which Ishihara helped create, was subsequently assigned to Creatures. This resulted in Pokemon having three legal owners: Game Freak, the main developer; Creatures, representing producer Ishihara; and Nintendo, the publisher. Anne Allison wrote that Nintendo also bought the property after Red and Green were finished.[121] Kenji Hatakeyama noted that the ownership structure of Pokemon is uncommon.[12] He wrote that \"Pokemon is probably the only property in the world today for which the original rights are not concentrated in a single company\", like The Walt Disney Company does with their IPs.[122] Tajiri and Ishihara did consider merging Game Freak and Creatures at one point.",
+    "id": 21,
+    "original_id": 20,
+    "split_id": 0,
+    "page": 6,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 149,
+      "sentence_count": 10,
+      "is_split": false
+    }
+  },
+  {
+    "text": "However, Tajiri decided against it because he feared it would erase what he had built up since he was a teenager. \"I felt threatened by the idea of changing how Game Freak was operating, and starting back over with Mr. Ishihara\", he said. \"It was an identity problem. If Game Freak ceased to exist, then so would I\". Tajiri noted that, since Game Freak and Creatures both focus on Pokemon, it sometimes felt more like different departments than different companies.[92] Pocket Monsters Red and Green were finally finished in December 1995.[123] A release date of 21 December that year was announced,[124] but missed.",
+    "id": 22,
+    "original_id": 20,
+    "split_id": 1,
+    "page": 6,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 103,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "After sufficient cartridges, manuals and packages had been manufactured, the pair of games ended up being published on 27 February",
+    "id": 23,
+    "original_id": 20,
+    "split_id": 2,
+    "page": 6,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 20,
+      "sentence_count": 0,
+      "is_split": true
+    }
+  },
+  {
+    "text": "1996. However, the property was copyrighted in 1995, and \"\u00a91995\" is shown on the title screens[125] and cartridges.[126] This year is since used on the copyright notice[2] seen on many Pokemon products, even though no actual Pokemon product was released in 1995.[127] Nintendo had no high expectations of Pocket Monsters Red and Green, and media largely ignored the game(s).[128] By 1996, the seven-year-old Game Boy console was considered yesterday's news and near the end of its lifecycle.[27][129][130] On the other hand, new Game Boys continued to be manufactured and sold.[131] The console was widespread and, due to its age, affordable to children.[27][132] Also, the Game Boy had experienced a small revival in Japan in 1995 due to the success of Mario's Picross. Coincidentally, this game was directed by Ishihara, and co-developed by Ape.",
+    "id": 24,
+    "original_id": 21,
+    "split_id": 0,
+    "page": 6,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 133,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "The popularity of Mario's Picross incited Nintendo to develop the Game Boy Pocket,[133] a slimmer and improved version of the Game Boy, released in Japan on 21 July 1996.[134] Because of the timing and naming, some were under the impression that the Game Boy Pocket was made to promote Pocket Monsters, but this was in fact a coincidence that would end up benefiting both.[135] Two media channels that would play important roles in the Pokemon franchise were the CoroCoro Comic, released monthly, and its sister magazine Bessatsu CoroCoro Comic, released bi-monthly.",
+    "id": 25,
+    "original_id": 21,
+    "split_id": 1,
+    "page": 6,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 91,
+      "sentence_count": 3,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Both manga magazines are published by Shogakukan, a long-time business partner of Nintendo, and have featured manga based on Nintendo properties (e.g. Super Mario-kun, Kirby of the Stars, Donkey Kong). At the time of Pokemon's release, the main CoroCoro magazine was read by one in four elementary school students.[136] CoroCoro's deputy editor-in-chief was Masakazu Kubo. On Ishihara's suggestion,[137] Kubo commissioned the creation of a manga adaptation. Written and 1996\u20131998: Rise in Japan Release of Red and Green CoroCoro manga, Mew lottery",
+    "id": 26,
+    "original_id": 22,
+    "split_id": 0,
+    "page": 6,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 81,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "illustrated by Kosaku Anakubo, its first chapter was featured in the March/April issue of Bessatsu CoroCoro Comic, released on 28 February 1996, the day after Red and Green's release.[138] Shogakukan, which frequently surveys their target groups, determined that the Pocket Monsters manga was well received.[139] To further promote Red and Green, the May issue of CoroCoro, released on 15 April 1996, announced the \"Legendary Pokemon Offer\", centered around a mysterious, secret Pokemon called Mew.[140][141] Mew was a last-minute addition to Red & Green. It is unobtainable in the game(s) through usual means, and was intended to be used at a later point in some post-launch activity.[142] To participate in the promotion, CoroCoro readers had to send in a postcard, and from the entrants, 20 were selected at random. The winners then had to send in their cartridge so that Mew could be uploaded onto it. The lottery was a success and increased word-of- mouth.[27][142] By September, sales of Red and Green had surpassed 1 million units.[143] Even after the release of Pokemon Red and Green, Game Freak continued testing their game(s) for the purpose of bug fixing[f] and training new staff members.",
+    "id": 27,
+    "original_id": 24,
+    "split_id": 0,
+    "page": 7,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 192,
+      "sentence_count": 10,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Trainees were also tasked with creating new sprites for the game. The resulting new version was dubbed Pokemon Blue.[145] It was originally not meant to be sold. Only a small number of handmade copies were made, intended as a special gift to \"20 to 100 people\".[146] After Kubo learned of it, he encouraged Tajiri and Ishihara to allow an official release of Blue. President Hiroshi Yamauchi initially rejected this, fearing it would confuse people into believing it was an entirely new Pokemon game. Kawaguchi then suggested an alternative, which Yamauchi agreed with: Blue would not receive a normal retail release, but would instead be made available only through mail order for a limited time as a special offer.[147] It was announced in the November issue of CoroCoro, which explicitly stated that Blue was not a new game, but rather a special, limited edition to celebrate 1 million sales of Red and Green.[141] The offer was a surprisingly big success: 300,000 units were expected to be sold, but more than double that amount was ordered.[148][149] The Pokemon Trading Card Game was one of the first collectible card games (CCGs) developed in Japan.",
+    "id": 28,
+    "original_id": 24,
+    "split_id": 1,
+    "page": 7,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 191,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Its creation was influenced by Magic: The Gathering, the first CCG in history.[150][151][152] Indeed, the Pokemon Trading Card Game can be considered a simplified version of Magic.[153][154] First released in the United States in 1993, Magic had gained popularity not just in North America and Europe, but also in Asia.[155] Ishihara was fond of playing cards,[59] and had contributed to the development of at least three simple card games designed by Shigesato Itoi and released through Ape, Inc. [d] At the time, Ishihara was particularly interested in Magic: The Gathering.[150] While developing the Pokemon RPG, he realized that the concept behind it could be adapted into a Magic-like CCG.[58] The Pokemon Trading Card Game was designed by Ishihara,[156] Akihiko Miura, K\u014dichi \u014cyama, and Takumi Akabane.[157] All were former staff members of Ape and had previously worked on EarthBound (1994): Miura was the game's main designer, \u014cyama was its art director, and Akabane was one of its chief debuggers.[158] While card games have a long history in Japan, a collectible card game was a relatively new concept there, and at the time not widely known.[159] Because of this, Ishihara had difficulties finding distributors.",
+    "id": 29,
+    "original_id": 24,
+    "split_id": 2,
+    "page": 7,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 192,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Sometime in 1995, Ishihara pitched the card game to Nintendo. They agreed to have the cards manufactured, subcontracting an unidentified printing company. However, Nintendo did not want the hassle of having to develop a distribution system from the ground up, Pokemon Blue Trading Card Game",
+    "id": 30,
+    "original_id": 24,
+    "split_id": 3,
+    "page": 7,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 45,
+      "sentence_count": 2,
+      "is_split": true
+    }
+  },
+  {
+    "text": "i.e. finding retailers willing to sell a CCG.[160] Ishihara was then contacted by Satoshi Kayama, director of a small firm called Media Factory. Like Ishihara, Kayama was a fan of card games. He felt that CCGs would soon rise to prominence in Japan, and had been gathering information on the possibility of developing such a game in some form. When Kayama heard that Creatures had developed a CCG, he contacted Ishihara and offered to distribute it, signing the contract near the end of 1995.[161] CoroCoro again proved a valuable information channel. The Trading Card Game was first announced in the November issue, the same one that announced Pokemon Blue.[162] The issue came bundled with two promo cards: one of Purin (Jigglypuff) and one of Pikachu. Surveys showed that they were respectively the most and second-most popular Pokemon at the time.[163] On 20 October 1996, the first card set was released.[164] Booster packs were launched the same day, containing 10 randomly inserted cards.[165] In the West, the booster packs would contain 11 cards.[g] The original set would be titled the Base Set in English. Many more sets would follow.",
+    "id": 31,
+    "original_id": 26,
+    "split_id": 0,
+    "page": 8,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 188,
+      "sentence_count": 16,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Despite being ignored by the media, except for CoroCoro,[166] the cards became an instant success upon release. 87 million Pokemon cards were shipped by the end of March 1997, six months after its launch, and one month before the debut of the next big installment of the franchise: the Pokemon anime. The success of the TV series would cause the cards' sales figure to explode: by March 1998, a total of 499 million cards had been produced in Japan.[167] By August 1996, Kubo had become convinced of Pokemon's potential, and believed Shogakukan should create an anime adaptation.[168] Nintendo felt reluctant, believing that the property had developed enough as it had over the course of six months.",
+    "id": 32,
+    "original_id": 27,
+    "split_id": 0,
+    "page": 8,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 116,
+      "sentence_count": 5,
+      "is_split": false
+    }
+  },
+  {
+    "text": "At that time, they did not consider such a significant expansion to be necessary.[169] Nintendo also noted that if the anime would flop, it would negatively affect future Pokemon games.[170] Ishihara initially opposed the idea, because he thought it would overly hasten the 'consumption' of the property: he feared that if the series would end, people would assume that Pokemon has ended, and move on to the next thing.[171] At the time, Creatures and Game Freak were planning the sequel(s) to Red and Green, Pokemon Gold and Silver, and Ishihara did not want the anime to end before they could release their new games.[172][173] Kubo was ultimately able to resolve the concerns of all parties involved. An important aspect of Kubo's bargaining power was the then-ongoing Mini 4WD craze and its accompanying hit series Bakus\u014d Ky\u014ddai Let's & Go!!. Kubo had an important role in the creation of both, which impressed the stakeholders.[174] To appease Ishihara, Kubo promised him that the anime would last for at least a year and a half. This was unusually long for a debuting anime, and required a big investment.[172][175] Kubo's proposal for Pocket Monsters was officially approved on",
+    "id": 33,
+    "original_id": 27,
+    "split_id": 1,
+    "page": 8,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 194,
+      "sentence_count": 11,
+      "is_split": true
+    }
+  },
+  {
+    "text": "ShoPro assembled a team of five writers, plus two supporting writers.[180] All key people involved with the production of Pokemon were well-experienced and had proven track records within Japan's anime industry. Yoshikawa felt that the team got lucky. \"The probability of so many great people coming together at the same time is very low\", he said.[181] Per Tajiri's explicit condition,[182] every anime team member had to play the game extensively, including the Anime production and premiere",
+    "id": 34,
+    "original_id": 29,
+    "split_id": 0,
+    "page": 8,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 76,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "A boy hugging a Pikachu-costumed performer. Pikachu became a popular character among both boys and girls.[185] illustrators and voice actors.[181] The anime staff \"unanimously agreed that the game was interesting\"[183] and \"felt connected with each other through the world of Pokemon\",[181] feeling positively challenged to make an anime that would match the game's quality.[184]",
+    "id": 35,
+    "original_id": 31,
+    "split_id": 0,
+    "page": 9,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 54,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "also got more girls interested in the franchise, and girls' purchases of Pokemon products increased.[185] This has been partly credited to Pikachu, who gained widespread popularity among both boys and girls.[199] The success of this character would later lead to the game Pocket Monsters Pikachu (Pok\u00e9mon Yellow: Special Pikachu Edition), released in Japan on 12 September 1998.[200][201] An adaptation of Pokemon Blue, this version was made to resemble the TV series more.[202] In the early months of the franchise, Nintendo was the contractual representative for Pokemon, and thus the central contact point for all Pokemon-related licensing (the approval of branded products).[203] Around the time that planning of the anime begun, licensing requests for Pokemon started to increase, which Nintendo had difficulties handling due to a lack of (experienced) staff.[204] Nintendo consequently granted ShoPro exclusive licensor rights. This was the first time that Nintendo of Japan (NoJ) granted licensor rights to another company, aside from its overseas subsidiaries Nintendo of America (NoA) and Nintendo of Europe (NoE).[205] A copyright council was formed, headed by Ishihara.",
+    "id": 36,
+    "original_id": 35,
+    "split_id": 0,
+    "page": 10,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 174,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Beginning in April 1997, the council met every Tuesday, in the conference room of Creatures' office, at the Nintendo Kanda Building in Sudach\u014d, Tokyo.[120][206][207] Attendees usually included Ishihara and his secretary, representatives of Nintendo, Game Freak, ShoPro, TV Tokyo, and JR Kikaku, as well as head of the anime Yoshikawa.[208] Broadly put, every meeting had three types of agenda items: discussing Pokemon-related events and basic policies in Japan, discussing Shogakukan publication plans, and considering merchandise proposals.[209] For merchandising, the council set the bar high. Fiercely protective of Pokemon's brand equity, Ishihara was unwilling to greenlit an item just because it had a picture of a Pokemon printed on it.",
+    "id": 37,
+    "original_id": 35,
+    "split_id": 1,
+    "page": 10,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 109,
+      "sentence_count": 5,
+      "is_split": true
+    }
+  },
+  {
+    "text": "To avoid the market being flooded with low-quality goods, Ishihara put very specific demands on the products he evaluated.[172][210] Furthermore, in most cases, the council opted to contract one company for each product category.[211] Because of this, most merchandise proposals were rejected: of the approximately 7,500 applications submitted in 1997, only about 5% was approved.[212] By March 1998, 35 companies offered licensed Pokemon goods, and there were approximately 700 Pokemon products.[134][213] Tomy manufactured Pokemon toy figures and plush dolls.[214] Bandai made Pokemon gashapon, dolls and ramune-flavored candy in a plastic box in the shape of a Game Boy.[215] Meiji Seika produced Pokemon chocolate snacks and pudding.[134][216] The lucrative franchise provided a much-needed boost to Japan's economy, which was stagnating in what would later be called the Lost Decade.[217][218] An example of a firm that benefited greatly from Pokemon was food manufacturer Nagatanien.",
+    "id": 38,
+    "original_id": 35,
+    "split_id": 2,
+    "page": 10,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 142,
+      "sentence_count": 9,
+      "is_split": true
+    }
+  },
+  {
+    "text": "From May 1997, the company began selling Pokemon-branded curry, furikake, and baking mixes.[134][219] In December 1997, Nagatanien was hit hard by the collapse of one of its biggest sales channels, Toshoku, in what was then the third- largest bankruptcy in Japan's postwar history.[220][221] Nonetheless, due to their Pokemon- licensed products, Nagatanien reported net profits in fiscal years '97 and '98, despite having forecasted losses.[219][220][222] In the evening of 16 December 1997, the Pokemon franchise was hit by a crisis related to the broadcast of the anime's 38th episode, \"Denn\u014d Senshi Porygon\" (Computer Warrior Porygon). It was watched by approximately 4.6\u00a0million households.[223] In the episode, the cast is transported into a virtual world, accompanied by a Porygon, an artificially-made Pokemon.",
+    "id": 39,
+    "original_id": 35,
+    "split_id": 3,
+    "page": 10,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 120,
+      "sentence_count": 7,
+      "is_split": true
+    }
+  },
+  {
+    "text": "While flying Copyright council formed, merchandising expands \"Denn\u014d Senshi Porygon\" incident",
+    "id": 40,
+    "original_id": 35,
+    "split_id": 4,
+    "page": 10,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 11,
+      "sentence_count": 0,
+      "is_split": true
+    }
+  },
+  {
+    "text": "\"When we started this project in Japan, one of the first things I was told was that this kind of thing would never appeal to American audiences. They said, 'Because the characters are in a very Japanese style, you cannot sell them to Americans'.",
+    "id": 41,
+    "original_id": 37,
+    "split_id": 0,
+    "page": 11,
+    "score": 80.0,
+    "metadata": {
+      "word_count": 44,
+      "sentence_count": 2,
+      "is_split": false
+    }
+  },
+  {
+    "text": "So from the very beginning, I never thought there would be an English version. Now, it's just as popular in the United States [as in Japan], and I realized that we shouldn't always believe the opinions of conservative marketers.\"",
+    "id": 42,
+    "original_id": 38,
+    "split_id": 0,
+    "page": 11,
+    "score": 80.0,
+    "metadata": {
+      "word_count": 39,
+      "sentence_count": 2,
+      "is_split": false
+    }
+  },
+  {
+    "text": "through cyberspace, they are attacked by an anti-virus program which mistakes them for viruses, shooting \"vaccine missiles\" at them resulting in explosions of bright, rapidly swapping red and blue flashes.[224] The intense stimuli brought about by the episode triggered a variety of adverse health effects in more than 10,000 viewers,[225] primarily irritated eyes, headaches, dizziness, and nausea.[226] A small part suffered a photosensitive epileptic seizure, manifested in loss of conscious and/or convulsions.[226][227] Hundreds[h] of children were brought to hospitals, although some had recovered enough upon arrival and did not need to be hospitalized. No one died. Broadcasting of Pokemon was halted, and new guidelines were implemented to help prevent similar events from happening.[233] With the show on hiatus, ShoPro and OLM worked on a feature Pokemon film. By the time the incident occurred, its script was already written and storyboards were being made.",
+    "id": 43,
+    "original_id": 40,
+    "split_id": 0,
+    "page": 11,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 143,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "In mid-January, the staff resumed creating new episodes.[234] The anime series returned on 16 April 1998.[235] The film, titled Pocket Monsters the Movie: Mewtwo Strikes Back (Pok\u00e9mon: The First Movie), premiered on 18 July 1998, becoming the fourth highest grossing film of the year in Japan.[236][237] Ultimately, the incident did not damage the Pokemon franchise \u2013 it in fact grew further during and after the anime's hiatus.",
+    "id": 44,
+    "original_id": 40,
+    "split_id": 1,
+    "page": 11,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 67,
+      "sentence_count": 4,
+      "is_split": true
+    }
+  },
+  {
+    "text": "While video rental tapes were removed from shelves,[238][239] all other Pokemon products continued to be sold as usual, and customer demand for them remained high.[240][241] Helping matters was a general understanding among businesses that the anime was not canceled, but rather suspended, and many executives (correctly) expected the show to be resumed after precautions had been taken. Supermarkets and other distribution outlets responded calmly to the crisis, and did not remove Pokemon products from their sales floors.[242] Possibly the first official to show interest in a North American launch of Pokemon was Minoru Arakawa, founder and then-president of Nintendo of America (NoA). Arakawa visited Japan to participate in Shoshinkai 1996, held 22\u201324 November. It was around this time when he first played one of the three Pokemon titles released at the time. He thought the games were promising, but Nintendo of Japan (NoJ) had no plans at the time to release them elsewhere.",
+    "id": 45,
+    "original_id": 40,
+    "split_id": 2,
+    "page": 11,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 153,
+      "sentence_count": 7,
+      "is_split": true
+    }
+  },
+  {
+    "text": "He returned to America with a few cartridges and tested the game on his employees \u2013 they did not believe it would work in the US.[244] At the time, role-playing games (RPGs) were not very popular outside Japan,[245] and NoA executives believed that American children did not have the attention span for such a complex title.[246] Americans were said to be more interested in sport- and action-oriented games, preferably with realistic graphics.[17][247] Japanese people, by contrast, were alleged to care more about characters and plot.[248] Up to that point, few Japanese properties had been successfully mainstreamed in the US, and if they 1998\u20132000: International expansion North America",
+    "id": 46,
+    "original_id": 40,
+    "split_id": 3,
+    "page": 11,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 107,
+      "sentence_count": 4,
+      "is_split": true
+    }
+  },
+  {
+    "text": "were, it was alleged to be on account of having been properly Americanized: Mighty Morphin Power Rangers was considered a prime example of this.[249] Visually, Pokemon was believed to be too kawaii, or cute. It was assumed that Pokemon could not succeed on cute alone \u2013 it must also be cool.[250][251] In an effort to enhance the franchise's coolness, NoA considered a graphical redesign and contracted a few external artists to create some test-designs for the American market.[246][251] The mockups they proposed included 'graffiti style' drawings,[251] 'beefed-up' and more muscular looking Pokemon,[252] and a new Pikachu that looked like \"a tiger with huge breasts\".[250] Arakawa concluded that it \"didn't work\",[251] and by that time, the anime had begun its production in Japan, leading NoA to conclude it was too late for a graphical revamp anyway.[246] Of pivotal importance to Pokemon's global expansion was Alfred R.",
+    "id": 47,
+    "original_id": 42,
+    "split_id": 0,
+    "page": 12,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 145,
+      "sentence_count": 7,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Kahn, CEO of US-based 4Kids Entertainment, NoA's licensing agent since 1987.[253][254] Convinced of the franchise's potential, Kahn agreed to invest an undisclosed sum in return for both the anime and licensing rights.[245] Pokemon became one of the first Japanese media franchises in which both the localization of the anime and the licensing of merchandise was handled by a single company, as well as a non- Japanese company.[255] Kahn suggested to use the short version of the name, \"Pok\u00e9mon\", adding an acute accent (\u00b4) over the e to assist with pronunciation and \"give it a little flair\".[15] NoJ president Hiroshi Yamauchi officially approved the project in late November,[256] and subsequently announced it at Space World 1997.[257] However, three weeks later, the \"Denn\u014d Senshi Porygon\" incident happened, which Kubo felt made even more people resistant to the idea of an overseas introduction.[258] Market research turned back negative: American kids reportedly did not like Pok\u00e9mon.[259] Arakawa ignored the study and, convinced of the franchise's potential, allocated an enormous budget to Pok\u00e9mon's launch.",
+    "id": 48,
+    "original_id": 42,
+    "split_id": 1,
+    "page": 12,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 169,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "The exact amount was not disclosed, but was reportedly equal to or more than $50\u00a0million (c. $96.46 million in 2024), approximately the same amount as the launch budget of the Nintendo Entertainment System in 1985. Arakawa admitted that it was \"quite a bit of money\", but NoA \"had been doing well for several years, so we had a lot of money to spare\". He opined that if Pok\u00e9mon would be as successful in the US as it had been in Japan, \"an investment of 1 would turn into 100\".[260] NoA and 4Kids proceeded to devise a strategy on how to localize Pok\u00e9mon for the United States.[246] Arakawa appointed Gail Tilden to lead the project, prompting her to leave her position at Nintendo Power magazine.[261] Tilden said that they \"decided to make an all-out effort to repeat the phenomenon in the Western world\".[27] In two press releases, NoA self-described Pok\u00e9mon's marketing campaign as \"aggressive\".[262][263] The localization of the Pok\u00e9mon anime was done by 4Kids, and directed by Norman J. Grossfeld.",
+    "id": 49,
+    "original_id": 42,
+    "split_id": 2,
+    "page": 12,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 170,
+      "sentence_count": 11,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Grossfeld strongly believed that the anime should be Americanized.[264] At NATPE 1998, he asked ShoPro for a \"kind of carte blanche, to let me change the show as I think would work for this market\", to which ShoPro agreed.[265] However, no national TV station was interested in buying the anime or financing its localization.[15][245] Kahn then decided to self-finance Pok\u00e9mon's production costs, despite realizing this \"could very well bring down 4Kids\" if the show would fail.[265] According to Kahn, they \"spend a fortune\" on the localization.[26] To have it broadcast in syndication, 4Kids offered the show for free to local TV stations across the country, in exchange for a portion of the advertising revenue.[15][245] NoA assisted, persuading dozens of stations to carry the series by offering to buy some of their advertisement space, spending a total of $5\u00a0million (c. $9.65 million in 2024).[247][265] Despite all this, most broadcasters were still reluctant to carry Pok\u00e9mon, with Grossfeld experiencing difficulties getting through their \"preconceived notions or their snobbery for Western-produced animation over something from Asia\".[265] At the time,",
+    "id": 50,
+    "original_id": 43,
+    "split_id": 0,
+    "page": 12,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 177,
+      "sentence_count": 10,
+      "is_split": false
+    }
+  },
+  {
+    "text": "anime had not yet found mainstream popularity in the West. Contemporary news reports cited Sailor Moon[VI] as an example of an anime that had failed to catch on with American youth.[i] Still, with NoA's help, 4Kids ultimately succeeded in contracting 112 broadcasters for Pok\u00e9mon,[271] reaching \"about 85 to 90 percent\"[272] of television households.",
+    "id": 51,
+    "original_id": 45,
+    "split_id": 0,
+    "page": 13,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 53,
+      "sentence_count": 3,
+      "is_split": false
+    }
+  },
+  {
+    "text": "However, many broadcasters gave it off-peak time slots, with starting times like 06:00 or 06:30.[15][247] Prior to the late 1990s, this was the case for many anime in the US.[255] Grossfeld came up with the advertising slogan \"Gotta catch 'em all!\" as the English equivalent to the Japanese Pokemon GETTO daze~! (\u30dd\u30b1\u30e2\u30f3\u30b2\u30c3\u30c8\u3060\u305c\u30fc\uff01, Get (the) Pok\u00e9mon!).[273][274] The phrase \"miraculously managed to gain approval\" by the Federal Communications Commission (FCC), which normally prohibits the use of injunctions in ads directed at children (e.g. \"You must buy this!\").",
+    "id": 52,
+    "original_id": 45,
+    "split_id": 1,
+    "page": 13,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 85,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "While the tagline may sound commanding, the FCC reasoned that the act of catching is at the core of Pok\u00e9mon's play. Therefore, the phrase was allowed.[275] The series' theme song was written by John Loeffler and John Siegler, and performed by Jason Paige.[276] In commissioning the track, Grossfeld specifically requested the song's chorus to be written around the \"Gotta catch 'em all\" phrase, firmly embedding the slogan into the theme.[274] While NoA and 4Kids were allowed a fair degree of liberty in their localization of Pok\u00e9mon, the Japanese copyright council, headed by Ishihara, had the last say over it. All decisions regarding adjustments and promotion had to gain final approval of the Japan side.[277] This included all of the merchandise, for which a 'two-step system' was created. All (aspiring) licensees in North America were to send their merchandise proposals to 4Kids.[245] Staff of both 4Kids and NoA then made a pre-selection and send the approved proposals to Japan, where the council made the final decision. Many submissions were bounced at the US stage, and thus never got sent to Japan.",
+    "id": 53,
+    "original_id": 45,
+    "split_id": 2,
+    "page": 13,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 180,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Tilden noted that processing all license applications, and mailing all approved prototypes and their documentation to Japan, was a lot of work. Arakawa did consider streamlining the process by moving someone from Japan to the US, but no person could be found who was as competent as Ishihara.[278] The Pok\u00e9mon anime was first broadcast on 7 September 1998.[279][280] Pok\u00e9mon Red Version and Blue Version were released three weeks later, on 28 September 1998.[281] To localize the card game, Nintendo contracted Wizards of the Coast, the creator of Magic: The Gathering.[282] The Pok\u00e9mon Trading Card Game was officially launched nationwide on 9 January 1999, although pre-sold in select stores in December.[283] Coinciding with the North American launch of Pok\u00e9mon was the release of the Game Boy Color on 23 November 1998.[284] The American version of the Pok\u00e9mon anime started broadcasting in Australia and New Zealand on 28 September 1998. Red and Blue were subsequently released there on 23 October. Various territories in Asia followed: the anime series debuted in Hong Kong on 16 November, in Taiwan on",
+    "id": 54,
+    "original_id": 46,
+    "split_id": 0,
+    "page": 13,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 176,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "dominance in the home console market, with the Nintendo 64 being outsold by Sony's PlayStation.[313][314][315] The global success of Pok\u00e9mon compensated this loss somewhat.[IX] Scholars David Buckingham and Julian Sefton-Green went even further, writing in 2004: \"while Nintendo is now among Japan's most profitable corporations, it could be argued that the company would have struggled to survive without Pok\u00e9mon\".[320] 4Kids, initially a little-known firm,[245][253] expanded thirty times in revenues,[321] and was named the fastest-growing company in America in the 4 September 2000, issue of Fortune magazine.[254][322][323] Many businesses that timely obtained a Pok\u00e9mon license reaped considerable profits.[321][324] In the summer of 1999, a massive run on stocks of publicly traded Pok\u00e9mon licensees caused their value to increase dramatically.",
+    "id": 55,
+    "original_id": 53,
+    "split_id": 0,
+    "page": 15,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 118,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "However, by November, most investors were shorting their shares. Realizing that Pok\u00e9mon was a fad that would peak and fall at some point, investors were bearish about its prospects.[325] Pok\u00e9mon: The First Movie premiered in North America on 12 November 1999, and in Europe the following year. Despite being negatively received by many Western critics, it became one of the most successful Japanese animated films of all time.[326] In the United States, November 1999 was estimated to have been the peak of Pok\u00e9mania.[X] Supporting the American release of The First Movie was a promotional action with Burger King, one of the largest in the history of the fast-food industry.[331][332][333] The success of the promotion resulted in supply issues; restaurants often ran out of Pok\u00e9mon toys to include with their meals.[334][335] On 27 December,[336] Burger King recalled its Pok\u00e9 Ball toy after a 13-month-old girl died suffocating on one.[337][338] Pok\u00e9mon Gold and Silver, the successors to Red/Green/Blue, were released in North America on",
+    "id": 56,
+    "original_id": 53,
+    "split_id": 1,
+    "page": 15,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 162,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "and officially renamed in October 2000.[343][350] The goal of TPC is to centralize and streamline the global management of Pok\u00e9mon.[351] Satoru Iwata, who had joined Nintendo of Japan in June, was involved with the company's creation, which was one of his first jobs at Nintendo.[350] In February 2001, Pok\u00e9mon USA (PUSA) was established, an affiliated firm of The Pok\u00e9mon Company.[343] The company's first president was Tatsumi Kimishima (who would later become president of NoA, and subsequently president of NoJ).[352] In 2002, Kimishima was succeeded by Akira Chiba.[353] In North America, Pok\u00e9mania peaked in 1999, slowing down throughout the next year.[354] On 29 April 2000, the anime was bumped off Kids' WB's No. 1 spot after holding it for 54 weeks.",
+    "id": 57,
+    "original_id": 56,
+    "split_id": 0,
+    "page": 16,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 120,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Around the same time, Pok\u00e9mon was surpassed at Fox Kids by its rival Digimon.[355] In Europe, the craze peaked in 2000.[356][357] On 20 January 2001, The New York Times reported that Pok\u00e9mon's trading card market had collapsed in the US.[358] A June 2001 survey in the United Kingdom confirmed that Pok\u00e9mon's popularity was waning there.[359] Joseph Tobin wrote: \"By the summer of 2001, Pok\u00e9mon's shelf space in Japanese and U.S. toy stores was but a fraction of what it enjoyed in the fall of 1999\".[360] By the end of 2001, Pok\u00e9mania was fading globally, and by 2002, the fad was largely over.[361] From 2000 to 2002, Game Freak developed Pok\u00e9mon Ruby and Sapphire, the successors to Gold and Silver, for the newly released Game Boy Advance. Masuda, who was appointed to assistant director during Gold and Silver,[362] was promoted to director for Ruby and Sapphire, with Tajiri making himself executive director.[363] Masuda was concerned that the end of Pok\u00e9mania indicated the end of Pok\u00e9mon as a whole: \"After Gold and Silver came out, it was a huge hit around the world, but shortly after everyone was saying, 'That's it. The Pok\u00e9mon fad is over!",
+    "id": 58,
+    "original_id": 56,
+    "split_id": 1,
+    "page": 16,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 194,
+      "sentence_count": 12,
+      "is_split": true
+    }
+  },
+  {
+    "text": "It's dead!'.\"[364] Determined to keep the franchise going, GF not only wanted to \"prove people wrong\" with Ruby and Sapphire, but already started planning their sequels: Diamond and Pearl (2006).",
+    "id": 59,
+    "original_id": 56,
+    "split_id": 2,
+    "page": 16,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 30,
+      "sentence_count": 3,
+      "is_split": true
+    }
+  },
+  {
+    "text": "They also began planning remakes of older installments, starting with FireRed and LeafGreen (2004), remakes of the original Red and Green.[364] Ruby and Sapphire were released in Japan on 21 November 2002, and in the rest of the world the next year. The games introduced 135 new Pok\u00e9mon, bringing the total amount to 386. Because of this, Golin Harris, NoA's ad agency,[246] advised them to move away from the \"Gotta catch 'em all!\" slogan. They reasoned that if new, younger players were drawn into the franchise with Ruby/Sapphire, they would find the concept of \"catching them all\" to be a daunting if not impossible task if they didn't also have Red/Blue/Yellow and Gold/Silver/Crystal.[365] Author Daniel Dockery noted that \"from both a marketing perspective and, really, a legal perspective, it would not be to the company's advantage to keep pushing that slogan\".[365] By 2002, the relationship between Pok\u00e9mon USA (PUSA) and Wizards of the Coast had deteriorated. That year, at least seven high-profile employees were poached from Wizards by PUSA: Wizard's former art director, senior graphic designer, business manager, events marketing director, project management director, and two vice presidents.",
+    "id": 60,
+    "original_id": 57,
+    "split_id": 0,
+    "page": 16,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 188,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "All employees had signed NDAs.[366][367] In March 2003, PUSA told Wizards that their contract would not be renewed, and that Wizards would not be distributing the new Ruby & Sapphire card set.[368] Later, Wizards was also prohibited from releasing the sets Jamboree and Legendary Collection II.[369] Notably, Jamboree was the first set containing cards designed by Wizards themselves. As considerable time 2001\u20132006: End of the craze, business reforms",
+    "id": 61,
+    "original_id": 57,
+    "split_id": 1,
+    "page": 16,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 68,
+      "sentence_count": 4,
+      "is_split": true
+    }
+  },
+  {
+    "text": "and concept and expressed them using modern hardware, such as replacing the original Pok\u00e9Gear feature for the enhanced versions BuzzNav and DexNav to more effectively provide information enabled by the games' hardware capabilities. They seek to explore the concept of Pok\u00e9mon coexisting with humans and nature, revisiting the concept behind original games' setting, which translated to \"richness or abundance in nature and bonds between people and nature\" in Japanese.",
+    "id": 62,
+    "original_id": 65,
+    "split_id": 0,
+    "page": 19,
+    "score": 100.0,
+    "metadata": {
+      "word_count": 69,
+      "sentence_count": 2,
+      "is_split": false
+    }
+  },
+  {
+    "text": "To appeal to the newer audience in X and Y, the developers decided to connect the story with X and Y by further exploring their core mechanic.[408] In Generation VII, Pok\u00e9mon Sun and Moon were released worldwide for the 3DS on 18 November 2016, and on 23 November 2016, in Europe.[409] The developers chose Hawaii for inspiration due to its distinctive warm sunlight and clear moonlight and unique biomes that helped support the games' regional Pok\u00e9mon variance concept. Ohmori said, as director, he aimed to focus on the concept of \"Pok\u00e9mon as these living creatures, [and really focus] on them being alive.\" Having the release date on the 20th anniversary of Pok\u00e9mon in mind, he treated this project as a \"celebration of that life, and to really express this respect for life\". As he contemplated about life and its origins, Ohmori considered the significance of the Sun, enabling life with its light, and the Moon's impact on certain species' reproduction.",
+    "id": 63,
+    "original_id": 66,
+    "split_id": 0,
+    "page": 19,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 160,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "He explained how the Sun, the Moon, and the Earth \"work [together] to influence [one another], and life as a result grows and flourishes based on [this] relationship.\"[410] Ohmori stated that with the innovation to 3D in X and Y the designers decided to examine more minor aspects concerning with the Pok\u00e9mon themselves such as their motions, such as when they designed the games' first starter Pok\u00e9mon to capitalize on its owl-like characteristics with its head \"twists round and round\". With the 3DS technologies, the developers are able to design the characters to be more expressive as themselves including different facial expressions and reactions.",
+    "id": 64,
+    "original_id": 66,
+    "split_id": 1,
+    "page": 19,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 104,
+      "sentence_count": 3,
+      "is_split": true
+    }
+  },
+  {
+    "text": "In addition to portraying Pok\u00e9mon harmoniously coexisting with people and vice versa in the games, the developers replaced the traditional Gym mechanic with Island Trials, deepening the players' connection with the story and their Pok\u00e9mon.[411] The enhanced versions Pok\u00e9mon Ultra Sun and Ultra Moon were released worldwide on 17 November 2017.[412] The games added an alternate storyline and additional characters, Pok\u00e9mon, and other features.[413] Developer Shigeki Morimoto revealed that they were developed by the younger staff members and veterans so the more veterans can prioritized on developing more important titles,[414] and the developers considered them to be their culmination with the 3DS.[415] In 2016, the Pok\u00e9mon franchise spawned a second worldwide fad with the release of Pok\u00e9mon Go, a mobile augmented reality game. The app originated as a Google April Fools' Day joke in 2014: the \"Google Maps Pok\u00e9mon Challenge\". The prank was conceived by Tsunekazu Ishihara and Satoru Iwata.[416] On Ishihara's initiation,[417] the hoax was turned into an actual video game developed by Niantic.",
+    "id": 65,
+    "original_id": 67,
+    "split_id": 0,
+    "page": 19,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 165,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Ishihara was a fan of Niantic's previous transreality game, Ingress, and saw the game's concept as a perfect match for Pok\u00e9mon.[417] Through in-game purchases, the game generated more than $160\u00a0million by the end of July 2016,[418] with App Annie reporting that Pok\u00e9mon Go had generated around $10\u00a0 million in revenue every day that 2016: Release of Pok\u00e9mon Go",
+    "id": 66,
+    "original_id": 67,
+    "split_id": 1,
+    "page": 19,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 59,
+      "sentence_count": 1,
+      "is_split": true
+    }
+  },
+  {
+    "text": "month.[419] The same month, Sensor Tower reported that the game had passed more than $200\u00a0million in worldwide revenue, beating every existing record set by Clash of Clans and Candy Crush by a wide margin.[420] The average daily usage of the app on Android devices in July 2016 exceeded that of Snapchat, Tinder, Twitter, Instagram, and Facebook.[421] By 2 September 2016, Pok\u00e9mon Go had generated more than $440\u00a0million in worldwide revenue, according to Sensor Tower.[422] By 30 September, it had received 500 million downloads and grossed $470\u00a0million in 80 days, according to market research firm Newzoo.[423] Pok\u00e9mon Go reached the milestone of $600\u00a0million in revenue after only 90 days on the market, becoming the fastest mobile game ever to do so.[424] Pok\u00e9mon: Let's Go, Pikachu! and Let's Go, Eevee! were released for the Nintendo Switch on 16 November 2018. They are part of Generation VII.[425] Inspired by Pok\u00e9mon Yellow, the games seek to introduce newcomers and a new generation of players (particularly Pok\u00e9mon Go players) to the Pok\u00e9mon series in addition to catering old players.",
+    "id": 67,
+    "original_id": 69,
+    "split_id": 0,
+    "page": 20,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 178,
+      "sentence_count": 11,
+      "is_split": false
+    }
+  },
+  {
+    "text": "As such, the games feature similar capture mechanics to Go where the player throws Pok\u00e9 Balls to catch wild Pok\u00e9mon rather than battling them like traditional Pok\u00e9mon games. In addition, the games feature the same setting and characters as the first generation of games and the original animated series, and include exclusively the original 151 Pok\u00e9mon to further appeal to their targeted audience.[426][427] The only new Pok\u00e9mon featured are Meltan and Melmetal.[428] Generation VIII[429] debuted with the release of Pok\u00e9mon Sword and Shield on 15 November 2019, for the Switch.[430] Director Shigeru Ohmori stated that they designed the games based on what they believed of the biggest Pok\u00e9mon theme of becoming/being \"the greatest or strongest\", which was expressed in the games' Dynamax / Gigantamax Pok\u00e9mon core mechanic and the games' increasingly powerful software and hardware capabilities. Ohmori further revealed that through developing the Let's Go games as research projects for the Switch, they were able to gain valuable experiences and knowledge to develop Sword and Shield. He noted that they took advantage of the Switch's high resolution and TV connectivity to implement the games' gigantic- size core Pok\u00e9mon mechanic.",
+    "id": 68,
+    "original_id": 69,
+    "split_id": 1,
+    "page": 20,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 189,
+      "sentence_count": 7,
+      "is_split": true
+    }
+  },
+  {
+    "text": "They envisioned the games' setting to be a \"wide-open space\" that is different from the traditional route systems and is constantly changing where the player can meet and explore with other players.[431] Many pre-existing Pok\u00e9mon are not available in Sword and Shield. This \"Dexit\", as it was called, led to fan backlash.[432] Sword and Shield were the first Pok\u00e9mon games to receive DLC expansions: Part 1\u2014The Isle of Armor, and Part 2\u2014The Crown Tundra; they were released on 17 June 2020, and 22 October 2020, respectively.[433] They include additional storylines, places, Pok\u00e9mon, characters, and other features.[434] In 2020, the COVID-19 pandemic broke out. The resulting widespread ennui and excessive leisure time inspired a resurgence in popularity and interest of Pok\u00e9mon cards,[435] which was further popularized by various YouTubers and other influencers, such as Logan Paul.[436][437] The craze resulted in severe supply shortages, and customers' inappropriate and obsessive behavior raised safety concerns in many retail outlets. Pok\u00e9mon cards' values skyrocketed, prompting collectors to submit cards and overwhelm card grading agencies.[438][439] The Pok\u00e9mon Company responded by reprinting impacted products at maximum capacity to ensure price stabilization and general accessibility.[440]",
+    "id": 69,
+    "original_id": 69,
+    "split_id": 2,
+    "page": 20,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 187,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Pok\u00e9mon games, in particular the core RPGs, are commonly classified in generations. For example, Junichi Masuda referred to Diamond and Pearl (2006) as Gen 4,[462] and X and Y (2013) as the 6th generation.[463] Until 2011, Pok\u00e9mon games were released exclusively on Nintendo's consoles. With the rise of the smartphone during the 2010s, The Pok\u00e9mon Company also began developing, publishing, and licensing Pok\u00e9mon titles for the mobile phone market, most notably Pok\u00e9mon Go (2016), an",
+    "id": 70,
+    "original_id": 74,
+    "split_id": 0,
+    "page": 21,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 75,
+      "sentence_count": 3,
+      "is_split": false
+    }
+  },
+  {
+    "text": "augmented reality game developed by Niantic that spawned a worldwide craze in the summer of 2016.[423][424] According to the official website of The Pok\u00e9mon Company, as of March\u00a02025, over 489 million Pok\u00e9mon game units have been sold worldwide.[464] The Pok\u00e9mon Trading Card Game (PTCG) was one of the first collectable card games (CCGs) in Japan. It was inspired by Magic: The Gathering.[150][151][152] In the card game, the players use a 60-card deck featuring Basic and evolved Pok\u00e9mon, Energy cards, and Trainer cards to help them knock out the opponent's Pok\u00e9mon, drawing prize cards and winning the game.[465] Cards are classified into various levels of rarity, ranging from Common to Rare Holofoil with a holographic illustration. Rare cards, including limited edition, exclusive cards, and older cards, are highly valued among collectors due to their scarcity.[466][467] According to the official website of The Pok\u00e9mon Company, over 75\u00a0billion cards have been printed as of March\u00a02025.[464] As of 2025, the Pok\u00e9mon anime consists of over 1,300 episodes across 28 seasons. Its current season, Pok\u00e9mon Horizons \u2013 Rising Hope, started airing on 11 April",
+    "id": 71,
+    "original_id": 77,
+    "split_id": 0,
+    "page": 22,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 182,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "2025. The anime originally focused on Ash Ketchum and his travels across the Pok\u00e9mon world with his partner, Pikachu. They were retired as protagonists at the end of season 25.[468] The 26th season, Pok\u00e9mon Horizons, introduced two new protagonists, Liko and Roy.[469] A total of 23 anime films have been released, the most recent being Pok\u00e9mon the Movie: Secrets of the Jungle (2020).[470] Spin-off series from the anime have also been produced, including a variety show titled Weekly Pok\u00e9mon Broadcasting Station (\u9031\u520a\u30dd\u30b1\u30e2\u30f3\u653e\u9001\u5c40, Sh\u016bkan Pokemon H\u014ds\u014dkyoku), which aired on TV Tokyo from 2002 to 2004 and aired in English as part of Pok\u00e9mon Chronicles.[471][472] Several television specials have been released. 27 short films starring Pikachu were produced, primarily preceding the films.[473] Various animated mini-series also exist.",
+    "id": 72,
+    "original_id": 78,
+    "split_id": 0,
+    "page": 22,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 125,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Detective Pikachu, a live-action/animated film based on the video game of the same name, was released in 2019.[474] A sequel was announced even before the original premiered.[475] However, despite a number of updates over the next few years, the film did not materialize. As of 2025, the status of the sequel is not known.",
+    "id": 73,
+    "original_id": 79,
+    "split_id": 0,
+    "page": 22,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 54,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "In 1999 and 2000, Pok\u00e9mon was an unprecedented, ubiquitous fad in the Western world. Time magazine described it as \"a multimedia and interactive barrage like no other before it\".[27] The franchise, primarily aimed at children, elicited mixed responses from parents and teachers, some of them critical. In a 2004 essay, anthropologist Christine R. Yano even claimed that the reactions at one point constituted a moral panic.[477] The bulk of the criticism on Pok\u00e9mon was directed at the trading cards,[478] in particular the booster packs, sealed packages of 11[g] randomly inserted cards that were sold separately from the main sets. The cards are of varying scarcity, the most valuable being the \"holofoil cards\" (also called \"holographic\" or \"foil cards\"), in which the illustrations of the Pok\u00e9mon have a shiny overlay effect. The rare cards can only be found in booster packs, and the rarest ones are very infrequently included.",
+    "id": 74,
+    "original_id": 83,
+    "split_id": 0,
+    "page": 23,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 148,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Joseph Tobin noted that rarity in this case is \"artificially created\", and \"effectively a form of gambling\" in which children need to repeatedly purchase booster packs to get more rare cards.[479] Gilles Broug\u00e8re described a cynicism among adults that corporations could apparently, \"out of thin air\", ascribe value to cards which they saw as valueless, thereby \"deceiving vulnerable young consumers and garnering excessive profits\".[478] As the franchise's popularity grew, children began taking their Pok\u00e9mon cards to school for trading and playing. Soon, the cards were alleged to be \"disrupting learning, poisoning playground friendships and causing such distraction that some children forget their homework, tune out in class and even miss school buses as they scramble to acquire one more card\".[480] The cards were \"turning the playground into a black market\",[481] with card swaps sometimes inciting conflicts.",
+    "id": 75,
+    "original_id": 83,
+    "split_id": 1,
+    "page": 23,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 136,
+      "sentence_count": 5,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Certain children engaged in \"aggressive trading\",[482] tricking other (often younger) kids into unfair deals, forcing teachers to arbitrate.[XI] Some parents expressed their concerns about the craze, but feared that their children would be ostracized if they were to deny them Pok\u00e9mon products.[482][487][488] In the US, the Pok\u00e9mon cards ended up \"almost universally banned\" from school grounds.[489] Similar bans occurred in Canada,[490][491] Australia,[492] New Zealand,[493] and European countries.[482][494][495] In September 1999, US-based law firm Milberg filed a class- action lawsuit against Nintendo of America, Wizards of the Coast, and 4Kids. The suit claimed that the booster packs constitute a form of lottery and promote gambling in kids.[496][497] Susan Estrich noted that similar lawsuits had been filed against trading-card makers in the US, without success.[498] The Pok\u00e9mon card suit is not known to have gone to court, and is believed to have been settled.[k] The Pok\u00e9mon anime series was criticized by some as \"cheap Japanese animation\"[500] that is \"violent\"[28][501][502] and has \"little educational value\".[503] Michelle Orecklin of Time dismissed the TV series as \"less a cartoon than a half-hour exercise in Pok\u00e9mon product placement\".[504] Anne Allison wrote that even those within Pok\u00e9mon's US marketing team agreed that the anime's",
+    "id": 76,
+    "original_id": 84,
+    "split_id": 0,
+    "page": 23,
+    "score": 75.0,
+    "metadata": {
+      "word_count": 197,
+      "sentence_count": 10,
+      "is_split": false
+    }
+  },
+  {
+    "text": "visuals were \"not especially sophisticated\" compared to Disney cartoons.[500] Pok\u00e9mon: The First Movie premiered in the United States on 12 November 1999, and in European countries in February 2000. While a huge box-office success, the film was received negatively by several Western film critics.[505][506] The Guardian decried it as a \"contemptuously cheap animated cash- in on the monster kids' craze\".[507] The American adult animated series South Park satirized Pok\u00e9mon in the episode \"Chinpokomon\", aired on 3 November 1999. In the episode, the titular media franchise is portrayed as a low-quality line of products that is part of an evil plan by the Japanese government to invade the US. South Park co-creator Matt Stone commented that, at the time, Pok\u00e9mon was \"scary huge\".[508] Author Chris Kohler wrote that Pok\u00e9mon was considered \"ruthlessly commercial\", and that it \"program[med] children to be consumers of anything and everything Pok\u00e9mon\".[509] CNN quoted child psychiatrist John Lochridge as worrying that \"Pok\u00e9mon's creators and marketers deliberately set out to create a fantasy world so compelling that children would quickly become obsessed\".",
+    "id": 77,
+    "original_id": 87,
+    "split_id": 0,
+    "page": 24,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 174,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "He believed that kids were being \"brainwashed\", and said: \"I have had parents tell me that they cannot get their kids to do anything except Pok\u00e9mon, so this stuff seems to really capture their minds, in a way\".[6] These concerns were countered by psychologist William Damon, who told Newsweek that obsessing is in fact a normal part of a child's neurological development. It should concern parents only when the obsession gets dangerous or excessive.[510] An op-ed in the New Zealander newspaper The Dominion Post claimed that the anti-Pok\u00e9mon sentiment was particularly American: \"The backlash, which seems largely confined to the United States, may be no more than the sound of the world's leading cultural imperialist gagging on a taste of its own medicine\".[511] As Pok\u00e9mania built, Western media started reporting on several crimes associated with Pok\u00e9mon.",
+    "id": 78,
+    "original_id": 87,
+    "split_id": 1,
+    "page": 24,
+    "score": 80.75,
+    "metadata": {
+      "word_count": 136,
+      "sentence_count": 5,
+      "is_split": true
+    }
+  },
+  {
+    "text": "In the US, the incidents peaked in November 1999.[327] In England, Pok\u00e9mon-related delinquency reached a head in April 2000.[517][521] High prices on the grey market were a motive behind some of the crimes, \"posing a great temptation for older kids and bullies to take advantage of weaker children\".[522] At specialty shops and online auctions, a rare Pok\u00e9mon card could be bought and sold for $50 or more (c. $94 in 2024).[523][524] Aside from the negative reactions, many media also cited alleged beneficial effects of Pok\u00e9mon.[525][526][527] It was noted that the video games and the cards require children to read, memorize, calculate, and plan out a strategy.[5][167][528] Both encourage socialization, and trading Pok\u00e9mon requires negotiating skills.[6][17][23] Stephanie Strom wrote in The New York Times that the Pok\u00e9mon anime taught children \"traditional Japanese values \u2013 responsibility, empathy, cooperation, obedience, respect for elders, humility\".[529] Anne Allison interviewed various American parents during Pok\u00e9mania. She found that while most of them were \"utterly mystified\" about Pok\u00e9mon, few were overly worried about it, instead meeting the craze with \"befuddled acceptance\". Allison also notes that the Columbine High School massacre occurred during Pok\u00e9mania (on 20 April 1999), causing violent television, music, and games to be scrutinized.",
+    "id": 79,
+    "original_id": 89,
+    "split_id": 0,
+    "page": 24,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 199,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Compared to these media, she notes, Pok\u00e9mon is in fact rather tame.[530] In contrast, Pok\u00e9mon received far less criticism in its native country of Japan. Anthropologist Christine R. Yano attributes this to cultural differences, which includes: 1) greater acceptance of exuberant consumerism \u2013 to buy is to be a good citizen; 2) less focus on media influence \u2013 instead, Japan's educational system, bullying, and dysfunctional families are more often the target of",
+    "id": 80,
+    "original_id": 90,
+    "split_id": 0,
+    "page": 24,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 72,
+      "sentence_count": 3,
+      "is_split": false
+    }
+  },
+  {
+    "text": "attention; 3) less separation between child- and adulthood \u2013 what is suitable for adults is not necessarily considered unsuitable for kids; 4) Pok\u00e9mon being permeated with kawaisa (cuteness), a hallmark of Japanese culture; 5) Japan's core religions, Buddhism and Shinto, are less moralizing in nature.[531] However, Oliver Burkeman wrote in The Guardian that the Pok\u00e9mon cards were also banned from some Japanese schools.[30] After World War II, Japan experienced a period of unprecedented growth and became well-known in the Western world for its consumer products, such as radios (e.g. Panasonic, Toshiba), cars (e.g.",
+    "id": 81,
+    "original_id": 92,
+    "split_id": 0,
+    "page": 25,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 93,
+      "sentence_count": 6,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Toyota, Mitsubishi), and Sony's Walkman.[532] From 1991 onwards, its economy stagnated, causing the country to lose its status as an economic superpower.",
+    "id": 82,
+    "original_id": 93,
+    "split_id": 0,
+    "page": 25,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 22,
+      "sentence_count": 2,
+      "is_split": false
+    }
+  },
+  {
+    "text": "However, during the 1990s and 2000s, Japan re-emerged as a source of 'cool' cultural goods, embraced by a growing international audience interested in Japanese culture.[XII] Nintendo, Sega, and Sony launched several popular video game consoles and franchises.[248][537][538] In terms of children's properties, the success of Mighty Morphin Power Rangers changed perceptions on the viability of such Japanese imports in the West.[539][540][541] The Tamagotchi fad (1997\u201398),[542] centered around a portable digital pet device, was said to have \"paved the way for Pok\u00e9mon\".[247] Anne Allison wrote that, before the 1990s, Japan figured little in the face of the worldwide hegemony of Euro-American cultural industries, in particular that of the US. \"Hollywood has been hostile to imports\", she wrote, \"and foreignness has largely been, and been seen as, an impediment to mass popularization in the United States\".[543] The surprise success of Pok\u00e9mon was \"an undeniable breakthrough in the homeland of Disney\" that \"changed preexisting assumptions about the US marketplace at the same time that it was constantly resisted for deviating from them\".[544] Pok\u00e9mon was a welcomed boon to Japan's faltering economy,[217] and positively influenced the country's soft power.[545][546] Sociologist Yoshinori Kamo interviewed various American children and found that kids who thought Pok\u00e9mon was cool, were more likely to believe that Japan was a cool nation.[547] Anne Allison gave a similar finding: all the children she interviewed knew where Pok\u00e9mon originated, and \"many said that, as a result of Pok\u00e9mon and other 'cool' Japanese goods, they had developed an interest in Japan.",
+    "id": 83,
+    "original_id": 93,
+    "split_id": 1,
+    "page": 25,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 248,
+      "sentence_count": 10,
+      "is_split": true
+    }
+  },
+  {
+    "text": "A number said that they now wanted to study Japanese and travel there one day\".[548] Author Chris Kohler wrote: \"Japanese are proud of Pok\u00e9mon, the most successful export of Japanese popular culture ever\".[549] Although, sociologist Koichi Iwabuchi questioned to what extent Pok\u00e9mon really is 'Japanese', and to what extent it is simply a good property with universal appeal. He noted that Japanese nationalist commentators celebrated Pok\u00e9mon's global success and retrospectively attributed this to its \"Japanese cultural power\",[550] while ignoring the localization of Pok\u00e9mon overseas,[551] as well as decades of increasing cooperation and cultural exchange between countries (globalization).[552] In the 20th century, anime found niche popularity in North America and Europe in series (Astro Boy, Kimba the White Lion, Speed Racer) and films (Akira, Ghost in the Shell).[XIII] The Pok\u00e9mon TV series and films marked a breakthrough for anime, contributing to its growing worldwide success at the turn of the 21st century.[XIV] For some children, Pok\u00e9mon was their introduction to 'Japanimation',[557][558] serving as a \"gateway\" to other anime, manga, and Japanese culture in general.[559][560] Pok\u00e9mon: The First Movie became one of the most successful Japanese animated films in history.[326] After Princess Mononoke, Pok\u00e9mon: The First Movie became the second",
+    "id": 84,
+    "original_id": 93,
+    "split_id": 2,
+    "page": 25,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 198,
+      "sentence_count": 8,
+      "is_split": true
+    }
+  },
+  {
+    "text": "anime film to open at mainstream cinemas in the West, as opposed to the usual art house venues.[561] Pioneering anime importer John Ledford noted that Pok\u00e9mon underscored the commercial potential of anime, thus making it interesting from a business perspective.[562] In the field of video games, the main Pok\u00e9mon series became the paradigm of the monster-taming game.",
+    "id": 85,
+    "original_id": 96,
+    "split_id": 0,
+    "page": 26,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 3,
+      "is_split": false
+    }
+  },
+  {
+    "text": "While not the first to use this concept, the Pok\u00e9mon games became so synonymous with it that later titles involving catching and training monsters, RPGs or not, were inevitably compared to Pok\u00e9mon.[563][564][565] Examples of this include Dragon Warrior Monsters (1998),[XV] Robopon Sun and Star (1998),[571][572] Spectrobes (2007),[XVI] Invizimals (2009),[XVII] Monster Crown (2021),[XVIII] and Palworld (2024).[XIX] The success of Pok\u00e9mon encouraged companies to look for other popular Japanese properties that might be localized for Western markets.[255][593][594] The importing of at least three similar franchises were confirmed by business executives to have been (partly) inspired by Pok\u00e9mon: Yu- Gi-Oh!,[595] Digimon,[596] and Monster Rancher.[597] The import of Cardcaptor Sakura (as Cardcaptors) might also have been prompted by Pok\u00e9mon.[598][599] a. Pronunciation: /\u02c8p\u0259\u028ak\u0259m\u0252n/ POH-k\u0259-mon, US also /\u02c8po\u028akim\u0252n/ POH-kee-mon. b. Japanese: \u30dd\u30b1\u30e2\u30f3, Hepburn: Pokemon c. This count excludes Mega Evolutions, Dynamax, Gigantamax, regional variants, and other forms. These are not considered separate species of Pok\u00e9mon, but variations of existing ones. d. Four[60] original card games are known to have been designed by Itoi: Slot Brothers,[61] Edoka,[62] Hanamaru,[63] and Rameka.[64] The 1998 book The Secrets of Pokemon states that the last three games were contributed to by Ishihara.[65] e.",
+    "id": 86,
+    "original_id": 96,
+    "split_id": 1,
+    "page": 26,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 192,
+      "sentence_count": 16,
+      "is_split": true
+    }
+  },
+  {
+    "text": "In Dragon Quest II, the item is called \u3075\u3057\u304e\u306a\u307c\u3046\u3057, Fushigina B\u014dshi, i.e. Mysterious Hat.",
+    "id": 87,
+    "original_id": 96,
+    "split_id": 2,
+    "page": 26,
+    "score": 71.25,
+    "metadata": {
+      "word_count": 14,
+      "sentence_count": 3,
+      "is_split": true
+    }
+  },
+  {
+    "text": "Mysterious Candy. This item raises the level of a Pokemon by one. In the English games, it is called Rare Candy. f. Shortly after the original release of Red/Green, and before the release of Blue, Game Freak also made a slightly tweaked, new revision of Red/Green, which included bug fixes. Newly pressed cartridges shipped to stores subsequently had the updated Red/Green version installed on them.[144] g. From the original Base Set to the Neo Destiny sets, the booster packs contained 11 cards.",
+    "id": 88,
+    "original_id": 98,
+    "split_id": 0,
+    "page": 26,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 82,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Since the seventh generation Sun and Moon sets, the packs have again contained 11 cards. h. A definitive number could not be established. The Fire and Disaster Management Agency announced that, as of 17:00, 17 December, a total of 685 people had been taken to hospitals in direct relationship to the Pokemon episode. Of these, 208 people were actually hospitalized.[228] However, different figures have been stated by different sources.[229][230] Pokemon Story (2000), a 500+ page book on Pokemon, states that \"approximately 750 children\" were taken to hospitals, of which 135 were hospitalized.[231] It has been reported that, due to the incident catching the country off-guard, different methods of surveying were used throughout Japan, and these methods were not always accurate.[232]",
+    "id": 89,
+    "original_id": 101,
+    "split_id": 0,
+    "page": 26,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 120,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "i. However, Sailor Moon did gain a cult following at the time.[268] After being pulled from syndication in spring 1996 due to low ratings,[269] it was broadcast again on USA Network from June 1997 to March 1998.[270] The anime subsequently had a successful run on Cartoon Network's Toonami block from 1 June 1998, to 5 July 2002, a timeframe that overlapped Pok\u00e9mania.[268][270] j. Shogakukan kept this condition until 2021. As of 2025, the last animated Pok\u00e9mon feature is Pokemon: Coco (\u30dd\u30b1\u30e2\u30f3 \u30b3\u30b3), released in Japan on 25 December 2020. It was released worldwide (excluding Japan, Korea, and China) as Pok\u00e9mon the Movie: Secrets of the Jungle on 8 October 2021. Between 1998 and 2021, a total of 23 anime films were released. k. In her 2006 book Millennial Monsters, Anne Allison mentions the card suit and writes, within parentheses, that it \"was eventually settled out of court\".[499] However, she does not cite a source for this. The full sentence does contain an inline citation to a New York Times piece, but this article doesn't state that the case was settled.",
+    "id": 90,
+    "original_id": 103,
+    "split_id": 0,
+    "page": 27,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 180,
+      "sentence_count": 13,
+      "is_split": false
+    }
+  },
+  {
+    "text": "4. Tomisawa, Akihito (1 September 2000). \u30b2\u30fc\u30e0\u30d5\u30ea\u30fc\u30af: \u3073\u306e \u3092 \u308a \u3048\u308b\u30af\u30ea\u30a8 \u30a4\u30c6\u30a3\u30d6 [Game Freak: A Creative Group That Redefines the Global Standard for Gaming]. Media Factory. pp.\u00a0138\u2013139. ISBN\u00a0978-4840101189. \"\u3084\u304c\u3066\u3001\u3069\u3046\u305b \u3051\u306e\u30b2 \u30fc \u3060\u308d\u3046\u3001\u3068 \u304d\u3082\u3057\u306a\u304b\u3064\u305f \u305f\u3061\u307e\u3067\u304c \u3092 \u3057\u306f\u3058\u3081\u305f\u3002\" [Soon, the game was even picked up by adults, who initially didn't pay attention to it because they considered it a children's game.]",
+    "id": 91,
+    "original_id": 107,
+    "split_id": 0,
+    "page": 27,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 61,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "5. Mcfarland, Melanie; Parvaz, D.H. (11 April 1999). \"Are Your Children Nuts About Little Cartoon Creatures From Japan? Don't Know Why? The Diagnosis Is Simple: Pokemon Fever\" (https://a rchive.seattletimes.com/archive/?date=19990411&slug=2954422). The Seattle Times. Archived (https://web.archive.org/web/20230508154229/https://archive.seattletimes.com/archive/?date= 19990411&slug=2954422) from the original on 8 May 2023. \"And yes, there are plenty of adult fans as well.\"",
+    "id": 92,
+    "original_id": 108,
+    "split_id": 0,
+    "page": 27,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 52,
+      "sentence_count": 18,
+      "is_split": false
+    }
+  },
+  {
+    "text": "12. Hatakeyama, Kenji; Kubo, Masakazu (10 December 2000). \u30dd\u30b1\u30e2\u30f3\u30fb\u30b9\u30c8\u30fc\u30ea\u30fc [Pokemon Story]. Nikkei BP. pp.\u00a0474\u2013475. ISBN\u00a0978-4822241995. \"\u3053\u3046\u3057\u305f \u306b \u3044\u30b7\u30b9\u30c6\u30e0\u306f\u3001 \u306f \u30ad\u30e3\u30e9\u30af\u30bf\u30fc\u3067\u306f\u305d\u308c\u307b\u3069 \u306a\u30b7\u30b9\u30c6\u30e0\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002(...) \u3044\u307e\u3001 \u30ad\u30e3\u30e9 \u30af\u30bf\u30fc\u306e \u3067\u3001 \u304c1 \u3082\u3057\u304f\u306f1 \u306b \u3055\u308c\u3066\u3044\u306a\u3044\u30ad\u30e3\u30e9\u30af\u30bf\u2014\u306f\u3001\u30dd\u30b1\u30e2\u30f3\u305f \u3060 \u3064\u3067\u3057\u3087\u3046\u3002\" [Such a council-like system is actually not that common among well-known properties. (...) Pok\u00e9mon is probably the only character in the world today whose original rights are not consolidated in the hands of a single major copyright holder or a single company.]",
+    "id": 93,
+    "original_id": 117,
+    "split_id": 0,
+    "page": 28,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 75,
+      "sentence_count": 15,
+      "is_split": false
+    }
+  },
+  {
+    "text": "20. Ruby and Emerald Pok\u00e9dex entries on Pikachu: Game Freak, Creatures (19 March 2003). Pok\u00e9mon Ruby (Game Boy Advance). Nintendo. \"No 156 - PIKACHU - MOUSE POK\u00c9MON. Whenever Pikachu comes across something new, it blasts it with a jolt of electricity. If you come across a blackened berry, it's evidence that this Pok\u00e9mon mistook the intensity of its charge.\" Game Freak, Creatures (1 May 2005). Pok\u00e9mon Emerald (Game Boy Advance). Nintendo. \"No 156 - PIKACHU - MOUSE POK\u00c9MON. It stores electricity in the electric sacs on its cheeks.",
+    "id": 94,
+    "original_id": 129,
+    "split_id": 0,
+    "page": 29,
+    "score": 100.0,
+    "metadata": {
+      "word_count": 88,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "23. Liu, Caitlin (10 May 1999). \"Pokemon Is One Powerful Drawing Card\" (https://www.latimes.co m/archives/la-xpm-1999-may-10-me-35763-story.html). Los Angeles Times. Archived (https://w eb.archive.org/web/20210228032857/https://www.latimes.com/archives/la-xpm-1999-may-10- me-35763-story.html) from the original on 28 February 2021. \"Parents said that, although some Pokemon charters [sic] are violent, the depiction of blood and gore that comes into family rooms every night is far worse.\"",
+    "id": 95,
+    "original_id": 133,
+    "split_id": 0,
+    "page": 29,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 54,
+      "sentence_count": 14,
+      "is_split": false
+    }
+  },
+  {
+    "text": "24. Graeber, Laurel (29 August 1999). \"Masters of the Universe, Youth Division\" (https://www.nytim es.com/1999/08/29/tv/cover-story-masters-of-the-universe-youth-division.html). The New York Times. p.\u00a04. Archived (https://web.archive.org/web/20230220231748/https://www.nytimes.com/ 1999/08/29/tv/cover-story-masters-of-the-universe-youth-division.html) from the original on 20 February 2023. \"But on the other hand, I don't worry about it as much as, say, 'Beast Wars', 'Batman' or 'X-Men'\", all animated series that she said emphasized violence.\"",
+    "id": 96,
+    "original_id": 134,
+    "split_id": 0,
+    "page": 29,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 16,
+      "is_split": false
+    }
+  },
+  {
+    "text": "26. Mallory, Michael (12 October 2001). \"Kids' Anime Hits Critical Mass\" (https://www.latimes.com/ archives/la-xpm-2001-oct-12-ca-56238-story.html). Los Angeles Times. p.\u00a0F18. Archived (http s://web.archive.org/web/20230322090014/https://www.latimes.com/archives/la-xpm-2001-oct-1 2-ca-56238-story.html) from the original on 22 March 2023. \"[The anime] managed to crack a perennial kids' TV nut: how to present action without violence. It's the stylized, whimsical little monsters that do all the fighting, not the humans.\"",
+    "id": 97,
+    "original_id": 136,
+    "split_id": 0,
+    "page": 29,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 59,
+      "sentence_count": 17,
+      "is_split": false
+    }
+  },
+  {
+    "text": "27. Chua-Eoan, Howard; Larimer, Tim (22 November 1999). \"Beware of the Poke Mania\" (https://c ontent.time.com/time/subscriber/printout/0,8816,992625,00.html). Time. Vol.\u00a0154, no.\u00a021. pp.\u00a080\u201386. Archived (https://web.archive.org/web/20230608162453/https://content.time.com/ti me/subscriber/printout/0,8816,992625,00.html) from the original on 8 June 2023. \"Pokemon do not die. When they lose battles, they faint. And if that happens to your Pokemon, you can take it to the local Pokemon Center, a high-tech spa where it can be restored to \"fighting fit\".\"",
+    "id": 98,
+    "original_id": 137,
+    "split_id": 0,
+    "page": 29,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 69,
+      "sentence_count": 21,
+      "is_split": false
+    }
+  },
+  {
+    "text": "28. Plotz, David (12 November 1999). \"Pok\u00e9mon. Little. Yellow. Different. Better\" (https://slate.com/ news-and-politics/1999/11/pokemon.html). Slate. Archived (https://web.archive.org/web/200303 16022254/http://slate.msn.com/id/55696/) from the original on 16 March 2003. \"Pok\u00e9mon softens its violence with sweetness. Like Ninja Turtles and Power Rangers, Pok\u00e9mon is packed with battle scenes. But it is far gentler. Pok\u00e9mon never die, they only \"faint\".\"",
+    "id": 99,
+    "original_id": 138,
+    "split_id": 0,
+    "page": 29,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 53,
+      "sentence_count": 19,
+      "is_split": false
+    }
+  },
+  {
+    "text": "41. Sato, Tetsur\u014d (30 March 1998). \"\u300c\u30dd\u30b1\u30e2\u30f3\u300d \" [The Birth of Pokemon]. In Ohtsuki, Takahiro (ed.). \u30dd\u30b1\u30e2\u30f3\u306e [The Magic of Pokemon]. Mainichi Newspapers. p.\u00a0131.",
+    "id": 100,
+    "original_id": 152,
+    "split_id": 0,
+    "page": 31,
+    "score": 80.0,
+    "metadata": {
+      "word_count": 25,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "45. Tomisawa (2000), p.\u00a0168: \" \u306f\u3001 \u306e\u3088\u3046\u306a\u30b2\u30fc \u304c \u3055\u308c\u305f \u306e \u306f\u307e\u3060 \u3057\u3066\u3044\u306a\u304b\u3063\u305f\u3002\u3060\u304b\u3089\u3053\u305d\u3001\u305d\u308c\u3092 \u306a\u308a \u306a\u308a\u306b\u307e\u3068\u3081\u3066\u3084\u308c\u3070\u3001\u30b2\u30fc \u30d7\u30ec \u30a4\u30e4\u30fc\u305f\u3061\u304b\u3089\u306e \u304d\u306a \u304c\u3042\u308b\u3060\u308d\u3046\u3001\u3068 \u3048\u305f\u306e\u3060\u3002\" [\"At that time, magazines specializing in gaming did not yet exist as they do today. Therefore, he figured there would be a great demand among gamers for a kind of pamphlet or small book with gaming information.\"]",
+    "id": 101,
+    "original_id": 157,
+    "split_id": 0,
+    "page": 31,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "46. Sato, Tetsur\u014d. \"The Birth of Pokemon\". In Ohtsuki (1998), p.\u00a0133. \" \u306fTV\u30b2\u30fc\u30e0\u306e \u3092 \u3057\u305f \u306a\u3069 \u3060\u3063\u305f\u3002\u300e\u30b2\u30fc\u30e0\u30d5\u30ea\u30fc\u30af\u300f\u306f \u306eTV\u30b2\u30fc\u30e0\u30d5\u30a1\u30f3\u306b \u30b3\u30df\u3067 \u304c \u308a\u3001 \u3092 \u3084\u3057\u3066\u3044\u3063\u305f\u3002 \u304b\u3089\u306e \u306e\u30ea\u30af\u30a8\u30b9\u30c8\u3082 \u3057\u305f\u3002\" [\"At that time, there were no magazines that explained video game strategies. \"Game Freak\" spread by word of mouth among video game fans nationwide, and the number of subscribers grew.",
+    "id": 102,
+    "original_id": 158,
+    "split_id": 0,
+    "page": 31,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 7,
+      "is_split": false
+    }
+  },
+  {
+    "text": "57. Hatakeyama & Kubo (2000), p.\u00a080. 58. \"\u30dd\u30b1\u30e2\u30f3 !! \u3055\u3093\uff08 \u30a4\u30f3\u30bf\u30d3\u30e5\u30fc\" (https://web.archive.org/we b/20021216011425/http://www.nintendo.co.jp/nom/0007/kawaguti/page01.html) [The secret story of Pokemon's birth is revealed!! Interview with Takashi Kawaguchi (Nintendo)]. Nintendo Online Magazine. nintendo.co.jp. July 2000. Archived from the original (http://www.nintendo.co. jp/nom/0007/kawaguti/page01.html) on 16 December 2002. 59. \" \u304c \u308b\u3001\u30b2\u30fc\u30e0\u30d5\u30ea\u30fc\u30af\u304c \u3067 \u3058\u308b \u306b\u306a\u308b\u307e\u3067\" (https://lavacutcontent.com/ masuda-game-freak-history/) [Game Freak's Path to Worldwide Fame, As Told By Masuda].",
+    "id": 103,
+    "original_id": 169,
+    "split_id": 0,
+    "page": 31,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 62,
+      "sentence_count": 28,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Sh\u016bkan Famits\u016b. 23 May 2019. pp.\u00a082\u201386. Archived (https://archive.today/20250207170813/htt ps://lavacutcontent.com/masuda-game-freak-history/) from the original on 7 February 2025. \"Ishihara in particular was fond of card games and used that insight to advise on how to add more depth to the battle system. To be honest, things like the Pokemon types, the link cable battles, and the Pokedex were all added later in development based on his suggestions. (...) Ishihara also gave us some pointers on the story and setting.\"",
+    "id": 104,
+    "original_id": 170,
+    "split_id": 0,
+    "page": 31,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 78,
+      "sentence_count": 13,
+      "is_split": false
+    }
+  },
+  {
+    "text": "77. Hatakeyama & Kubo (2000), p.\u00a0133-135: \"\u3064\u307e\u308a\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u3092 \u3068\u3057\u3066\u3001 \u306e \u30b2\u30fc\u30e0\u3092 \u308b\u307e\u3067\u306e \u306f \u306b \u308f\u308c\u305f\u308f\u3051\u3067\u3059\u304c\u3001\u305d\u306e \u308f\u308c\u305f \u3092\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u306e \u306f\u3082\u3046 \u308a \u305d\u3046\u3068\u3057\u3066\u3001\u30dd\u30b1\u30e2\u30f3\u3092 \u308a \u3057\u305f\u306e\u3067\u3057\u305f\u3002\" [\"In other words, the world Tajiri knew up to the day he learned about games was lost forever. But after that, Tajiri tried to regain the world that he had lost by creating Pokemon.\"]",
+    "id": 105,
+    "original_id": 184,
+    "split_id": 0,
+    "page": 32,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 60,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "101. Pokemon Business Study Group (1998), p.\u00a043. 102. \"Secrets of Pok\u00e9mon: How A Game Captured The World's Kids\" (https://web.archive.org/web/2 0000817051831/http://abcnews.go.com/sections/world/DailyNews/pokemon_000208_chat.htm l). ABC News. ABC News. 8 February 2000. Archived from the original (http://abcnews.go.com/ sections/world/DailyNews/pokemon_000208_chat.html) on 17 August 2000. \"Exeggutor is my favorite. That's because I was always using this character while I was debugging the program.\"",
+    "id": 106,
+    "original_id": 210,
+    "split_id": 0,
+    "page": 33,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 19,
+      "is_split": false
+    }
+  },
+  {
+    "text": "130. Frank, Allegra (28 September 2018). \"Pok\u00e9mon veteran Junichi Masuda reflects on the series' early days\" (https://www.polygon.com/interviews/2018/9/27/17909916/pokemon-red-blue-junic hi-masuda-interview). Polygon. Archived (https://web.archive.org/web/20181230152625/https:// www.polygon.com/interviews/2018/9/27/17909916/pokemon-red-blue-junichi-masuda-intervie w) from the original on 30 December 2018. \"Even when we were talking to our friends in the industry and saying that, \"Oh, we're working on a Game Boy game,\" they were like, \"Really?",
+    "id": 107,
+    "original_id": 240,
+    "split_id": 0,
+    "page": 35,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 56,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "You're working on a Game Boy game? That's not going to sell very well, don't you think?\" That's kind of what the atmosphere was like in Japan at the time.\"",
+    "id": 108,
+    "original_id": 241,
+    "split_id": 0,
+    "page": 35,
+    "score": 80.0,
+    "metadata": {
+      "word_count": 30,
+      "sentence_count": 3,
+      "is_split": false
+    }
+  },
+  {
+    "text": "140. Hatakeyama & Kubo (2000), p.\u00a0204. 141. \"\u30dd\u30b1\u30c3\u30c8\u30e2\u30f3\u30b9\u30bf\u30fc\u300c \u30fb 100 \u30d0\u30fc\u30b8\u30e7\u30f3 \" [To commemorate the sales of over 1 million copies of Pokemon Red and Green, a new Blue version has been released!]. CoroCoro Comic. 15 April 1996. pp.\u00a059\u201360. (Translation (https://ar chive.today/20250207173209/https://lavacutcontent.com/corocoro-comic-pokemon-blue/)) 142. \"Just Making The Last Train\" (https://iwataasks.nintendo.com/interviews/ds/pokemon/0/0/) (Interview). Iwata Asks. Interviewed by Iwata, Satoru. Archived (https://web.archive.org/web/20 230328012400/https://iwataasks.nintendo.com/interviews/ds/pokemon/0/0/) from the original on 28 March 2023.",
+    "id": 109,
+    "original_id": 251,
+    "split_id": 0,
+    "page": 35,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 68,
+      "sentence_count": 23,
+      "is_split": false
+    }
+  },
+  {
+    "text": "144. Hatakeyama & Kubo (2000), p.\u00a0200: \"\u30df\u30e5\u30a6\u304c \u3059\u308b\u3068\u3044\u3046 \u3092 \u3051\u308b\u3068\u3001\u3059\u3050\u306b\u30c7\u30d0\u30c3 \u30b0\u30d7\u30ed\u30b0\u30e9\u30e0\u3092 \u3053\u3057\u3001 \u3067\u304d\u308b\u30bf\u30a4\u30df\u30f3\u30b0\u306e \u304b\u3089\u3001\u30df\u30e5\u30a6\u306e \u3092\u3055\u3089\u306b \u306b \u3057\u307e\u3057\u305f\u3002\u305d\u306e \u306b\u306f\u30df\u30e5\u30a6\u304c \u3059\u308b\u30ab\u30fc\u30c8\u30ea\u30c3\u30b8\u3068 \u3057\u306a\u3044\u30ab\u30fc\u30c8\u30ea\u30c3\u30b8 \u304c \u3059\u308b\u3053\u3068\u306b\u306a\u308a\u307e\u3057\u305f\u3002\" [\"As soon as they [Nintendo] received reports of Mew appearing, they initiated a debugging program and sealed the Mew data even tighter, starting with the next batch of shipped cartridges. As a result, there were now cartridges on the market in which Mew could appear and cartridges in which Mew could not appear.\"].",
+    "id": 110,
+    "original_id": 253,
+    "split_id": 0,
+    "page": 35,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 76,
+      "sentence_count": 5,
+      "is_split": false
+    }
+  },
+  {
+    "text": "145. Tomisawa (2000), p.\u00a014: \" \u3068\u3008 \u304c \u3055\u308c\u305f\u3042\u3068\u3082\u3001 \u3055\u308c\u3066\u3044\u305f\u30d0\u30b0\u3092 \u308a \u304f \u3084\u3001 \u306e \u306a\u3069\u306e \u3082 \u3081\u3066\u3001 \u3092 \u3057\u305f\u30b2\u30fc \u30d5\u30ea\u30fc\u30af\u306e \u3067 \u306b \u3089\u308c\u3066\u3044\u305f\u3082\u306e\u3060\u3063\u305f\u306e\u3060\u3002\u3057\u304b\u3057\u3001\u30b0\u30e9\u30d5\u30a3\u30c3\u30af \u304b\u3089\u306e \u3067\u3001\u30dd\u30b1\u30e2\u30f3\u305f\u3061\u306e \u3092 \u3057\u304f \u304d \u3053\u3059\u306a\u3069\u3057\u3066\u3044\u308b\u3046\u3061\u306b\u3001\u3008 \u30d0\u30fc\u30b8\u30e7\u30f3\u3009\u306f\u304b\u306a\u308a \u306e \u3044\u3082\u306e\u306b\u306a\u3063 \u3066\u304d\u305f\u3002\" [\"Even after Red and Green had been released, the games were still being tested in- house at Game Freak, the company in charge of their development, in order to remove any remaining bugs and to train new employees. However, at the request of the graphic designers, the Pokemon characters were redrawn, and eventually, the Blue Version turned out a very polished product.\"].",
+    "id": 111,
+    "original_id": 255,
+    "split_id": 0,
+    "page": 36,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 95,
+      "sentence_count": 5,
+      "is_split": false
+    }
+  },
+  {
+    "text": "152. Kimura (2006): \" \u306f \u3051\u3066 \u306b\u3001 WOC \u30de\u30b8\u30c3\u30af\u30fb\u30b6\u30fb\u30ae\u30e3\u30b6\u30ea\u30f3\u30b0\u300d\u3068\u3044 \u3046\u30c8\u30ec\u30fc\u30c7\u30a3\u30f3\u30b0\u30ab\u30fc\u30c9\u30b2\u30fc\u30e0\u304c \u3067 \u3067\u3042\u308b\u3053\u3068\u3001 \u305f\u3061\u304c \u3057\u305f\u300c\u30dd\u30b1\u30c3\u30c8\u30e2 \u30f3\u30b9\u30bf\u30fc \u30ab\u30fc\u30c9\u30b2\u30fc\u30e0\u300d\u306f\u300c\u30de\u30b8\u30c3\u30af\u30fb\u30b6\u30fb\u30ae\u30e3\u30b6\u30ea\u30f3\u30b0\u300d\u3092\u30d2\u30f3\u30c8\u306b\u3057\u3066\u3044\u308b\u304c\u3001 \u306e\u30aa\u30ea\u30b8\u30ca\u30eb\u30c8\u30ec\u30fc\u30c7\u30a3\u30f3\u30b0\u30ab\u30fc\u30c9\u30b2\u30fc\u30e0\u3067\u3042\u308b\u3053\u3068\u3092 \u3048\u305f\u3002\u305d\u3057\u3066 \u306e \u3092\u304b\u3051\u305f\u3001 \u3064\u304b\u306e \u304b\u3089 \u308a \u307f\u3092 \u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3082 \u306b \u3048\u305f\u3002\" (\"Kayama went on to tell Iwasaki that a trading card game called \"Magic the Gathering\" made by WOC [Wizards of the Coast] was very popular in the United States, and that the \"Pokemon Card Game\" developed by Ishihara and his colleagues was inspired by \"Magic the Gathering\". However, it was a completely original trading card game made in Japan. He also told Iwasaki that, so far, several major wholesalers he had approached had rejected the project.\")",
+    "id": 112,
+    "original_id": 262,
+    "split_id": 0,
+    "page": 36,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 103,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "153. Broug\u00e8re, Gilles (5 February 2004). \"Pok\u00e9mon in France\". In Tobin, Joseph (ed.). Pikachu's Global Adventure: The Rise and Fall of Pok\u00e9mon. Duke University Press. p.\u00a0197. ISBN\u00a0978- 0822332879. 154. \"Pyramid Review: Pokemon Trading Card Game\" (http://www.sjgames.com/pyramid/sample.ht ml?id=571). Pyramid. SJGames.com. 29 January 1999. Archived (https://web.archive.org/web/ 20201021223225/http://www.sjgames.com/pyramid/sample.html?id=571) from the original on",
+    "id": 113,
+    "original_id": 263,
+    "split_id": 0,
+    "page": 36,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 51,
+      "sentence_count": 26,
+      "is_split": false
+    }
+  },
+  {
+    "text": "162. Kimura (2006): \"\u30dd\u30b1\u30e2\u30f3\u30ab\u30fc\u30c9\u30b2\u30fc\u30e0\u306e \u306f\u300110 15 \u306e \u30b3\u30ed\u30b3\u30ed\u30b3\u30df\u30c3\u30af 11 \u3067 \u3081\u3066 \u3055\u308c\u305f\u3002(...) \u3053\u306e \u306f\u3001 \u30d0\u30fc\u30b8\u30e7\u30f3\u306e \u3092 \u3057\u305f\u306e\u3068 \u3058 \u3067\u3042\u3063\u305f\u3002\" (\"The Pokemon card game was first revealed in the November issue of the monthly CoroCoro Comic, released on October 15. (...) This issue was the same one that announced the magazine's mail order of the Blue version.\")",
+    "id": 114,
+    "original_id": 272,
+    "split_id": 0,
+    "page": 37,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 56,
+      "sentence_count": 9,
+      "is_split": false
+    }
+  },
+  {
+    "text": "189. Yoshida, Toshifumi; Flanagan, Bill (July 1999). \"Animerica interview: Takemoto Mori\" (https://w ww.animenostalgiabomb.com/1st-pokemon-cover-pikachu-and-ash-ketchum-animerica-july-19 99/). Animerica. Vol.\u00a07. pp.\u00a028 + 30. Archived (https://web.archive.org/web/20231201224853/htt ps://www.animenostalgiabomb.com/1st-pokemon-cover-pikachu-and-ash-ketchum-animerica-j uly-1999/) from the original on 1 December 2023. \"The main point is not to alienate any of the kids. For example, if we had the main character choose Zenigame (Squirtle), then some of the kids would say, \"Hey, I chose Hitokage (Charmander),\" and that would lead to the kid saying, \"Who needs this show!\" \"",
+    "id": 115,
+    "original_id": 297,
+    "split_id": 0,
+    "page": 37,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 79,
+      "sentence_count": 17,
+      "is_split": false
+    }
+  },
+  {
+    "text": "223. \"An Interim Report from the \"Study Group on Broadcasting and Audio-Visual Sensory Perception\" (https://web.archive.org/web/20081023122526/http://www.soumu.go.jp/joho_tsusi n/policyreports/english/group/broadcasting/interim_rep.html). Ministry of Posts and Telecommunications. April 1998. Archived from the original (http://www.soumu.go.jp/joho_tsusi n/policyreports/english/group/broadcasting/interim_rep.html) on 23 October 2008. 224. \"It's Been 25 Years Since Pok\u00e9mon Accidentally Gave People Seizures\" (https://gizmodo.com/ pokemon-porygon-seizures-pikachu-shock-25th-anniversary-1849900785). Gizmodo. 15 December 2022. Archived (https://web.archive.org/web/20230925173836/https://gizmodo.com/ pokemon-porygon-seizures-pikachu-shock-25th-anniversary-1849900785) from the original on",
+    "id": 116,
+    "original_id": 332,
+    "split_id": 0,
+    "page": 39,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 57,
+      "sentence_count": 23,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Included in Ohtsuki (1998), p.\u00a038. 229. \"Pocket Monsters TV Cartoon Show Seizures News Coverage, Page 1\" (https://www.virtualpet. com/vp/farm/pmonster/seizures/pmnews1.htm). virtualpet.com. Archived (https://web.archive.or g/web/19990421131836/http://www.virtualpet.com/vp/farm/pmonster/seizures/pmnews1.htm) from the original on 21 April 1999. 230. \"Pocket Monsters TV Cartoon Show Seizures News Coverage, Page 2\" (https://www.virtualpet. com/vp/farm/pmonster/seizures/pmnews2.htm). virtualpet.com. Archived (https://web.archive.or g/web/19990421171426/http://www.virtualpet.com/vp/farm/pmonster/seizures/pmnews2.htm) from the original on 21 April 1999.",
+    "id": 117,
+    "original_id": 335,
+    "split_id": 0,
+    "page": 39,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 54,
+      "sentence_count": 28,
+      "is_split": false
+    }
+  },
+  {
+    "text": "234. Hatakeyama & Kubo (2000), p.\u00a0389-390. 235. \"WORLD DATELINES\" (https://www.chron.com/news/article/WORLD-DATELINES-3097306.ph p). Houston Chronicle. 1 April 1998. Archived (https://web.archive.org/web/20230520123740/ht tps://www.chron.com/news/article/WORLD-DATELINES-3097306.php) from the original on 20 May 2023. \"Pokemon, as the series is called in Japan, back April 16 follows investigations by the network and the National Association of Commercial Broadcasters.\" 236. \" 10 \u2014 1998 1 12 \" (https://web.a rchive.org/web/20100613064628/http://eiren.org/toukei/1998.html) [Top films with past distribution revenues (films with distribution revenues of 1 billion yen or more) \u2014 1998 (January to December)]. eiren.org. Motion Pictures Producers Association of Japan. Archived from the original (http://eiren.org/toukei/1998.html) on 13 June 2010.",
+    "id": 118,
+    "original_id": 338,
+    "split_id": 0,
+    "page": 39,
+    "score": 75.0,
+    "metadata": {
+      "word_count": 97,
+      "sentence_count": 29,
+      "is_split": false
+    }
+  },
+  {
+    "text": "237. Wolf, Michael. \"Pokemon Movie Frenzy\" (https://web.archive.org/web/20000613055906/http:// www.dailyradar.com/features/game_feature_page_31_1.html). Daily Radar. Archived from the original (http://www.dailyradar.com/features/game_feature_page_31_1.html) on 13 June 2000. \"The movie (...) became the fourth highest grossing film of the year.\" 238. \"\u30d3\u30c7\u30aa \u3057 \u3048\u3082\" [Video Rentals Suspended]. Hokkaido Shimbun, morning edition (South Hokkaido). 19 December 1997. Included in Ohtsuki (1998), p.\u00a070.",
+    "id": 119,
+    "original_id": 339,
+    "split_id": 0,
+    "page": 39,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 53,
+      "sentence_count": 23,
+      "is_split": false
+    }
+  },
+  {
+    "text": "239. \"\u30a2\u30cb\u30e1\u300c\u30dd\u30b1\u30e2\u30f3\u300d \u3067\u30ec\u30f3\u30bf\u30eb\u30d3\u30c7\u30aa\u306e \u3050\" [Due to the \"Pokemon\" anime issue, multiple video rental companies have suspended rentals]. Minami-Nihon Shimbun, morning edition. 19 December 1997. Included in Ohtsuki (1998), p.\u00a070. 240. \"\u30af\u30ea\u30b9\u30de\u30b9\u306e\u30d7\u30ec\u30bc\u30f3\u30c8\u306f?\" [What are your Christmas presents?]. Asahi Shimbun, morning edition. 24 December 1997. Included in Ohtsuki (1998), p.\u00a083.",
+    "id": 120,
+    "original_id": 341,
+    "split_id": 0,
+    "page": 40,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 50,
+      "sentence_count": 14,
+      "is_split": false
+    }
+  },
+  {
+    "text": "November 1999. p.\u00a0171. \"President Hiroshi Yamauchi told a crowd at the company's Space World '97 exhibition, \"I want people all over the world to play Pok\u00e9mon.\" \"",
+    "id": 121,
+    "original_id": 362,
+    "split_id": 0,
+    "page": 41,
+    "score": 80.0,
+    "metadata": {
+      "word_count": 28,
+      "sentence_count": 4,
+      "is_split": false
+    }
+  },
+  {
+    "text": "264. Margot Adler (reporter), Brooke Gladstone (host) (6 March 1999). Pokemon Fever: Pokemon TV & Video Game Enthralls (https://web.archive.org/web/20240413110631/https://www.youtub e.com/watch?v=qbszbUK5U90) (Radio broadcast). Washington DC, United States: National Public Radio, Weekend Edition. Event occurs at 04:24. Archived from the original (https://www. youtube.com/watch?v=qbszbUK5U90) on 13 April 2024. \"We looked at Pok\u00e9mon and said: 'Let's make this an American show for American kids'.\" (entry on website (https://web.archive.or g/web/20221012081706/https://www.npr.org/1999/03/06/1046502/pokemon-fever))",
+    "id": 122,
+    "original_id": 367,
+    "split_id": 0,
+    "page": 41,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 65,
+      "sentence_count": 19,
+      "is_split": false
+    }
+  },
+  {
+    "text": "274. Van Luling, Todd (2 June 2017). \"Before 'Gotta Catch 'Em All:' The Creation Of The Pok\u00e9mon Theme\" (https://www.huffpost.com/entry/pokemon-theme-catch-em-if-you-can_n_592f3495e4b 0540ffc84324a). HuffPost. Archived (https://web.archive.org/web/20230121064144/https://ww w.huffpost.com/entry/pokemon-theme-catch-em-if-you-can_n_592f3495e4b0540ffc84324a) from the original on 21 January 2023. \" \"It was always my intention to come up with a tagline for marketing purposes that would also be included in the theme song,\" 4Kids Entertainment head of production Norman Grossfeld explained to HuffPost.\"",
+    "id": 123,
+    "original_id": 381,
+    "split_id": 0,
+    "page": 42,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 65,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "309. Schaefer, Gary (27 May 1999). \"Pokemon boom helps push Nintendo profit to six-year high\" (ht tps://www.proquest.com/docview/329405610). National Post. p.\u00a0C11. ProQuest\u00a0329405610 (htt ps://www.proquest.com/docview/329405610). 310. \"Week of November 8\u201314, 1999\" (https://web.archive.org/web/20021003082227/http://www.ga masutra.com/newswire/news/index19991108.htm). Gamasutra. Archived from the original (htt p://www.gamasutra.com/newswire/news/index19991108.htm) on 3 October 2002. \"The Pokemon franchise has accounted for over thirty percent of Nintendo's revenues this year.\"",
+    "id": 124,
+    "original_id": 411,
+    "split_id": 0,
+    "page": 44,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 58,
+      "sentence_count": 24,
+      "is_split": false
+    }
+  },
+  {
+    "text": "330. Breen, Peter (January 2000). \"Monster Marketing: Pokemon is white-hot now. But will it be evergreen?\" (https://web.archive.org/web/20040618111725/http://promomagazine.com/mag/m arketing_monster_marketing_pokemon/). PROMO Magazine. Archived from the original (http:// promomagazine.com/mag/marketing_monster_marketing_pokemon/) on 18 June 2004. \" [Pok\u00e9mon] began fully living up to its hype in November, when the release of Pokemon the First Movie and a corresponding Burger King promotion sent sales of licensed merchandise \u2013 and alleged incidents of criminal behavior \u2013 soaring. (...) [Pok\u00e9mon products] built up the buzz before the movie release opened the floodgates.\"",
+    "id": 125,
+    "original_id": 431,
+    "split_id": 0,
+    "page": 46,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 83,
+      "sentence_count": 16,
+      "is_split": false
+    }
+  },
+  {
+    "text": "344. See this phone card (https://web.archive.org/web/20230407091240im_/https://i.ebayimg.com/i mages/g/HVEAAOSwAJpj9t-N/s-l1600.png). 345. \"Official Shop List\" (https://www.pokemon.co.jp/shop/en/). pokemon.co.jp. Archived (https://arc hive.today/20250903173509/https://www.pokemon.co.jp/shop/en/) from the original on 3 September 2025. Retrieved 3 September 2025. 346. \"Pok\u00e9mon says \"I Choose You!\" To Rockefeller Center for First U.S. Store Dedicated To the Growing Worldwide Phenomenon\" (https://web.archive.org/web/20011119104638/http://www.p okemoncenter.com/pkstore/text_2.asp) (Press release). Pok\u00e9mon USA. 1 November 2001.",
+    "id": 126,
+    "original_id": 444,
+    "split_id": 0,
+    "page": 47,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 55,
+      "sentence_count": 33,
+      "is_split": false
+    }
+  },
+  {
+    "text": "358. Barnes, Julian E. (20 January 2001). \"Pokemon's House of Cards; Market Crash Holds Lessons for Young Traders\" (https://www.nytimes.com/2001/01/20/business/pokemon-s-house- of-cards-market-crash-holds-lessons-for-young-traders.html). The New York Times. p.\u00a0C1. Archived (https://web.archive.org/web/20130723154357/http://www.nytimes.com/2001/01/20/b usiness/pokemon-s-house-of-cards-market-crash-holds-lessons-for-young-traders.html?pagew anted=print&src=pm) from the original on 23 July 2013. 359. \"Pokemon popularity wanes among children\" (https://web.archive.org/web/20020220161536/htt p://www.ananova.com/news/story/sm_337185.html). Ananova. Archived from the original (htt p://www.ananova.com/news/story/sm_337185.html) on 20 February 2002. \"James Leach from [UK-based] Carrick James Market Research, which carried out the study, says it suggests the Pokemon craze is now firmly on the decline.\"",
+    "id": 127,
+    "original_id": 458,
+    "split_id": 0,
+    "page": 48,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 81,
+      "sentence_count": 30,
+      "is_split": false
+    }
+  },
+  {
+    "text": "369. Huebner, Chuck (28 April 2003). \"RE: Future Pok\u00e9mon TCG Releases by Wizards of the Coast\" (https://web.archive.org/web/20061205062126/http://ww2.wizards.com/Company/Misc/I ndex.aspx?doc=pr_20030428a). wizards.com. Wizards of the Coast. Archived from the original (http://ww2.wizards.com/Company/Misc/Index.aspx?doc=pr_20030428a) on 5 December 2006. 370. \"Pokemon USA, Inc. and Wizards of the Coast, Inc. Resolve Dispute\" (https://web.archive.org/ web/20130319163917/http://www.businesswire.com/news/home/20031229005065/en/Pokemo n-USA-Wizards-Coast-Resolve-Dispute) (Press release). Nintendo and Wizards of the Coast.",
+    "id": 128,
+    "original_id": 470,
+    "split_id": 0,
+    "page": 49,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 55,
+      "sentence_count": 26,
+      "is_split": false
+    }
+  },
+  {
+    "text": "388. Christopher, Michael (3 November 2020). \"Pokemon: Everything In The Johto Region Changed In HeartGold & SoulSilver\" (https://www.thegamer.com/pokemon-johto-differences-heartgold-so ulsilver/). TheGamer. Retrieved 1 October 2023. 389. \"Iwata Asks \u2013 Pok\u00e9mon HeartGold Version & Pok\u00e9mon SoulSilver Version\" (https://www.ninten do.co.uk/NOE/en_GB/news/iwata/iwata_asks_-_pokmon_heartgold_version__soulsilver_versio n_16288_16289.html#top). Nintendo. Archived (https://archive.today/20121205023415/http://w ww.nintendo.co.uk/Iwata-Asks/Iwata-Asks-Pokemon-HeartGold-Version-SoulSilver-Version/Iwa ta-Asks-Pokemon-HeartGold-Version-SoulSilver-Version/1-Just-Making-The-Last-Train/1-Just- Making-The-Last-Train-225842.html#top) from the original on 5 December 2012. Retrieved",
+    "id": 129,
+    "original_id": 485,
+    "split_id": 0,
+    "page": 50,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 52,
+      "sentence_count": 20,
+      "is_split": false
+    }
+  },
+  {
+    "text": "404. Farokhmanesh, Megan (2 October 2014). \"Pok\u00e9mon Omega Ruby, Alpha Sapphire roll out new legendary Mega-Evolution\" (https://www.polygon.com/2014/10/2/6895021/pokemon-omega-ru by-alpha-sapphier-mega-rayquaza). Polygon. Retrieved 30 September 2023. 405. \"Pok\u00e9mon Omega Ruby and Alpha Sapphire release date announced\" (https://www.eurogame r.net/pokemon-omega-ruby-and-alpha-sapphire-will-launch-21st-november). Eurogamer.net. 10 June 2014. Retrieved 30 September 2023. 406. \"Pok\u00e9mon Omega Ruby and Pok\u00e9mon Alpha Sapphire\" (https://www.pokemon.com/us/pokemo n-video-games/pokemon-omega-ruby-and-pokemon-alpha-sapphire/). www.pokemon.com.",
+    "id": 130,
+    "original_id": 500,
+    "split_id": 0,
+    "page": 51,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 54,
+      "sentence_count": 22,
+      "is_split": false
+    }
+  },
+  {
+    "text": "409. Tumbokon, Karen (17 November 2016). \"When Is 'Pok\u00e9mon Sun' & 'Pok\u00e9mon Moon' Being Released For Nintendo 3DS?\" (https://www.ibtimes.com/pokemon-sun-moon-nintendo-3ds-rele ase-date-gameplay-trailers-2447587). International Business Times. Retrieved 17 September 2023. 410. \"Why the New Pok\u00e9mon Are Called 'Sun and Moon' \" (https://time.com/4536438/pokemon-sun- moon-interview/). Time. 19 October 2016. Retrieved 24 September 2023. 411. \"Learn all about Pok\u00e9mon Sun and Pok\u00e9mon Moon in our in-depth interview\" (https://www.nint endo.co.uk/News/2016/October/Learn-all-about-Pokemon-Sun-and-Pokemon-Moon-in-our-in-d epth-interview-1149779.html). Nintendo of Europe GmbH. Retrieved 24 September 2023. 412. \"Why Pokemon Ultra Sun And Moon Aren't Coming To Nintendo Switch\" (https://www.gamespo t.com/articles/why-pokemon-ultra-sun-and-moon-arent-coming-to-nin/1100-6454166/).",
+    "id": 131,
+    "original_id": 504,
+    "split_id": 0,
+    "page": 51,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 86,
+      "sentence_count": 26,
+      "is_split": false
+    }
+  },
+  {
+    "text": "417. Takahashi, Dean (16 December 2015). \"How Pok\u00e9mon Go will benefit from Niantic's lessons from Ingress on location-based game design\" (https://venturebeat.com/games/how-niantic-will- marry-animated-characters-with-mobile-location-data-in-pokemon-go/). VentureBeat. Archived (https://archive.today/20160717135156/http://venturebeat.com/2015/12/16/how-niantic-will-mar ry-animated-characters-with-mobile-location-data-in-pokemon-go/) from the original on 17 July 2016. 418. \"Pok\u00e9mon GO Passes $160 Million Worldwide Revenue, Usage Remains Strong\" (https://sens ortower.com/blog/pokemon-go-160-million-dollars-usage-still-strong). Sensor Tower App Marketing Blog. Archived (https://web.archive.org/web/20160804095654/https://sensortower.co m/blog/pokemon-go-160-million-dollars-usage-still-strong) from the original on 4 August 2016. 419. \"Pok\u00e9mon GO: An Opportunity, Not a Threat\" (https://www.appannie.com/insights/mobile-strate gy/pokemon-go-an-opportunity-not-a-threat/). App Annie. 29 July 2016. Archived (https://web.ar chive.org/web/20161011024900/https://www.appannie.com/insights/mobile-strategy/pokemon- go-an-opportunity-not-a-threat/) from the original on 11 October 2016. 420. \"Ending a Historic First Month, Pok\u00e9mon GO Has Passed $200 Million in Worldwide Revenue\" (https://sensortower.com/blog/pokemon-go-first-month). Sensor Tower App Marketing Blog.",
+    "id": 132,
+    "original_id": 512,
+    "split_id": 0,
+    "page": 52,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 108,
+      "sentence_count": 31,
+      "is_split": false
+    }
+  },
+  {
+    "text": "539. Allison (2006), p.\u00a0128: \"In 1994, one year after it had debuted as the top-ranking children's show on U.S. television, Mighty Morphin Power Rangers sold $330 million of toy merchandise for Bandai America\u2014a spectacular success and major breakthrough into a market (U.S. kids' entertainment, a portal to global kid fads) long resistant to Japanese properties.\"",
+    "id": 133,
+    "original_id": 642,
+    "split_id": 0,
+    "page": 59,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 56,
+      "sentence_count": 7,
+      "is_split": false
+    }
+  },
+  {
+    "text": "Archived (https://archive.today/20230405220008/https://www.wsj.com/articles/SB89614026767 2665000) from the original on 5 April 2023. \"The U.S. marketing interest in Pokemon shows a new respect for Japanese children's products. Japanese hits were once thought to be difficult to translate into American sales. The Mighty Morphin Power Rangers and Tamagotchi virtual pets, two blockbusters sold here by Bandai Co., of Japan, changed all that.\"",
+    "id": 134,
+    "original_id": 646,
+    "split_id": 0,
+    "page": 60,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 58,
+      "sentence_count": 10,
+      "is_split": false
+    }
+  },
+  {
+    "text": "541. Keveney (1998b): \"Interest in Japanese children's programming enjoyed a renaissance in the past decade after Saban Entertainment succeeded with the \"Mighty Morphin Power Rangers\"\"",
+    "id": 135,
+    "original_id": 647,
+    "split_id": 0,
+    "page": 60,
+    "score": 70.0,
+    "metadata": {
+      "word_count": 25,
+      "sentence_count": 1,
+      "is_split": false
+    }
+  },
+  {
+    "text": "550. Iwabuchi, Koichi. \"How \"Japanese\" Is Pok\u00e9mon?\". In Tobin (2004), pp.\u00a059\u201361. \"While feared and envied in the West, Japan's success in exporting cultural products led to the emergence in the 1990s of a chauvinistic, self-praising discourse in Japan. Flush with nationalistic pride, Japanese social commentators suddenly found a specifically Japanese \"fragrance\" in these previously culturally odorless products\".",
+    "id": 136,
+    "original_id": 657,
+    "split_id": 0,
+    "page": 60,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 58,
+      "sentence_count": 8,
+      "is_split": false
+    }
+  },
+  {
+    "text": "552. Iwabuchi, Koichi. \"How \"Japanese\" Is Pok\u00e9mon?\". In Tobin (2004), p.\u00a064. \"It is important to locate the global popularity of Pok\u00e9mon, and of Japanese animation and computer games in general, within a wider picture of the increasing interconnectedness of transnational media industries and markets, an interconnectedness that in turn reflects larger processes of globalization.\"",
+    "id": 137,
+    "original_id": 659,
+    "split_id": 0,
+    "page": 60,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 55,
+      "sentence_count": 7,
+      "is_split": false
+    }
+  },
+  {
+    "text": "557. Yoon, Andrew (9 June 2007). \"Review: Spectrobes\" (https://www.animenewsnetwork.com/revie w/nintendo-ds/spectrobes). Anime News Network. Archived (https://web.archive.org/web/20180 222044225/https://www.animenewsnetwork.com/review/nintendo-ds/spectrobes) from the original on 22 February 2018. \"While the Saturday morning cartoon may not feature the depth of other critically renowned series, it's undeniable that for many, Pokemon was the first step into the world of anime.\"",
+    "id": 138,
+    "original_id": 666,
+    "split_id": 0,
+    "page": 61,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 53,
+      "sentence_count": 12,
+      "is_split": false
+    }
+  },
+  {
+    "text": "560. Solomon, Charles (30 April 2012). \"Still choosing Pokemon: A decade and a half later, the animated TV show, video and card game are going strong\" (https://www.proquest.com/docvie w/1011048151). The Baltimore Sun. p.\u00a0C1. ProQuest\u00a01011048151 (https://www.proquest.com/d ocview/1011048151). \"[Pok\u00e9mon] introduced audiences, usually kids, to what I call anime style ... Shows like 'Pok\u00e9mon' and 'Dragon Ball Z' serve as gateway drugs to anime, manga and sometimes Japanese culture itself.\"",
+    "id": 139,
+    "original_id": 669,
+    "split_id": 0,
+    "page": 61,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 68,
+      "sentence_count": 15,
+      "is_split": false
+    }
+  },
+  {
+    "text": "562. Bremner, Brian; Tashiro, Hiroko (19 March 2007). \"Anime Fantasy Is Big-Biz Reality\" (https://w eb.archive.org/web/20070328191657/http://www.businessweek.com/globalbiz/content/mar200 7/gb20070319_620018.htm). BusinessWeek.com. Archived from the original (http://www.busin essweek.com/globalbiz/content/mar2007/gb20070319_620018.htm) on 28 March 2007. \" [Pok\u00e9mon] was a real breakthrough, [Ledford] contends. It spawned a wave of money-spinning manga comic books, toys, and video games, and underscored the commercial potential of anime.\"",
+    "id": 140,
+    "original_id": 671,
+    "split_id": 0,
+    "page": 61,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 55,
+      "sentence_count": 16,
+      "is_split": false
+    }
+  },
+  {
+    "text": "579. Gillett, Nick (27 November 2009). \"Invizimals, PSP\" (https://www.theguardian.com/technology/ 2009/nov/28/games-previews-nintendo-playstation). The Guardian. Archived (https://web.archi ve.org/web/20240417194529/https://www.theguardian.com/technology/2009/nov/28/games-pre views-nintendo-playstation) from the original on 17 April 2024. \"you get to fight other Invizimals in a way that is copyright-threateningly close to Pok\u00e9mon\" 580. \"Move over Pokemon ... 'Invizimals' tries to take over your PSP\" (https://www.nydailynews.co m/2010/11/07/move-over-pokemon-invizimals-tries-to-take-over-your-psp/). New York Daily News. 7 November 2010. Archived (https://archive.today/20240416090627/https://www.nydaily news.com/2010/11/07/move-over-pokemon-invizimals-tries-to-take-over-your-psp/) from the original on 16 April 2024. \"there are more than 100 invizimals to find, and they're as diverse as anything Pokemon could create\"",
+    "id": 141,
+    "original_id": 691,
+    "split_id": 0,
+    "page": 62,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 86,
+      "sentence_count": 24,
+      "is_split": false
+    }
+  },
+  {
+    "text": "583. Wood, Austin (11 April 2018). \"Monster breeding RPG Monster Crown looks like build-a- Pok\u00e9mon\" (https://www.pcgamer.com/monster-breeding-rpg-monster-crown-looks-like-build-a- pokemon/). PC Gamer. Archived (https://web.archive.org/web/20200803051413/https://www.pc gamer.com/monster-breeding-rpg-monster-crown-looks-like-build-a-pokemon/) from the original on 3 August 2020. \"Jason Walsh and Shad Shwarck, the two halves of Studio Aurum, grew up playing games like Pok\u00e9mon and wishing that they had more involved, realistic taming and breeding systems. So, in February 2016, they decided to make their own breeding-centric monster game: Monster Crown.\"",
+    "id": 142,
+    "original_id": 696,
+    "split_id": 0,
+    "page": 63,
+    "score": 85.0,
+    "metadata": {
+      "word_count": 73,
+      "sentence_count": 13,
+      "is_split": false
+    }
+  }
+]

@@ -1,0 +1,310 @@
+{
+  "status": "success",
+  "total_extracted": 29,
+  "qa_pairs": [
+    {
+      "question": "Who created a pair of role-playing games developed by Game Freak?",
+      "answer_short": "The franchise",
+      "answer_sentence": "a pair of role-playing games developed by Game Freak was created by The franchise.",
+      "evidence_span": "The franchise originated as a pair of role-playing games developed by Game Freak, from an original concept by its founder, Satoshi Tajiri.",
+      "question_type": "who",
+      "fact_type": "creation",
+      "subject_surface": "a pair of role-playing games developed by Game Freak",
+      "topic_aliases": [],
+      "svo_verb": "originate"
+    },
+    {
+      "question": "Who owned Pok\u00e9mon?",
+      "answer_short": "three",
+      "answer_sentence": "Pok\u00e9mon was owned by three.",
+      "evidence_span": "Pok\u00e9mon is jointly owned by three:",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "Pok\u00e9mon",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who founded The Pok\u00e9mon Company (TPC)?",
+      "answer_short": "The three companies",
+      "answer_sentence": "The Pok\u00e9mon Company (TPC) was founded by The three companies.",
+      "evidence_span": "The three companies established The Pok\u00e9mon Company (TPC) in 1998 to manage the Pok\u00e9mon property within Asia.",
+      "question_type": "who",
+      "fact_type": "founding",
+      "subject_surface": "The Pok\u00e9mon Company (TPC)",
+      "topic_aliases": [],
+      "svo_verb": "establish"
+    },
+    {
+      "question": "How many three companies?",
+      "answer_short": "three",
+      "answer_sentence": "three three companies.",
+      "evidence_span": "The three companies established The Pok\u00e9mon Company (TPC) in 1998 to manage the Pok\u00e9mon property within Asia.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "three companies",
+      "topic_aliases": []
+    },
+    {
+      "question": "What is The original full name of the franchise?",
+      "answer_short": "Pocket Monsters ( \u30dd\u30b1\u30c3\u30c8\u30e2\u30f3\u30b9\u30bf\u30fc, Poketto Monsut\u0101)",
+      "answer_sentence": "The original full name of the franchise is Pocket Monsters ( \u30dd\u30b1\u30c3\u30c8\u30e2\u30f3\u30b9\u30bf\u30fc, Poketto Monsut\u0101).",
+      "evidence_span": "The original full name of the franchise is Pocket Monsters ( \u30dd\u30b1\u30c3\u30c8\u30e2\u30f3\u30b9\u30bf\u30fc, Poketto Monsut\u0101), which has been commonly abbreviated to Pokemon (\u30dd\u30b1\u30e2\u30f3) since its launch.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "The original full name of the franchise",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who conceived The main idea behind Pok\u00e9mon?",
+      "answer_short": "Satoshi Tajiri",
+      "answer_sentence": "The main idea behind Pok\u00e9mon was conceived by Satoshi Tajiri.",
+      "evidence_span": "The main idea behind Pok\u00e9mon was conceived by Satoshi Tajiri.",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "The main idea behind Pok\u00e9mon",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who founded an informal development team called Game Freak, named after the magazine it grew out of?",
+      "answer_short": ", Tajiri, Sugimori, and a few other enthusiasts",
+      "answer_sentence": "an informal development team called Game Freak, named after the magazine it grew out of was founded by , Tajiri, Sugimori, and a few other enthusiasts.",
+      "evidence_span": "In 1986, Tajiri, Sugimori, and a few other enthusiasts started an informal development team called Game Freak, named after the magazine it grew out of.",
+      "question_type": "who",
+      "fact_type": "founding",
+      "subject_surface": "an informal development team called Game Freak, named after the magazine it grew out of",
+      "topic_aliases": [],
+      "svo_verb": "start"
+    },
+    {
+      "question": "How many one points?",
+      "answer_short": "one",
+      "answer_sentence": "one one points.",
+      "evidence_span": "Tajiri and Ishihara did consider merging Game Freak and Creatures at one point.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "one points",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who directed this game?",
+      "answer_short": "Ishihara",
+      "answer_sentence": "this game was directed by Ishihara.",
+      "evidence_span": "Coincidentally, this game was directed by Ishihara, and co-developed by Ape.",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "this game",
+      "topic_aliases": []
+    },
+    {
+      "question": "What were Two media channels that would play important roles in the Pokemon franchise?",
+      "answer_short": "the CoroCoro Comic",
+      "answer_sentence": "Two media channels that would play important roles in the Pokemon franchise were the CoroCoro Comic.",
+      "evidence_span": "Two media channels that would play important roles in the Pokemon franchise were the CoroCoro Comic, released monthly, and its sister magazine Bessatsu CoroCoro Comic, released bi-monthly.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "Two media channels that would play important roles in the Pokemon franchise",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who published Both manga magazines?",
+      "answer_short": "Shogakukan, a long-time business partner of Nintendo",
+      "answer_sentence": "Both manga magazines was published by Shogakukan, a long-time business partner of Nintendo.",
+      "evidence_span": "Both manga magazines are published by Shogakukan, a long-time business partner of Nintendo, and have featured manga based on Nintendo properties (e.g. Super Mario-kun, Kirby of the Stars, Donkey Kong).",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "Both manga magazines",
+      "topic_aliases": []
+    },
+    {
+      "question": "What was Kayama?",
+      "answer_short": "a fan of card games",
+      "answer_sentence": "Kayama was a fan of card games.",
+      "evidence_span": "Like Ishihara, Kayama was a fan of card games.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "Kayama",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who shipped 87 million Pokemon cards?",
+      "answer_short": "the end of March 1997",
+      "answer_sentence": "87 million Pokemon cards was shipped by the end of March 1997.",
+      "evidence_span": "87 million Pokemon cards were shipped by the end of March 1997, six months after its launch, and one month before the debut of the next big installment of the franchise: the Pokemon anime.",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "87 million Pokemon cards",
+      "topic_aliases": []
+    },
+    {
+      "question": "How many six months?",
+      "answer_short": "six",
+      "answer_sentence": "six six months.",
+      "evidence_span": "87 million Pokemon cards were shipped by the end of March 1997, six months after its launch, and one month before the debut of the next big installment of the franchise: the Pokemon anime.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "six months",
+      "topic_aliases": []
+    },
+    {
+      "question": "How many one months?",
+      "answer_short": "one",
+      "answer_sentence": "one one months.",
+      "evidence_span": "87 million Pokemon cards were shipped by the end of March 1997, six months after its launch, and one month before the debut of the next big installment of the franchise: the Pokemon anime.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "one months",
+      "topic_aliases": []
+    },
+    {
+      "question": "What was Ishihara?",
+      "answer_short": "unwilling to greenlit an item",
+      "answer_sentence": "Ishihara was unwilling to greenlit an item.",
+      "evidence_span": "Fiercely protective of Pokemon's brand equity, Ishihara was unwilling to greenlit an item just because it had a picture of a Pokemon printed on it.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "Ishihara",
+      "topic_aliases": []
+    },
+    {
+      "question": "What was An example of a firm that benefited greatly from Pokemon?",
+      "answer_short": "food manufacturer Nagatanien",
+      "answer_sentence": "An example of a firm that benefited greatly from Pokemon was food manufacturer Nagatanien.",
+      "evidence_span": "An example of a firm that benefited greatly from Pokemon was food manufacturer Nagatanien.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "An example of a firm that benefited greatly from Pokemon",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who done The localization of the Pok\u00e9mon anime?",
+      "answer_short": "4Kids",
+      "answer_sentence": "The localization of the Pok\u00e9mon anime was done by 4Kids.",
+      "evidence_span": "The localization of the Pok\u00e9mon anime was done by 4Kids, and directed by Norman J. Grossfeld.",
+      "question_type": "who",
+      "fact_type": "passive_creation",
+      "subject_surface": "The localization of the Pok\u00e9mon anime",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who created a Google April Fools' Day joke?",
+      "answer_short": "The app originated as a Google April Fools' Day joke in 2014: the \"Google Maps Pok\u00e9mon Challenge\"",
+      "answer_sentence": "a Google April Fools' Day joke was created by The app originated as a Google April Fools' Day joke in 2014: the \"Google Maps Pok\u00e9mon Challenge\".",
+      "evidence_span": "The app originated as a Google April Fools' Day joke in 2014: the \"Google Maps Pok\u00e9mon Challenge\".",
+      "question_type": "who",
+      "fact_type": "creation",
+      "subject_surface": "a Google April Fools' Day joke",
+      "topic_aliases": [],
+      "svo_verb": "originate"
+    },
+    {
+      "question": "When was developing, publishing, and licensing Pok\u00e9mon titles for the mobile phone market, most notably Pok\u00e9mon Go (2016) released?",
+      "answer_short": "2016",
+      "answer_sentence": "developing, publishing, and licensing Pok\u00e9mon titles for the mobile phone market, most notably Pok\u00e9mon Go (2016) was released in 2016.",
+      "evidence_span": "With the rise of the smartphone during the 2010s, The Pok\u00e9mon Company also began developing, publishing, and licensing Pok\u00e9mon titles for the mobile phone market, most notably Pok\u00e9mon Go (2016),",
+      "question_type": "when",
+      "fact_type": "date_release",
+      "expect_type": "date",
+      "subject_surface": "developing, publishing, and licensing Pok\u00e9mon titles for the mobile phone market, most notably Pok\u00e9mon Go (2016)",
+      "topic_aliases": []
+    },
+    {
+      "question": "What was The Pok\u00e9mon Trading Card Game (PTCG)?",
+      "answer_short": "one of the first collectable card games (CCGs) in Japan",
+      "answer_sentence": "The Pok\u00e9mon Trading Card Game (PTCG) was one of the first collectable card games (CCGs) in Japan.",
+      "evidence_span": "The Pok\u00e9mon Trading Card Game (PTCG) was one of the first collectable card games (CCGs) in Japan.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "The Pok\u00e9mon Trading Card Game (PTCG)",
+      "topic_aliases": []
+    },
+    {
+      "question": "How many over 1,300 episodes across 28 seasons?",
+      "answer_short": "1,300",
+      "answer_sentence": "1,300 over 1,300 episodes across 28 seasons.",
+      "evidence_span": "As of 2025, the Pok\u00e9mon anime consists of over 1,300 episodes across 28 seasons.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "over 1,300 episodes across 28 seasons",
+      "topic_aliases": []
+    },
+    {
+      "question": "How many 28 seasons?",
+      "answer_short": "28",
+      "answer_sentence": "28 28 seasons.",
+      "evidence_span": "As of 2025, the Pok\u00e9mon anime consists of over 1,300 episodes across 28 seasons.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "28 seasons",
+      "topic_aliases": []
+    },
+    {
+      "question": "What was Pok\u00e9mon?",
+      "answer_short": "an unprecedented, ubiquitous fad in the Western world",
+      "answer_sentence": "Pok\u00e9mon was an unprecedented, ubiquitous fad in the Western world.",
+      "evidence_span": "In 1999 and 2000, Pok\u00e9mon was an unprecedented, ubiquitous fad in the Western world.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "Pok\u00e9mon",
+      "topic_aliases": []
+    },
+    {
+      "question": "Who created a slightly tweaked, new revision of Red/Green, which included bug fixes?",
+      "answer_short": "Game Freak",
+      "answer_sentence": "a slightly tweaked, new revision of Red/Green, which included bug fixes was created by Game Freak.",
+      "evidence_span": "Shortly after the original release of Red/Green, and before the release of Blue, Game Freak also made a slightly tweaked, new revision of Red/Green, which included bug fixes.",
+      "question_type": "who",
+      "fact_type": "creation",
+      "subject_surface": "a slightly tweaked, new revision of Red/Green, which included bug fixes",
+      "topic_aliases": [],
+      "svo_verb": "make"
+    },
+    {
+      "question": "How many 685 peoples?",
+      "answer_short": "685",
+      "answer_sentence": "685 685 peoples.",
+      "evidence_span": "The Fire and Disaster Management Agency announced that, as of 17:00, 17 December, a total of 685 people had been taken to hospitals in direct relationship to the Pokemon episode.",
+      "question_type": "how_many",
+      "fact_type": "quantity_simple",
+      "expect_type": "number",
+      "subject_surface": "685 peoples",
+      "topic_aliases": []
+    },
+    {
+      "question": "What is the last animated Pok\u00e9mon feature?",
+      "answer_short": "Pokemon: Coco (\u30dd\u30b1\u30e2\u30f3 \u30b3\u30b3), released in Japan on 25 December 2020",
+      "answer_sentence": "the last animated Pok\u00e9mon feature is Pokemon: Coco (\u30dd\u30b1\u30e2\u30f3 \u30b3\u30b3), released in Japan on 25 December 2020.",
+      "evidence_span": "As of 2025, the last animated Pok\u00e9mon feature is Pokemon: Coco (\u30dd\u30b1\u30e2\u30f3 \u30b3\u30b3), released in Japan on 25 December 2020.",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "the last animated Pok\u00e9mon feature",
+      "topic_aliases": []
+    },
+    {
+      "question": "What is Pok\u00e9mon?",
+      "answer_short": "the only character in the world today whose original rights are not consolidated in the hands of a single major copyright holder or a single company",
+      "answer_sentence": "Pok\u00e9mon is the only character in the world today whose original rights are not consolidated in the hands of a single major copyright holder or a single company.",
+      "evidence_span": "Pok\u00e9mon is probably the only character in the world today whose original rights are not consolidated in the hands of a single major copyright holder or a single company.]",
+      "question_type": "what",
+      "fact_type": "definition",
+      "subject_surface": "Pok\u00e9mon",
+      "topic_aliases": []
+    },
+    {
+      "question": "When was Hatakeyama & Kubo (2000), p.\u00a0133-135: \"\u3064\u307e\u308a\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u3092 \u3068\u3057\u3066\u3001 \u306e released?",
+      "answer_short": "2000",
+      "answer_sentence": "Hatakeyama & Kubo (2000), p.\u00a0133-135: \"\u3064\u307e\u308a\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u3092 \u3068\u3057\u3066\u3001 \u306e was released in 2000.",
+      "evidence_span": "Hatakeyama & Kubo (2000), p.\u00a0133-135: \"\u3064\u307e\u308a\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u3092 \u3068\u3057\u3066\u3001 \u306e \u30b2\u30fc\u30e0\u3092 \u308b\u307e\u3067\u306e \u306f \u306b \u308f\u308c\u305f\u308f\u3051\u3067\u3059\u304c\u3001\u305d\u306e \u308f\u308c\u305f \u3092\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u306e \u306f\u3082\u3046 \u308a \u305d\u3046\u3068\u3057\u3066\u3001\u30dd\u30b1\u30e2\u30f3\u3092 \u308a \u3057\u305f\u306e\u3067\u3057\u305f\u3002\" [\"In other words, the world Tajiri knew up to the day he learned about games was lost forever.",
+      "question_type": "when",
+      "fact_type": "date_release",
+      "expect_type": "date",
+      "subject_surface": "Hatakeyama & Kubo (2000), p.\u00a0133-135: \"\u3064\u307e\u308a\u3001\u30b2\u30fc\u30e0\u3092 \u3063\u305f \u3092 \u3068\u3057\u3066\u3001 \u306e",
+      "topic_aliases": []
+    }
+  ]
+}

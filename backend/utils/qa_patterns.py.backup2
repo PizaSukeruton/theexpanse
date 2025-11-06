@@ -1,0 +1,98 @@
+import spacy
+from spacy.matcher import DependencyMatcher
+from qa_utils import np_text_with_modifiers
+
+OWNERSHIP_LEMMAS = {"own", "control", "manage", "publish", "distribute"}
+DATE_VERBS = {"release", "launch", "publish", "found", "create", "debut", "start", "begin"}
+
+def make_matchers(nlp):
+    dep = DependencyMatcher(nlp.vocab)
+    
+    dep.add("COPULAR_DEF", [[
+        {"RIGHT_ID":"root","RIGHT_ATTRS":{"LEMMA":"be","POS":"AUX"}},
+        {"LEFT_ID":"root","REL_OP":">","RIGHT_ID":"subj","RIGHT_ATTRS":{"DEP":{"IN":["nsubj","nsubjpass"]}}},
+        {"LEFT_ID":"root","REL_OP":">","RIGHT_ID":"attr","RIGHT_ATTRS":{"DEP":{"IN":["attr","acomp"]}}}
+    ]])
+    
+    dep.add("SVO", [[
+        {"RIGHT_ID":"root","RIGHT_ATTRS":{"POS":"VERB"}},
+        {"LEFT_ID":"root","REL_OP":">","RIGHT_ID":"subj","RIGHT_ATTRS":{"DEP":{"REGEX":"^nsubj"}}},
+        {"LEFT_ID":"root","REL_OP":">","RIGHT_ID":"obj","RIGHT_ATTRS":{"DEP":{"IN":["dobj","attr","oprd","pobj"]}}}
+    ]])
+    
+    return dep
+
+def find_copular_defs(doc):
+    for tok in doc:
+        if tok.dep_ == "ROOT" and tok.lemma_ == "be":
+            subj = next((c for c in tok.children if c.dep_ in ("nsubj","nsubjpass")), None)
+            attr = next((c for c in tok.children if c.dep_ in ("attr","acomp")), None)
+            if subj and attr:
+                yield {
+                    "type":"definition",
+                    "subject":subj, 
+                    "subject_full":np_text_with_modifiers(subj),
+                    "attribute":attr,
+                    "attribute_full":np_text_with_modifiers(attr),
+                    "root":tok, 
+                    "doc":doc
+                }
+
+def find_svo(doc):
+    for tok in doc:
+        if tok.dep_ == "ROOT" and tok.pos_ == "VERB":
+            subj = next((c for c in tok.children if c.dep_.startswith("nsubj")), None)
+            obj = next((c for c in tok.children if c.dep_ in ("dobj","attr","oprd","pobj")), None)
+            if subj and obj:
+                yield {
+                    "type":"svo",
+                    "subject":subj,
+                    "subject_full":np_text_with_modifiers(subj),
+                    "verb":tok,
+                    "object":obj,
+                    "object_full":np_text_with_modifiers(obj),
+                    "doc":doc
+                }
+
+def find_passive_ownership(doc):
+    for v in doc:
+        if v.pos_ == "VERB" and v.lemma_ in OWNERSHIP_LEMMAS:
+            auxp = any(c.dep_ == "auxpass" for c in v.children)
+            subj = next((c for c in v.children if c.dep_ == "nsubjpass"), None)
+            agent = next((c for c in v.children if c.dep_ == "agent"), None)
+            pobj = None
+            if agent:
+                pobj = next((c for c in agent.children if c.dep_ == "pobj"), None)
+            if auxp and subj is not None and pobj is not None:
+                owners = [pobj]
+                owners.extend(list(pobj.conjuncts))
+                owners_text = ", ".join(o.text for o in owners)
+                yield {
+                    "type":"ownership",
+                    "subject":subj,
+                    "subject_full":np_text_with_modifiers(subj),
+                    "owner":owners_text,
+                    "owner_head":pobj,
+                    "root":v,
+                    "doc":doc
+                }
+
+def find_release_dates(doc):
+    for v in doc:
+        if v.pos_ == "VERB" and v.lemma_ in DATE_VERBS:
+            subj = next((c for c in v.children if c.dep_.startswith("nsubj")), None)
+            time_mod = next((c for c in v.children if c.dep_ in ("obl","npadvmod","advmod")), None)
+            if subj and time_mod:
+                yield {
+                    "type":"date_release",
+                    "subject":subj,
+                    "subject_full":np_text_with_modifiers(subj),
+                    "time_mod":time_mod,
+                    "root":v,
+                    "doc":doc
+                }
+
+def find_quantities(doc):
+    if any(tok.like_num for tok in doc):
+        return [{"type":"quantity", "doc":doc}]
+    return []

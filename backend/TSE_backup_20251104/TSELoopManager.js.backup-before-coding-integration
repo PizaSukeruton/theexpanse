@@ -1,0 +1,267 @@
+// ================================================================================
+// TSELoopManager.js - Core TSE Cycle Orchestrator
+// Fixed version - removed cycle_number completely, fixed syntax errors
+// ================================================================================
+
+const { Pool } = require('pg');
+const TeacherComponent = require("./TeacherComponent");
+const StudentComponent = require("./StudentComponent");
+const EvaluationComponent = require("./EvaluationComponent");
+
+class TSELoopManager {
+    constructor(pool) {
+        if (!pool) {
+            throw new Error("TSELoopManager requires a database pool.");
+        }
+        this.pool = pool;
+        this.isInitialized = false;
+        this.teacherComponent = new TeacherComponent(pool);
+        this.studentComponent = new StudentComponent(pool);
+        this.evaluationComponent = new EvaluationComponent(pool, null, null);
+        this.hexCounter = null; // Set from database during initialization
+    }
+
+    async initialize() {
+        try {
+            // Initialize hex counter for cycle_id
+            const result = await this.pool.query("SELECT cycle_id FROM tse_cycles WHERE cycle_id LIKE '#8%' ORDER BY cycle_id DESC LIMIT 1");
+            if (result.rows.length > 0) {
+                const lastHex = result.rows[0].cycle_id.substring(1);
+                this.hexCounter = parseInt(lastHex, 16) + 1;
+            } else {
+                this.hexCounter = 0x800000; // Start of the #8 range for TSE cycles
+            }
+
+            // Initialize all learning components
+            await this.teacherComponent.initialize();
+            await this.studentComponent.initialize();
+            // Note: EvaluationComponent doesn't have initialize method
+            this.isInitialized = true;
+            console.log(`TSELoopManager initialized. Next cycle ID hex: 0x${this.hexCounter.toString(16).toUpperCase()}`);
+            return true;
+        } catch (error) {
+            console.error('TSELoopManager initialization failed:', error);
+            this.isInitialized = false;
+            return false;
+        }
+    }
+
+    _generateCycleId() {
+        if (this.hexCounter === null) {
+            throw new Error("Hex counter not initialized.");
+        }
+        const hex = '#' + (this.hexCounter++).toString(16).toUpperCase().padStart(6, '0');
+        return hex;
+    }
+
+    async startTSECycle(cycle_type = 'standard') {
+        if (!this.isInitialized) throw new Error("TSELoopManager not initialized.");
+
+        const client = await this.pool.connect();
+        try {
+            const cycle_id = this._generateCycleId();
+
+            const query = `
+                INSERT INTO tse_cycles (
+                    cycle_id, cycle_type, status, cultural_compliance, seven_commandments_check
+                ) VALUES ($1, $2, $3, $4, $5)
+                RETURNING *;
+            `;
+            const values = [
+                cycle_id,
+                cycle_type,
+                'running',
+                {},
+                true
+            ];
+
+            const result = await client.query(query, values);
+            console.log(`✅ TSE Cycle started: ${cycle_id}`);
+            return result.rows[0];
+
+        } catch (error) {
+            console.error(`❌ Failed to start TSE cycle:`, error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
+    async startChatCycle(chatData) {
+        if (!this.isInitialized) {
+            throw new Error("TSELoopManager is not initialized. Cannot start chat cycle.");
+        }
+
+        const { conversation_id, user_message, chat_context } = chatData;
+        const cycle_id = this._generateCycleId();
+        const cycle_type = 'standard';
+        const status = 'running';
+
+        const query = `
+            INSERT INTO tse_cycles (
+                cycle_id, cycle_type, status, conversation_id, user_message, chat_context
+            ) VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING *;
+        `;
+        const values = [
+            cycle_id,
+            cycle_type,
+            status,
+            conversation_id || null,
+            user_message,
+            chat_context || {}
+        ];
+
+        const client = await this.pool.connect();
+        try {
+            const result = await client.query(query, values);
+            console.log(`✅ Chat cycle started: ${cycle_id} for conversation ${conversation_id}`);
+
+            // Record Teacher prediction
+            try {
+                const teacherData = {
+                    algorithm_decision: { prediction: "chat_response_needed", user_input: user_message },
+                    confidence_score: 0.8,
+                    predicted_outcomes: { success_probability: 0.7, response_quality: "good" },
+                    message_processing_context: { input_type: "user_query" },
+                    character_selection_reasoning: "Character selected based on user input pattern"
+                };
+                const teacherRecord = await this.teacherComponent.recordChatDecision(cycle_id, teacherData);
+                console.log(`🧑‍🏫 Teacher prediction recorded for cycle: ${cycle_id}`);
+            } catch (teacherError) {
+                console.warn(`⚠️ Teacher recording failed for ${cycle_id}:`, teacherError.message);
+            }
+
+            return result.rows[0];
+        } catch (error) {
+            console.error(`❌ Failed to start chat cycle:`, error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
+    async getTeacherRecordId(cycle_id) {
+        const result = await this.pool.query(
+            "SELECT record_id FROM tse_teacher_records WHERE cycle_id = $1 ORDER BY created_at DESC LIMIT 1",
+            [cycle_id]
+        );
+        return result.rows.length > 0 ? result.rows[0].record_id : null;
+    }
+
+    async completeTSECycle(cycle_id, completion_data = {}) {
+        if (!this.isInitialized) throw new Error("TSELoopManager not initialized.");
+
+        const client = await this.pool.connect();
+        try {
+            const query = `
+                UPDATE tse_cycles 
+                SET 
+                    completed_at = NOW(),
+                    cycle_duration_ms = EXTRACT(EPOCH FROM (NOW() - started_at)) * 1000,
+                    status = 'completed',
+                    cultural_compliance = $2
+                WHERE cycle_id = $1
+                RETURNING *;
+            `;
+            const values = [cycle_id, completion_data];
+
+            const result = await client.query(query, values);
+            if (result.rows.length === 0) {
+                throw new Error(`Cycle ${cycle_id} not found.`);
+            }
+
+            // Record Student outcome
+            try {
+                const studentData = {
+                    real_world_outcome: { outcome_type: "conversation_completed", success: true },
+                    success_metrics: completion_data,
+                    quality_indicators: { response_generated: true },
+                    user_engagement: { engagement_level: "active" },
+                    character_similarity_accuracy: 0.8
+                };
+                await this.studentComponent.recordChatOutcome(cycle_id, await this.getTeacherRecordId(cycle_id), studentData);
+                console.log(`🎓 Student outcome recorded for cycle: ${cycle_id}`);
+            } catch (studentError) {
+                console.warn(`⚠️ Student recording failed for ${cycle_id}:`, studentError.message);
+            }
+
+            console.log(`✅ TSE Cycle completed: ${cycle_id}`);
+            return result.rows[0];
+
+        } catch (error) {
+            console.error(`❌ Failed to complete TSE cycle ${cycle_id}:`, error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
+    async getCycleStatus(cycle_id) {
+        if (!this.isInitialized) throw new Error("TSELoopManager not initialized.");
+
+        try {
+            const query = "SELECT * FROM tse_cycles WHERE cycle_id = $1";
+            const result = await this.pool.query(query, [cycle_id]);
+            
+            if (result.rows.length === 0) {
+                return null;
+            }
+            
+            return result.rows[0];
+        } catch (error) {
+            console.error(`❌ Failed to get cycle status for ${cycle_id}:`, error);
+            throw error;
+        }
+    }
+
+    async getActiveCycles() {
+        if (!this.isInitialized) throw new Error("TSELoopManager not initialized.");
+
+        try {
+            const query = "SELECT * FROM tse_cycles WHERE status = 'running' ORDER BY started_at DESC";
+            const result = await this.pool.query(query);
+            return result.rows;
+        } catch (error) {
+            console.error(`❌ Failed to get active cycles:`, error);
+            throw error;
+        }
+    }
+
+    async getCycleMetrics(cycle_id) {
+        if (!this.isInitialized) throw new Error("TSELoopManager not initialized.");
+
+        try {
+            const query = `
+                SELECT 
+                    c.*,
+                    COUNT(tr.record_id) as teacher_records_count,
+                    COUNT(sr.record_id) as student_records_count,
+                    AVG(tr.confidence_score) as avg_teacher_confidence,
+                    AVG(sr.character_similarity_accuracy) as avg_student_accuracy
+                FROM tse_cycles c
+                LEFT JOIN tse_teacher_records tr ON c.cycle_id = tr.cycle_id
+                LEFT JOIN tse_student_records sr ON c.cycle_id = sr.cycle_id
+                WHERE c.cycle_id = $1
+                GROUP BY c.cycle_id, c.started_at, c.completed_at, 
+                         c.cycle_duration_ms, c.status, c.cycle_type, c.cultural_compliance, 
+                         c.seven_commandments_check, c.conversation_id, c.user_message, 
+                         c.chat_context, c.created_at, c.updated_at, c.metadata, 
+                         c.algorithm_version, c.performance_summary, c.learning_outcomes;
+            `;
+            const result = await this.pool.query(query, [cycle_id]);
+            
+            if (result.rows.length === 0) {
+                return null;
+            }
+            
+            return result.rows[0];
+        } catch (error) {
+            console.error(`❌ Failed to get cycle metrics for ${cycle_id}:`, error);
+            throw error;
+        }
+    }
+}
+
+module.exports = TSELoopManager;
+

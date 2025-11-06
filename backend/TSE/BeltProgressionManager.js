@@ -1,29 +1,47 @@
 // backend/TSE/BeltProgressionManager.js
 
-import { validateHexId  } from '../utils/hexUtils.js'; // For hex ID validation
-import generateAokHexId from '../utils/hexIdGenerator.js'; // Our AOK-specific hex ID generator
+import { validateHexId  } from '../utils/hexUtils.js';
+import generateAokHexId from '../utils/hexIdGenerator.js';
 
-// Belt Advancement Criteria Definitions
+// Belt Advancement Criteria Definitions - FIXED VALUES
+// All belts: 0-10,000 cycles total, 2,500 cycles per stripe
 const BELT_REQUIREMENTS = {
-    white_belt: {
-        stripe_0: { cycles: 0, effectiveness: 0.00, efficiency: 0.00, cultural: 0.00 }, // Base for White Belt
-        stripe_1: { cycles: 2500, effectiveness: 0.75, efficiency: 0.70, cultural: 0.95 },
-        stripe_2: { cycles: 5000, effectiveness: 0.78, efficiency: 0.73, cultural: 0.95 },
-        stripe_3: { cycles: 7500, effectiveness: 0.80, efficiency: 0.75, cultural: 0.95 },
-        stripe_4: { cycles: 10000, effectiveness: 0.82, efficiency: 0.78, cultural: 0.95 }
-    },
-    blue_belt: {
-        stripe_0: { cycles: 25000, effectiveness: 0.85, efficiency: 0.80, innovation: 0.70, cultural: 0.95 }
-        // ... additional stripes and belts can be defined here
-    }
-    // ... other belts
+  white_belt: {
+    stripe_0: { cycles: 0, effectiveness: 0.00, efficiency: 0.00, cultural: 0.00 },
+    stripe_1: { cycles: 2500, effectiveness: 0.30, efficiency: 0.25, cultural: 0.90 },
+    stripe_2: { cycles: 5000, effectiveness: 0.35, efficiency: 0.30, cultural: 0.92 },
+    stripe_3: { cycles: 7500, effectiveness: 0.40, efficiency: 0.35, cultural: 0.94 },
+    stripe_4: { cycles: 10000, effectiveness: 0.45, efficiency: 0.40, cultural: 0.95 }
+  },
+  blue_belt: {
+    stripe_0: { cycles: 12500, effectiveness: 0.50, efficiency: 0.45, cultural: 0.95 },
+    stripe_1: { cycles: 15000, effectiveness: 0.55, efficiency: 0.50, cultural: 0.95 },
+    stripe_2: { cycles: 17500, effectiveness: 0.60, efficiency: 0.55, cultural: 0.95 },
+    stripe_3: { cycles: 20000, effectiveness: 0.65, efficiency: 0.60, cultural: 0.95 },
+    stripe_4: { cycles: 22500, effectiveness: 0.70, efficiency: 0.65, cultural: 0.95 }
+  },
+  purple_belt: {
+    stripe_0: { cycles: 25000, effectiveness: 0.72, efficiency: 0.67, cultural: 0.96 },
+    stripe_1: { cycles: 27500, effectiveness: 0.74, efficiency: 0.69, cultural: 0.96 },
+    stripe_2: { cycles: 30000, effectiveness: 0.76, efficiency: 0.71, cultural: 0.96 },
+    stripe_3: { cycles: 32500, effectiveness: 0.78, efficiency: 0.73, cultural: 0.96 },
+    stripe_4: { cycles: 35000, effectiveness: 0.80, efficiency: 0.75, cultural: 0.96 }
+  },
+  brown_belt: {
+    stripe_0: { cycles: 37500, effectiveness: 0.82, efficiency: 0.77, cultural: 0.97 },
+    stripe_1: { cycles: 40000, effectiveness: 0.84, efficiency: 0.79, cultural: 0.97 },
+    stripe_2: { cycles: 42500, effectiveness: 0.86, efficiency: 0.81, cultural: 0.97 },
+    stripe_3: { cycles: 45000, effectiveness: 0.88, efficiency: 0.83, cultural: 0.97 },
+    stripe_4: { cycles: 47500, effectiveness: 0.90, efficiency: 0.85, cultural: 0.97 }
+  },
+  black_belt: {
+    stripe_0: { cycles: 50000, effectiveness: 0.92, efficiency: 0.87, cultural: 0.98 },
+    stripe_1: { cycles: 52500, effectiveness: 0.93, efficiency: 0.88, cultural: 0.98 },
+    stripe_2: { cycles: 55000, effectiveness: 0.94, efficiency: 0.89, cultural: 0.98 },
+    stripe_3: { cycles: 57500, effectiveness: 0.95, efficiency: 0.90, cultural: 0.99 },
+    stripe_4: { cycles: 60000, effectiveness: 0.96, efficiency: 0.91, cultural: 0.99 }
+  }
 };
-
-// KNOWLEDGE_DOMAINS mapping:
-// REMOVED: The previous hardcoded fake mapping has been removed as per instructions.
-// This object is now empty, serving as a placeholder for future dynamic loading
-// or external reference for knowledge domain traits (#00012C - #00015D).
-// These are understood to be LINKS to external knowledge bases, not content.
 const KNOWLEDGE_DOMAINS = {};
 
 
@@ -169,7 +187,7 @@ class BeltProgressionManager {
             progression.last_evaluation_score = tseEvaluationResult.score;
 
             // Determine if the cycle was "successful" based on a threshold (e.g., 0.75 effectiveness)
-            const effectivenessThreshold = progression.advancement_criteria.effectiveness_threshold || 0.75;
+            const effectivenessThreshold = progression.advancement_criteria.effectiveness || 0.75;
             if (tseEvaluationResult.score >= effectivenessThreshold) {
                 progression.successful_cycles = (progression.successful_cycles || 0) + 1;
             }
@@ -282,7 +300,7 @@ class BeltProgressionManager {
 
             // If no more stripes for current belt, check for next belt's 0 stripe
             if (!requirements) {
-                const beltOrder = ['white_belt', 'blue_belt']; // Define your belt order
+                const beltOrder = ['white_belt', 'blue_belt', 'purple_belt', 'brown_belt', 'black_belt']; // Define your belt order
                 const currentBeltIndex = beltOrder.indexOf(currentBelt);
                 if (currentBeltIndex !== -1 && currentBeltIndex < beltOrder.length - 1) {
                     nextBelt = beltOrder[currentBeltIndex + 1];
@@ -392,7 +410,7 @@ class BeltProgressionManager {
             let nextAdvancementRequirements;
             // If advancing to stripe 4, the next is the next belt's 0 stripe
             if (newStripes === 4) {
-                const beltOrder = ['white_belt', 'blue_belt']; // Define your belt order
+                const beltOrder = ['white_belt', 'blue_belt', 'purple_belt', 'brown_belt', 'black_belt']; // Define your belt order
                 const currentBeltIndex = beltOrder.indexOf(newBelt);
                 if (currentBeltIndex !== -1 && currentBeltIndex < beltOrder.length - 1) {
                     nextAdvancementRequirements = this.getBeltRequirements(beltOrder[currentBeltIndex + 1], 0);
@@ -475,7 +493,7 @@ class BeltProgressionManager {
 
         if (!nextRequirements) {
             // Check for next belt if current stripes are exhausted
-            const beltOrder = ['white_belt', 'blue_belt'];
+            const beltOrder = ['white_belt', 'blue_belt', 'purple_belt', 'brown_belt', 'black_belt'];
             const currentBeltIndex = beltOrder.indexOf(currentBelt);
             if (currentBeltIndex !== -1 && currentBeltIndex < beltOrder.length - 1) {
                 nextMilestoneBelt = beltOrder[currentBeltIndex + 1];

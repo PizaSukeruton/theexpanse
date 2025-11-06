@@ -1,0 +1,54 @@
+CHANGES NEEDED IN TSELoopManager.js
+
+Location: Lines 185-197 (current binary evaluation)
+
+REPLACE THIS:
+------------
+const evaluationResult = {
+    appropriateness: knowledgeResponse.deliveryStyle ? 100 : 50,
+    traitAlignment: knowledgeResponse.learningProfile ? 100 : 0,
+    cognitiveLoadManagement: knowledgeResponse.cognitiveLoad <= 12 ? 100 : 50
+};
+
+evaluationResult.overallScore = (
+    evaluationResult.appropriateness * 0.3 +
+    evaluationResult.traitAlignment * 0.4 +
+    evaluationResult.cognitiveLoadManagement * 0.3
+);
+
+
+WITH THIS:
+----------
+// Import AccuracyScorer at top of file
+import AccuracyScorer from './AccuracyScorer.js';
+
+// In constructor
+this.accuracyScorer = new AccuracyScorer();
+
+// In handleKnowledgeQuery method (around line 185)
+const accuracyEvaluation = await this.accuracyScorer.evaluateResponse(
+    knowledgeResponse.response,
+    knowledgeResponse.aokSources || [],
+    knowledgeResponse.deliveryStyle,
+    knowledgeResponse.learningProfile
+);
+
+const evaluationResult = {
+    appropriateness: accuracyEvaluation.overallAccuracy,
+    traitAlignment: knowledgeResponse.learningProfile ? 100 : 0,
+    cognitiveLoadManagement: knowledgeResponse.cognitiveLoad <= 12 ? 100 : 50,
+    
+    // Add detailed breakdown
+    accuracyBreakdown: {
+        groundTruth: accuracyEvaluation.groundTruthAlignment,
+        coverage: accuracyEvaluation.coverageRelevance,
+        contradiction: accuracyEvaluation.contradictionCheck,
+        styleFit: accuracyEvaluation.styleFit
+    }
+};
+
+evaluationResult.overallScore = (
+    evaluationResult.appropriateness * 0.5 +  // Increased weight for accuracy
+    evaluationResult.traitAlignment * 0.3 +
+    evaluationResult.cognitiveLoadManagement * 0.2
+);

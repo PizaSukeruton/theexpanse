@@ -9,8 +9,12 @@ const { Pool  } = pkg;
 import TeacherComponent from './TeacherComponent.js';
 import StudentComponent from './StudentComponent.js';
 import EvaluationComponent from './EvaluationComponent.js';
+import BeltProgressionManager from './BeltProgressionManager.js';
 import CodingTrainingModule from './modules/codingTrainingModule.js';
+import KnowledgeResponseEngine from './helpers/KnowledgeResponseEngine.js';
 import CodeResponseGenerator from './helpers/CodeResponseGenerator.js';
+import AccuracyScorer from './AccuracyScorer.js';
+
 class TSELoopManager {
     constructor(pool) {
         if (!pool) {
@@ -21,25 +25,26 @@ class TSELoopManager {
         this.teacherComponent = new TeacherComponent(pool);
         this.studentComponent = new StudentComponent(pool);
         this.evaluationComponent = new EvaluationComponent(pool, null, null);
-        this.codingModule = new CodingTrainingModule(); // Initialize coding module
-        this.hexCounter = null; // Set from database during initialization
+        this.beltProgressionManager = new BeltProgressionManager(pool, this.evaluationComponent, null);
+        this.codingModule = new CodingTrainingModule();
+        this.hexCounter = null;
+        this.knowledgeEngine = new KnowledgeResponseEngine();
+        this.accuracyScorer = new AccuracyScorer();
     }
 
     async initialize() {
         try {
-            // Initialize hex counter for cycle_id
-            const result = await this.pool.query("SELECT cycle_id FROM tse_cycles WHERE cycle_id LIKE '#8%' ORDER BY cycle_id DESC LIMIT 1");
+            const result = await this.pool.query("SELECT cycle_id FROM tse_cycles WHERE cycle_id ~ '^#[0-9A-F]{6}$' ORDER BY SUBSTR(cycle_id, 2) DESC LIMIT 1");
             if (result.rows.length > 0) {
                 const lastHex = result.rows[0].cycle_id.substring(1);
                 this.hexCounter = parseInt(lastHex, 16) + 1;
             } else {
-                this.hexCounter = 0x800000; // Start of the #8 range for TSE cycles
+                this.hexCounter = 0x800000;
             }
 
-            // Initialize all learning components
             await this.teacherComponent.initialize();
             await this.studentComponent.initialize();
-            // Note: EvaluationComponent doesn't have initialize method
+            await this.knowledgeEngine.initialize();
             this.isInitialized = true;
             console.log(`TSELoopManager initialized. Next cycle ID hex: 0x${this.hexCounter.toString(16).toUpperCase()}`);
             return true;
@@ -56,6 +61,15 @@ class TSELoopManager {
         }
         const hex = '#' + (this.hexCounter++).toString(16).toUpperCase().padStart(6, '0');
         return hex;
+    }
+
+    mapTSEEvaluationToBeltFormat(tseEvaluation) {
+        return {
+            score: tseEvaluation.overallScore / 100,
+            efficiency_score: (tseEvaluation.cognitiveLoadManagement / 100),
+            cultural_score: (tseEvaluation.appropriateness / 100),
+            innovation_score: (tseEvaluation.traitAlignment / 100)
+        };
     }
 
     async startTSECycle(cycle_type = 'standard') {
@@ -91,11 +105,188 @@ class TSELoopManager {
         }
     }
 
-    /**
-     * Start a coding training cycle for Claude
-     * @param {Object} codingContext - Contains language, topic, difficulty preferences
-     * @returns {Object} The completed cycle data
-     */
+    async startKnowledgeCycle(knowledgeContext = {}) {
+        if (!this.isInitialized) {
+            throw new Error("TSELoopManager is not initialized. Cannot start knowledge cycle.");
+        }
+
+        const { characterId, query, domain } = knowledgeContext;
+        
+        if (!characterId) {
+            throw new Error("characterId is required for knowledge cycle");
+        }
+
+        const cycle_id = this._generateCycleId();
+        const client = await this.pool.connect();
+        
+        try {
+            await client.query('BEGIN');
+
+            const cycleMetadata = {
+                module: 'knowledge_learning',
+                characterId: characterId,
+                query: query,
+                domain: domain,
+                startTime: new Date().toISOString()
+            };
+
+            const cycleQuery = `
+                INSERT INTO tse_cycles (
+                    cycle_id, cycle_type, status, metadata
+                ) VALUES ($1, $2, $3, $4)
+                RETURNING *;
+            `;
+
+            await client.query(cycleQuery, [
+                cycle_id,
+                'knowledge_learning',
+                'running',
+                cycleMetadata
+            ]);
+
+            console.log(`[TSE-KNOWLEDGE] ✅ Knowledge cycle started: ${cycle_id} for ${characterId}`);
+
+            await client.query('COMMIT');
+            await client.query('BEGIN');
+
+            const teacherData = {
+                algorithm_decision: { 
+                    action: "provide_knowledge_query",
+                    query: query,
+                    domain: domain,
+                    characterId: characterId
+                },
+                confidence_score: 0.9,
+                predicted_outcomes: { 
+                    learning_impact: "positive",
+                    expected_retention: "high"
+                },
+                instruction_data: {
+                    query: query,
+                    domain: domain,
+                    expectedResponse: "trait-driven personalized answer"
+                },
+                character_selection_reasoning: `Knowledge query for ${characterId}`
+            };
+
+            const teacherRecord = await this.teacherComponent.recordChatDecision(cycle_id, teacherData);
+            console.log(`[TSE-KNOWLEDGE] 🧑‍🏫 Teacher query recorded: "${query}"`);
+
+            const startResponseTime = Date.now();
+            const knowledgeResponse = await this.knowledgeEngine.generateKnowledgeResponse(
+                characterId,
+                query,
+                { domain: domain, cycleId: cycle_id }
+            );
+            const responseTime = Date.now() - startResponseTime;
+
+            console.log(`[TSE-KNOWLEDGE] 🎓 Knowledge response generated in ${responseTime}ms`);
+            console.log(`[TSE-KNOWLEDGE] Delivery style: ${knowledgeResponse.deliveryStyle}`);
+            console.log(`[TSE-KNOWLEDGE] Cognitive load: ${knowledgeResponse.cognitiveLoad}/12`);
+
+                        // Use AccuracyScorer for real accuracy evaluation
+            const accuracyEvaluation = await this.accuracyScorer.evaluateResponse(
+                knowledgeResponse.knowledge,
+                knowledgeResponse.aokSources || [],
+                knowledgeResponse.deliveryStyle,
+                knowledgeResponse.learningProfile
+            );
+
+            const evaluationResult = {
+                appropriateness: accuracyEvaluation.overallAccuracy,
+                traitAlignment: knowledgeResponse.learningProfile ? 100 : 0,
+                cognitiveLoadManagement: knowledgeResponse.cognitiveLoad <= 12 ? 100 : 50,
+                
+                // Add detailed 4-pillar breakdown
+                accuracyBreakdown: {
+                    groundTruth: accuracyEvaluation.groundTruthAlignment,
+                    coverage: accuracyEvaluation.coverageRelevance,
+                    contradiction: accuracyEvaluation.contradictionCheck,
+                    styleFit: accuracyEvaluation.styleFit
+                }
+            };
+
+            evaluationResult.overallScore = (
+                evaluationResult.appropriateness * 0.5 +
+                evaluationResult.traitAlignment * 0.3 +
+                evaluationResult.cognitiveLoadManagement * 0.2
+            );
+
+            evaluationResult.feedback = `4-Pillar Score: Ground Truth ${accuracyEvaluation.groundTruthAlignment}%, Coverage ${accuracyEvaluation.coverageRelevance}%, No Contradictions ${accuracyEvaluation.contradictionCheck}%, Style Fit ${accuracyEvaluation.styleFit}%`;
+
+
+            console.log(`[TSE-KNOWLEDGE] ✅ Evaluation complete: Score ${evaluationResult.overallScore.toFixed(1)}`);
+
+            const beltCompatibleEvaluation = this.mapTSEEvaluationToBeltFormat(evaluationResult);
+            await this.beltProgressionManager.updateProgressionAfterTSE(characterId, beltCompatibleEvaluation);
+            console.log(`[TSE-KNOWLEDGE] 🥋 Belt progression updated for ${characterId}`);
+
+            const completeCycleQuery = `
+                UPDATE tse_cycles 
+                SET 
+                    completed_at = NOW(),
+                    cycle_duration_ms = EXTRACT(EPOCH FROM (NOW() - started_at)) * 1000,
+                    status = 'completed',
+                    performance_summary = $2,
+                    learning_outcomes = $3
+                WHERE cycle_id = $1
+                RETURNING *;
+            `;
+
+            const performanceSummary = {
+                score: evaluationResult.overallScore,
+                appropriateness: evaluationResult.appropriateness,
+                traitAlignment: evaluationResult.traitAlignment,
+                cognitiveLoad: knowledgeResponse.cognitiveLoad,
+                processingTime: responseTime
+            };
+
+            const learningOutcomes = {
+                deliveryStyle: knowledgeResponse.deliveryStyle,
+                traitInfluences: knowledgeResponse.traitInfluences,
+                emergentPatterns: knowledgeResponse.learningProfile?.emergentPatterns || [],
+                feedback: evaluationResult.feedback
+            };
+
+            const completedCycle = await client.query(completeCycleQuery, [
+                cycle_id,
+                performanceSummary,
+                learningOutcomes
+            ]);
+
+            await client.query('COMMIT');
+
+            console.log(`[TSE-KNOWLEDGE] ✅ Knowledge cycle completed: ${cycle_id} with score ${evaluationResult.overallScore.toFixed(1)}`);
+            
+            return {
+                cycle: completedCycle.rows[0],
+                query: query,
+                response: knowledgeResponse.knowledge,
+                deliveryStyle: knowledgeResponse.deliveryStyle,
+                learningProfile: knowledgeResponse.learningProfile,
+                evaluation: evaluationResult,
+                overallScore: evaluationResult.overallScore
+            };
+
+        } catch (error) {
+            await client.query('ROLLBACK');
+            console.error(`[TSE-KNOWLEDGE] ❌ Failed knowledge cycle ${cycle_id}:`, error);
+            
+            try {
+                await this.pool.query(
+                    "UPDATE tse_cycles SET status = 'failed', metadata = metadata || $2 WHERE cycle_id = $1",
+                    [cycle_id, { error: error.message }]
+                );
+            } catch (updateError) {
+                console.error(`[TSE-KNOWLEDGE] Failed to update cycle status:`, updateError);
+            }
+            
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
     async startCodingCycle(codingContext = {}) {
         if (!this.isInitialized) {
             throw new Error("TSELoopManager is not initialized. Cannot start coding cycle.");
@@ -107,7 +298,6 @@ class TSELoopManager {
         try {
             await client.query('BEGIN');
 
-            // 1. Create the TSE cycle record
             const cycleQuery = `
                 INSERT INTO tse_cycles (
                     cycle_id, cycle_type, status, metadata
@@ -131,16 +321,14 @@ class TSELoopManager {
 
             console.log(`[TSE-CODING] ✅ Coding cycle started: ${cycle_id} for ${cycleMetadata.language}`);
 
-            // Commit the cycle creation so it exists for foreign key references
             await client.query('COMMIT');
-            await client.query('BEGIN'); // Start new transaction for the rest
-            // 2. Get Claude's current learning state
+            await client.query('BEGIN');
+
             const learningState = await this.codingModule.getLearningState(
                 cycleMetadata.language,
                 cycleMetadata.topic
             );
 
-            // 3. Teacher Component: Generate coding instruction
             const teacherContext = {
                 language: cycleMetadata.language,
                 currentLevel: learningState.currentDifficulty,
@@ -150,7 +338,6 @@ class TSELoopManager {
 
             const teacherInstruction = await this.codingModule.generateTeacherInstruction(teacherContext);
             
-            // Record teacher instruction in standard TSE format
             const teacherData = {
                 algorithm_decision: { 
                     action: "provide_coding_challenge",
@@ -170,13 +357,10 @@ class TSELoopManager {
             const teacherRecord = await this.teacherComponent.recordChatDecision(cycle_id, teacherData);
             console.log(`[TSE-CODING] 🧑‍🏫 Teacher instruction generated: ${teacherInstruction.type} - ${teacherInstruction.language}`);
 
-            // 4. Student Component: Claude generates code response
-            // This is where Claude actually writes code - NO MOCK DATA
             const studentResponse = await this.generateClaudeCodeResponse(teacherInstruction);
             
-            // Record the attempt
             const attemptData = {
-                teacherRecordId: teacherInstruction.recordId || "#C40001",
+                teacherRecordId: teacherRecord.record_id,
                 challengePrompt: teacherInstruction.prompt,
                 studentCode: studentResponse.code,
                 executionTimeMs: studentResponse.processingTime,
@@ -190,15 +374,13 @@ class TSELoopManager {
             const studentAttempt = await this.codingModule.recordStudentAttempt(attemptData);
             console.log(`[TSE-CODING] 🎓 Student response recorded: ${studentAttempt.attempt.attempt_id}`);
 
-            // 5. Evaluation Component: Evaluate Claude's code
             const evaluationResult = await this.codingModule.evaluateAttempt(
                 studentAttempt.attempt.attempt_id,
-                { strictMode: false } // Be lenient while Claude is learning
+                { strictMode: false }
             );
 
             console.log(`[TSE-CODING] ✅ Evaluation complete: Score ${evaluationResult.evaluation.overall_score}`);
 
-            // 6. Complete the cycle
             const completionData = {
                 module: 'coding_training',
                 language: cycleMetadata.language,
@@ -260,7 +442,6 @@ class TSELoopManager {
             await client.query('ROLLBACK');
             console.error(`[TSE-CODING] ❌ Failed coding cycle ${cycle_id}:`, error);
             
-            // Update cycle status to failed
             try {
                 await this.pool.query(
                     "UPDATE tse_cycles SET status = 'failed', metadata = metadata || $2 WHERE cycle_id = $1",
@@ -276,16 +457,9 @@ class TSELoopManager {
         }
     }
 
-    /**
-     * Generate Claude's actual code response
-     * This is where Claude writes real code - NO MOCK DATA
-     * @param {Object} instruction - The teacher's coding instruction
-     * @returns {Object} Claude's code response
-     */
     async generateClaudeCodeResponse(instruction) {
         const startTime = Date.now();
         
-        // Construct a learning prompt for Claude
         let prompt = `You are learning to code. Here is your coding challenge:\n\n`;
         
         if (instruction.type === 'lesson') {
@@ -314,38 +488,10 @@ class TSELoopManager {
         prompt += `Difficulty: ${instruction.difficulty}\n`;
         prompt += `\nPlease write your ${instruction.language} code solution:`;
 
-        // TODO: This is where you need to integrate with Claude's actual API
-        // For now, I'll add a placeholder that shows where the real integration goes
-        
-        console.log(`[TSE-CODING] Prompting Claude with:\n${prompt}\n`);
-        
-        // IMPORTANT: Replace this section with actual Claude API call
-        // Example integration point:
-        // const response = await claudeAPI.generateResponse({
-        //     prompt: prompt,
-        //     characterId: '#700002',
-        //     context: 'coding_training',
-        //     maxTokens: 2000
-        // });
-        
-        // For now, throw an error to indicate this needs implementation
+        console.log(`[TSE-CODING] Using internal CodeResponseGenerator`);
         const generator = new CodeResponseGenerator();
         return generator.generateResponse(instruction);
-        
-        // The response should return:
-        // return {
-        //     code: response.text,
-        //     processingTime: Date.now() - startTime,
-        //     hintsUsed: [],
-        //     metadata: {
-        //         promptLength: prompt.length,
-        //         responseLength: response.text.length,
-        //         model: 'claude-3'
-        //     }
-        // };
     }
-
-    // ... rest of the existing methods remain unchanged ...
 
     async startChatCycle(chatData) {
         if (!this.isInitialized) {
@@ -377,7 +523,6 @@ class TSELoopManager {
             const result = await client.query(query, values);
             console.log(`✅ Chat cycle started: ${cycle_id} for conversation ${conversation_id}`);
 
-            // Record Teacher prediction
             try {
                 const teacherData = {
                     algorithm_decision: { prediction: "chat_response_needed", user_input: user_message },
@@ -431,7 +576,6 @@ class TSELoopManager {
                 throw new Error(`Cycle ${cycle_id} not found.`);
             }
 
-            // Record Student outcome
             try {
                 const studentData = {
                     real_world_outcome: { outcome_type: "conversation_completed", success: true },
@@ -495,19 +639,26 @@ class TSELoopManager {
             const query = `
                 SELECT 
                     c.*,
-                    COUNT(tr.record_id) as teacher_records_count,
-                    COUNT(sr.record_id) as student_records_count,
-                    AVG(tr.confidence_score) as avg_teacher_confidence,
-                    AVG(sr.character_similarity_accuracy) as avg_student_accuracy
+                    COALESCE(tr.teacher_records_count, 0) AS teacher_records_count,
+                    COALESCE(sr.student_records_count, 0) AS student_records_count,
+                    tr.avg_teacher_confidence,
+                    sr.avg_student_accuracy
                 FROM tse_cycles c
-                LEFT JOIN tse_teacher_records tr ON c.cycle_id = tr.cycle_id
-                LEFT JOIN tse_student_records sr ON c.cycle_id = sr.cycle_id
-                WHERE c.cycle_id = $1
-                GROUP BY c.cycle_id, c.started_at, c.completed_at, 
-                         c.cycle_duration_ms, c.status, c.cycle_type, c.cultural_compliance, 
-                         c.seven_commandments_check, c.conversation_id, c.user_message, 
-                         c.chat_context, c.created_at, c.updated_at, c.metadata, 
-                         c.algorithm_version, c.performance_summary, c.learning_outcomes;
+                LEFT JOIN (
+                    SELECT cycle_id,
+                           COUNT(DISTINCT record_id) AS teacher_records_count,
+                           AVG(confidence_score) AS avg_teacher_confidence
+                    FROM tse_teacher_records
+                    GROUP BY cycle_id
+                ) tr ON tr.cycle_id = c.cycle_id
+                LEFT JOIN (
+                    SELECT cycle_id,
+                           COUNT(DISTINCT record_id) AS student_records_count,
+                           AVG(character_similarity_accuracy) AS avg_student_accuracy
+                    FROM tse_student_records
+                    GROUP BY cycle_id
+                ) sr ON sr.cycle_id = c.cycle_id
+                WHERE c.cycle_id = $1;
             `;
             const result = await this.pool.query(query, [cycle_id]);
             
@@ -522,16 +673,12 @@ class TSELoopManager {
         }
     }
 
-    /**
-     * Run a continuous coding training session
-     * @param {Object} options - Training options (duration, languages, etc.)
-     */
     async runCodingTrainingSession(options = {}) {
         const {
             maxCycles = 10,
             languages = ['html', 'javascript', 'python'],
             minScoreToAdvance = 80,
-            delayBetweenCycles = 5000 // 5 seconds
+            delayBetweenCycles = 5000
         } = options;
 
         console.log(`[TSE-CODING] Starting coding training session for Claude`);
@@ -552,14 +699,12 @@ class TSELoopManager {
                 
                 console.log(`[TSE-CODING] Cycle complete. Score: ${result.evaluation.overall_score}`);
                 
-                // Check if we should advance to next language
                 if (result.evaluation.overall_score >= minScoreToAdvance) {
                     currentLanguageIndex++;
                 }
                 
                 cycleCount++;
                 
-                // Wait between cycles
                 if (cycleCount < maxCycles) {
                     console.log(`[TSE-CODING] Waiting ${delayBetweenCycles}ms before next cycle...`);
                     await new Promise(resolve => setTimeout(resolve, delayBetweenCycles));
@@ -567,15 +712,13 @@ class TSELoopManager {
                 
             } catch (error) {
                 console.error(`[TSE-CODING] Error in cycle ${cycleCount + 1}:`, error);
-                // Continue with next cycle even if one fails
                 cycleCount++;
             }
         }
 
-        // Generate summary
         const summary = {
             totalCycles: results.length,
-            averageScore: results.reduce((sum, r) => sum + r.evaluation.overall_score, 0) / results.length,
+            averageScore: results.length > 0 ? results.reduce((sum, r) => sum + r.evaluation.overall_score, 0) / results.length : 0,
             languageProgress: languages.map(lang => {
                 const langResults = results.filter(r => r.teacherInstruction.language === lang);
                 return {
