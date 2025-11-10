@@ -165,6 +165,7 @@
       <nav>
         <button class="nav-item active" data-section="stories">Stories</button>
         <button class="nav-item" data-section="characters">Characters</button>
+        <button class="nav-item" data-section="settings">Settings</button>
       </nav>
     </aside>
     
@@ -214,6 +215,24 @@
         
         <div id="stories-list" class="data-grid"></div>
       </section>
+
+      <section id="settings" class="section">
+        <h2>System Settings</h2>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="auto-approve-toggle"> Auto-approve new users after email verification
+          </label>
+          <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">When enabled, users can login immediately after verifying their email. When disabled, admin must manually approve each user.</p>
+        </div>
+        
+        <button class="btn" onclick="saveAutoApproveSetting()">Save Settings</button>
+        
+        <hr style="border: 1px solid var(--accent); margin: 30px 0;">
+        
+        <h3>Pending User Approvals</h3>
+        <div id="pending-users-list" class="data-grid"></div>
+      </section>
       
       <section id="characters" class="section">
         <h2>Character Management</h2>
@@ -262,6 +281,24 @@
         </form>
         
         <div id="characters-list" class="data-grid"></div>
+      </section>
+
+      <section id="settings" class="section">
+        <h2>System Settings</h2>
+        
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="auto-approve-toggle"> Auto-approve new users after email verification
+          </label>
+          <p style="font-size: 12px; opacity: 0.7; margin-top: 5px;">When enabled, users can login immediately after verifying their email. When disabled, admin must manually approve each user.</p>
+        </div>
+        
+        <button class="btn" onclick="saveAutoApproveSetting()">Save Settings</button>
+        
+        <hr style="border: 1px solid var(--accent); margin: 30px 0;">
+        
+        <h3>Pending User Approvals</h3>
+        <div id="pending-users-list" class="data-grid"></div>
       </section>
     </main>
   </div>

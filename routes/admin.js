@@ -1,44 +1,49 @@
 import express from 'express';
-import bcrypt from 'bcryptjs';
+import { authLimiter } from '../backend/middleware/rateLimiter.js';
+import { verifyToken } from '../middleware/auth.js';
+import { validate } from '../backend/utils/validator.js';import bcrypt from 'bcryptjs';
 import pool from '../backend/db/pool.js';
-import { generateToken, verifyToken } from '../backend/utils/jwtUtil.js';
+import { generateToken, verifyToken as verifyTokenJWT } from '../backend/utils/jwtUtil.js';
 
+import UserManager from '../backend/auth/UserManager.js';
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
-  try {
+router.post('/login', authLimiter, validate({ username: { required: true, type: 'username' }, password: { required: true, type: 'password' } }), async (req, res) => {
     const { username, password } = req.body;
+  try {
     
-    const result = await pool.query(
-      'SELECT user_id, username, password_hash, access_level FROM users WHERE username = $1',
-      [username]
-    );
+    // Verify user credentials using UserManager
+    const result = await UserManager.verifyUser(username, password);
     
-    if (result.rows.length === 0 || !await bcrypt.compare(password, result.rows[0].password_hash)) {
+    if (!result.success) {
       return res.status(401).json({ 
         success: false, 
-        message: 'Invalid credentials' 
+        message: result.error 
       });
     }
     
-    const user = result.rows[0];
+    const user = result.user;
     
-    if (user.access_level < 5) {
+    // Check if user has admin role
+    if (user.role !== 'admin' && (!user.access_level || user.access_level < 5)) {
       return res.status(403).json({ 
         success: false, 
-        message: 'Admin access required (level 5+)' 
+        message: 'Admin access required' 
       });
     }
     
+    // Generate JWT token
     const token = generateToken(user);
     
     res.json({
       success: true,
       token,
       user: {
-        user_id: user.user_id,
+        user_id: user.user_id || user.id,
+        access_level: user.access_level,
         username: user.username,
-        access_level: user.access_level
+        role: user.role,
+        email: user.email
       }
     });
     
@@ -50,8 +55,7 @@ router.post('/login', async (req, res) => {
     });
   }
 });
-
-router.get('/verify', async (req, res) => {
+router.get('/verify', verifyToken, async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     
@@ -62,7 +66,7 @@ router.get('/verify', async (req, res) => {
       });
     }
     
-    const decoded = verifyToken(token);
+    const decoded = verifyTokenJWT(token);
     res.json({ success: true, user: decoded });
     
   } catch (error) {
@@ -121,7 +125,7 @@ async function applyCRTFilter(buffer) {
   }
 }
 
-router.post("/media", upload.single("image"), async (req, res) => {
+router.post("/media", verifyToken, upload.single("image"), async (req, res) => {
   const client = await pool.connect();
   
   try {
@@ -211,7 +215,7 @@ router.post("/media", upload.single("image"), async (req, res) => {
   }
 });
 
-router.get("/media", async (req, res) => {
+router.get("/media", verifyToken, async (req, res) => {
   try {
     const query = `
       SELECT 
@@ -249,7 +253,7 @@ router.get("/media", async (req, res) => {
   }
 });
 
-router.get("/entities", async (req, res) => {
+router.get("/entities", verifyToken, async (req, res) => {
   try {
     const { entity_type } = req.query;
     
@@ -270,7 +274,7 @@ router.get("/entities", async (req, res) => {
   }
 });
 
-router.get("/hex/next/:entityType", async (req, res) => {
+router.get("/hex/next/:entityType", verifyToken, async (req, res) => {
   try {
     const entityTypeMap = {
       'multimedia': 'multimedia_asset',
@@ -298,7 +302,7 @@ router.get("/hex/next/:entityType", async (req, res) => {
   }
 });
 
-router.post("/relationships", async (req, res) => {
+router.post("/relationships", verifyToken, async (req, res) => {
   try {
     const { source_hex, target_hex, relationship_type, metadata } = req.body;
     
@@ -319,7 +323,7 @@ router.post("/relationships", async (req, res) => {
   }
 });
 
-router.get("/relationships/:hexId", async (req, res) => {
+router.get("/relationships/:hexId", verifyToken, async (req, res) => {
   try {
     const hexId = '#' + req.params.hexId.replace('#', '');
     
@@ -339,7 +343,7 @@ router.get("/relationships/:hexId", async (req, res) => {
   }
 });
 
-router.get("/stats", async (req, res) => {
+router.get("/stats", verifyToken, async (req, res) => {
   try {
     const stats = await pool.query(`
       SELECT 
@@ -366,3 +370,249 @@ router.get("/stats", async (req, res) => {
 });
 
 export default router;
+
+// Knowledge Entity Management Routes
+router.get('/knowledge-entities', verifyToken, async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+        cp.character_id,
+        cp.character_name,
+        cp.description,
+        COUNT(ki.knowledge_id) as knowledge_count
+      FROM character_profiles cp
+      LEFT JOIN knowledge_items ki ON ki.initial_character_id = cp.character_id
+      WHERE cp.category = 'Knowledge Entity'
+      GROUP BY cp.character_id, cp.character_name, cp.description
+      ORDER BY cp.character_name
+    `;
+    
+    const result = await pool.query(query);
+    
+    res.json({
+      success: true,
+      entities: result.rows
+    });
+  } catch (error) {
+    console.error('Error fetching knowledge entities:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+// Add knowledge item for an entity
+router.post('/knowledge-item', verifyToken, async (req, res) => {
+  const client = await pool.connect();
+  
+  try {
+    await client.query('BEGIN');
+    
+    const { entity_id, entity_name, statement, difficulty } = req.body;
+    
+    // Generate knowledge ID
+    const hexResult = await client.query(
+      "SELECT '#' || LPAD(TO_HEX(COALESCE(MAX(CAST(SUBSTRING(knowledge_id FROM 2) AS INT)), 11468800) + 1), 6, '0') AS hex_id FROM knowledge_items WHERE knowledge_id LIKE '#AF%'"
+    );
+    const knowledgeId = hexResult.rows[0].hex_id;
+    
+    // Create JSON content
+    const content = {
+      type: 'fact',
+      subject: entity_name,
+      statement: statement,
+      entity_id: entity_id
+    };
+    
+    // Insert knowledge item
+    await client.query(
+      `INSERT INTO knowledge_items (
+        knowledge_id,
+        content,
+        domain_id,
+        source_type,
+        initial_character_id,
+        complexity_score,
+        concept
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        knowledgeId,
+        JSON.stringify(content),
+        '#AE0001', // General knowledge domain
+        'admin_entry',
+        entity_id,
+        (difficulty || 50) / 100.0,
+        entity_name.toLowerCase().replace(/\s+/g, '_')
+      ]
+    );
+    
+    await client.query('COMMIT');
+    
+    res.json({
+      success: true,
+      knowledge_id: knowledgeId,
+      message: 'Knowledge item added successfully'
+    });
+    
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error('Error adding knowledge item:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  } finally {
+    client.release();
+  }
+});
+
+// System Settings Routes
+router.get('/settings/:setting_key', verifyToken, async (req, res) => {
+  try {
+    const { setting_key } = req.params;
+    
+    const result = await pool.query(
+      'SELECT setting_value FROM system_settings WHERE setting_key = $1',
+      [setting_key]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Setting not found' 
+      });
+    }
+    
+    res.json({
+      success: true,
+      key: setting_key,
+      value: result.rows[0].setting_value
+    });
+  } catch (error) {
+    console.error('Error fetching setting:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+router.post('/settings/:setting_key', verifyToken, async (req, res) => {
+  try {
+    const { setting_key } = req.params;
+    const { value } = req.body;
+    
+    await pool.query(
+      `INSERT INTO system_settings (setting_key, setting_value, updated_by, updated_at)
+       VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+       ON CONFLICT (setting_key) 
+       DO UPDATE SET setting_value = $2, updated_by = $3, updated_at = CURRENT_TIMESTAMP`,
+      [setting_key, value, req.user?.user_id || '#D00001']
+    );
+    
+    res.json({
+      success: true,
+      message: 'Setting updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating setting:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+router.get('/pending-users', verifyToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT user_id, username, email, created_at, email_verified, approval_status
+       FROM users
+       WHERE approval_status = 'pending'
+       ORDER BY created_at DESC`
+    );
+    
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching pending users:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+router.post('/approve-user/:user_id', verifyToken, async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    
+    const result = await pool.query(
+      `UPDATE users 
+       SET approval_status = 'approved', approved_at = CURRENT_TIMESTAMP
+       WHERE user_id = $1
+       RETURNING username, email`,
+      [user_id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+    
+    const user = result.rows[0];
+    
+    const { sendApprovalEmail } = await import('../backend/utils/emailSender.js');
+    await sendApprovalEmail(user.email, user.username);
+    
+    res.json({
+      success: true,
+      message: 'User approved successfully'
+    });
+  } catch (error) {
+    console.error('Error approving user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
+router.post('/reject-user/:user_id', verifyToken, async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    
+    const result = await pool.query(
+      `UPDATE users 
+       SET approval_status = 'rejected'
+       WHERE user_id = $1
+       RETURNING username, email`,
+      [user_id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+    
+    const user = result.rows[0];
+    
+    const { sendRejectionEmail } = await import('../backend/utils/emailSender.js');
+    await sendRejectionEmail(user.email, user.username);
+    
+    res.json({
+      success: true,
+      message: 'User rejected successfully'
+    });
+  } catch (error) {
+    console.error('Error rejecting user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
