@@ -4,6 +4,7 @@ import pool from '../db/pool.js';
 import cotwIntentMatcher from './cotwIntentMatcher.js';
 import cotwQueryEngine from './cotwQueryEngine.js';
 
+import initializeRegistrationSockets from './registrationSocketHandler.js';
 export function initializeWebSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
@@ -14,6 +15,8 @@ export function initializeWebSocket(httpServer) {
   });
 
   const sessions = new Map();
+
+  initializeRegistrationSockets(io);
 
   io.on('connection', (socket) => {
     console.log(`🟢 Terminal connected: ${socket.id}`);
