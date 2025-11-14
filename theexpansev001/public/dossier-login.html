@@ -29,10 +29,10 @@
       mix-blend-mode: screen;
     }
 
-    .app { display:grid; grid-template-columns:1fr 1fr; grid-template-rows: minmax(0, 1fr); align-items: stretch; gap:var(--gap); height:100vh; padding:16px; box-sizing:border-box; }
+    .app { display:grid; grid-template-columns:1fr 1.1fr; gap:var(--gap); height:100vh; padding:16px; box-sizing:border-box; }
 
     .panel {
-      border: 2px solid var(--accent);
+      border: 1px solid var(--accent);
       border-radius: var(--radius);
       padding: 16px;
       box-shadow: var(--shadow);
@@ -44,7 +44,7 @@
     .left-panel { position: relative; }
     .dossier-stack { display:none; }
 
-    .panel-box { position: relative; border: 2px solid var(--accent); border-radius: 12px; padding: 0; box-shadow: var(--shadow); background: rgba(0,16,0,0.25); }
+    .panel-box { position: relative; border: 1px solid var(--accent); border-radius: 12px; padding: 0; box-shadow: var(--shadow); background: rgba(0,16,0,0.25); }
     .portrait-wrap { height: 220px; }
     .portrait { width: 100%; height:100%; object-fit: contain; object-position: center 30%; border-radius: 12px; filter: grayscale(20%) contrast(1.05); }
 
@@ -54,31 +54,8 @@
     .info-v { font-weight: bold; }
     .summary { margin-top: 10px; }
 
-    .right-panel { 
-      display: flex; 
-      flex-direction: column; 
-      gap: 0; 
-      align-self: stretch;
-      min-height: 0;
-    }    
-    .info-display-area {
-      flex: 65;
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(0,16,0,0.25);
-      box-shadow: 0 0 22px rgba(0,255,117,0.28), inset 0 0 18px rgba(0,255,117,0.18);
-      overflow-y: auto;
-      min-height: 0;
-    }
-    
-    .chat-section {
-      flex: 35;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-height: 0;
-    }    .hud { padding:10px 14px; border:1px solid var(--accent); border-radius:12px; background: rgba(0,255,0,0.04); font-weight:600; }
+    .right-panel { display:flex; flex-direction:column; gap:12px; }
+    .hud { padding:10px 14px; border:1px solid var(--accent); border-radius:12px; background: rgba(0,255,0,0.04); font-weight:600; }
     .hud small { font-weight:400; opacity:1; }
 
     .login-container {
@@ -100,7 +77,7 @@
 
     .login-input {
       background: rgba(0,16,0,0.25);
-      border: 2px solid var(--accent);
+      border: 1px solid var(--accent);
       border-radius: 12px;
       outline: none;
       color: var(--fg);
@@ -148,15 +125,15 @@
     }
 
     .chat-log { 
-      border: 2px solid var(--accent); 
+      border: 1px solid var(--accent); 
       border-radius: 12px; 
       padding: 12px; 
       background: rgba(0,16,0,0.25); 
       box-shadow: var(--shadow); 
       overflow-y: auto; 
       flex: 1; 
-      min-height: 0;
     }
+
     .line { white-space: pre-wrap; word-break: break-word; margin: 6px 0; }
     .line.error { color: #ff4444; }
     .line.success { color: #00ff75; }
@@ -165,7 +142,7 @@
     .chat-input-bar { display: flex; gap: 8px; }
     #chat-input {
       background: rgba(0,16,0,0.25); 
-      border: 2px solid var(--accent); 
+      border: 1px solid var(--accent); 
       border-radius: 12px; 
       outline: none; 
       color: var(--fg); 
@@ -178,7 +155,7 @@
 
     button { 
       background: transparent; 
-      border: 2px solid var(--accent); 
+      border: 1px solid var(--accent); 
       color: var(--fg); 
       padding: 8px 16px; 
       border-radius: 12px; 
@@ -228,7 +205,7 @@
     .dossier-cover.open ~ .dossier-stack { 
       display: grid; 
       grid-template-rows: auto auto; 
-      gap: 0px; 
+      gap: 12px; 
       position: relative; 
     }
 
@@ -273,6 +250,7 @@
     </section>
 
     <section class="panel right-panel" id="chat-panel">
+      <div class="hud">TERMINAL :: AUTHENTICATION <small>SECURE LOGIN</small></div>
 
       <div class="login-container" id="loginContainer">
         <div class="login-form">
@@ -283,16 +261,12 @@
         </div>
       </div>
 
-      <div class="info-display-area" id="infoDisplay">
-      </div>
-
-      <div class="chat-section">
       <div class="chat-interface" id="chatInterface">
+        <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
         <div class="chat-input-bar">
           <input id="chat-input" type="text" placeholder="> Enter command" autocomplete="off" />
           <button id="send-btn" type="button">Send</button>
         </div>
-      </div>
       </div>
     </section>
   </div>
@@ -300,7 +274,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      window.socket = io(); const socket = window.socket;
+      const socket = io();
       
       const loginContainer = document.getElementById('loginContainer');
       const chatInterface = document.getElementById('chatInterface');
@@ -311,7 +285,7 @@
       
       const chatInput = document.getElementById('chat-input');
       const sendBtn = document.getElementById('send-btn');
-      const chatLog = document.getElementById('infoDisplay');
+      const chatLog = document.getElementById('chat-log');
       const cover = document.getElementById('dossier-cover');
       
       window.currentUser = null;
@@ -324,55 +298,13 @@
       function addLine(text, cls = '') {
         const line = document.createElement('div');
         line.className = 'line ' + cls;
-
-        // Parse text for hex IDs and add 🦝 icons
-        const hexPattern = /#[0-9A-F]{6}/gi;
-        const parts = text.split(hexPattern);
-        const hexMatches = text.match(hexPattern) || [];
-
-        // Reconstruct with hex IDs as clickable elements
-        for (let i = 0; i < parts.length; i++) {
-          if (parts[i]) {
-            line.appendChild(document.createTextNode(parts[i]));
-          }
-
-          if (i < hexMatches.length) {
-            // Create hex ID span
-            const hexSpan = document.createElement('span');
-            hexSpan.textContent = hexMatches[i];
-            hexSpan.style.color = '#00ff75';
-            hexSpan.style.fontWeight = 'bold';
-            hexSpan.style.cursor = 'pointer';
-            hexSpan.style.textDecoration = 'underline';
-            hexSpan.title = 'Click to learn more about this hex ID';
-            hexSpan.onclick = () => {
-              if (typeof window.socket !== 'undefined') {
-                window.socket.emit('explain-hex', { hexId: hexMatches[i], mode: 'basic' });
-              }
-            };
-            line.appendChild(hexSpan);
-
-            // Add 🦝 icon right after
-            const raccoon = document.createElement('span');
-            raccoon.textContent = ' 🦝';
-            raccoon.style.cursor = 'pointer';
-            raccoon.style.marginLeft = '2px';
-            raccoon.title = 'Click for more info about ' + hexMatches[i];
-            raccoon.onclick = () => {
-              if (typeof window.socket !== 'undefined') {
-                window.socket.emit('explain-hex', { hexId: hexMatches[i], mode: 'basic' });
-              }
-            };
-            line.appendChild(raccoon);
-          }
-        }
-
+        line.textContent = text;
         chatLog.appendChild(line);
         chatLog.scrollTop = chatLog.scrollHeight;
       }
 
       function switchToCommandInterface() {
-        loginContainer.remove();
+        loginContainer.style.display = 'none';
         chatInterface.classList.add('active');
         chatInput.focus();
       }
@@ -498,13 +430,6 @@
         }
       });
 
-      socket.on("terminal-output", (data) => {
-        if (data.error) {
-          addLine("SYSTEM: " + data.error, "error");
-          return;
-        }
-        addLine(data.output || ("SYSTEM: " + data.message) || "", data.type || "");
-      });
       socket.on('dossier-data', (data) => {
         if (data.success) {
           addLine('SYSTEM: Opening dossier...', '');
@@ -539,9 +464,6 @@
       loginUsername.focus();
     });
   </script>
-  <script src="raccoon-component.js"></script>
-  <script src="raccoon-handler.js"></script>
-  <script src="raccoon-buttons.js"></script>
   <script src="admin-menu.js"></script>
   <script>
     function loadUserMenuByLevel(accessLevel) {
