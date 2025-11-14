@@ -1,0 +1,228 @@
+import BeltProgressionManager from './BeltProgressionManager.js';// backend/TSE/EvaluationComponent.js
+
+import pool from '../db/pool.js';
+import LearningDatabase from './LearningDatabase.js';
+import PerformanceMonitor from './PerformanceMonitor.js';// backend/TSE/EvaluationComponent.js
+import generateAokHexId from '../utils/hexIdGenerator.js';
+import { createModuleLogger } from '../utils/logger.js';class EvaluationComponent {
+    constructor(pool, learningDatabase, performanceMonitor) {
+        this.pool = pool;
+        this.learningDatabase = learningDatabase;
+        this.performanceMonitor = performanceMonitor;
+        this.beltManager = new BeltProgressionManager(pool);
+    }
+
+    async performAnalysis(cycle_id) {
+        try {
+            const cycleData = await this._getCycleData(cycle_id);
+            if (!cycleData) {
+                throw new Error(`Cycle ${cycle_id} not found`);
+            }
+
+            const teacherRecords = await this._getTeacherRecords(cycle_id);
+            const studentRecords = await this._getStudentRecords(cycle_id);
+
+            const effectiveness = this._calculateEffectiveness(teacherRecords, studentRecords);
+            const efficiency = this._calculateEfficiency(studentRecords);
+            const culturalAlignment = this._calculateCulturalAlignment(teacherRecords, studentRecords);
+
+            const evaluation = {
+                cycle_id,
+                character_id: cycleData.character_id,
+                timestamp: new Date().toISOString(),
+                metrics: {
+                    effectiveness,
+                    efficiency,
+                    cultural_alignment: culturalAlignment,
+                    cycles_completed: cycleData.cycles_completed || 1
+                },
+                teacher_performance: {
+                    confidence_avg: this._averageConfidence(teacherRecords),
+                    clarity_score: this._clarityScore(teacherRecords),
+                    records_count: teacherRecords.length
+                },
+                student_performance: {
+                    accuracy_avg: this._averageAccuracy(studentRecords),
+                    understanding_depth: this._understandingDepth(studentRecords),
+                    records_count: studentRecords.length
+                },
+                recommendation: await this._generateRecommendation(
+                    cycleData.character_id, 
+                    effectiveness, 
+                    efficiency, 
+                    culturalAlignment
+                )
+            };
+
+            await this._storeEvaluation(evaluation);
+            
+            return evaluation;
+        } catch (error) {
+            logger.error("EvaluationComponent", `Evaluation failed for cycle ${cycle_id}:`, error);
+            throw error;
+        }
+    }
+
+    async _getCycleData(cycle_id) {
+        const result = await this.pool.query(
+            'SELECT * FROM tse_cycles WHERE cycle_id = $1',
+            [cycle_id]
+        );
+        return result.rows[0] || null;
+    }
+
+    async _getTeacherRecords(cycle_id) {
+        const result = await this.pool.query(
+            'SELECT * FROM tse_teacher_records WHERE cycle_id = $1 ORDER BY created_at',
+            [cycle_id]
+        );
+        return result.rows;
+    }
+
+    async _getStudentRecords(cycle_id) {
+        const result = await this.pool.query(
+            'SELECT * FROM tse_student_records WHERE cycle_id = $1 ORDER BY created_at',
+            [cycle_id]
+        );
+        return result.rows;
+    }
+
+    _calculateEffectiveness(teacherRecords, studentRecords) {
+        if (teacherRecords.length === 0 || studentRecords.length === 0) {
+            return 0;
+        }
+
+        const teacherConfidence = this._averageConfidence(teacherRecords);
+        const studentAccuracy = this._averageAccuracy(studentRecords);
+        const responseRate = studentRecords.length / Math.max(teacherRecords.length, 1);
+        
+        return (teacherConfidence * 0.3 + studentAccuracy * 0.5 + responseRate * 0.2);
+    }
+
+    _calculateEfficiency(studentRecords) {
+        if (studentRecords.length === 0) return 0;
+        
+        const timings = studentRecords
+            .filter(r => r.response_time_ms)
+            .map(r => r.response_time_ms);
+        
+        if (timings.length === 0) return 0.5;
+        
+        const avgTime = timings.reduce((a, b) => a + b, 0) / timings.length;
+        const targetTime = 5000;
+        
+        return Math.min(1, targetTime / avgTime);
+    }
+
+    _calculateCulturalAlignment(teacherRecords, studentRecords) {
+        const expanseKeywords = ['piza', 'sukeruton', 'cheese', 'fang', 'hex', 'belt'];
+        let culturalScore = 0;
+        let totalRecords = 0;
+
+        [...teacherRecords, ...studentRecords].forEach(record => {
+            if (record.content || record.response) {
+                const text = (record.content || record.response || '').toLowerCase();
+                const matches = expanseKeywords.filter(kw => text.includes(kw)).length;
+                culturalScore += Math.min(1, matches / 3);
+                totalRecords++;
+            }
+        });
+
+        return totalRecords > 0 ? culturalScore / totalRecords : 0.9;
+    }
+
+    _averageConfidence(teacherRecords) {
+        const confidences = teacherRecords
+            .filter(r => r.confidence_score !== null && r.confidence_score !== undefined)
+            .map(r => parseFloat(r.confidence_score));
+        
+        return confidences.length > 0 
+            ? confidences.reduce((a, b) => a + b, 0) / confidences.length 
+            : 0.5;
+    }
+
+    _averageAccuracy(studentRecords) {
+        const accuracies = studentRecords
+            .filter(r => r.accuracy_score !== null && r.accuracy_score !== undefined)
+            .map(r => parseFloat(r.accuracy_score));
+        
+        return accuracies.length > 0 
+            ? accuracies.reduce((a, b) => a + b, 0) / accuracies.length 
+            : 0.5;
+    }
+
+    _clarityScore(teacherRecords) {
+        const avgLength = teacherRecords
+            .map(r => (r.content || '').length)
+            .reduce((a, b) => a + b, 0) / Math.max(teacherRecords.length, 1);
+        
+        const optimalLength = 200;
+        return Math.min(1, 1 - Math.abs(avgLength - optimalLength) / 1000);
+    }
+
+    _understandingDepth(studentRecords) {
+        const responseQuality = studentRecords.map(r => {
+            const response = r.response || '';
+            const hasDetail = response.length > 50 ? 0.3 : 0;
+            const hasStructure = response.includes('\n') ? 0.3 : 0;
+            const hasAccuracy = (r.accuracy_score || 0) > 0.7 ? 0.4 : 0;
+            return hasDetail + hasStructure + hasAccuracy;
+        });
+        
+        return responseQuality.length > 0
+            ? responseQuality.reduce((a, b) => a + b, 0) / responseQuality.length
+            : 0;
+    }
+
+    async _generateRecommendation(character_id, effectiveness, efficiency, cultural) {
+        const currentBelt = await this.beltManager.getCurrentBelt(character_id);
+        const progression = await this.beltManager.checkProgression(character_id);
+        
+        const recommendations = [];
+        
+        if (effectiveness < 0.5) {
+            recommendations.push('Focus on improving teaching clarity and student engagement');
+        }
+        if (efficiency < 0.5) {
+            recommendations.push('Work on response time and processing efficiency');
+        }
+        if (cultural < 0.8) {
+            recommendations.push('Increase integration of Expanse universe concepts');
+        }
+        
+        if (progression.can_advance) {
+            recommendations.push(`Ready for advancement to ${progression.next_belt}`);
+        }
+        
+        return {
+            current_belt: currentBelt,
+            progression: progression,
+            suggestions: recommendations.length > 0 ? recommendations : ['Continue current training pattern']
+        };
+    }
+
+    async _storeEvaluation(evaluation) {
+        const evaluation_id = generateAokHexId('E');
+        
+        await this.pool.query(
+            `INSERT INTO tse_evaluations 
+            (evaluation_id, cycle_id, character_id, metrics, teacher_performance, 
+             student_performance, recommendation, created_at)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            ON CONFLICT (cycle_id) DO UPDATE SET
+            metrics = $4, teacher_performance = $5, student_performance = $6,
+            recommendation = $7, updated_at = $8`,
+            [
+                evaluation_id,
+                evaluation.cycle_id,
+                evaluation.character_id,
+                JSON.stringify(evaluation.metrics),
+                JSON.stringify(evaluation.teacher_performance),
+                JSON.stringify(evaluation.student_performance),
+                JSON.stringify(evaluation.recommendation),
+                evaluation.timestamp
+            ]
+        );
+    }
+}
+

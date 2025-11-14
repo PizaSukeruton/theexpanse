@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C_O_T_W Terminal Interface</title>
+  <style>
+    body {
+      background: #070b0f;
+      color: #39ff14;
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      margin: 0; min-height: 100vh;
+      letter-spacing: 1.2px;
+      user-select: none;
+    }
+    #terminal-root {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      background: repeating-linear-gradient(
+        to bottom, transparent 0 19px, #07320410 19px 21px
+      );
+      box-shadow: 0 0 60px #39ff14cc inset;
+    }
+    .terminal-panel {
+      flex: 1;
+      padding: 42px 16px;
+      min-width: 0; box-sizing: border-box;
+      display: flex; flex-direction: column; align-items: stretch;
+    }
+    .terminal-panel:not(:last-child) {
+      border-right: 2px solid #24c700;
+    }
+    #terminal-header {
+      width: 100vw;
+      font-size: 1.7em;
+      text-align: center;
+      padding: 20px 0 12px 0;
+      text-shadow: 0 0 24px #39ff14, 0 0 2px #39ff14, 1px 1px 0 #004a13;
+      letter-spacing: 5px;
+      border-bottom: 2px solid #39ff14;
+      background: #161818;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+    #info-panel {
+      justify-content: center; align-items: center;
+      background: transparent;
+    }
+    #dossier-content {
+      text-align: left;
+      width: 80%;
+      margin: 0 auto;
+      font-size: 1.05em;
+      opacity: 0.92;
+      min-width: 220px;
+      min-height: 240px;
+      padding: 28px 18px;
+      border: 1.5px solid #36c90080;
+      background: #090d0f84;
+      box-shadow: 0 0 18px #00e88244 inset;
+      border-radius: 3px;
+      display: none;
+    }
+    .chat-log {
+      height: 320px;
+      overflow-y: auto;
+      border: 2px solid #39ff14;
+      padding: 10px 8px 4px 12px;
+      background: #000811;
+      font-size: 1.07em;
+      box-shadow: 0 0 22px #00ff0d33 inset;
+      line-height: 1.69em;
+    }
+    .chat-line {
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .chat-user { color: #39ff14; font-weight: bold; margin-right: 5px; }
+    .chat-bot { color: #33b8cc; font-weight: bold; }
+    .chat-system { color: #cc8613; font-weight: bold; }
+    .crt-cursor {
+      display: inline-block;
+      width: 10px; height: 1em;
+      background: #39ff14;
+      margin-left: 0;
+      animation: blink 1.2s steps(2, start) infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink { 0%, 50% { opacity: 0;} 51%, 100% { opacity: 1; } }
+    .chat-input-bar { display: flex; gap: 8px; margin-top: 6px;}
+    .chat-input-bar input[type="text"] {
+      background: #050c0b;
+      border: 1.3px solid #39ff14;
+      color: #39ff14;
+      font-size: 1.1em;
+      padding: 4px 8px;
+      flex: 1;
+      font-family: inherit;
+      caret-color: #13ff7a;
+      border-radius: 1px;
+    }
+    .chat-input-bar button {
+      background: #092910;
+      color: #39ff14;
+      border: 1.3px solid #39ff14;
+      border-radius: 2px;
+      padding: 5px 18px;
+      font-size: 1.1em;
+      font-family: inherit;
+      text-shadow: 0 0 9px #00c07a;
+      box-shadow: 0 0 4px #00e0aa65;
+      cursor: pointer;
+    }
+    @media (max-width: 800px) {
+      #terminal-root { flex-direction: column; height: auto; }
+      .terminal-panel:not(:last-child) { border-right: none; border-bottom: 2px solid #39ff14;}
+      #terminal-header { font-size: 1.15em;}
+    }
+    @media (max-width: 480px) {
+      #terminal-header { font-size: 0.9em; }
+      .terminal-panel { padding: 13px 2px; }
+      .chat-log { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal-header">C_O_T_W :: TERMINAL NODE #001</div>
+  <div id="terminal-root">
+    <div class="terminal-panel" id="info-panel">
+      <div id="dossier-content">
+        <h2>Dossier Unlocked</h2>
+        <pre id="info-content">
+Name: Agent Piza Sukeruton
+Entity: Multiverse Reaper
+Level: Psi Div :: LEVEL 0
+        </pre>
+        <div id="dossier-summary">
+Status: Internal archives and mission files accessible.<br>
+Type a dossier command or query on the right.
+        </div>
+      </div>
+    </div>
+    <div class="terminal-panel" id="chatbot-panel">
+      <div id="chat-log" class="chat-log"></div>
+      <div class="chat-input-bar">
+        <input type="text" id="chat-input" autocomplete="off" spellcheck="false" autofocus placeholder="> Enter credentials or command">
+        <button onclick="sendChat()">Send</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    let unlocked = false;
+    let firstPrompt = true;
+    const correctUser = "pizasukeruton";
+    const correctPass = "ctw-secret";
+    let tempUser = "";
+
+    function crtCursor() {
+      return '<span class="crt-cursor"></span>';
+    }
+
+    function logChat(userClass, msg) {
+      const chatLog = document.getElementById('chat-log');
+      const entry = document.createElement('div');
+      entry.className = 'chat-line';
+      if(userClass === 'user') entry.innerHTML = '<span class="chat-user">YOU</span>: ' + msg;
+      else if(userClass === 'bot') entry.innerHTML = '<span class="chat-bot">BOT</span>: ' + msg;
+      else if(userClass === 'system') entry.innerHTML = '<span class="chat-system">//</span> ' + msg;
+      else entry.innerHTML = msg;
+      chatLog.appendChild(entry);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chat-input');
+      let raw = input.value;
+      let msg = raw.trim();
+      if(!msg.length) return;
+      logChat('user', '> ' + msg);
+      input.value = '';
+      // LOGIN FLOW / MAIN COMMANDS
+      if (!unlocked) {
+        if (firstPrompt) {
+          tempUser = msg.toLowerCase();
+          logChat('system', 'Password: ' + crtCursor());
+          firstPrompt = false;
+        } else {
+          if (tempUser === correctUser && msg === correctPass) {
+            unlocked = true;
+            logChat('system', '*** ACCESS GRANTED. Welcome, ' + tempUser + '!');
+            document.getElementById('dossier-content').style.display = '';
+            // Optionally hide login elements; update info panel content dynamically here
+          } else {
+            logChat('system', 'ACCESS DENIED. Try again.<br>Username: ' + crtCursor());
+            firstPrompt = true;
+            tempUser = "";
+          }
+        }
+        return;
+      }
+      // Commands or chatbot interaction here
+      if (unlocked) {
+        // Add logic for commands, e.g. 'help', 'who is ...', etc.
+        if (msg.toLowerCase() === "help") {
+          logChat('system', "Available: [who is ...], [missions], [logout]");
+        } else if (/^who is /i.test(msg)) {
+          logChat('bot', "[C_O_T_W] Piza Sukeruton, Multiverse Reaper, is classified Psi Division; monitoring in progress.");
+        } else if (msg.toLowerCase() === "logout") {
+          unlocked = false;
+          firstPrompt = true;
+          tempUser = "";
+          document.getElementById('dossier-content').style.display = 'none';
+          logChat('system', "Logged out. Username: " + crtCursor());
+        } else {
+          logChat('bot', "Simulated chatbot: no API connection yet.");
+        }
+      }
+    }
+
+    // Initial CRT effect + focus
+    logChat('system', "C_O_T_W Ops Terminal v1. Type Username to begin. " + crtCursor());
+    document.getElementById('chat-input').focus();
+    document.getElementById('chat-input').addEventListener('keydown', function(e){
+      if(e.key === "Enter") sendChat();
+    });
+  </script>
+</body>
+</html>

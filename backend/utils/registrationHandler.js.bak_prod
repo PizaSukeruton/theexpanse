@@ -1,0 +1,145 @@
+import pool from '../db/pool.js';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import generateHexId from './hexIdGenerator.js';
+import { sendVerificationEmail } from './emailSender.js';
+
+export async function registerUser(email, username, password) {
+  try {
+    const existingPending = await pool.query(
+      'SELECT registration_id FROM pending_registrations WHERE email = $1 OR username = $2',
+      [email, username]
+    );
+
+    if (existingPending.rows.length > 0) {
+      return { success: false, error: 'Email or username already registered' };
+    }
+
+    const existingUser = await pool.query(
+      'SELECT user_id FROM users WHERE email = $1 OR username = $2',
+      [email, username]
+    );
+
+    if (existingUser.rows.length > 0) {
+      return { success: false, error: 'Email or username already exists' };
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const registrationExpires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+    await pool.query(
+      `INSERT INTO pending_registrations (email, username, password_hash, verification_token, token_expires_at, expires_at)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [email, username, passwordHash, verificationToken, tokenExpires, registrationExpires]
+    );
+
+    const verificationLink = `http://localhost:3000/dossier-login-clean.html?verify=${verificationToken}`;
+    
+    await sendVerificationEmail(email, username, verificationLink);
+
+    return { success: true, message: 'Verification email sent. Check your inbox.' };
+
+  } catch (error) {
+    console.error('Registration error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function verifyEmailAndSetPassword(verificationToken, password) {
+  try {
+    const result = await pool.query(
+      'SELECT registration_id, email, username FROM pending_registrations WHERE verification_token = $1 AND token_expires_at > NOW()',
+      [verificationToken]
+    );
+
+    if (result.rows.length === 0) {
+      return { success: false, error: 'Invalid or expired verification link' };
+    }
+
+    const pending = result.rows[0];
+    const passwordHash = await bcrypt.hash(password, 10);
+    const userId = await generateHexId('user_id');
+
+    await pool.query('BEGIN');
+
+    try {
+      await pool.query(
+        `INSERT INTO users (user_id, email, username, password_hash, approval_status, email_verified, password_set_at, access_level)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        [userId, pending.email, pending.username, passwordHash, 'pending', true, new Date(), 1]
+      );
+
+      await pool.query(
+        'DELETE FROM pending_registrations WHERE registration_id = $1',
+        [pending.registration_id]
+      );
+
+      await pool.query('COMMIT');
+
+      return { success: true, message: 'Email verified. Awaiting admin approval.', user: { user_id: userId, username: pending.username, email: pending.email } };
+
+    } catch (innerError) {
+      await pool.query('ROLLBACK');
+      throw innerError;
+    }
+
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function verifyEmail(verificationToken) {
+  try {
+    const result = await pool.query(
+      'SELECT registration_id, email, username, password_hash FROM pending_registrations WHERE verification_token = $1 AND token_expires_at > NOW()',
+      [verificationToken]
+    );
+
+    if (result.rows.length === 0) {
+      return { success: false, error: 'Invalid or expired verification link' };
+    }
+
+    const pending = result.rows[0];
+    const userId = await generateHexId('user_id');
+
+    const settingResult = await pool.query(
+      "SELECT setting_value FROM system_settings WHERE setting_key = 'auto_approve_users'"
+    );
+    const autoApprove = settingResult.rows.length > 0 && settingResult.rows[0].setting_value === 'true';
+    const approvalStatus = autoApprove ? 'approved' : 'pending';
+
+    await pool.query('BEGIN');
+
+    try {
+      await pool.query(
+        `INSERT INTO users (user_id, email, username, password_hash, approval_status, email_verified, password_set_at, access_level, approved_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        [userId, pending.email, pending.username, pending.password_hash, approvalStatus, true, new Date(), 1, autoApprove ? new Date() : null]
+      );
+
+      await pool.query(
+        'DELETE FROM pending_registrations WHERE registration_id = $1',
+        [pending.registration_id]
+      );
+
+      await pool.query('COMMIT');
+
+      const message = autoApprove 
+        ? 'Email verified and account approved. You may now login.'
+        : 'Email verified. Awaiting admin approval.';
+
+      return { success: true, message, user: { user_id: userId, username: pending.username, email: pending.email }, auto_approved: autoApprove };
+
+    } catch (innerError) {
+      await pool.query('ROLLBACK');
+      throw innerError;
+    }
+
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return { success: false, error: error.message };
+  }
+}

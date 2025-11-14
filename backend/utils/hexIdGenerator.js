@@ -19,7 +19,7 @@ const HEX_RANGES = {
     tse_evaluation_record_id: { start: 0x800000, end: 0x80FFFF },
     belt_progression_id: { start: 0xBB0000, end: 0xBBFFFF },
     conversation_id: { start: 0x900000, end: 0x9FFFFF },
-    
+    psychic_event_id: { start: 0xBD0000, end: 0xBDFFFF },    
     narrative_segment_id: { start: 0xC00000, end: 0xC0FFFF },
     narrative_path_id: { start: 0xC10000, end: 0xC1FFFF },
     multimedia_asset_id: { start: 0xC20000, end: 0xC2FFFF },

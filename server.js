@@ -17,6 +17,7 @@ import narrativeRouter from './backend/api/narrative-router.js';
 import authRoutes from './routes/auth.js';
 const __filename = fileURLToPath(import.meta.url);
 import adminRoutes from './routes/admin.js';
+import psychicAdminRoutes from './routes/psychic-admin.js';
 import adminCharactersRoutes from './routes/adminCharacters.js';
 import qaExtractorRouter from './backend/api/qa-extractor.js';
 const __dirname = dirname(__filename);
@@ -80,6 +81,8 @@ app.use('/api/auth', authRoutes);
 registerRoute("/api/auth", "Authentication");
 registerRoute("/api/terminal", "Terminal API");
 app.use('/api/admin', adminRoutes);
+app.use('/api/psychic', psychicAdminRoutes);
+registerRoute("/api/psychic", "Psychic Engine Admin");
 registerRoute("/api/admin", "Admin API");
 app.use('/api/admin/characters', adminCharactersRoutes);
 registerRoute("/api/admin/characters", "Admin Characters");
@@ -115,14 +118,25 @@ async function loadAllCharacters() {
     const result = await pool.query(`
       SELECT character_id, character_name, category 
       FROM character_profiles 
-      ORDER BY character_id
+      ORDER BY category, character_id
     `);
     
-    console.log(`\n👥 Characters loaded (${result.rows.length}):`);
-    result.rows.forEach(char => {
-      console.log(`   ${char.character_id} - ${char.character_name}`);
+    const narrative = result.rows.filter(c => c.category !== 'Knowledge Entity');
+    const knowledge = result.rows.filter(c => c.category === 'Knowledge Entity');
+    
+    console.log(`\n👥 Narrative Characters (${narrative.length}):`);
+    narrative.forEach(char => {
+      console.log(`   ${char.character_id} - ${char.character_name} [${char.category}]`);
     });
-    console.log('');
+    
+    if (knowledge.length > 0) {
+      console.log(`\n📚 Knowledge Entities (${knowledge.length}):`);
+      knowledge.forEach(char => {
+        console.log(`   ${char.character_id} - ${char.character_name}`);
+      });
+    }
+    
+    console.log('' );
   } catch (error) {
     console.error('❌ Failed to load characters:', error.message);
   }
@@ -130,7 +144,19 @@ async function loadAllCharacters() {
 
 const httpServer = createServer(app);
 const io = initializeWebSocket(httpServer);
-
+import { WebSocketServer } from "ws";
+import { startPsychicRadar } from "./backend/psychicRadarEmitter.js";
+import { startPsychicEngine } from "./backend/psychicEngineScheduler.js";
+const radarWSS = new WebSocketServer({ noServer: true });
+httpServer.on("upgrade", (req, socket, head) => {
+  if (req.url === "/ws/psychic-radar") {
+    radarWSS.handleUpgrade(req, socket, head, (ws) => {
+      radarWSS.emit("connection", ws, req);
+    });
+  }
+});
+startPsychicRadar(radarWSS, { intervalMs: 100, rmax: 10000 });
+startPsychicEngine();
 httpServer.listen(PORT, async () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
   console.log(`🔌 WebSocket server initialized`);

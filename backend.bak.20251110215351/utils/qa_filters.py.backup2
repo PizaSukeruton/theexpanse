@@ -1,0 +1,73 @@
+from qa_utils import is_yes_no, has_vague_ref, count_independent_clauses, answer_in_evidence
+
+MAX_Q_LEN = 20
+MAX_A_TOK = 15
+MIN_Q_LEN = 3
+
+def check_length(qa):
+    q_len = len(qa["question"].split())
+    a_len = len(qa["answer_short"].split())
+    return MIN_Q_LEN <= q_len <= MAX_Q_LEN and a_len <= MAX_A_TOK
+
+def check_yes_no(qa):
+    return not is_yes_no(qa["question"])
+
+def check_vague_referent(qa):
+    return not has_vague_ref(qa["question"])
+
+def check_multi_fact(qa):
+    return count_independent_clauses(qa["question"]) <= 1
+
+def check_verifiable(qa):
+    return answer_in_evidence(qa["answer_short"], qa.get("evidence_span", ""))
+
+def check_not_empty(qa):
+    return (qa.get("question", "").strip() and 
+            qa.get("answer_short", "").strip() and
+            qa.get("answer_sentence", "").strip())
+
+def quality_pipeline(qa):
+    checks = [
+        check_not_empty,
+        check_length,
+        check_yes_no,
+        check_vague_referent,
+        check_multi_fact,
+        check_verifiable
+    ]
+    
+    for fn in checks:
+        try:
+            if not fn(qa):
+                return False, fn.__name__
+        except Exception as e:
+            return False, f"{fn.__name__}_error"
+    
+    return True, None
+
+def deduplicate_and_rank(items, target=25):
+    from collections import defaultdict
+    import re
+    
+    def normalize(s):
+        return re.sub(r'\s+', ' ', s.strip().lower())
+    
+    def evidence_quality(qa):
+        ev = qa.get("evidence_span", "").lower()
+        ans = qa["answer_short"].lower()
+        presence_score = ev.count(ans) * 10
+        length_penalty = len(ev) / 100
+        return presence_score - length_penalty
+    
+    buckets = defaultdict(list)
+    for item in items:
+        key = (normalize(item["question"]), normalize(item["answer_short"]))
+        buckets[key].append(item)
+    
+    kept = []
+    for group in buckets.values():
+        best = max(group, key=evidence_quality)
+        kept.append(best)
+    
+    kept.sort(key=evidence_quality, reverse=True)
+    return kept[:target]

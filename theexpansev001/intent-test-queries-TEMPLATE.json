@@ -1,0 +1,17 @@
+[
+  {
+    "query": "Who is Batman?",
+    "expectedPattern": "WHO",
+    "expectedEntity": "batman"
+  },
+  {
+    "query": "What is gravity?",
+    "expectedPattern": "WHAT",
+    "expectedEntity": "gravity"
+  },
+  {
+    "query": "When did this happen?",
+    "expectedPattern": "WHEN",
+    "expectedEntity": "this happen"
+  }
+]

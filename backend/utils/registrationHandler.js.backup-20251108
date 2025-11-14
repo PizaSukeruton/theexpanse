@@ -1,0 +1,67 @@
+import pool from '../db/pool.js';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import generateHexId from './hexIdGenerator.js';
+import { sendVerificationEmail } from './emailSender.js';
+
+export async function registerUser(email, username) {
+  try {
+    const existingUser = await pool.query(
+      'SELECT user_id FROM users WHERE email = $1 OR username = $2',
+      [email, username]
+    );
+
+    if (existingUser.rows.length > 0) {
+      return { success: false, error: 'Email or username already exists' };
+    }
+
+    const userId = await generateHexId('user_id');
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    await pool.query(
+      `INSERT INTO users (user_id, email, username, password_hash, approval_status, email_verification_token, email_verification_token_expires, access_level)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [userId, email, username, '', 'pending', verificationToken, tokenExpires, 1]
+    );
+
+    const verificationLink = `https://theexpanse.onrender.com/dossier-login.html?verify=${verificationToken}`;
+    
+    await sendVerificationEmail(email, username, verificationLink);
+
+    return { success: true, message: 'Verification email sent' };
+
+  } catch (error) {
+    console.error('Registration error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+export async function verifyEmailAndSetPassword(verificationToken, password) {
+  try {
+    const result = await pool.query(
+      'SELECT user_id, username, email FROM users WHERE email_verification_token = $1 AND email_verification_token_expires > NOW()',
+      [verificationToken]
+    );
+
+    if (result.rows.length === 0) {
+      return { success: false, error: 'Invalid or expired verification token' };
+    }
+
+    const user = result.rows[0];
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    await pool.query(
+      `UPDATE users 
+       SET email_verified = true, password_hash = $1, password_set_at = NOW(), email_verification_token = NULL, email_verification_token_expires = NULL
+       WHERE user_id = $2`,
+      [passwordHash, user.user_id]
+    );
+
+    return { success: true, message: 'Password set. Awaiting approval.', user };
+
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return { success: false, error: error.message };
+  }
+}

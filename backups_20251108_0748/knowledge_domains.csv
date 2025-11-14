@@ -1,0 +1,6 @@
+domain_id,domain_name,description,parent_domain_id,is_active,created_at,updated_at
+#C133B7,tanuki_mythology,Japanese tanuki folklore,,t,2025-07-23 10:48:48.379957+00,2025-07-23 10:48:48.379957+00
+#AE0100,NLG Vocabulary - Tanuki,Natural Language Generation vocabulary for Tanuki character personality,,t,2025-08-15 07:48:37.358118+00,2025-08-15 07:48:37.358118+00
+#AE0001,Conversational Acts,Utterances for baseline dialogue,,t,2025-08-16 06:39:02.205044+00,2025-08-16 06:39:02.205044+00
+#AE0002,Pokemon Knowledge,"Pokemon lore, mechanics, and trivia",,t,2025-11-06 05:06:31.013259+00,2025-11-06 05:06:31.013259+00
+#AE0101,True Norwegian Black Metal,"Knowledge about the origins, history, and cultural impact of True Norwegian Black Metal music genre",,t,2025-11-07 10:26:26.709458+00,2025-11-07 10:26:26.709458+00

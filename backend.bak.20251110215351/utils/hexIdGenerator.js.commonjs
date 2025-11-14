@@ -1,0 +1,114 @@
+// backend/utils/hexIdGenerator.js
+
+const pool = require('../db/pool'); // PostgreSQL connection pool
+
+// Define the AOK Hex ID ranges
+const AOK_RANGES = {
+    aok_entry: { start: 0x600000, end: 0x6003E7 },     // 1000 slots
+    aok_category: { start: 0x601000, end: 0x601063 },  // 100 slots
+    aok_review: { start: 0x602000, end: 0x6027FF },    // 2048 slots
+    aok_search: { start: 0x603000, end: 0x6037FF },    // 2048 slots
+
+    // Previous AOK ranges
+    mapping_id: { start: 0xAA0000, end: 0xAA9FFF },
+    relationship_id: { start: 0xAB0000, end: 0xAB9FFF },
+    requirement_id: { start: 0xAC0000, end: 0xAC9FFF },
+    transfer_id: { start: 0xAD0000, end: 0xAD9FFF },
+    domain_id: { start: 0xAE0000, end: 0xAE9FFF },
+    knowledge_item_id: { start: 0xAF0000, end: 0xAF9FFF },
+
+    // Confirmed TSE Belt Progression ranges
+    tse_evaluation_record_id: { start: 0x800000, end: 0x80FFFF },
+    belt_progression_id: { start: 0xBB0000, end: 0xBBFFFF },
+
+    // NEW: Conversation ID range (added here)
+    conversation_id: { start: 0x900000, end: 0x9FFFFF },
+
+    // NEW: Narrative System Hex ID Ranges (as per research document)
+    narrative_segment_id: { start: 0xC00000, end: 0xC0FFFF }, // ~65k slots for segments
+    narrative_path_id: { start: 0xC10000, end: 0xC1FFFF },    // ~65k slots for paths
+    multimedia_asset_id: { start: 0xC20000, end: 0xC2FFFF },  // ~65k slots for assets
+    location_id: { start: 0xC30000, end: 0xC3FFFF },          // ~65k slots for locations
+
+    // TSE Coding Training IDs
+    tse_coding_teacher: { start: 0xC40000, end: 0xC4FFFF },    // ~65k slots for teacher records
+    tse_coding_attempt: { start: 0xC50000, end: 0xC5FFFF },    // ~65k slots for attempts
+    tse_coding_evaluation: { start: 0xC60000, end: 0xC6FFFF }, // ~65k slots for evaluations
+    tse_coding_progress: { start: 0xC70000, end: 0xC7FFFF },   // ~65k slots for progress
+    tse_coding_challenge: { start: 0xC80000, end: 0xC8FFFF },  // ~65k slots for challenges
+    
+    // Story Arc Management
+    story_arc_id: { start: 0x301000, end: 0x301FFF }           // 4096 slots for story arcs
+};
+
+/**
+ * Generates a new unique hexadecimal ID for a given AOK entity type.
+ * It uses a PostgreSQL transaction with row-level locking (FOR UPDATE)
+ * to safely increment the counter and ensure uniqueness in concurrent scenarios.
+ *
+ * @param {string} idType - The type of AOK ID to generate (e.g., 'aok_entry', 'narrative_segment_id').
+ * @returns {Promise<string>} A promise that resolves to the newly generated hex ID (e.g., '#600001').
+ * @throws {Error} If the hex ID range for the given type is exhausted, or a database error occurs.
+ */
+async function generateAokHexId(idType) {
+    // Validate the ID type against predefined ranges
+    if (!AOK_RANGES[idType]) {
+        throw new Error(`Invalid AOK ID type: ${idType}. Must be one of: ${Object.keys(AOK_RANGES).join(', ')}`);
+    }
+
+    const client = await pool.connect(); // Get a client from the pool
+    try {
+        await client.query('BEGIN'); // Start a transaction
+
+        // Lock the row for the specific idType to prevent race conditions
+        const selectQuery = 'SELECT current_value FROM hex_id_counters WHERE id_type = $1 FOR UPDATE';
+        const result = await client.query(selectQuery, [idType]);
+
+        let currentCounterValue;
+        let newHexId;
+
+        if (result.rows.length === 0) {
+            // If the counter for this type doesn't exist, initialize it
+            currentCounterValue = AOK_RANGES[idType].start;
+            newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
+
+            const insertQuery = `
+                INSERT INTO hex_id_counters (id_type, last_used_id, current_value)
+                VALUES ($1, $2, $3)
+            `;
+            await client.query(insertQuery, [idType, newHexId, currentCounterValue]);
+        } else {
+            // If the counter exists, increment its value
+            currentCounterValue = parseInt(result.rows[0].current_value, 10) + 1;
+
+            // Check if the new ID exceeds the allocated range
+            if (currentCounterValue > AOK_RANGES[idType].end) {
+                await client.query('ROLLBACK'); // Rollback the transaction
+                throw new Error(`Hex ID range for ${idType} exhausted. Max: #${AOK_RANGES[idType].end.toString(16).toUpperCase().padStart(6, '0')}`);
+            }
+
+            // Convert the new value to hex format
+            newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
+
+            // Update the counter in the database
+            const updateQuery = `
+                UPDATE hex_id_counters
+                SET last_used_id = $1, current_value = $2
+                WHERE id_type = $3
+            `;
+            await client.query(updateQuery, [newHexId, currentCounterValue, idType]);
+        }
+
+        await client.query('COMMIT'); // Commit the transaction
+        return newHexId;
+
+    } catch (error) {
+        await client.query('ROLLBACK'); // Rollback on error
+        console.error(`Error generating new AOK hex ID for type ${idType}:`, error.message);
+        throw error; // Re-throw the error for the caller to handle
+    } finally {
+        client.release(); // Release the client back to the pool
+    }
+}
+
+module.exports = generateAokHexId;

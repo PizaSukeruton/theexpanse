@@ -1,0 +1,65 @@
+// Add these imports at the top
+import cotwIntentMatcher from './cotwIntentMatcher.js';
+import cotwQueryEngine from './cotwQueryEngine.js';
+
+// Update the processCommand function to include intelligent queries
+async function processCommand(command, session) {
+  const cmd = command.toLowerCase().trim();
+  
+  // Basic commands first
+  if (cmd === 'help') {
+    return {
+      output: `Available commands:
+- help: Show this message
+- status: Show system status
+- who is [name]: Query character dossier
+- what is [concept]: Query knowledge base
+- when did [event]: Query timeline
+- where is [location]: Query locations
+- why [reason]: Query causality
+- how [process]: Query methods
+- search [term]: Comprehensive search
+- clear: Clear terminal`
+    };
+  }
+  
+  // ... existing status and clear commands ...
+  
+  // Use the intent matcher
+  const intent = cotwIntentMatcher.matchIntent(command);
+  
+  if (intent.confidence > 0.6) {
+    const result = await cotwQueryEngine.executeQuery(intent);
+    
+    if (result.error) {
+      return { output: result.error };
+    }
+    
+    if (result.count === 0) {
+      return { output: `No data found for: ${intent.entity}` };
+    }
+    
+    // Format output based on result type
+    let output = `[${intent.type} QUERY: ${intent.entity}]\n`;
+    output += `Found ${result.count} result(s)\n\n`;
+    
+    result.data.slice(0, 3).forEach((item, i) => {
+      output += `[${i+1}] `;
+      if (result.type === 'characters') {
+        output += `${item.character_name} (${item.character_id})\n`;
+        output += `   ${item.description}\n`;
+      } else if (result.type === 'knowledge') {
+        output += `${item.concept || 'Knowledge Item'}\n`;
+        output += `   ${item.content.substring(0, 100)}...\n`;
+      } else if (result.type === 'search_results') {
+        output += `[${item.source_type}] ${item.title || item.id}\n`;
+        output += `   ${item.content.substring(0, 100)}...\n`;
+      }
+      output += '\n';
+    });
+    
+    return { output };
+  }
+  
+  return { output: `Unknown command: ${command}` };
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Psychic Radar PPI (Dossier Terminal v0)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body { background:#000000; color:#00FF75; font-family: ui-monospace, "IBM Plex Mono", "Courier New", monospace; margin:0 }
+    .container { display:flex; height:100vh }
+    .left { width:300px; padding:16px; background:#00130A; border-right:1px solid #00A660; display:flex; flex-direction:column; gap:12px }
+    .right { flex:1; display:flex; align-items:center; justify-content:center; background:#000000 }
+    .group { display:flex; flex-direction:column; gap:6px }
+    label { font-size:12px; color:#00FF75 }
+    select, input[type="range"], input[type="text"], button { width:100%; background:#00170D; color:#00FF75; border:1px solid #007A4A; border-radius:10px; padding:8px; font-family:inherit }
+    button { cursor:pointer }
+    #log { background:#000000; color:#9BFFC3; min-height:120px; max-height:160px; overflow:auto; border-radius:10px; padding:8px; font-size:12px; white-space:pre }
+    #bearingHUD { font-size:28px; font-weight:700; color:#00FF75; text-shadow:0 0 18px rgba(0,255,117,0.35) }
+    canvas { max-width:100%; max-height:90vh; border-radius:20px;  background: #000000 }
+    .hud { position:relative; width:1024px; display:flex; justify-content:space-between; margin-top:8px; font-size:12px; opacity:.9 }
+    .crt::before{ display:none !important; }
+    .crt::after{ display:none !important; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="left">
+    <div class="group">
+      <label>Mode</label>
+      <select id="modeSel">
+        <option value="live" selected>Live WebSocket</option>
+      </select>
+      <label>WebSocket URL</label>
+      <input id="wsUrl" type="text" value="ws://localhost:3000/ws/psychic-radar" />
+      <div style="display:flex; gap:8px">
+        <button id="btnConnect">Connect</button>
+        <button id="btnDisconnect">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <label>PAD → Polar Mapping</label>
+      <select id="padMapSel">
+        <option value="A-P">Angle=Arousal, Range=Pleasure</option>
+        <option value="atan2A-D">Angle=atan2(A,D), Range=Pleasure</option>
+        <option value="atan2P-A">Angle=atan2(P,A), Range=Dominance</option>
+      </select>
+    </div>
+
+    <div class="group">
+      <label>Sweep RPM <span id="rpmOut"></span></label>
+      <input id="rpmSlider" type="range" min="3" max="24" value="12" step="0.1" />
+      <label>Trail Length (s) <span id="trailOut"></span></label>
+      <input id="trailSlider" type="range" min="0.5" max="6" value="3" step="0.1" />
+      <label>Gain <span id="gainOut"></span></label>
+      <input id="gainSlider" type="range" min="0.5" max="3.0" value="1.0" step="0.05" />
+      <label style="display:flex; align-items:center; gap:8px; margin-top:12px">
+        <input id="showLabels" type="checkbox" checked style="width:auto" />
+        <span>Show Character Names</span>
+      </label>
+    </div>
+    <div class="group">
+      <label>Bearing HUD</label>
+      <div id="bearingHUD">000°</div>
+    </div>
+
+    <div class="group">
+      <label>Log</label>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="crt" style="position:relative">
+      <canvas id="scope" width="1024" height="1024"></canvas>
+      <div class="hud"><div id="hudLeft"></div><div id="hudRight"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('scope');
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+  canvas.style.width = '800px';
+  canvas.style.height = '800px';
+  canvas.width  = Math.round(1024 * dpr);
+  canvas.height = Math.round(1024 * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const W = 1024, H = 1024;
+  const CX = W/2, CY = H/2;
+  const R = Math.min(CX, CY) * 0.94;
+
+  const trailCanvas = document.createElement('canvas');
+  trailCanvas.width  = canvas.width;
+  trailCanvas.height = canvas.height;
+  const tctx = trailCanvas.getContext('2d');
+  tctx.fillStyle = "#000000";
+  tctx.fillRect(0, 0, W, H);
+  tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const modeSel = document.getElementById('modeSel');
+  const wsUrl = document.getElementById('wsUrl');
+  const btnConnect = document.getElementById('btnConnect');
+  const btnDisconnect = document.getElementById('btnDisconnect');
+  const padMapSel = document.getElementById('padMapSel');
+
+  const rpmSlider = document.getElementById('rpmSlider');
+  const trailSlider = document.getElementById('trailSlider');
+  const gainSlider = document.getElementById('gainSlider');
+  const rpmOut = document.getElementById('rpmOut');
+  const trailOut = document.getElementById('trailOut');
+  const gainOut = document.getElementById('gainOut');
+  const showLabelsCheckbox = document.getElementById('showLabels');
+  const bearingHUD = document.getElementById('bearingHUD');
+  const logDiv = document.getElementById('log');
+  const hudLeft = document.getElementById('hudLeft');
+  const hudRight = document.getElementById('hudRight');
+
+  function log(s){ const t = new Date().toISOString().split('T')[1].replace('Z',''); logDiv.textContent += "["+t+"] "+s+"\n"; logDiv.scrollTop = logDiv.scrollHeight; }
+
+  let sweepDeg = 0;
+  let rpm = parseFloat(rpmSlider.value);
+  let trailSec = parseFloat(trailSlider.value);
+  let gain = parseFloat(gainSlider.value);
+  let contacts = [];
+  window.__PRADAR_LATEST__ = { sweep_bearing_deg: 0, contacts: [] };
+  let showLabels = showLabelsCheckbox.checked;
+  let arcs = [];
+  let ws = null;
+  let lastFrame = performance.now();
+
+  const TAU = Math.PI*2, DEG = 180/Math.PI, RAD = Math.PI/180;
+  const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+  const wrap360 = d => (d%360+360)%360;
+
+  function polarToXY(deg, radius){
+    const rad = (deg-90)*RAD;
+    return [CX + Math.cos(rad)*radius, CY + Math.sin(rad)*radius];
+  }
+
+  function padToPolar(pad, scheme){
+    const p = clamp(pad?.p ?? 0, -1, 1);
+    const a = clamp(pad?.a ?? 0, -1, 1);
+    const d = clamp(pad?.d ?? 0, -1, 1);
+    let bearing, rangeNorm;
+    switch(scheme){
+      case 'A-P':
+        bearing = wrap360((a * 180) + 180);
+        rangeNorm = 1 - ((p + 1)/2);
+        break;
+      case 'atan2A-D':
+        bearing = wrap360(Math.atan2(a, d) * DEG + 180);
+        rangeNorm = 1 - ((p + 1)/2);
+        break;
+      case 'atan2P-A':
+        bearing = wrap360(Math.atan2(p, a) * DEG + 180);
+        rangeNorm = 1 - ((d + 1)/2);
+        break;
+      default:
+        bearing = wrap360((a * 180) + 180);
+        rangeNorm = 1 - ((p + 1)/2);
+    }
+    return { bearing_deg: bearing, range_px: rangeNorm * R };
+  }
+
+  function padToIntensity(pad){
+    const p = clamp(pad?.p ?? 0, -1, 1), a = clamp(pad?.a ?? 0, -1, 1), d = clamp(pad?.d ?? 0, -1, 1);
+    return Math.sqrt(p*p + a*a + d*d) / Math.sqrt(3);
+  }
+
+  function fadeTrails(dt){
+    const k = clamp(1 - Math.exp(-dt / trailSec), 0, 1);
+    tctx.globalCompositeOperation = 'source-over';
+    tctx.fillStyle = "rgba(0,0,0,"+k+")";
+    tctx.fillRect(0,0,W,H);
+  }
+
+  function drawGrid(){
+    ctx.save();
+    ctx.strokeStyle = "#00995D";
+    ctx.globalAlpha = .6;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    for(let r=R/5; r<=R; r+=R/5){ ctx.moveTo(CX+r, CY); ctx.arc(CX, CY, r, 0, TAU); }
+    ctx.stroke();
+
+    ctx.globalAlpha = .9;
+    ctx.strokeStyle = "#00B06A";
+    for(let deg=0; deg<360; deg+=10){
+      const len = (deg%30===0)? 16 : 8;
+      const [x1,y1] = polarToXY(deg, R - len);
+      const [x2,y2] = polarToXY(deg, R);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+
+    ctx.fillStyle = "#00FF75";
+    ctx.font = "14px IBM Plex Mono, monospace"; ctx.textAlign="center"; ctx.textBaseline="middle";
+    [["N",0],["E",90],["S",180],["W",270]].forEach(([t,d])=>{ const [x,y]=polarToXY(d, R-26); ctx.fillText(t,x,y); });
+    ctx.restore();
+  }
+
+  function drawSweep(){
+    const [x,y] = polarToXY(sweepDeg, R);
+    tctx.save();
+    tctx.strokeStyle = "#9FFFCC";
+    tctx.shadowBlur = 24; tctx.shadowColor = "#9FFFCC";
+    tctx.globalCompositeOperation = "lighter";
+    tctx.beginPath(); tctx.moveTo(CX,CY); tctx.lineTo(x,y); tctx.stroke();
+    tctx.restore();
+  }
+
+
+  function drawLabelOnTrail(x, y, text, boost){
+    tctx.save();
+    tctx.globalCompositeOperation = "lighter";
+    tctx.font = 'bold 13px ui-monospace, "IBM Plex Mono", monospace';
+    tctx.textBaseline = 'middle';
+    tctx.textAlign = 'center';
+    const ly = y - 14;
+    // Green phosphor outline/glow
+    tctx.shadowColor = "#00FF75";
+    tctx.shadowBlur = 10 * (0.6 + boost);
+    tctx.strokeStyle = "#00FF75";
+    tctx.lineWidth = 2;
+    tctx.strokeText(text, x, ly);
+    // Bright white/yellow core for readability
+    tctx.shadowBlur = 0;
+    tctx.fillStyle = "#00FF75";
+    tctx.fillText(text, x, ly);
+    tctx.restore();
+  }  function drawContactEcho(c){
+    let bearing = (typeof c.bearing_deg === "number") ? c.bearing_deg : null;
+    let rangePx = null;
+    const PAD = c?.meta?.PAD;
+
+    if(bearing==null || c.range_m==null){
+      const tmp = padToPolar(PAD, padMapSel.value);
+      bearing = bearing==null ? tmp.bearing_deg : bearing;
+      rangePx = tmp.range_px;
+    }
+    if(rangePx==null){
+      const Rmax = c?.meta?.Rmax_m ?? 10000;
+      rangePx = clamp((c.range_m / Rmax) * R, 0, R);
+    }
+
+
+    const intensity = clamp((typeof c.intensity === "number") ? c.intensity : padToIntensity(PAD), 0, 1);
+    const boost = intensity * gain;
+    const [x,y] = polarToXY(bearing, rangePx);
+    const size = 2 + Math.pow(boost, 0.7) * 5;
+
+    tctx.save();
+    tctx.globalCompositeOperation = "lighter";
+    tctx.shadowBlur = 18 * (0.6 + boost);
+    tctx.shadowColor = "#00FF75";
+    tctx.fillStyle = "#00FF75";
+    tctx.beginPath(); tctx.arc(x,y,size,0,TAU); tctx.fill();
+
+
+    // Draw label on trail (fades with blip)
+    if(showLabels) {
+      const name = c?.meta?.character_name || c.character_id || c.id || '';
+      if(name) drawLabelOnTrail(x, y, name, boost);
+    }  }
+
+  function drawArcs(){
+    if(!arcs?.length) return;
+    tctx.save();
+    tctx.globalCompositeOperation = "lighter";
+    tctx.strokeStyle = "#00FF75"; tctx.globalAlpha = 0.35; tctx.lineWidth = 1.2;
+    for(const a of arcs){
+      const [x1,y1] = polarToXY(a.from.bearing_deg, a.from.range_px);
+      const [x2,y2] = polarToXY(a.to.bearing_deg, a.to.range_px);
+      tctx.beginPath(); tctx.moveTo(x1,y1); tctx.lineTo(x2,y2); tctx.stroke();
+    }
+    tctx.restore();
+  }
+
+  function compose(){
+    ctx.clearRect(0,0,W,H);
+    drawGrid();
+    ctx.drawImage(trailCanvas, 0, 0);
+    ctx.save();
+    ctx.globalAlpha = .7; ctx.strokeStyle = "#00B06A";
+    ctx.beginPath(); ctx.moveTo(CX-8,CY); ctx.lineTo(CX+8,CY); ctx.moveTo(CX,CY-8); ctx.lineTo(CX,CY+8); ctx.stroke();
+    ctx.restore();
+
+  }
+  function frame(now){
+    const dt = Math.min((now - lastFrame)/1000, 0.05); lastFrame = now;
+    const revPerSec = rpm / 60;
+    sweepDeg = wrap360(sweepDeg + revPerSec*360*dt);
+
+    fadeTrails(dt);
+    drawSweep();
+
+    for(const c of contacts){ drawContactEcho(c); }
+    drawArcs();
+
+    compose();
+
+    bearingHUD.textContent = Math.round(sweepDeg) + "°";
+    hudLeft.textContent = "RPM " + rpm.toFixed(1) + "  Trail " + trailSec.toFixed(1) + "s  Gain " + gain.toFixed(2);
+    hudRight.textContent = "Contacts " + contacts.length + "  Sweep " + Math.round(sweepDeg) + "°";
+    requestAnimationFrame(frame);
+  }
+
+  function handleMessage(obj){
+    if(obj?.type === "contacts"){
+      contacts = Array.isArray(obj.contacts) ? obj.contacts : [];
+      if(typeof obj.sweep_bearing_deg === "number") sweepDeg = wrap360(obj.sweep_bearing_deg);
+    } else if(obj?.type === "overlays" && Array.isArray(obj.arcs)){
+      arcs = obj.arcs.map(a => {
+        const from = a.from?.PAD ? padToPolar(a.from.PAD, padMapSel.value) : { bearing_deg: a.from.bearing_deg, range_px: (a.from.range_m / (a.Rmax_m||10000)) * R };
+        const to   = a.to?.PAD   ? padToPolar(a.to.PAD,   padMapSel.value) : { bearing_deg: a.to.bearing_deg,   range_px: (a.to.range_m   / (a.Rmax_m||10000)) * R };
+        return { from, to, weight: a.weight ?? 1 };
+      });
+    }
+    window.__PRADAR_LATEST__ = obj;
+  }
+
+  function connect(){
+    if(ws && ws.readyState===WebSocket.OPEN){ log("WS already open"); return }
+    try{
+      const url = wsUrl.value && wsUrl.value.trim().length ? wsUrl.value.trim() : null;
+      if(!url){ log("Set WebSocket URL then Connect"); return }
+      ws = new WebSocket(url);
+      ws.onopen = () => log("WebSocket connected");
+      ws.onmessage = ev => { try{ handleMessage(JSON.parse(ev.data)) } catch(e){ log("Bad JSON") } };
+      ws.onclose = () => log("WebSocket closed");
+      ws.onerror = () => log("WebSocket error");
+    }catch(e){ log("WS connect failed") }
+  }
+  function disconnect(){ if(ws){ ws.close(); ws=null } }
+
+  rpmSlider.addEventListener("input", ()=>{ rpm = parseFloat(rpmSlider.value); rpmOut.textContent = rpm.toFixed(1) + " rpm" });
+  trailSlider.addEventListener("input", ()=>{ trailSec = parseFloat(trailSlider.value); trailOut.textContent = trailSec.toFixed(1) + " s" });
+  gainSlider.addEventListener("input", ()=>{ gain = parseFloat(gainSlider.value); gainOut.textContent = gain.toFixed(2) });
+  showLabelsCheckbox.addEventListener("change", ()=>{ showLabels = showLabelsCheckbox.checked; });
+  btnConnect.addEventListener("click", ()=>{ connect(); modeSel.value="live" });
+  btnDisconnect.addEventListener("click", ()=>{ disconnect() });
+
+  rpmOut.textContent = rpm.toFixed(1) + " rpm";
+  trailOut.textContent = trailSec.toFixed(1) + " s";
+  gainOut.textContent = gain.toFixed(2);
+  log("Psychic Radar v0 ready. Mode: Live WebSocket. Set URL and Connect.");
+  compose(); // draw grid immediately so scope is visible
+  requestAnimationFrame(ts => { lastFrame = ts; frame(ts) });
+})();
+</script>
+</body>
+</html>

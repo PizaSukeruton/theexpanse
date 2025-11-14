@@ -1,0 +1,155 @@
+// backend/api/character.js
+// Fixed version with proper pool import
+
+import express from 'express';
+const router = express.Router();
+import pool from '../db/pool.js'; // Added missing pool import
+
+// GET /api/character?character_id=#700002
+router.get('/', async (req, res) => {
+    const { character_id } = req.query;
+
+    if (!/^#[0-9A-Fa-f]{6}$/.test(character_id)) {
+        return res.status(400).json({ error: 'Invalid character_id. Must be hex format.' });
+    }
+
+    try {
+        const isAutonomous = (category === "B-Roll Chaos" || category === "Machines") ? true : null;
+        const result = await pool.query(`
+            SELECT character_id, character_name, category, description, created_at, updated_at
+            FROM character_profiles
+            WHERE character_id = $1
+        `, [character_id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Character not found.' });
+        }
+
+        return res.json(result.rows[0]);
+
+    } catch (err) {
+        console.error('Error fetching character profile:', err);
+        return res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+
+// Admin endpoints for character management
+// GET /api/character/all - Get all characters for admin panel
+router.get('/all', async (req, res) => {
+    try {
+        const isAutonomous = (category === "B-Roll Chaos" || category === "Machines") ? true : null;
+        const result = await pool.query(`
+            SELECT character_id, character_name, category, description
+            FROM character_profiles
+            ORDER BY character_id
+        `);
+        
+        return res.json({ 
+            success: true,
+            characters: result.rows 
+        });
+    } catch (err) {
+        console.error('Error fetching all characters:', err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});
+
+// POST /api/character - Create new character
+router.post('/', async (req, res) => {
+    const { character_name, category, description } = req.body;
+    
+    try {
+        // Generate next hex ID
+        const countResult = await pool.query(
+            "SELECT COUNT(*) FROM character_profiles WHERE character_id LIKE '#70%'"
+        );
+        const count = parseInt(countResult.rows[0].count);
+        const newId = `#70${String(count).padStart(4, '0')}`;
+        
+        const isAutonomous = (category === "B-Roll Chaos" || category === "Machines") ? true : null;
+        const result = await pool.query(`
+            INSERT INTO character_profiles (character_id, character_name, category, description, is_b_roll_autonomous)
+            VALUES ($1, $2, $3, $4, $5) RETURNING *
+        `, [newId, character_name, category, description, isAutonomous]);
+        
+        return res.json({ 
+            success: true,
+            character: result.rows[0] 
+        });
+    } catch (err) {
+        console.error('Error creating character:', err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});
+
+// PUT /api/character/:id - Update character
+router.put("/:id", async (req, res) => {
+    const characterId = "#" + req.params.id.replace("#", "");
+    const { character_name, category, description } = req.body;
+    
+    try {
+        const isAutonomous = (category === "B-Roll Chaos" || category === "Machines") ? true : null;
+        const result = await pool.query(`
+            UPDATE character_profiles 
+            SET character_name = $2, category = $3, description = $4, updated_at = NOW()
+            WHERE character_id = $1
+            RETURNING *
+        `, [characterId, character_name, category, description]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ 
+                success: false,
+                error: "Character not found" 
+            });
+        }
+        
+        return res.json({ 
+            success: true,
+            character: result.rows[0] 
+        });
+    } catch (err) {
+        console.error("Error updating character:", err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});
+
+// DELETE /api/character/:id - Delete character
+router.delete("/:id", async (req, res) => {
+    const characterId = "#" + req.params.id.replace("#", "");
+    
+    try {
+        const result = await pool.query(
+            "DELETE FROM character_profiles WHERE character_id = $1 RETURNING character_id",
+            [characterId]
+        );
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ 
+                success: false,
+                error: "Character not found" 
+            });
+        }
+        
+        return res.json({ 
+            success: true,
+            message: `Character ${characterId} deleted` 
+        });
+    } catch (err) {
+        console.error("Error deleting character:", err);
+        return res.status(500).json({ 
+            success: false,
+            error: err.message 
+        });
+    }
+});
+export default router;

@@ -1,0 +1,15 @@
+character_name,trait_vector,created_at,updated_at,character_id,category,description,trait_generation_enabled,is_b_roll_autonomous,image_url,forgetting_enabled
+Slicifer,,2025-07-18 12:02:29.167775,2025-07-18 12:02:29.167775,#700004,Angry Slice Of Pizza,"Slicifer was the very first Slice of Pizza to lose their Cheese Soul when Pineaple Yurei began vanquishing Cheese from the Earth Realm. He became the very first ""Angry Slice Of Pizza"" and obeys only Pineaple Yurei's orders",f,,,t
+Claude The Tanuki,,2025-07-18 11:57:20.025669,2025-07-18 11:57:20.025669,#700002,Tanuki,Claude is a mischievous Mythological Tanuki. He befriends Piza Sukeruton and also is a Guide and Narrator through the Piza Sukeruton Multiverse,t,,,t
+Chuckles The Monkey,,2025-07-29 09:30:32.431279,2025-07-29 09:30:32.431279,#700005,B-Roll Chaos,A Rollerskating Chimpanzee who was fired from a Saturday Morning Kid's TV Show but thinks the entire world is still watching Him,f,t,,t
+Test Mutai Warrior,,2025-10-31 21:47:32.799047,2025-10-31 21:47:32.799047,#700006,Mutai,A test character of the Mutai category,f,,,t
+Piza Sukeruton UPDATED,,2025-07-18 11:51:09.037786,2025-11-01 12:20:38.111634,#700000,Protagonist,Updated via curl test,f,,/gallery/pizasukerutonprofile.png,t
+Test Hero,,2025-11-01 12:25:44.273646,2025-11-01 12:25:44.273646,#700007,Protagonist,A brave test hero,f,,,t
+Test Villain,,2025-11-01 12:25:44.666752,2025-11-01 12:25:44.666752,#700008,Antagonist,An evil test villain,f,,,t
+Test Tanuki,,2025-11-01 12:25:45.071752,2025-11-01 12:25:45.071752,#700009,Tanuki,A mystical tanuki,f,,,t
+Test Fighter,,2025-11-01 12:25:45.892659,2025-11-01 12:25:45.892659,#700011,Mutai,A Mutai warrior,f,,,t
+Test Pizza Slice,,2025-11-01 12:26:28.82834,2025-11-01 12:26:28.82834,#700012,Angry Slice Of Pizza,An angry pizza slice,f,,,t
+Piza Sukeruton,,2025-07-18 11:54:02.577589,2025-11-01 14:35:03.01651,#700001,Protagonist,Updated with image,f,,/gallery/char-1762007702880-251725217.png,t
+Test B-Roll Character,,2025-11-01 12:44:35.120848,2025-11-01 23:30:26.179598,#700013,B-Roll Chaos,Testing EDits,f,t,,t
+Frankie Trouble,,2025-07-18 11:59:52.735782,2025-07-18 11:59:52.735782,#700003,Council Of The Wise,Frankie Trouble is a head strong and determined young Woman who loves the Wu-Tang Clan and is Piza Sukeruton's best friend,f,,,f
+Test Sage,,2025-11-01 12:25:45.475351,2025-11-01 12:25:45.475351,#700010,Council Of The Wise,A wise council member,f,,,f
