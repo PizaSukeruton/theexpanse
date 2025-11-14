@@ -167,3 +167,4 @@ httpServer.listen(PORT, async () => {
   console.log(`🔌 WebSocket server initialized`);
   await loadAllCharacters();
 });
+
