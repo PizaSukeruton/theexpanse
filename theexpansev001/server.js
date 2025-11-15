@@ -26,13 +26,11 @@ const app = express();
 import loreAdminRoutes from "./routes/lore-admin.js";
 import tseRouter from './backend/TSE/index.js';
 import terminalRoutes from "./routes/terminal.js";
-import testIntentRoutes from "./routes/test-intent.js";
-import testIntentSimpleRoutes from "./routes/test-intent-simple.js";
-import testQueryEngineRoutes from "./routes/test-query-engine.js";const PORT = process.env.PORT || 3000;
 import traitsRouter from './backend/traits/index.js';
 import { createServer } from "http";
 import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";
 
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -79,9 +77,6 @@ registerRoute("/api/character/:id/knowledge", "Knowledge API");
 app.use('/api/narrative', narrativeRouter);
 registerRoute("/api/narrative", "Narrative System");
 app.use("/api/terminal", terminalRoutes);
-app.use(testIntentRoutes);
-app.use(testIntentSimpleRoutes);
-app.use(testQueryEngineRoutes);
 // registerRoute("/api/auth", "Authentication");
 registerRoute("/api/terminal", "Terminal API");
 app.use('/api/admin', adminRoutes);
@@ -150,8 +145,8 @@ async function loadAllCharacters() {
 const httpServer = createServer(app);
 const io = initializeWebSocket(httpServer);
 import { WebSocketServer } from "ws";
-import { startPsychicRadar } from "./backend/psychicRadarEmitter.js";
-import { startPsychicEngine } from "./backend/psychicEngineScheduler.js";
+//import { startPsychicRadar } from "./backend/psychicRadarEmitter.js";
+//import { startPsychicEngine } from "./backend/psychicEngineScheduler.js";
 const radarWSS = new WebSocketServer({ noServer: true });
 httpServer.on("upgrade", (req, socket, head) => {
   if (req.url === "/ws/psychic-radar") {
@@ -160,8 +155,8 @@ httpServer.on("upgrade", (req, socket, head) => {
     });
   }
 });
-startPsychicRadar(radarWSS, { intervalMs: 100, rmax: 10000 });
-startPsychicEngine();
+//startPsychicRadar(radarWSS, { intervalMs: 100, rmax: 10000 });
+//startPsychicEngine();
 httpServer.listen(PORT, async () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
   console.log(`🔌 WebSocket server initialized`);

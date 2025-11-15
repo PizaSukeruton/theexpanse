@@ -17,11 +17,13 @@ class PsychicEngine {
   }
 
   async getCharacterTraits(characterId) {
+  const qStart1 = Date.now();
     const result = await pool.query(
       'SELECT trait_hex_color, percentile_score FROM character_trait_scores WHERE character_hex_id = $1',
       [characterId]
     );
     return result.rows;
+  console.log("[ENGINE] pool.query line 20 took", Date.now() - qStart1, "ms");
   }
 
   /**

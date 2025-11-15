@@ -29,25 +29,12 @@ export async function startPsychicEngine(intervalMs) {
   
   if (engineTimer) clearInterval(engineTimer);
   
-  engineTimer = setInterval(async () => {
-    const engine = new PsychicEngine();
+  const batchStart = Date.now();
+engineTimer = setInterval(async () => {
+  const engine = new PsychicEngine();
+  console.log("[ENGINE] Psychic batch job took", Date.now() - batchStart, "ms");
+}, 900000);
     
-    const chars = await pool.query(`
-      SELECT character_id 
-      FROM character_profiles 
-      WHERE category != 'Knowledge Entity'
-    `);
-    
-    for (const char of chars.rows) {
-      try {
-        await engine.processCharacter(char.character_id);
-      } catch (err) {
-        console.error(`Engine error for ${char.character_id}:`, err);
-      }
-    }
-  }, updateInterval);
-  
-  console.log(`✅ Psychic Engine running (interval: ${updateInterval}ms)`);
 }
 
 export function stopPsychicEngine() {

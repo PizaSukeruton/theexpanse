@@ -274,7 +274,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      window.socket = io();
+      const socket = io();
       
       const loginContainer = document.getElementById('loginContainer');
       const chatInterface = document.getElementById('chatInterface');

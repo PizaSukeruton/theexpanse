@@ -179,25 +179,16 @@ window.askAboutWizard = function(wizardId) {
 };
 
 function loadWizardFile(filename) {
-  const tagId = "wizard-" + filename.replace(/[^\w-]/g, "_");
-  let script = document.getElementById(tagId);
-  if (script) {
-    console.log("[WIZARD] Script already loaded: " + filename);
-    if (window.GiftWizard?.init) {
-      window.GiftWizard.init();
-    }
-    return;
-  }
-  script = document.createElement("script");
-  script.id = tagId;
-  script.src = filename;
-  script.setAttribute("data-wizard", "gift-wizard");
+  const existingScripts = document.querySelectorAll('script[data-wizard]');
+  existingScripts.forEach(s => s.remove());
+  
+  const script = document.createElement('script');
+  script.src = filename + '?t=' + Date.now();
+  script.setAttribute('data-wizard', 'true');
   script.onload = () => {
-    console.log("[WIZARD] Loaded: " + filename);
-    if (window.GiftWizard?.init) {
-      window.GiftWizard.init();
+    if (typeof initWizard === 'function') {
+      initWizard();
     }
   };
-  script.onerror = (e) => console.error("[WIZARD] Load error:", e);
   document.body.appendChild(script);
 }

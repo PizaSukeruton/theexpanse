@@ -7,6 +7,7 @@ import pool from '../db/pool.js';
 import { rankCandidate } from './rankCandidate.js';
 
 const HEX_REGEX = /^#[0-9A-F]{6}$/;
+const DISCOVERY_TTL_MS = 5 * 60 * 1000;
 const CONCURRENCY = 12;
 const BAND_SIZE = 40;
 
@@ -43,7 +44,7 @@ function createLimiter(max) {
  */
 async function discoverHexColumns() {
   const now = Date.now();
-  if (discoveryCache.candidates.length) {
+  if (now - discoveryCache.at < DISCOVERY_TTL_MS && discoveryCache.candidates.length) {
     log(`discovery cache hit (${discoveryCache.candidates.length} candidates)`);
     return discoveryCache.candidates;
   }
@@ -261,13 +262,3 @@ export async function explainHex(hexId, userAccessLevel = 1) {
 }
 
 export default { explainHex };
-
-// Preload hex column candidates at startup (single run)
-let discoveryCache = { at: 0, candidates: [] };
-async function preloadHexCandidatesOnStartup() {
-  discoveryCache.candidates = await discoverHexColumns();
-  discoveryCache.at = Date.now();
-  console.log('[HEX] Preloaded hex column candidates:', discoveryCache.candidates.length);
-}
-preloadHexCandidatesOnStartup();
-
