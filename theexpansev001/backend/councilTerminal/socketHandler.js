@@ -20,11 +20,10 @@ export default function initializeWebSocket(httpServer, sessionMiddleware) {
 
   // --- /public namespace ---
   const publicIo = io.of('/public');
+  initializeRegistrationSockets(publicIo);
   publicIo.on('connection', (socket) => {
     console.log('🟢 /public socket connected:', socket.id);
     
-    // Initialize registration handlers on this socket
-    initializeRegistrationSockets(publicIo);
     
     socket.on('disconnect', () => {
       console.log('🔴 /public socket disconnected:', socket.id);
