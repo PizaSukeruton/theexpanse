@@ -182,6 +182,14 @@ If you are cleared you will receive a Confirmation Email which will allow you Le
         showMessage('Creating account...', '');
         const publicSocket = window.SocketManager.getPublicSocket();
         publicSocket.emit('registration-signup', { email, username });
+
+        publicSocket.once('registration-response', (response) => {
+          if (response.success) {
+            showMessage(response.message || 'Account created! Check your email for verification link.', 'success');
+          } else {
+            showMessage(response.message || 'Registration failed', 'error');
+          }
+        });
       });
 
       emailInput.addEventListener('keydown', (e) => {
