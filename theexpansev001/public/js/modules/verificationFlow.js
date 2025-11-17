@@ -3,7 +3,7 @@ import { ModuleRegistry } from '../moduleRegistry.js';
 ModuleRegistry.register('dossier/setup', {
   async mount(container, context) {
     console.log('[verificationFlow/setup] Mounting...');
-    
+   
     const { verifyToken } = context;
 
     if (!verifyToken) {
@@ -24,17 +24,8 @@ ModuleRegistry.register('dossier/setup', {
     `;
 
     try {
-      // Check if token is valid via Socket.io
-      if (!window.socket) {
-        console.error('[verificationFlow/setup] window.socket is not defined');
-        container.innerHTML = `
-          <div style="padding: 16px; color: #ff4444; text-align: center;">
-            <p>Connection error.</p>
-            <p>Please refresh the page and try again.</p>
-          </div>
-        `;
-        return;
-      }
+      // Get public socket
+      const publicSocket = window.SocketManager.getPublicSocket();
 
       // Check token over Socket.io using Promise with timeout
       let checkData;
@@ -44,7 +35,7 @@ ModuleRegistry.register('dossier/setup', {
             reject(new Error('Token check timeout'));
           }, 5000);
 
-          window.socket.emit(
+          publicSocket.emit(
             'check-verification-token',
             { verificationToken: verifyToken },
             (response) => {
@@ -77,7 +68,7 @@ ModuleRegistry.register('dossier/setup', {
       // Load dossier form
       const dossierRes = await fetch('/expanse_user_dossier.html');
       const dossierHtml = await dossierRes.text();
-      
+     
       // Parse and inject
       const parser = new DOMParser();
       const dossierDoc = parser.parseFromString(dossierHtml, 'text/html');
@@ -148,98 +139,79 @@ function setupDossierHandlers(container, verifyToken) {
     const name = container.querySelector('#name');
     const password = container.querySelector('#password');
     const confirmPassword = container.querySelector('#confirmPassword');
-    const completeBtn = container.querySelector('#completeBtn');
+    const statusMessage = container.querySelector('#status-message');
 
-    if (!name || !password || !confirmPassword || !completeBtn) {
-      console.error('[verificationFlow] Form elements not found');
-      alert('Form error. Please refresh the page.');
+    if (!name || !password || !confirmPassword) {
+      if (statusMessage) statusMessage.textContent = 'Error: form fields missing';
       return;
     }
 
-    const nameVal = name.value.trim();
-    const passwordVal = password.value;
-    const confirmVal = confirmPassword.value;
+    const nameValue = name.value.trim();
+    const passwordValue = password.value.trim();
+    const confirmValue = confirmPassword.value.trim();
 
-    // Validation
-    if (!nameVal) {
-      alert('Name is required');
+    if (!nameValue) {
+      if (statusMessage) {
+        statusMessage.style.color = '#ff4444';
+        statusMessage.textContent = 'Please enter your name';
+      }
       return;
     }
 
-    if (!passwordVal) {
-      alert('Password is required');
+    if (!passwordValue) {
+      if (statusMessage) {
+        statusMessage.style.color = '#ff4444';
+        statusMessage.textContent = 'Please enter a password';
+      }
       return;
     }
 
-    if (passwordVal.length < 8) {
-      alert('Password must be at least 8 characters');
+    if (passwordValue.length < 8) {
+      if (statusMessage) {
+        statusMessage.style.color = '#ff4444';
+        statusMessage.textContent = 'Password must be at least 8 characters';
+      }
       return;
     }
 
-    if (passwordVal !== confirmVal) {
-      alert('Passwords do not match');
+    if (passwordValue !== confirmValue) {
+      if (statusMessage) {
+        statusMessage.style.color = '#ff4444';
+        statusMessage.textContent = 'Passwords do not match';
+      }
       return;
     }
 
-    // Guard socket
-    if (!window.socket) {
-      console.error('[verificationFlow] window.socket is not defined');
-      alert('Connection error. Please refresh the page.');
-      return;
+    if (statusMessage) {
+      statusMessage.style.color = '#00ff75';
+      statusMessage.textContent = 'Submitting...';
     }
 
-    completeBtn.classList.add('loading');
+    // Get public socket
+    const publicSocket = window.SocketManager.getPublicSocket();
 
-    window.socket.emit('registration-verify', {
+    // Emit verification
+    publicSocket.emit('registration-verify', {
       verificationToken: verifyToken,
-      password: passwordVal,
-      newsletter: window.newsletterChoice || false
+      password: passwordValue
+    });
+
+    // Listen for response
+    publicSocket.once('registration-response', (data) => {
+      if (data.success) {
+        if (statusMessage) {
+          statusMessage.style.color = '#00ff75';
+          statusMessage.textContent = 'Account created successfully! Redirecting to login...';
+        }
+        setTimeout(() => {
+          window.location.href = '/terminal_new_v003.html';
+        }, 2000);
+      } else {
+        if (statusMessage) {
+          statusMessage.style.color = '#ff4444';
+          statusMessage.textContent = data.message || 'Verification failed';
+        }
+      }
     });
   };
-
-  // Listen for registration response
-  if (window.socket) {
-    window.socket.once('registration-response', (data) => {
-      const completeBtn = container.querySelector('#completeBtn');
-      if (completeBtn) {
-        completeBtn.classList.remove('loading');
-      }
-
-      if (data.success) {
-        container.innerHTML = `
-          <div style="padding: 16px; color: #00ff75; text-align: center;">
-            <p>✓ Profile setup complete!</p>
-            <p>Logging in...</p>
-          </div>
-        `;
-        
-        // Store user data
-        window.currentUser = data.user;
-        localStorage.setItem('terminal_user', data.user.username);
-        
-        setTimeout(() => {
-          // Load user menu based on access level
-          if (data.user.access_level >= 11) {
-            loadScript('admin-menu.js');
-          } else {
-            loadScript('user-menu-level' + data.user.access_level + '.js');
-          }
-          
-          // Redirect to terminal with user loaded
-          window.location.href = '/terminal_new_v003.html';
-        }, 1500);
-      } else {
-        alert(data.message || data.error || 'Setup failed');
-      }
-    });
-    
-    function loadScript(filename) {
-      const script = document.createElement('script');
-      script.src = filename;
-      document.body.appendChild(script);
-    }
-  }
-
-  // Set initial newsletter choice
-  window.newsletterChoice = true;
 }
