@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expanse User Dossier</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --accent: #00ff75;
+      --fg: #00ff75;
+      --shadow: 0 0 24px rgba(0,255,0,0.25), 0 0 64px rgba(0,255,0,0.1);
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      background: var(--bg);
+      color: var(--fg);
+      letter-spacing: 0.2px;
+    }
+
+    .dossier-container {
+      height: 100%;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    .sections {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section {
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(0, 32, 0, 0.5);
+    }
+
+    .section-header {
+      background: rgba(0, 255, 0, 0.08);
+      padding: 10px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+      border-bottom: 1px solid rgba(0, 255, 117, 0.2);
+      transition: all 0.3s;
+    }
+
+    .section-header:hover {
+      background: rgba(0, 255, 0, 0.12);
+    }
+
+    .section-toggle {
+      font-size: 12px;
+      min-width: 12px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .section-content {
+      padding: 12px;
+      display: none;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .section-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px 10px;
+      background: rgba(0, 16, 0, 0.25);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      color: var(--fg);
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      transition: all 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      background: rgba(0, 16, 0, 0.4);
+      box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
+    }
+
+    .toggle-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .toggle-btn {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--fg);
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-btn.active {
+      background: rgba(0, 255, 0, 0.15);
+      box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+    }
+
+    .toggle-btn:hover {
+      background: rgba(0, 255, 0, 0.1);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+      margin-top: 12px;
+    }
+
+    .complete-btn {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--fg);
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .complete-btn:hover:not(:disabled) {
+      background: rgba(0, 255, 0, 0.1);
+      box-shadow: 0 0 12px rgba(0, 255, 0, 0.3);
+    }
+
+    .complete-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .complete-btn.loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .success-message {
+      color: var(--fg);
+      font-size: 11px;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dossier-container">
+    <h1>EXPANSE USER DOSSIER</h1>
+
+    <div class="sections">
+      <!-- BASIC INFORMATION -->
+      <div class="section">
+        <div class="section-header" onclick="window.toggleSection('basic')">
+          <span class="section-toggle">▶</span>
+          <span class="section-title">BASIC INFORMATION</span>
+        </div>
+        <div class="section-content" id="basic">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" />
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Your registered username" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Your registered email" />
+          </div>
+        </div>
+      </div>
+
+      <!-- SECURITY -->
+      <div class="section">
+        <div class="section-header" onclick="window.toggleSection('security')">
+          <span class="section-toggle">▶</span>
+          <span class="section-title">SECURITY</span>
+        </div>
+        <div class="section-content" id="security">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter password (minimum 8 characters)" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" />
+          </div>
+        </div>
+      </div>
+
+      <!-- COMMUNICATIONS -->
+      <div class="section">
+        <div class="section-header" onclick="window.toggleSection('communications')">
+          <span class="section-toggle">▶</span>
+          <span class="section-title">COMMUNICATIONS</span>
+        </div>
+        <div class="section-content" id="communications">
+          <div class="form-group">
+            <label>Join Our Mailing List</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" id="newsletterYes" onclick="window.setNewsletter(true)">YES</button>
+              <button class="toggle-btn" id="newsletterNo" onclick="window.setNewsletter(false)">NO</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="complete-btn" id="completeBtn" onclick="window.completeSetup()">COMPLETE DOSSIER</button>
+    </div>
+    <div id="successMessage" class="success-message"></div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    let verificationToken = null;
+    let newsletterChoice = true;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      verificationToken = urlParams.get('verify');
+
+      if (!verificationToken) {
+        showError('Invalid verification link - no token found');
+        document.getElementById('completeBtn').disabled = true;
+        return;
+      }
+
+      if (!window.socket) {
+        window.socket = io();
+      }
+
+      setupSocketListeners();
+    });
+
+    function setupSocketListeners() {
+      window.socket.on('registration-response', (data) => {
+        document.getElementById('completeBtn').classList.remove('loading');
+        
+        if (data.success) {
+          showSuccess('✓ Profile setup complete! Redirecting to login...');
+          setTimeout(() => {
+            window.location.href = '/terminal_new_v003.html';
+          }, 2000);
+        } else {
+          showError(data.message || data.error || 'Setup failed');
+        }
+      });
+    }
+
+    window.toggleSection = function(sectionId) {
+      const content = document.getElementById(sectionId);
+      const header = content.previousElementSibling;
+      const toggle = header.querySelector('.section-toggle');
+
+      document.querySelectorAll('.section-content').forEach(section => {
+        if (section.id !== sectionId) {
+          section.classList.remove('active');
+          section.previousElementSibling.querySelector('.section-toggle').textContent = '▶';
+        }
+      });
+
+      content.classList.toggle('active');
+      toggle.textContent = content.classList.contains('active') ? '▼' : '▶';
+    };
+
+    window.setNewsletter = function(choice) {
+      newsletterChoice = choice;
+      document.getElementById('newsletterYes').classList.toggle('active', choice);
+      document.getElementById('newsletterNo').classList.toggle('active', !choice);
+    };
+
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!name) {
+        showError('Name is required');
+        return false;
+      }
+
+      if (!password) {
+        showError('Password is required');
+        return false;
+      }
+
+      if (password.length < 8) {
+        showError('Password must be at least 8 characters');
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        showError('Passwords do not match');
+        return false;
+      }
+
+      return true;
+    }
+
+    function showError(message) {
+      const successEl = document.getElementById('successMessage');
+      if (successEl) {
+        successEl.style.color = '#ff4444';
+        successEl.textContent = message;
+      }
+    }
+
+    function showSuccess(message) {
+      const successEl = document.getElementById('successMessage');
+      if (successEl) {
+        successEl.style.color = 'var(--accent)';
+        successEl.textContent = message;
+      }
+    }
+
+    window.completeSetup = function() {
+      if (!validateForm()) {
+        return;
+      }
+
+      const password = document.getElementById('password').value;
+      const completeBtn = document.getElementById('completeBtn');
+      
+      completeBtn.classList.add('loading');
+
+      window.socket.emit('registration-verify', {
+        verificationToken: verificationToken,
+        password: password,
+        newsletter: newsletterChoice
+      });
+    };
+  </script>
+</body>
+</html>
