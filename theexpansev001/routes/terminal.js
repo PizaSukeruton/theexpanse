@@ -136,7 +136,8 @@ router.post('/query', async (req, res) => {
 
   if (looksLikeCouncilIntent(normalized)) {
     try {
-      const r = await fetch('http://localhost:3000/api/expanse/council/chat', {
+      const baseUrl = process.env.FRONTEND_ORIGIN || 'http://localhost:3000';
+      const r = await fetch(`${baseUrl}/api/expanse/council/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: normalized })

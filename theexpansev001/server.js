@@ -22,6 +22,11 @@ import adminCharactersRoutes from './routes/adminCharacters.js';
 import godModeRoutes from './routes/god-mode.js';import qaExtractorRouter from './backend/api/qa-extractor.js';
 const __dirname = dirname(__filename);
 
+// Session management
+import cookieParser from 'cookie-parser';
+import { sessionMiddleware } from './config/session.js';
+import authRoutes from './routes/auth.js';
+
 const app = express();
 import loreAdminRoutes from "./routes/lore-admin.js";
 import tseRouter from './backend/TSE/index.js';
@@ -29,11 +34,19 @@ import terminalRoutes from "./routes/terminal.js";
 import traitsRouter from './backend/traits/index.js';
 import { createServer } from "http";
 import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";
+import initializeRegistrationSockets from "./backend/councilTerminal/registrationSocketHandler.js";
 
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+// Trust proxy for Render.com (needed for secure cookies)
+app.set('trust proxy', 1);
+
+// Session and cookie middleware
+app.use(cookieParser());
+app.use(sessionMiddleware);
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -43,7 +56,7 @@ app.use(
         "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "data:", "blob:"],
-        "connect-src": ["'self'", "ws:", "http://localhost:3000"],
+        "connect-src": ["'self'", "ws:", "wss:", process.env.FRONTEND_ORIGIN || "http://localhost:3000"],
         "font-src": ["'self'", "https:", "data:"],
         "media-src": ["'self'", "blob:", "data:"],
         "object-src": ["'none'"]
@@ -67,6 +80,8 @@ app.get("/admin", (req, res) => {
 });
 
 app.use("/api/lore", loreAdminRoutes);
+app.use('/auth', authRoutes);
+registerRoute('/auth', 'Authentication');
 registerRoute("/api/lore", "Lore Admin");
 app.use("/api/expanse", expanseRoutes);
 registerRoute("/api/expanse", "Expanse API");
@@ -143,7 +158,7 @@ async function loadAllCharacters() {
 }
 
 const httpServer = createServer(app);
-const io = initializeWebSocket(httpServer);
+initializeWebSocket(httpServer, sessionMiddleware);
 import { WebSocketServer } from "ws";
 //import { startPsychicRadar } from "./backend/psychicRadarEmitter.js";
 //import { startPsychicEngine } from "./backend/psychicEngineScheduler.js";
