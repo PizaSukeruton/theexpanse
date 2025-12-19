@@ -1,0 +1,265 @@
+function initPizaPanel() {
+  const leftPanel = document.getElementById('dossier-panel');
+  
+  leftPanel.innerHTML = `
+    <div class="admin-panel" style="padding: 15px; height: 100%; overflow-y: auto;">
+      <h2 style="color: #ffffff; text-shadow: 0 0 10px #ffffff; margin-bottom: 20px; font-size: 16px; text-align: center;">
+        GOD MODE ADMIN
+      </h2>
+      
+      <div class="menu-container" id="godModeMenu"></div>
+      
+      <div id="godModeContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ffffff; background: rgba(255,255,255,0.02); min-height: 100px; display: none;">
+        <div id="contentArea"></div>
+      </div>
+      
+      <button onclick="returnToAdminMenu()" style="width: 100%; padding: 10px; margin-top: 15px; background: rgba(255,255,255,0.1); border: 2px solid #ffffff; color: #ffffff; font-family: 'Courier New', monospace; font-size: 12px; cursor: pointer; border-radius: 8px; font-weight: bold;">
+        RETURN TO ADMIN MENU
+      </button>
+    </div>
+  `;
+  
+  buildMenu();
+  addStyles();
+}
+
+function returnToAdminMenu() {
+  if (typeof initAdminPanel === 'function') {
+    initAdminPanel();
+  }
+}
+
+async function buildMenu() {
+  const menu = document.getElementById('godModeMenu');
+  console.log("[godModeMenu] buildMenu() called");  
+  const menuItems = [
+    {
+      title: 'SYSTEM ADMINISTRATION',
+      items: [{ button_name: 'God Mode Buttons', action_type: 'button-wizard' }]
+    }
+  ];
+  
+  menuItems.forEach((section, idx) => {
+  console.log("[godModeMenu] Building menu with items:", menuItems);    const div = document.createElement('div');
+    div.className = 'menu-item';
+    div.innerHTML = `
+      <button class="menu-btn" onclick="toggleSection('godSection${idx}')">
+        ▶ ${section.title}
+      </button>
+      <div class="menu-content" id="godSection${idx}" style="display: none;">
+        ${
+          section.items.map(item => `
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px; margin: 2px 0; border: 1px solid rgba(255,255,255,0.3); background: transparent; border-radius: 4px;">
+              <button class="sub-btn" onclick="loadGodModeFunction('${item.action_type}')" style="flex: 1; margin: 0; border: none; background: transparent; text-align: left;">
+                ${item.button_name}
+              </button>
+            </div>
+          `).join('') 
+        }
+      </div>
+    `;
+    menu.appendChild(div);
+    });
+  console.log("[godModeMenu] Menu built, total items:", menu.children.length);}
+
+async function fetchAvailableWizards() {
+  try {
+    const response = await fetch('/api/god-mode/wizards', {
+      headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+    });
+    if (response.ok) {      const data = await response.json();
+      return data.wizards || [];
+    }
+  } catch (error) {
+    console.error('Error fetching wizards:', error);
+  }
+  
+  return [];
+}
+function addStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .menu-item { margin-bottom: 5px; }
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .menu-btn:hover {
+      background: rgba(255,255,255,0.2);
+      text-shadow: 0 0 5px #ff0000;
+    }
+    .menu-content {
+      padding: 5px 0 5px 10px;
+      background: rgba(0,0,0,0.5);
+    }
+    .sub-btn {
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      transition: all 0.3s;
+    }
+    .sub-btn:hover {
+      text-shadow: 0 0 5px #00ff75;
+    }
+    .help-icon {
+      opacity: 0.7;
+      transition: all 0.3s;
+    }
+    .help-icon:hover {
+      opacity: 1;
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 5px #00ff75);
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+window.toggleSection = function(sectionId) {
+  const section = document.getElementById(sectionId);
+  const button = section.previousElementSibling;
+  const allSections = document.querySelectorAll('.menu-content');
+  
+  allSections.forEach(s => {
+    if (s.id !== sectionId) s.style.display = 'none';
+  });
+  
+  document.querySelectorAll('.menu-btn').forEach(b => {
+    b.textContent = '▶ ' + b.textContent.substring(2);
+  });
+  
+  if (section.style.display === 'none') {
+    section.style.display = 'block';
+    button.textContent = '▼ ' + button.textContent.substring(2);
+  } else {
+    section.style.display = 'none';
+    button.textContent = '▶ ' + button.textContent.substring(2);
+  }
+};
+
+window.handleWizardAction = function(wizardName) {
+  console.log('Loading wizard:', wizardName);
+  
+  if (wizardName === 'Gift Experiment Wizard') {
+    loadWizardFile('gift-wizard.js');
+  }
+};
+
+window.askAboutWizard = function(wizardId) {
+  console.log('User asked about wizard:', wizardId);
+  
+  // Send socket message to get basic info about the wizard
+  if (typeof window.socket !== "undefined") {
+    window.socket.emit('explain-hex', { 
+      hexId: wizardId, 
+      mode: 'basic' 
+    });
+  }
+};
+
+function loadWizardFile(filename) {
+  const tagId = "wizard-" + filename.replace(/[^\w-]/g, "_");
+  let script = document.getElementById(tagId);
+  if (script) {
+    console.log("[WIZARD] Script already loaded: " + filename);
+    if (window.GiftWizard?.init) {
+      window.GiftWizard.init();
+    }
+    return;
+  }
+  script = document.createElement("script");
+  script.id = tagId;
+  script.src = filename;
+  script.setAttribute("data-wizard", "gift-wizard");
+  script.onload = () => {
+    console.log("[WIZARD] Loaded: " + filename);
+    if (window.GiftWizard?.init) {
+      window.GiftWizard.init();
+    }
+  };
+  script.onerror = (e) => console.error("[WIZARD] Load error:", e);
+  document.body.appendChild(script);
+}
+
+window.loadGodModeFunction = function(actionType) {
+  const content = document.getElementById('contentArea');
+  const container = document.getElementById('godModeContent');
+  
+  if (actionType === 'button-wizard') {
+    container.style.display = 'block';
+    
+    if (typeof window.ModuleRegistry !== 'undefined' && window.ModuleRegistry.mount) {
+      window.ModuleRegistry.mount('wizard/menuBuilder', content, { targetLevel: 11 });
+    } else {
+      content.innerHTML = '<div style="color: #ff0000;">Module Registry not available</div>';
+    }
+  }
+};
+
+if (typeof window.ModuleRegistry !== 'undefined') {
+  window.ModuleRegistry.define('admin/godMode', {
+    mount: async (element) => {
+      console.log('[godModeMenu] Mounting...');
+      element.innerHTML = `
+        <div class="admin-panel" style="padding: 15px; height: 100%; overflow-y: auto;">
+          <h2 style="color: #ffffff; text-shadow: 0 0 10px #ffffff; margin-bottom: 20px; font-size: 16px; text-align: center;">
+            GOD MODE ADMIN
+          </h2>
+          
+          <div class="menu-container" id="godModeMenu"></div>
+          
+          <div id="godModeContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ffffff; background: rgba(255,255,255,0.02); min-height: 100px; display: none;">
+            <div id="contentArea"></div>
+          </div>
+        </div>
+      `;
+      
+      const menu = document.getElementById('godModeMenu');
+      const menuItems = [
+        {
+          title: 'SYSTEM ADMINISTRATION',
+          items: [{ button_name: 'God Mode Buttons', action_type: 'button-wizard' }]
+        }
+      ];
+      
+      menuItems.forEach((section, idx) => {
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+        div.innerHTML = `
+          <button class="menu-btn" onclick="toggleSection('godSection${idx}')">
+            ▶ ${section.title}
+          </button>
+          <div class="menu-content" id="godSection${idx}" style="display: none;">
+            ${section.items.map(item => `
+              <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px; margin: 2px 0; border: 1px solid rgba(255,255,255,0.3); background: transparent; border-radius: 4px;">
+                <button class="sub-btn" onclick="loadGodModeFunction('${item.action_type}')" style="flex: 1; margin: 0; border: none; background: transparent; text-align: left;">
+                  ${item.button_name}
+                </button>
+              </div>
+            `).join('')
+            }
+          </div>
+        `;
+        menu.appendChild(div);
+      });
+      
+      addStyles();
+    },
+    unmount: () => {
+      console.log('[godModeMenu] Unmounting...');
+    }
+  });
+}

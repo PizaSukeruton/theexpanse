@@ -1,0 +1,30 @@
+// backend/TSE/TeacherComponent.js
+
+import KnowledgeResponseEngine from "./helpers/KnowledgeResponseEngine.js";
+import KnowledgeResponseEngine from "./helpers/knowledge-response-engine.js";
+import TraitManager from "../traits/TraitManager.js";
+import pool from "../db/pool.js";
+
+export default class TeacherComponent {
+  constructor() {
+    this.pool = pool;
+    this.traits = new TraitManager();
+    this.acquisition = new KnowledgeResponseEngine();
+    this.responder = new KnowledgeResponseEngine();
+    this.nodeId = Math.floor(Math.random() * 256).toString(16).toUpperCase();
+  }
+
+  async initialize() {
+    console.log("[TSE-Teacher] Initialized with node ID:", this.nodeId);
+    return true;
+  }
+
+  async generateTask(characterId) {
+    console.log(`[TeacherComponent] Generating task for ${characterId}`);
+    return {
+      taskType: "knowledge_review",
+      characterId,
+      generatedAt: Date.now()
+    };
+  }
+}

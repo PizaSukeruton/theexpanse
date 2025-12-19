@@ -1,0 +1,196 @@
+// Admin Menu System for CMS
+window.showAdminMenu = () => {
+    const leftPanel = document.getElementById('character-list-container');
+    
+    leftPanel.innerHTML = `
+        <div class="admin-menu">
+            <div class="menu-section">
+                <h3 class="menu-header">CHARACTER MANAGEMENT</h3>
+                <button class="menu-button" onclick="loadCharacterList()">View All Characters</button>
+                <button class="menu-button" onclick="showCreateCharacter()">Create New Character</button>
+                <button class="menu-button" onclick="showEditCharacter()">Edit Character</button>
+                <button class="menu-button" onclick="showInventoryManager()">Character Inventory</button>
+                <button class="menu-button" onclick="showTraitsManager()">Traits & PAD Values</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">ENTITY MANAGEMENT</h3>
+                <button class="menu-button" onclick="showAllEntities()">View All Entities</button>
+                <button class="menu-button" onclick="showCreateEntity()">Create Entity</button>
+                <button class="menu-button" onclick="showKnowledgeEditor()">Knowledge Entity Editor</button>
+                <button class="menu-button" onclick="showEntityRelationships()">Entity Relationships</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">WORLD BUILDING</h3>
+                <button class="menu-button" onclick="showLocationsManager()">Locations Manager</button>
+                <button class="menu-button" onclick="showObjectsDatabase()">Objects Database</button>
+                <button class="menu-button" onclick="showKnowledgeDomains()">Knowledge Domains</button>
+                <button class="menu-button" onclick="showKnowledgeItems()">Knowledge Items</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">NARRATIVE SYSTEM</h3>
+                <button class="menu-button" onclick="showStoryArcs()">Story Arcs Manager</button>
+                <button class="menu-button" onclick="showNarrativeSegments()">Narrative Segments</button>
+                <button class="menu-button" onclick="showNarrativePaths()">Narrative Paths</button>
+                <button class="menu-button" onclick="showCharacterStoryAssign()">Character-Story Assignment</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">EVENTS SYSTEM</h3>
+                <button class="menu-button" onclick="showMultiverseEvents()">Multiverse Events Log</button>
+                <button class="menu-button" onclick="showPsychicEvents()">Psychic Events Monitor</button>
+                <button class="menu-button" onclick="showOmiyageEvents()">Omiyage (Gift) Events</button>
+                <button class="menu-button" onclick="showCreateEvent()">Create New Event</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">USER & SYSTEM</h3>
+                <button class="menu-button" onclick="showUserManagement()">User Management</button>
+                <button class="menu-button" onclick="showSystemSettings()">System Settings</button>
+                <button class="menu-button" onclick="showDatabaseHealth()">Database Health</button>
+                <button class="menu-button" onclick="showHexMonitor()">Hex ID Monitor</button>
+            </div>
+        </div>
+    `;
+
+// Placeholder functions for all menu items
+window.loadCharacterList = async () => {
+    try {
+        const response = await fetch("/api/cms/characters");
+        const data = await response.json();
+        
+        if (data.success && data.characters.length > 0) {
+            const listContainer = document.getElementById("character-list-container");
+            
+            const html = data.characters.map(char => `
+                <div class="character-item" onclick="showCharacter('${char.character_id}')">
+                    <div class="character-name">${char.character_name}</div>
+                    <div class="character-category">${char.category || 'Unknown'}</div>
+                </div>
+            `).join("");
+            
+            listContainer.innerHTML = html + `
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #00ff75;">
+                    <button class="menu-button" onclick="showAdminMenu()">Return To Main Menu</button>
+                </div>
+            `;            
+            document.getElementById("top-right-window-inner").innerHTML = `
+                <div class="success-message">
+                    <h2>✓ Characters Loaded</h2>
+                    <p>Loaded ${data.count} characters</p>
+                    <p>Select a character to view details</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error("Error loading characters:", error);
+    }
+};
+window.showCreateCharacter = () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>Create New Character</h2>
+            <form id="create-character-form" style="display: flex; flex-direction: column; gap: 10px; max-width: 400px;">
+                <input type="text" id="char-name" placeholder="Character Name" required style="padding: 5px; background: rgba(0,255,117,0.1); border: 1px solid #00ff75; color: #00ff75;">
+                <select id="char-category" style="padding: 5px; background: rgba(0,255,117,0.1); border: 1px solid #00ff75; color: #00ff75;">
+                    <option>Angry Slice Of Pizza</option>
+                    <option>Antagonist</option>
+                    <option>B-Roll Chaos</option>
+                    <option>Council Of The Wise</option>
+                    <option>Protagonist</option>
+                    <option>Tanuki</option>
+                </select>
+                <textarea id="char-description" placeholder="Description" style="padding: 5px; background: rgba(0,255,117,0.1); border: 1px solid #00ff75; color: #00ff75; min-height: 100px;"></textarea>
+                <hr style="border: 1px solid #00ff75; width: 100%; margin: 10px 0;">
+                <p style="color: #00ff75;">Confirm your password to create character:</p>
+                <input type="password" id="admin-password" placeholder="Enter Password" required style="padding: 5px; background: rgba(0,255,117,0.1); border: 1px solid #00ff75; color: #00ff75;">
+                <button type="submit" style="padding: 10px; background: rgba(0,255,117,0.2); border: 1px solid #00ff75; color: #00ff75; cursor: pointer;">Create Character</button>
+            </form>
+        </div>
+    `;
+    
+    // Add event listener AFTER the form exists in the DOM
+    setTimeout(() => {
+        const form = document.getElementById("create-character-form");
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                console.log("Form submitted!");
+                
+                const name = document.getElementById("char-name").value;
+                const category = document.getElementById("char-category").value;
+                const description = document.getElementById("char-description").value;
+                const password = document.getElementById("admin-password").value;
+                
+                try {
+                    console.log("Sending request to create character...");
+                    const response = await fetch("/api/cms/character/create", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ 
+                            character_name: name,
+                            category: category,
+                            description: description,
+                            password: password
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    console.log("Response:", result);
+                    
+                    if (result.success) {
+                        display.innerHTML = `
+                            <div class="success-message">
+                                <h2>✓ Character Created Successfully!</h2>
+                                <p>Character: ${result.character.character_name} (${result.character.character_id})</p>
+                                <p>Knowledge Entity: ${result.knowledge_entity.character_name} (${result.knowledge_entity.character_id})</p>
+                                <button class="menu-button" onclick="showCreateCharacter()">Create Another</button>
+};
+window.showEditCharacter = () => {
+    const display = document.getElementById('top-right-window-inner');
+    display.innerHTML = '<div class="admin-content"><h2>Edit Character</h2><p>Character editing interface coming soon...</p></div>';
+};
+
+window.showInventoryManager = () => {
+    const display = document.getElementById('top-right-window-inner');
+    display.innerHTML = '<div class="admin-content"><h2>Character Inventory Manager</h2><p>Inventory management interface coming soon...</p></div>';
+};
+
+window.showTraitsManager = () => {
+    const display = document.getElementById('top-right-window-inner');
+    display.innerHTML = '<div class="admin-content"><h2>Traits & PAD Values</h2><p>Trait management interface coming soon...</p></div>';
+};
+
+    /* ===== Entity Manager Buttons (LINKED TO ENTITY MANAGER) ===== */
+    window.showAllEntities = () => EntityManager.showAllEntities();
+    window.showCreateEntity = () => EntityManager.showCreateEntity();
+    window.showKnowledgeEditor = () => EntityManager.showKnowledgeEditor();
+    window.showEntityRelationships = () => EntityManager.manageRelationshipsSelector ? EntityManager.manageRelationshipsSelector() : EntityManager.showAllEntities();
+    
+    /* ===== System Placeholder Buttons (SAFE) ===== */
+    window.showUserManagement = () => {
+        const display = document.getElementById('top-right-window-inner');
+        display.innerHTML = '<div class="admin-content"><h2>User Management</h2><p>User management interface coming soon...</p></div>';
+    };
+    
+    window.showSystemSettings = () => {
+        const display = document.getElementById('top-right-window-inner');
+        display.innerHTML = '<div class="admin-content"><h2>System Settings</h2><p>System configuration coming soon...</p></div>';
+    };
+    
+    window.showDatabaseHealth = () => {
+        const display = document.getElementById('top-right-window-inner');
+        display.innerHTML = '<div class="admin-content"><h2>Database Health</h2><p>Database monitoring coming soon...</p></div>';
+    };
+    
+    window.showHexMonitor = () => {
+        const display = document.getElementById('top-right-window-inner');
+        display.innerHTML = '<div class="admin-content"><h2>Hex ID Monitor</h2><p>Hex ID tracking coming soon...</p></div>';
+    };
+
+// FINAL FIX — close showAdminMenu()
+};
+

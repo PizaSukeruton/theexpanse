@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup Module Test</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --accent: #00ff75;
+      --fg: #00ff75;
+      --shadow: 0 0 24px rgba(0,255,0,0.25), 0 0 64px rgba(0,255,0,0.1);
+    }
+    
+    html, body { 
+      height: 100%; 
+      margin: 0;
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+    }
+
+    .test-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .test-header {
+      border: 1px solid var(--accent);
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background: rgba(0,32,0,0.28);
+    }
+
+    .test-content {
+      flex: 1;
+      border: 1px solid var(--accent);
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(0,32,0,0.28);
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    #loginContainer {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-input {
+      background: rgba(0,16,0,0.25);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      outline: none;
+      color: var(--fg);
+      padding: 12px 14px;
+      font: inherit;
+      box-shadow: var(--shadow);
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    .login-button {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--fg);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .login-button:hover {
+      background: rgba(0,255,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .login-message {
+      text-align: center;
+      min-height: 20px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .error { color: #ff4444; }
+    .success { color: #00ff75; }
+  </style>
+  <link rel="stylesheet" href="signup-styles-v2.css">
+</head>
+<body>
+  <div class="test-container">
+    <div class="test-header">
+      <h2>SIGNUP MODULE TEST</h2>
+      <p>Testing signup module in isolation</p>
+      <p id="socket-status">Socket Status: DISCONNECTED</p>
+    </div>
+
+    <div class="test-content">
+      <div id="loginContainer"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="signup-module-v2.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.socket = io();
+      
+      const statusDiv = document.getElementById('socket-status');
+      
+      window.socket.on('connect', () => {
+        statusDiv.textContent = 'Socket Status: CONNECTED';
+        statusDiv.style.color = '#00ff75';
+        console.log('Socket connected');
+      });
+
+      window.socket.on('disconnect', () => {
+        statusDiv.textContent = 'Socket Status: DISCONNECTED';
+        statusDiv.style.color = '#ff4444';
+        console.log('Socket disconnected');
+      });
+
+      window.socket.on('registration-response', (data) => {
+        console.log('[REGISTRATION RESPONSE]', data);
+        window.SignupModule.onRegistrationResponse(data);
+      });
+
+      window.socket.on('terminal-auth', (data) => {
+        console.log('[TERMINAL AUTH RESPONSE]', data);
+      });
+
+      window.SignupModule.init();
+      console.log('Signup module initialized');
+    });
+  </script>
+</body>
+</html>

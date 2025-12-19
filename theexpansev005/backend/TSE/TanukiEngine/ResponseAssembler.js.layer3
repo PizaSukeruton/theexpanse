@@ -1,0 +1,52 @@
+import VocabularySelector from "./VocabularySelector.js";
+import ForbiddenWordScrubber from "./ForbiddenWordScrubber.js";
+import TanukiTemplates from "./TanukiTemplates.js";
+import RealityGrounder from "./RealityGrounder.js";
+import RelationshipGrounder from "./RelationshipGrounder.js";
+import EventGrounder from "./EventGrounder.js";
+
+export default class ResponseAssembler {
+  constructor() {
+    this.selector = new VocabularySelector();
+    this.scrubber = new ForbiddenWordScrubber();
+    this.templates = new TanukiTemplates();
+    this.grounder = new RealityGrounder();
+    this.relationshipGrounder = new RelationshipGrounder();
+    this.eventGrounder = new EventGrounder();
+  }
+
+  assemble(inputText, vocab, tanukiLevel, groundedContext = null, relationshipContext = null, eventContext = null) {
+    const templateList = this.templates.getTemplate(tanukiLevel);
+    const template = templateList[Math.floor(Math.random() * templateList.length)];
+
+    const word1 = this.selector.getTanukiWord(vocab) || {};
+    const word2 = this.selector.getDefaultWord(vocab) || {};
+    const pair = this.selector.getParadoxPair(vocab);
+
+    let pairString = "";
+    if (pair) {
+      pairString = `${pair.word1} meets ${pair.word2} — ${pair.connection}`;
+    }
+
+    // LAYER 1: Generate grounded statement from reality if available
+    let groundedStatement = "";
+    if (groundedContext && groundedContext.groundedReality) {
+      groundedStatement = this.grounder.generateGroundedStatement(groundedContext);
+    }
+
+    let finalText = template;
+
+    // Replace template variables
+    finalText = finalText
+      .replace(/\$\{input\}/g, inputText)
+      .replace(/\$\{word1\}/g, word1.word || "")
+      .replace(/\$\{word2\}/g, word2.word || "")
+      .replace(/\$\{pair\}/g, pairString)
+      .replace(/\$\{grounded\}/g, groundedStatement);
+
+    const forbidden = this.selector.getForbiddenWords(vocab);
+    finalText = this.scrubber.scrub(finalText, forbidden);
+
+    return finalText;
+  }
+}

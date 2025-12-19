@@ -1,0 +1,263 @@
+import pkg from 'pg';
+const { Pool } = pkg;
+
+import { getCurrentStoryTaskForCharacter } from '../storytellingTaskHelper.mjs';
+
+/**
+ * TeacherComponent
+ * Manages the Teacher phase of the TSE loop, recording the AI's internal
+ * decisions, confidence, and predictions before an outcome is known.
+ * Department: Teacher Records (8A0000-8AFFFF)
+ */
+class TeacherComponent {
+    constructor(pool) {
+        if (!pool) {
+            throw new Error("Database pool is required for TeacherComponent");
+        }
+        this.pool = pool;
+        this.isInitialized = false;
+        this.hexCounter = null;
+    }
+
+    async initialize() {
+        try {
+            await this.initializeHexCounter();
+            this.isInitialized = true;
+            console.log("✅ TeacherComponent initialized successfully");
+            return true;
+        } catch (error) {
+            console.error("❌ TeacherComponent initialization failed:", error);
+            this.isInitialized = false;
+            return false;
+        }
+    }
+
+    async initializeHexCounter() {
+        try {
+            const result = await this.pool.query(`
+                SELECT record_id
+                FROM tse_teacher_records
+                WHERE record_id >= '#8A0000' AND record_id <= '#8AFFFF'
+                ORDER BY record_id DESC
+                LIMIT 1
+            `);
+
+            if (result.rows.length > 0) {
+                this.hexCounter = parseInt(result.rows[0].record_id.substring(1), 16) + 1;
+            } else {
+                this.hexCounter = 0x8A0000;
+            }
+
+            console.log("🔢 TeacherComponent hex counter initialized at", this.hexCounter.toString(16).toUpperCase());
+        } catch (error) {
+            console.error("❌ Error initializing TeacherComponent hex counter:", error);
+            this.hexCounter = 0x8A0000;
+        }
+    }
+
+    generateNewRecordId() {
+        if (this.hexCounter === null) {
+            throw new Error("TeacherComponent hex counter not initialized.");
+        }
+        const hexId = this.hexCounter.toString(16).toUpperCase().padStart(6, '0');
+        this.hexCounter++;
+        return `#${hexId}`;
+    }
+
+    async recordChatDecision(cycleId, data) {
+        const client = await this.pool.connect();
+        try {
+            const {
+                algorithm_decision,
+                confidence_score,
+                predicted_outcomes,
+                message_processing_context,
+                character_selection_reasoning
+            } = data;
+
+            const record_id = this.generateNewRecordId();
+
+            const query = `
+                INSERT INTO tse_teacher_records (
+                    record_id,
+                    cycle_id,
+                    teacher_sequence,
+                    algorithm_id,
+                    algorithm_version,
+                    algorithm_decision,
+                    confidence_score,
+                    predicted_outcomes,
+                    message_processing_context,
+                    character_selection_reasoning
+                )
+                VALUES (
+                    $1,
+                    $2,
+                    (
+                        SELECT COALESCE(MAX(teacher_sequence), 0) + 1
+                        FROM tse_teacher_records
+                        WHERE cycle_id = $2::varchar
+                    ),
+                    $3,
+                    $4,
+                    $5,
+                    $6,
+                    $7,
+                    $8,
+                    $9
+                )
+                RETURNING *;
+            `;
+
+            const values = [
+                record_id,
+                cycleId,
+                'chat_algorithm',
+                '1.0.0',
+                algorithm_decision || {},
+                confidence_score || null,
+                predicted_outcomes || {},
+                message_processing_context || {},
+                character_selection_reasoning || null
+            ];
+
+            const result = await client.query(query, values);
+            return result.rows[0];
+        } catch (error) {
+            console.error("❌ Database error in TeacherComponent.recordChatDecision:", error);
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
+    async debugStoryTaskForClaude() {
+        const task = await getCurrentStoryTaskForCharacter('#700002');
+        console.log('Claude Story Task:', JSON.stringify(task, null, 2));
+        return task;
+    }
+
+    async handleKnowledgeCycle(cycleId, characterId, query, domain, client = null) {
+        const shouldReleaseClient = !client;
+        if (!client) {
+            client = await this.pool.connect();
+        }
+        try {
+            const lessonQuery = `
+                SELECT 
+                    lesson_id,
+                    lesson_name,
+                    level,
+                    difficulty,
+                    knowledge_domain
+                FROM tse_storytelling_lessons
+                WHERE knowledge_domain = $1
+                ORDER BY RANDOM()
+                LIMIT 1
+            `;
+
+            const domainMap = {
+                'story_sense': 'story_basics',
+                'character_sense': 'character_basics',
+                'structure_sense': 'story_structure'
+            };
+            const mappedDomain = domainMap[domain] || domain;
+            const lessonResult = await client.query(lessonQuery, [mappedDomain]);
+            
+            if (lessonResult.rows.length === 0) {
+                throw new Error(`No lesson found for domain ${domain}`);
+            }
+
+            const lesson = lessonResult.rows[0];
+
+            const taskQuery = `
+                SELECT 
+                    t.task_type_id,
+                    t.task_name,
+                    t.difficulty,
+                    t.prompt_template,
+                    t.expected_output_format,
+                    r.rubric_id,
+                    r.total_possible_score,
+                    r.features,
+                    r.grade_mapping
+                FROM tse_storytelling_task_types t
+                LEFT JOIN tse_storytelling_rubrics r ON t.task_type_id = r.task_type_id
+                WHERE t.lesson_id = $1
+                LIMIT 1
+            `;
+
+            const taskResult = await client.query(taskQuery, [lesson.lesson_id]);
+           
+            if (taskResult.rows.length === 0) {
+                throw new Error(`No task found for lesson ${lesson.lesson_id}`);
+            }
+
+            const task = taskResult.rows[0];
+
+            const record_id = this.generateNewRecordId();
+
+            const algorithm_decision = {
+                taskTypeId: task.task_type_id,
+                taskName: task.task_name,
+                difficulty: task.difficulty,
+                promptTemplate: task.prompt_template,
+                rubricId: task.rubric_id,
+                totalScore: task.total_possible_score
+            };
+
+            const query_insert = `
+                INSERT INTO tse_teacher_records (
+                    record_id, cycle_id, teacher_sequence,
+                    algorithm_id, algorithm_version,
+                    input_parameters, algorithm_decision,
+                    confidence_score, execution_context,
+                    performance_metrics, cultural_compliance,
+                    predicted_outcomes, resource_allocation,
+                    character_selection_reasoning
+                ) VALUES (
+                    $1, $2::varchar(7),
+                    (SELECT COALESCE(MAX(teacher_sequence), 0) + 1 FROM tse_teacher_records WHERE cycle_id = $2::varchar(7)),
+                    $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+                )
+                RETURNING *;
+            `;
+
+            const result = await client.query(query_insert, [
+                record_id,
+                cycleId,
+                'storytelling_task_selector',
+                'v1.0',
+                JSON.stringify({ domain, characterId, lessonId: lesson.lesson_id }),
+                JSON.stringify(algorithm_decision),
+                0.85,
+                JSON.stringify({ executedAt: new Date().toISOString() }),
+                JSON.stringify({ tasksConsidered: 1 }),
+                JSON.stringify({}),
+                JSON.stringify(algorithm_decision),
+                JSON.stringify({ estimatedTime: 300 }),
+                `Selected storytelling task for ${characterId} in domain ${domain}`
+            ]);
+
+            console.log(`Teacher record created: ${record_id} for cycle ${cycleId}`);
+
+            return {
+                record_id: record_id,
+                algorithm_decision: algorithm_decision,
+                confidence_score: 0.85,
+                lesson_id: lesson.lesson_id,
+                task_type_id: task.task_type_id
+            };
+
+        } catch (error) {
+            console.error(`Error in handleKnowledgeCycle for ${characterId}:`, error);
+            throw error;
+        } finally {
+            if (shouldReleaseClient) {
+                client.release();
+            }
+        }
+    }
+}
+
+export default TeacherComponent;

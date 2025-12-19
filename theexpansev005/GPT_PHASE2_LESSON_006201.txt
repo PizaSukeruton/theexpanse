@@ -1,0 +1,371 @@
+LESSON #006201: Protagonist, Antagonist, Allies
+
+════════════════════════════════════
+
+A. METADATA
+
+lesson_id: #006201
+module_id: #006200
+track_name: storytelling_tanuki_v1
+
+level: 2
+difficulty: 2
+
+knowledge_domain: character_basics
+
+prerequisites: [#005201, #005202]
+
+character_id: #700002
+
+learning_objectives:
+"Identify the protagonist (main character) in a short story."
+"Identify the antagonist (force or character that opposes the protagonist)."
+"Recognise allies or helpers and describe their role."
+
+unlocks_next_lesson: #006202
+
+B. TEACHER BLOCK
+
+definition:
+"A protagonist is the main character the story follows. The antagonist is whatever gets in their way – this might be another character, a situation, or even their own fear. Allies are characters who help the protagonist move toward their goal."
+
+micro_examples:
+"In a treasure-hunt story, the kid searching for the treasure is the protagonist, the rival team or the dangerous cave can be the antagonist, and a loyal friend who shares clues is an ally."
+"In a school story, the new student who wants a friend is the protagonist, their shyness or a bullying classmate can be the antagonist, and a kind teacher or classmate can be an ally."
+"In a sports story, the runner trying to win the race is the protagonist, a strong rival or an injury can be the antagonist, and a coach who trains them is an ally."
+
+worked_example:
+"Read this short story:
+
+'Jade wanted to perform in the school talent show, but her stage fright made her shake every time she imagined stepping on stage. Her best friend Mia stayed after school with her, clapped after each practice song, and promised to stand in the front row on the night of the show.'
+
+Protagonist: Jade. The story follows her wish to be in the talent show.
+Antagonist: Her stage fright, which tries to stop her from reaching her goal.
+Ally: Mia, because she supports Jade, practises with her, and helps her feel braver.
+
+Even though this is short, we can see who the story is about (protagonist), what is in the way (antagonist), and who is helping (ally)."
+
+C. TASK TYPES
+
+Task #006210: Label Protagonist / Antagonist / Ally
+
+task_type_id: #006210
+task_name: "Identify Protagonist, Antagonist, Ally"
+difficulty: 2
+
+prompt_template:
+"Read the story:
+
+{text_story}
+
+Answer in this format:
+Protagonist: [...]
+Antagonist: [...]
+Ally: [...] (write 'none' if there is no clear ally)."
+
+expected_output_format:
+"Protagonist: [name or short description]
+Antagonist: [name / force / situation]
+Ally: [name / description / 'none']"
+
+input_pool:
+{
+  "text_story": "Arin wanted to finish his project on the school computer, but an older kid kept cutting in front of him every time he joined the line. At last, the librarian noticed what was happening and made the older kid wait their turn so Arin could use the computer."
+}
+{
+  "text_story": "Mila wanted to reach the top of the hill, but the path was steep and she slipped more than once. Her older brother walked beside her, held her hand when she wobbled, and told her they could rest whenever she needed."
+}
+{
+  "text_story": "Ken hoped to fix his broken bike before the weekend trip. The broken chain made it impossible to ride, and the store was nearly out of parts, but a neighbour who knew about bikes offered to help him repair it."
+}
+
+Task #006211: Choose the Antagonist (Classification)
+
+task_type_id: #006211
+task_name: "Which One Is the Antagonist?"
+difficulty: 2
+
+prompt_template:
+"Read the short story:
+
+{text_story}
+
+Who or what is the antagonist in this story – the main thing that stands in the way of the protagonist’s goal?
+
+A) {optionA}
+B) {optionB}
+C) {optionC}
+
+Answer with one letter and a short reason."
+
+expected_output_format:
+"Answer: [A/B/C]
+Reason: [one sentence explaining why this is the main source of opposition]"
+
+input_pool:
+{
+  "text_story": "Riya wanted to sit at the busy lunch table where the kids were laughing, but every time she stood up, her stomach twisted and she sat back down. She watched them from far away and picked at her food.",
+  "optionA": "Riya’s shyness and fear of going over",
+  "optionB": "The kids at the table",
+  "optionC": "The food on Riya’s tray"
+}
+{
+  "text_story": "Jamal trained hard for the school race, but heavy rain on the day of the event turned the track into slippery mud. He wondered if he should even try to run.",
+  "optionA": "Jamal’s love of running",
+  "optionB": "The muddy track and bad weather",
+  "optionC": "The cheering crowd"
+}
+{
+  "text_story": "Lena wanted to finish her painting for the art wall, but her little brother kept running into her room and bumping her desk. She had to keep starting over.",
+  "optionA": "Lena’s paintbrushes",
+  "optionB": "Lena’s little brother who keeps bumping the desk",
+  "optionC": "The art wall at school"
+}
+
+Task #006212: Design a Tiny Cast (Generation)
+
+task_type_id: #006212
+task_name: "Create Protagonist, Antagonist, Ally"
+difficulty: 3
+
+prompt_template:
+"Create a very short story setup (2–4 sentences) that clearly includes:
+
+- A protagonist (main character)
+- An antagonist (who or what is in their way)
+- An ally (someone or something that helps)
+
+Follow this format:
+
+Protagonist: [...]
+Antagonist: [...]
+Ally: [...]
+Story: [2–4 sentences describing the situation]"
+
+expected_output_format:
+"Protagonist: [short description or name]
+Antagonist: [short description or name or situation]
+Ally: [short description or name]
+Story: [2–4 sentences]"
+
+input_pool:
+{ "topic": "trying to rescue a lost pet" }
+{ "topic": "preparing for a school performance" }
+{ "topic": "fixing a big mistake with a friend" }
+
+D. EVALUATOR RUBRIC for Task #006210
+
+features:
+
+protagonist_identified
+feature_id: "protagonist_identified"
+description: "Is the protagonist (main character) correctly identified?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Chosen character is not the main focus of the story or is clearly wrong."
+1: "Partly correct (for example, mentions group but not the specific main character)."
+2: "Correctly identifies the main character the story follows."
+
+antagonist_identified
+feature_id: "antagonist_identified"
+description: "Is the main source of opposition correctly identified as the antagonist?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Answer is unrelated or not actually blocking the goal."
+1: "Partly right but missing detail (for example, says 'problems' instead of naming the key problem)."
+2: "Clearly and specifically identifies the person, force, or situation that blocks the protagonist."
+
+ally_identified
+feature_id: "ally_identified"
+description: "Is an ally correctly identified, or 'none' used appropriately when there is no ally?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Names an ally when none exists, or chooses something that does not help the protagonist."
+1: "Chooses a character that helps, but the description is vague or mixed up."
+2: "Clearly names a helper who supports the protagonist’s goal, or correctly writes 'none' when there is no helper."
+
+total_possible_score: 6
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 3, "fsrs_grade": 2 }
+{ "min_score": 4, "max_score": 5, "fsrs_grade": 3 }
+{ "min_score": 6, "max_score": 6, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006210
+
+Example 1 (Correct)
+
+Input story:
+"Arin wanted to finish his project on the school computer, but an older kid kept cutting in front of him every time he joined the line. At last, the librarian noticed what was happening and made the older kid wait their turn so Arin could work."
+
+Expected output:
+Protagonist: Arin
+Antagonist: the older kid who keeps cutting in line
+Ally: the librarian who steps in to help
+
+Why correct:
+The answer picks Arin as the main character with the goal, the older kid as the clear blocker, and the librarian as the helper.
+
+Example 2 (Incorrect then corrected)
+
+Wrong student answer:
+Protagonist: the librarian
+Antagonist: the computer
+Ally: Arin
+
+Why wrong:
+The librarian is not the main character; Arin is. The computer is not blocking anything; the older kid is. Roles are reversed.
+
+Corrected answer:
+Protagonist: Arin
+Antagonist: the older kid cutting in line
+Ally: the librarian
+
+D. EVALUATOR RUBRIC for Task #006211
+
+features:
+
+correct_choice
+feature_id: "correct_choice"
+description: "Does the student choose the option that truly represents the antagonist?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Chosen letter does not represent the real source of opposition."
+1: "Correct letter plus extra letters or uncertainty (for example, 'A and B')."
+2: "Exactly the correct letter is chosen."
+
+reasoning_opposition_focus
+feature_id: "reasoning_opposition_focus"
+description: "Does the reason explain how that choice opposes the protagonist’s goal?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Reason does not mention blocking the goal or causing a problem."
+1: "Reason is vague but hints at a problem (for example, 'it is bad')."
+2: "Reason clearly shows the chosen option gets in the protagonist’s way (for example, 'this fear stops them from going over', 'this person keeps blocking them')."
+
+total_possible_score: 4
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 2, "fsrs_grade": 2 }
+{ "min_score": 3, "max_score": 3, "fsrs_grade": 3 }
+{ "min_score": 4, "max_score": 4, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006211
+
+Example 1 (Correct)
+
+Story:
+"Riya wanted to sit at the busy lunch table where the kids were laughing, but every time she stood up, her stomach twisted and she sat back down. She watched them from far away and picked at her food."
+
+Options:
+A) Riya’s shyness and fear of going over
+B) The kids at the table
+C) The food on Riya’s tray
+
+Expected answer:
+Answer: A
+Reason: "Her own fear and shyness are what stop her from going to the table."
+
+Why:
+The main opposition is inside her (fear), not the kids or the food.
+
+Example 2 (Incorrect then corrected)
+
+Student answer:
+Answer: B
+Reason: "They are the ones at the table."
+
+Why wrong:
+The kids are not shown blocking her; the text shows her fear and stomach twisting as the blocker.
+
+Correct answer:
+Answer: A
+Reason: focuses on fear blocking the goal.
+
+D. EVALUATOR RUBRIC for Task #006212
+
+features:
+
+three_roles_present
+feature_id: "three_roles_present"
+description: "Does the student clearly name a protagonist, antagonist, and ally?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Only one role given or labels missing."
+1: "Two roles are clear, the third is vague or missing."
+2: "All three roles are present and labelled."
+
+roles_consistent_with_story
+feature_id: "roles_consistent_with_story"
+description: "Do the named roles match how they act in the story text?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Roles are mixed up (for example, ally acts like an antagonist)."
+1: "Some confusion, but main pattern is mostly right."
+2: "Protagonist has clear goal, antagonist opposes, ally helps, all consistent."
+
+story_coherence
+feature_id: "story_coherence"
+description: "Is the short story clear and connected to the roles?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Story is very hard to follow or not related to the roles."
+1: "Story mostly makes sense but has gaps or unclear links."
+2: "Story is easy to follow; the conflict and help are clear."
+
+total_possible_score: 6
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 3, "fsrs_grade": 2 }
+{ "min_score": 4, "max_score": 5, "fsrs_grade": 3 }
+{ "min_score": 6, "max_score": 6, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006212
+
+Example 1 (Correct)
+
+Student answer:
+Protagonist: A girl named Nia who wants to find her lost cat.
+Antagonist: The busy, noisy city streets that make it hard to search.
+Ally: Her neighbour who knows the area well.
+Story: "Nia realised her cat was missing and felt a heavy worry in her chest. She searched the streets, but the traffic and loud noises made it hard to hear or see anything. Her neighbour joined her, calling the cat’s name and checking quiet backyards until they finally heard a soft meow from under a porch."
+
+Why correct:
+All three roles are present, they match the story, and the story is coherent.
+
+Example 2 (Incorrect then corrected)
+
+Student answer:
+Protagonist: The city
+Antagonist: The cat
+Ally: The cars
+Story: "The city was loud. A cat ran. Cars moved."
+
+Why wrong:
+The roles do not map to real behaviour in the story. There is no clear goal, no real opposition, and no helper.
+
+A better version would name a character with a goal, a clear blocker, and a helper.
+
+F. TSE METADATA for Lesson #006201
+
+character_id: #700002
+
+trait_influences:
+"empathy": { "weight": 0.4, "effect": "If high, show more examples that focus on characters’ feelings when identifying protagonists and antagonists." }
+"analytical_thinking": { "weight": 0.3, "effect": "If high, schedule more classification tasks (like #006211) before generation tasks." }
+"creativity": { "weight": 0.3, "effect": "If high, surface the generation task #006212 more often once basic recognition tasks are passed." }
+
+spaced_repetition_profile_id: #FSRS01
+
+unlocks_next_lesson: #006202

@@ -1,0 +1,295 @@
+import { Server } from "socket.io";
+import bcrypt from "bcryptjs";
+import pool from "../db/pool.js";
+
+// NEW MODULAR SYSTEMS
+import modeRouter from "./modeRouter.js";
+import cotwIntentMatcher from "./cotwIntentMatcher.js";
+import runStandardQuery from "./runStandardQuery.js";
+import TanukiModeRouter from "./TanukiModeRouter.js";
+import GodModeDebugger from "./GodModeDebugger.js";
+import aliasTrainer from "./aliasTrainer.js";
+import ContextMemoryManager from "./updateContextMemory.js";
+
+// OLD REQUIRED UTILITIES
+import generateHexId from "../utils/hexIdGenerator.js";
+import { initializeRegistrationSockets } from "./registrationSocketHandler.js";
+
+const contextMemory = new ContextMemoryManager();
+
+function wrapSessionMiddleware(middleware) {
+  return (socket, next) => middleware(socket.request, {}, next);
+}
+
+export default function initializeWebSocket(httpServer, sessionMiddleware) {
+  const io = new Server(httpServer, {
+    cors: {
+      origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
+      credentials: true
+    }
+  });
+
+  // -----------------------------
+  // PUBLIC NAMESPACE
+  // -----------------------------
+  const publicIo = io.of("/public");
+  initializeRegistrationSockets(publicIo);
+
+  publicIo.on("connection", (socket) => {
+    console.log("🟢 /public socket connected:", socket.id);
+    socket.on("disconnect", () =>
+      console.log("🔴 /public socket disconnected:", socket.id)
+    );
+  });
+
+  // -----------------------------
+  // TERMINAL NAMESPACE
+  // -----------------------------
+  const terminalIo = io.of("/terminal");
+
+  terminalIo.use(wrapSessionMiddleware(sessionMiddleware));
+
+  terminalIo.use((socket, next) => {
+    const sess = socket.request.session;
+    if (!sess || !sess.userId) {
+      return next(new Error("Unauthorized"));
+    }
+    socket.userId = sess.userId;
+    socket.username = sess.username;
+    socket.accessLevel = sess.accessLevel;
+    next();
+  });
+
+  // ------------------------------------------------------------------------
+  // TERMINAL COMMAND HANDLER — FULLY REWRITTEN
+  // ------------------------------------------------------------------------
+  terminalIo.on("connection", (socket) => {
+    console.log(`🟢 /terminal connected: ${socket.username} (lvl ${socket.accessLevel})`);
+
+    socket.on("terminal-command", async (data) => {
+      try {
+        if (!socket.userId) {
+          socket.emit("command-response", { error: "NOT AUTHENTICATED" });
+          return;
+        }
+
+        const { command } = data;
+        console.log("[DEBUG] Received terminal command:", command);
+
+        // Session object
+        const session = {
+          id: socket.userId,
+          username: socket.username,
+          access_level: socket.accessLevel,
+          context: socket.context || null
+        };
+
+        // 1️⃣ Detect Mode
+        const modeResult = await modeRouter.detectMode(command, session.access_level, session);
+
+        let response;
+
+        // 2️⃣ Route to Correct Engine
+        if (modeResult.mode === "god") {
+          response = await GodModeDebugger.debug(modeResult.cleanCommand, session);
+        } else if (modeResult.mode === "tanuki") {
+          response = await TanukiModeRouter.handle(modeResult.cleanCommand, session);
+        if (modeResult.mode === "standard" || modeResult.mode === "STANDARD") {
+          console.log("[Socket] STANDARD mode. Calling Intent Matcher...");
+          const intentResult = await cotwIntentMatcher.matchIntent(
+            modeResult.cleanCommand,
+            session.context,
+            { userid: session.id, username: session.username, access_level: session.access_level }
+          );
+          console.log("[Socket] Intent Matcher Output:", intentResult);
+          response = await runStandardQuery(intentResult, session, modeResult.cleanCommand);
+          socket.emit("command-response", response);
+          return;
+        }
+        } else {
+        // OPTION A — Standard Mode (intent matcher runs here)
+        const intentResult = await cotwIntentMatcher.matchIntent(
+          modeResult.cleanCommand,
+          session.context,
+          { userid: session.id, username: session.username, access_level: session.access_level }
+        );
+
+        if (!intentResult || !intentResult.type || !intentResult.entity) {
+          response = {
+            output: "I couldn't understand that query.",
+            success: false,
+            intent: intentResult || null
+          };
+        if (modeResult.mode === "standard" || modeResult.mode === "STANDARD") {
+          console.log("[Socket] STANDARD mode. Calling Intent Matcher...");
+          const intentResult = await cotwIntentMatcher.matchIntent(
+            modeResult.cleanCommand,
+            session.context,
+            { userid: session.id, username: session.username, access_level: session.access_level }
+          );
+          console.log("[Socket] Intent Matcher Output:", intentResult);
+          response = await runStandardQuery(intentResult, session, modeResult.cleanCommand);
+          socket.emit("command-response", response);
+          return;
+        }
+        } else {
+          response = await runStandardQuery(intentResult, session, modeResult.cleanCommand);
+        }
+        }
+
+        // 3️⃣ Alias Trainer
+        const aliasUpdates = await aliasTrainer.processIfApplicable(
+          session,
+          modeResult.cleanCommand,
+          response
+        );
+
+        // 4️⃣ Context Memory Update
+        session.context = await contextMemory.update(
+          session,
+          response.intent || {},
+          response,
+          aliasUpdates
+        );
+
+        socket.context = session.context;
+
+        // 5️⃣ Emit Clean Response
+        console.log("[DEBUG] Response from router:", response);
+        socket.emit("command-response", response);
+
+      } catch (err) {
+        console.error("Terminal command error:", err);
+        socket.emit("command-response", { error: "COMMAND FAILED" });
+      }
+    });
+
+    // ----------------------------------------------------------------------
+    // GIFT WIZARD & MENU WIZARD — UNTOUCHED FROM ORIGINAL FILE
+    // ----------------------------------------------------------------------
+
+    socket.on("gift-wizard:get-realms", async (ack) => {
+      if (!socket.userId) { ack?.({ success: false, error: "Not authenticated" }); return; }
+      try {
+        const r = await pool.query("SELECT DISTINCT realm FROM public.locations ORDER BY realm");
+        const realms = r.rows.map(x => x.realm);
+        ack?.({ success: true, realms });
+        socket.emit("gift-wizard:realms", { success: true, realms });
+      } catch (e) {
+        ack?.({ success: false, error: e.message });
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    socket.on("gift-wizard:get-locations", async (data) => {
+      if (!socket.userId) return;
+      try {
+        const r = await pool.query(
+          "SELECT location_id, name FROM public.locations WHERE realm = $1 ORDER BY name",
+          [data.realm]
+        );
+        socket.emit("gift-wizard:locations", { success: true, locations: r.rows });
+      } catch (e) {
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    socket.on("gift-wizard:get-characters", async () => {
+      if (!socket.userId) return;
+      try {
+        const r = await pool.query(
+          "SELECT character_id, character_name, category FROM public.character_profiles WHERE category NOT IN ('Knowledge Entity') LIMIT 20"
+        );
+        socket.emit("gift-wizard:characters", { success: true, characters: r.rows });
+      } catch (e) {
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    socket.on("gift-wizard:get-givers-only", async () => {
+      if (!socket.userId) return;
+      try {
+        const r = await pool.query(
+          "SELECT DISTINCT cp.character_id, cp.character_name, cp.category FROM character_profiles cp JOIN character_inventory ci ON cp.character_id = ci.character_id WHERE cp.category NOT IN ('Knowledge Entity') ORDER BY cp.character_name"
+        );
+        socket.emit("gift-wizard:givers-only", { success: true, characters: r.rows });
+      } catch (e) {
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    socket.on("gift-wizard:get-giver-inventory", async (data) => {
+      if (!socket.userId) return;
+      try {
+        const r = await pool.query(
+          "SELECT ci.inventory_entry_id, ci.object_id, o.object_name, o.object_type, o.rarity FROM character_inventory ci JOIN objects o ON ci.object_id = o.object_id WHERE ci.character_id = $1",
+          [data.giver_id]
+        );
+        socket.emit("gift-wizard:giver-inventory", { success: true, items: r.rows });
+      } catch (e) {
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    socket.on("gift-wizard:create-event", async (data) => {
+      if (!socket.userId) return socket.emit("gift-wizard:error", { error: "Not authenticated" });
+      try {
+        const eventId = await generateHexId("multiverse_event_id");
+        const r = await pool.query(
+          "INSERT INTO public.multiverse_events (event_id, realm, location, event_type, involved_characters, outcome, timestamp, notes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *",
+          [
+            eventId,
+            data.realm,
+            data.location?.name || "Unknown",
+            "gift_exchange",
+            JSON.stringify({ giver: data.giver_id, receiver: data.receiver_id }),
+            data.outcome,
+            new Date().toISOString(),
+            data.notes
+          ]
+        );
+        socket.emit("gift-wizard:event-created", { success: true, event: r.rows[0] });
+      } catch (e) {
+        socket.emit("gift-wizard:error", { error: e.message });
+      }
+    });
+
+    // MENU WIZARD
+    socket.on("menu-wizard:create-button", async (data, ack) => {
+      if (!socket.userId) return ack?.({ success: false, error: "Not authenticated" });
+      if (socket.accessLevel !== 11) return ack?.({ success: false, error: "Unauthorized - God Mode required" });
+
+      try {
+        const menuId = await generateHexId("wizard_guide_id");
+        await pool.query(
+          "INSERT INTO menu_configurations (menu_id, access_level, button_label, button_order, created_by) VALUES ($1, $2, $3, $4, $5)",
+          [menuId, data.access_level, data.button_label, data.button_order, socket.userId]
+        );
+        ack?.({ success: true, menu_id: menuId });
+      } catch (e) {
+        ack?.({ success: false, error: e.message });
+      }
+    });
+
+    socket.on("menu:fetch", async (data, ack) => {
+      if (!socket.userId) return ack?.({ success: false, error: "Not authenticated" });
+
+      try {
+        const result = await pool.query(
+          "SELECT menu_id, button_label, button_order, active FROM menu_configurations WHERE access_level = $1 AND active = true ORDER BY button_order ASC",
+          [data.access_level]
+        );
+        ack?.({ success: true, buttons: result.rows });
+      } catch (e) {
+        ack?.({ success: false, error: e.message });
+      }
+    });
+
+    socket.on("disconnect", () => {
+      console.log("🔴 /terminal socket disconnected:", socket.username);
+    });
+  });
+
+  console.log("🔌 WebSocket server initialized");
+  return io;
+}

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intent Matcher Tester - The Expanse</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #00aa00;
+            margin-bottom: 30px;
+        }
+
+        .test-panel {
+            background: #1a1a1a;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #00ff00;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #00ff00;
+            color: #0a0a0a;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00aa00;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        button:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .results {
+            background: #0a0a0a;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 200px;
+        }
+
+        .result-section {
+            margin-bottom: 20px;
+        }
+
+        .result-header {
+            color: #00ff00;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 5px;
+        }
+
+        .result-content {
+            color: #00aa00;
+            white-space: pre-wrap;
+            font-size: 13px;
+        }
+
+        .entity-card {
+            background: #1a1a1a;
+            border-left: 3px solid #00ff00;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .entity-name {
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .entity-detail {
+            color: #00aa00;
+            margin: 5px 0;
+        }
+
+        .confidence-high {
+            color: #00ff00;
+        }
+
+        .confidence-medium {
+            color: #ffaa00;
+        }
+
+        .confidence-low {
+            color: #ff0000;
+        }
+
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .status-success {
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .status-error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+            border: 1px solid #ff0000;
+        }
+
+        .quick-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quick-test-btn {
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .quick-test-btn:hover {
+            background: #00ff00;
+            color: #0a0a0a;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .stat-label {
+            color: #00aa00;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            color: #00ff00;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 INTENT MATCHER TESTER</h1>
+        <div class="subtitle">Universal Entity Search System - Test Interface</div>
+
+        <div class="test-panel">
+            <h2 style="margin-bottom: 20px; color: #00ff00;">Test Configuration</h2>
+            
+            <div class="form-group">
+                <label for="accessLevel">Access Level (User Realm):</label>
+                <select id="accessLevel">
+                    <option value="1">Level 1 - #F00000 (Piza Sukeruton Multiverse)</option>
+                    <option value="2">Level 2 - #F00001 (TSE Tester)</option>
+                    <option value="3">Level 3 - #F00002 (TBD)</option>
+                    <option value="4">Level 4 - #F00003 (Tour Manager TmBot)</option>
+                    <option value="5">Level 5 - #F00004 (TBD)</option>
+                    <option value="6">Level 6 - #F00005 (TBD)</option>
+                    <option value="7">Level 7 - #F00006 (TBD)</option>
+                    <option value="8">Level 8 - #F00007 (TBD)</option>
+                    <option value="9">Level 9 - #F00008 (TBD)</option>
+                    <option value="10">Level 10 - #F00009 (TBD)</option>
+                    <option value="11">Level 11 - #F0000A (Admin - defaults to #F00000)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="query">Query:</label>
+                <input type="text" id="query" placeholder="Enter your query (e.g., 'Who is Piza Sukeruton?')" />
+            </div>
+
+            <div class="quick-tests">
+                <button class="quick-test-btn" onclick="setQuery('Who is Piza Sukeruton?')">WHO Query</button>
+                <button class="quick-test-btn" onclick="setQuery('What is NOFX?')">WHAT Query</button>
+                <button class="quick-test-btn" onclick="setQuery('Tell me about Pizza Skeleton')">Phonetic Test</button>
+                <button class="quick-test-btn" onclick="setQuery('Is Slicifer a character?')">IS Query</button>
+                <button class="quick-test-btn" onclick="setQuery('Which character is the antagonist?')">WHICH Query</button>
+                <button class="quick-test-btn" onclick="setQuery('Show me Claude')">Image Request</button>
+            </div>
+
+            <button id="testBtn" onclick="testIntent()">🚀 TEST INTENT MATCHER</button>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-label">Tests Run</div>
+                <div class="stat-value" id="testCount">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Avg Latency</div>
+                <div class="stat-value" id="avgLatency">0ms</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Success Rate</div>
+                <div class="stat-value" id="successRate">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Last Method</div>
+                <div class="stat-value" id="lastMethod">-</div>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div style="text-align: center; color: #00aa00; padding: 40px;">
+                Enter a query and click "TEST INTENT MATCHER" to begin
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testStats = {
+            count: 0,
+            latencies: [],
+            successes: 0,
+            lastMethod: '-'
+        };
+
+        function setQuery(query) {
+            document.getElementById('query').value = query;
+            document.getElementById('query').focus();
+        }
+
+        async function testIntent() {
+            const accessLevel = parseInt(document.getElementById('accessLevel').value);
+            const query = document.getElementById('query').value.trim();
+            const testBtn = document.getElementById('testBtn');
+            const resultsDiv = document.getElementById('results');
+
+            if (!query) {
+                resultsDiv.innerHTML = `
+                    <div class="status status-error">
+                        ❌ Please enter a query
+                    </div>
+                `;
+                return;
+            }
+
+            testBtn.disabled = true;
+            testBtn.textContent = '⏳ Testing...';
+
+            resultsDiv.innerHTML = `
+                <div class="status status-success">
+                    🔄 Processing query...
+                </div>
+            `;
+
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch('/api/test-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        accessLevel: accessLevel
+                    })
+                });
+
+                const latency = Date.now() - startTime;
+                const data = await response.json();
+
+                // Update stats
+                testStats.count++;
+                testStats.latencies.push(latency);
+                if (data.success) testStats.successes++;
+                if (data.result && data.result.searchResult) {
+                    testStats.lastMethod = data.result.searchResult.method || '-';
+                }
+                updateStats();
+
+                if (data.success) {
+                    displaySuccess(data.result, latency);
+                } else {
+                    displayError(data.error);
+                }
+
+            } catch (error) {
+                displayError(error.message);
+            } finally {
+                testBtn.disabled = false;
+                testBtn.textContent = '🚀 TEST INTENT MATCHER';
+            }
+        }
+
+        function displaySuccess(result, latency) {
+            const resultsDiv = document.getElementById('results');
+            const confidence = result.confidence || 0;
+            const confidenceClass = confidence >= 0.85 ? 'confidence-high' : 
+                                   confidence >= 0.65 ? 'confidence-medium' : 'confidence-low';
+
+            let html = `
+                <div class="status status-success">
+                    ✅ Intent matched successfully (${latency}ms)
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">Intent Type</div>
+                    <div class="result-content">${result.type}</div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">Extracted Entity</div>
+                    <div class="result-content">"${result.entity}"</div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">Confidence</div>
+                    <div class="result-content ${confidenceClass}">${(confidence * 100).toFixed(1)}%</div>
+                </div>
+
+                <div class="result-section">
+                    <div class="result-header">Realm</div>
+                    <div class="result-content">${result.realm || 'Unknown'}</div>
+                </div>
+            `;
+
+            if (result.entityData) {
+                html += `
+                    <div class="result-section">
+                        <div class="result-header">Entity Details</div>
+                        <div class="entity-card">
+                            <div class="entity-name">${result.entityData.entity_name}</div>
+                            <div class="entity-detail">ID: ${result.entityData.entity_id}</div>
+                            <div class="entity-detail">Type: ${result.entityData.entity_type}</div>
+                            <div class="entity-detail">Category: ${result.entityData.category || 'N/A'}</div>
+                            ${result.entityData.search_context ? `<div class="entity-detail">Context: ${result.entityData.search_context}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (result.searchResult) {
+                html += `
+                    <div class="result-section">
+                        <div class="result-header">Search Details</div>
+                        <div class="result-content">
+Action: ${result.searchResult.action || 'N/A'}
+Method: ${result.searchResult.method || 'N/A'}
+Latency: ${result.searchResult.latency_ms || 0}ms
+Query: "${result.searchResult.query || ''}"
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (result.contextUsed) {
+                html += `
+                    <div class="status status-success">
+                        💡 Context-aware: Used previous entity from conversation history
+                    </div>
+                `;
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function displayError(error) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="status status-error">
+                    ❌ Error: ${error}
+                </div>
+            `;
+        }
+
+        function updateStats() {
+            document.getElementById('stats').style.display = 'grid';
+            document.getElementById('testCount').textContent = testStats.count;
+            
+            const avgLatency = testStats.latencies.length > 0 
+                ? Math.round(testStats.latencies.reduce((a,b) => a+b, 0) / testStats.latencies.length)
+                : 0;
+            document.getElementById('avgLatency').textContent = avgLatency + 'ms';
+            
+            const successRate = testStats.count > 0 
+                ? Math.round((testStats.successes / testStats.count) * 100)
+                : 0;
+            document.getElementById('successRate').textContent = successRate + '%';
+            
+            document.getElementById('lastMethod').textContent = testStats.lastMethod;
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('query').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testIntent();
+            }
+        });
+    </script>
+</body>
+</html>

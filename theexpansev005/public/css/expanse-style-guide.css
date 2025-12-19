@@ -1,0 +1,245 @@
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      /* Colors */
+      --bg: #000000;
+      --accent: #00ff75;
+      --fg: #00ff75;
+      --white: #ffffff;
+      --red: #ff0000;
+      --error: #ff4444;
+      
+      /* Effects */
+      --shadow: 0 0 24px rgba(0,255,0,0.25), 0 0 64px rgba(0,255,0,0.1);
+      --radius: 16px;
+      
+      /* Typography */
+      --font-normal: 14px;
+      --font-button: 16px;
+      --font-menu: 16px;
+      
+      /* Spacing */
+      --padding-standard: 15px;
+      --padding-button: 10px;
+      --gap-small: 10px;
+      --gap-medium: 15px;
+    }
+    
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+      height: 100vh;
+    }
+    
+    .crt {
+      filter: contrast(1.05) saturate(1.1);
+      text-shadow: 0 0 1px rgba(0,255,0,0.45), 0 0 8px rgba(0,255,0,0.12);
+    }
+    
+    .crt::after {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, rgba(0,255,0,0.06) 0 2px, transparent 2px 4px);
+      mix-blend-mode: screen;
+      z-index: 1;
+    }
+    
+    .app {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      height: 100vh;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(0,40,0,0.95), rgba(0,0,0,1)),
+                  radial-gradient(90% 60% at 50% 35%, rgba(0,255,0,0.25), transparent 60%);
+    }
+    
+    .window {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      background: rgba(0, 32, 0, 0.95);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #left-panel {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .left-window {
+      flex: 1;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    #right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .top-right-window {
+      flex: 0 0 65%;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .bottom-right-window {
+      flex: 0 0 calc(35% - 16px);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 16px;
+    }
+    
+    .window-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius);
+      padding: 16px;
+      background: rgba(0, 32, 0, 0.95);
+      box-shadow: var(--shadow);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .login-input {
+      background: rgba(0,16,0,0.25);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      outline: none;
+      color: var(--fg);
+      padding: 12px 14px;
+      font: inherit;
+      box-shadow: var(--shadow);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .login-button {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--fg);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+    
+    .login-button:hover {
+      background: rgba(0,255,0,0.1);
+      transform: translateY(-2px);
+    }
+    
+    .login-message {
+      text-align: center;
+      min-height: 20px;
+      color: var(--fg);
+    }
+    
+    #chat-log {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding: 8px 0;
+    }
+    
+    .line {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 6px 0;
+      font-size: 12px;
+    }
+    
+    .line.error { color: #ff4444; }
+    .line.success { color: #00ff75; }
+    .line.granted { font-weight: bold; }
+    
+    .chat-input-bar {
+      display: flex;
+      gap: var(--gap-small);
+      flex: 0 0 auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--accent);
+      background: rgba(0, 32, 0, 0.95);
+      box-shadow: var(--shadow);
+      padding: var(--padding-standard);
+    }
+   
+    #chat-input {
+      background: rgba(0, 32, 0, 0.95);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      outline: none;
+      color: var(--fg);
+      padding: var(--padding-button);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      font-size: var(--font-normal);
+      flex: 1;
+      min-width: 0;
+    }
+   
+    #send-btn {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--fg);
+      padding: var(--padding-button);
+      border-radius: 12px;
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      font-size: var(--font-button);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+   
+    #send-btn:hover {
+      background: rgba(0, 255, 117, 0.1);
+      box-shadow: 0 0 12px rgba(0, 255, 117, 0.3);
+    }
+
+    #dossier-panel {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .typewriter-text {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+      text-shadow: 0 0 24px rgba(0,255,0,0.8), 0 0 48px rgba(0,255,0,0.6), 0 0 12px rgba(0,255,117,1);
+      min-height: 60px;
+    }
+  </style>

@@ -1,0 +1,52 @@
+.signup-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 12px;
+}
+
+.signup-tab-btn {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--fg);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.signup-tab-btn:hover {
+  background: rgba(0,255,0,0.06);
+  box-shadow: var(--shadow);
+}
+
+.signup-tab-btn.active {
+  background: rgba(0,255,0,0.1);
+  box-shadow: var(--shadow);
+  border-color: var(--accent);
+}
+
+.signup-tab-content {
+  display: none;
+}
+
+.signup-tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.signup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

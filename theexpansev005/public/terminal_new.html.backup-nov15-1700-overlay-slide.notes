@@ -1,0 +1,40 @@
+TERMINAL_NEW.HTML BACKUP - November 15, 2025
+Status: Overlay Slide Animation Complete ✅
+
+STRUCTURE:
+- Left Panel (50%): Click-triggered overlay slide animation
+- Right Panel (50%): Two sub-windows
+  - Top Right Window (65%): Chat log display area
+  - Bottom Right Window (35%): Chat input area
+
+STYLING:
+- Font: IBM Plex Mono (matches dossier-login.html)
+- All windows: #00ff75 border, 12px radius
+- Window backgrounds: rgba(0, 32, 0, 0.95)
+- Left window base: #000000 (pure black, revealed when overlay slides)
+- CRT Background (gaps/padding only):
+  - Linear gradient: rgba(0,40,0,0.95) to rgba(0,0,0,1)
+  - Radial gradient: rgba(0,255,0,0.25) from center
+  - Scanlines overlay: 2px repeating green lines
+
+LEFT WINDOW ANIMATION:
+- Overlay cover (::before pseudo-element): rgba(0, 32, 0, 0.95)
+- Default state (closed): overlay fully visible, covers window
+- On click: overlay slides left (translateX(-100%)) revealing black window beneath
+- Transition: cubic-bezier(0.25, 0.8, 0.25, 1) - smooth easing
+- Duration: 0.6s
+
+INTERACTION:
+- Click left-window to toggle overlay open/closed
+- No auto-open on page load (user must click to reveal)
+- Window remains interactive while overlay sliding
+
+NEXT STEPS:
+1. Add "COUNCIL OF THE WISE" overlay content to left-panel
+2. Populate left-panel with Admin Control Panel (11 level buttons)
+3. Add chat-log div to top-right-window
+4. Add chat-input bar + send button to bottom-right-window
+5. Integrate socket.io for real-time communication
+
+FILES BACKED UP:
+- public/terminal_new.html.backup-nov15-1700-overlay-slide

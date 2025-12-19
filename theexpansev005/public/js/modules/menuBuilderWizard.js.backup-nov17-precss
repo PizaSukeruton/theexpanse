@@ -1,0 +1,115 @@
+// public/js/modules/menuBuilderWizard.js
+import { ModuleRegistry } from '../moduleRegistry.js';
+
+ModuleRegistry.register('wizard/menuBuilder', {
+  mount(container, context) {
+    console.log('[menuBuilderWizard] Mounting for level:', context.targetLevel);
+    
+    container.innerHTML = `
+      <div class="wizard-panel" style="padding: 15px;">
+        <h3 style="color: #00ff75; margin-bottom: 15px;">
+          CREATE MENU BUTTON FOR LEVEL ${context.targetLevel}
+        </h3>
+        
+        <div class="wizard-form">
+          <div class="form-group" style="margin-bottom: 15px;">
+            <label style="color: #ffffff; display: block; margin-bottom: 5px;">
+              Button Label:
+            </label>
+            <input 
+              type="text" 
+              id="buttonLabel" 
+              placeholder="e.g., CHARACTERS"
+              style="width: 100%; padding: 8px; background: rgba(0,0,0,0.5); border: 1px solid #00ff75; color: #00ff75; font-family: 'Courier New', monospace;"
+            />
+          </div>
+          
+          <div class="form-group" style="margin-bottom: 15px;">
+            <label style="color: #ffffff; display: block; margin-bottom: 5px;">
+              Button Order:
+            </label>
+            <input 
+              type="number" 
+              id="buttonOrder" 
+              placeholder="1"
+              min="1"
+              value="1"
+              style="width: 100%; padding: 8px; background: rgba(0,0,0,0.5); border: 1px solid #00ff75; color: #00ff75; font-family: 'Courier New', monospace;"
+            />
+          </div>
+          
+          <div class="form-actions" style="display: flex; gap: 10px;">
+            <button 
+              id="saveButton" 
+              style="flex: 1; padding: 10px; background: rgba(0,255,117,0.2); border: 1px solid #00ff75; color: #00ff75; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold;"
+            >
+              SAVE BUTTON
+            </button>
+            <button 
+              id="cancelButton"
+              style="flex: 1; padding: 10px; background: rgba(255,0,0,0.2); border: 1px solid #ff0000; color: #ff0000; cursor: pointer; font-family: 'Courier New', monospace; font-weight: bold;"
+            >
+              CANCEL
+            </button>
+          </div>
+          
+          <div id="wizardStatus" style="margin-top: 15px; color: #888; font-size: 11px;"></div>
+        </div>
+      </div>
+    `;
+    
+    setupEventHandlers(context);
+  }
+});
+
+function setupEventHandlers(context) {
+  const saveBtn = document.getElementById('saveButton');
+  const cancelBtn = document.getElementById('cancelButton');
+  const labelInput = document.getElementById('buttonLabel');
+  const orderInput = document.getElementById('buttonOrder');
+  const status = document.getElementById('wizardStatus');
+  
+  saveBtn.addEventListener('click', async () => {
+    const label = labelInput.value.trim();
+    const order = parseInt(orderInput.value);
+    
+    if (!label) {
+      status.style.color = '#ff0000';
+      status.textContent = 'ERROR: Button label is required';
+      return;
+    }
+    
+    if (!order || order < 1) {
+      status.style.color = '#ff0000';
+      status.textContent = 'ERROR: Button order must be at least 1';
+      return;
+    }
+    
+    status.style.color = '#00ff75';
+    status.textContent = 'Saving...';
+    
+    const terminalSocket = window.SocketManager.getTerminalSocket();
+    
+    terminalSocket.emit('menu-wizard:create-button', {
+      access_level: context.targetLevel,
+      button_label: label,
+      button_order: order
+    }, (response) => {
+      if (response.success) {
+        status.style.color = '#00ff75';
+        status.textContent = `✓ Button created: ${response.menu_id}`;
+        labelInput.value = '';
+        orderInput.value = parseInt(orderInput.value) + 1;
+      } else {
+        status.style.color = '#ff0000';
+        status.textContent = `ERROR: ${response.error}`;
+      }
+    });
+  });
+  
+  cancelBtn.addEventListener('click', () => {
+    labelInput.value = '';
+    orderInput.value = '1';
+    status.textContent = '';
+  });
+}

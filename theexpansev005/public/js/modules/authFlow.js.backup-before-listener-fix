@@ -1,0 +1,204 @@
+// public/js/modules/authFlow.js
+// Login and signup flow modules
+
+import { ModuleRegistry } from '../moduleRegistry.js';
+
+ModuleRegistry.register('auth/login', {
+  mount(container, context) {
+    console.log('[authFlow/login] Mounting...');
+    
+    container.innerHTML = `
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; gap: 20px;">
+        <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px;">
+          <input type="text" id="login-username" class="login-input" placeholder="Username" autocomplete="username" />
+          <input type="password" id="login-password" class="login-input" placeholder="Password" autocomplete="current-password" />
+          <button type="button" id="login-submit" class="login-button">LOGIN</button>
+          <button type="button" id="signup-btn" class="login-button">SIGN UP</button>
+          <div id="login-message" class="login-message"></div>
+        </div>
+      </div>
+    `;
+
+    const usernameInput = container.querySelector('#login-username');
+    const passwordInput = container.querySelector('#login-password');
+    const loginBtn = container.querySelector('#login-submit');
+    const signupBtn = container.querySelector('#signup-btn');
+    const messageDiv = container.querySelector('#login-message');
+
+    function showMessage(text, type = '') {
+      messageDiv.textContent = text;
+      messageDiv.className = 'login-message ' + type;
+    }
+
+    loginBtn.addEventListener('click', async () => {
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!username || !password) {
+        showMessage('Please enter both username and password', 'error');
+        return;
+      }
+
+      showMessage('Authenticating...', '');
+
+      try {
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage('Access Granted! Loading terminal...', 'success');
+          window.location.href = '/terminal_new_v003.html?authenticated=true';
+        } else {
+          showMessage(data.message || 'Authentication failed', 'error');
+        }
+      } catch (error) {
+        console.error('[authFlow/login] Error:', error);
+        showMessage('Connection error. Please try again.', 'error');
+      }
+    });
+
+    signupBtn.addEventListener('click', () => {
+      if (context.WindowManager) {
+        context.WindowManager.mountModule('left-panel', 'auth/signup', context);
+      }
+    });
+
+    usernameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') passwordInput.focus();
+    });
+
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') loginBtn.click();
+    });
+
+    usernameInput.focus();
+  }
+});
+
+ModuleRegistry.register('auth/signup', {
+  mount(container, context) {
+    console.log('[authFlow/signup] Mounting...');
+    
+    container.innerHTML = `
+      <div style="display: flex; flex-direction: column; height: 100%; gap: 20px; overflow-y: auto; padding: 16px;">
+        <div class="typewriter-text" id="greeting-text"></div>
+        <div id="signup-form-container" style="width: 100%; display: none; flex-direction: column; gap: 15px;">
+          <input type="email" id="signup-email" class="login-input" placeholder="Enter Email Address" autocomplete="email" />
+          <input type="email" id="signup-email-confirm" class="login-input" placeholder="Re-enter Email Address" autocomplete="email" />
+          <input type="text" id="signup-username" class="login-input" placeholder="Username" autocomplete="username" />
+          <input type="text" id="signup-username-confirm" class="login-input" placeholder="Confirm Username" autocomplete="username" />
+          <button type="button" id="signup-submit" class="login-button">CREATE ACCOUNT</button>
+          <div id="signup-message" class="login-message"></div>
+        </div>
+      </div>
+    `;
+
+    const greetingText = container.querySelector('#greeting-text');
+    const formContainer = container.querySelector('#signup-form-container');
+    const emailInput = container.querySelector('#signup-email');
+    const emailConfirmInput = container.querySelector('#signup-email-confirm');
+    const usernameInput = container.querySelector('#signup-username');
+    const usernameConfirmInput = container.querySelector('#signup-username-confirm');
+    const submitBtn = container.querySelector('#signup-submit');
+    const messageDiv = container.querySelector('#signup-message');
+
+    function showMessage(text, type = '') {
+      messageDiv.textContent = text;
+      messageDiv.className = 'login-message ' + type;
+    }
+
+    function typewriterEffect(element, text, speed = 30) {
+      return new Promise((resolve) => {
+        element.textContent = '';
+        let index = 0;
+        
+        function typeChar() {
+          if (index < text.length) {
+            element.textContent += text[index];
+            index++;
+            setTimeout(typeChar, speed);
+          } else {
+            resolve();
+          }
+        }
+        
+        typeChar();
+      });
+    }
+
+    const greeting = `Please enter Credentials as requested below.
+The Council Of The Wise will run standard background checks.
+If you are cleared you will receive a Confirmation Email which will allow you Level 1 access.`;
+
+    typewriterEffect(greetingText, greeting).then(() => {
+      // Show form after typewriter finishes
+      formContainer.style.display = 'flex';
+      emailInput.focus();
+
+      submitBtn.addEventListener('click', () => {
+        const email = emailInput.value.trim().toLowerCase();
+        const emailConfirm = emailConfirmInput.value.trim().toLowerCase();
+        const username = usernameInput.value.trim();
+        const usernameConfirm = usernameConfirmInput.value.trim();
+
+        if (!email || !emailConfirm || !username || !usernameConfirm) {
+          showMessage('Please fill in all fields', 'error');
+          return;
+        }
+
+        if (email !== emailConfirm) {
+          showMessage('Email addresses do not match', 'error');
+          return;
+        }
+
+        if (username !== usernameConfirm) {
+          showMessage('Usernames do not match', 'error');
+          return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showMessage('Invalid email address', 'error');
+          return;
+        }
+
+        if (username.length < 3 || username.length > 32) {
+          showMessage('Username must be 3-32 characters', 'error');
+          return;
+        }
+
+        if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+          showMessage('Username can only contain letters, numbers, underscore, and hyphen', 'error');
+          return;
+        }
+
+
+        showMessage('Creating account...', '');
+        const publicSocket = window.SocketManager.getPublicSocket();
+        publicSocket.emit('registration-signup', { email, username });
+      });
+
+      emailInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') emailConfirmInput.focus();
+      });
+
+      emailConfirmInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') usernameInput.focus();
+      });
+
+      usernameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') usernameConfirmInput.focus();
+      });
+
+      usernameConfirmInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    });
+  }
+});

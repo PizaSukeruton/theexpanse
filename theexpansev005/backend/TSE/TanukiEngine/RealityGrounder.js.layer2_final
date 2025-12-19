@@ -1,0 +1,263 @@
+import pool from "../../db/pool.js";
+
+/**
+ * RealityGrounder - Layer 1: Query Claude's actual database state
+ * 
+ * When Claude is asked "Do you have any gifts?" or "What do you know about the Cheese Wars?"
+ * this class queries his actual inventory, traits, and knowledge to ground the response
+ * in reality rather than templates.
+ */
+export default class RealityGrounder {
+  constructor() {
+    this.CLAUDE_CHARACTER_ID = "#700002"; // Fixed: Claude's hex ID
+  }
+
+  /**
+   * Main entry point: Ground a response in Claude's actual state
+   * @param {string} entity - What the user is asking about (e.g., "gifts", "cheese wars")
+   * @param {string} characterId - Character asking (usually "#700002" for Claude)
+   * @returns {object} Grounded context with inventory, traits, knowledge matches
+   */
+  async ground(entity, characterId = this.CLAUDE_CHARACTER_ID) {
+    try {
+      // Query three layers of Claude's state
+      const [inventory, traits, knowledge] = await Promise.all([
+        this.queryInventory(characterId),
+        this.queryTraits(characterId),
+        this.queryKnowledge(characterId)
+      ]);
+
+      // Find semantic matches between entity and each layer
+      const inventoryMatch = this.matchEntity(entity, inventory, "object_name");
+      const traitMatch = this.matchEntity(entity, traits, "trait_name");
+      const knowledgeMatch = this.matchEntity(entity, knowledge, "domain_name");
+
+      // If no exact match, return top items by relevance
+      const relatedInventory = inventoryMatch.found ? inventoryMatch.matches : inventory.slice(0, 3);
+      const relevantTraits = traitMatch.found ? traitMatch.matches : traits.slice(0, 3);
+      const accessibleKnowledge = knowledgeMatch.found ? knowledgeMatch.matches : knowledge.slice(0, 3);
+
+      return {
+        entity,
+        characterId,
+        timestamp: new Date().toISOString(),
+        inventory: inventory,
+        traits: traits,
+        knowledge: knowledge,
+        groundedReality: {
+          hasInventoryMatch: inventoryMatch.found,
+          hasTraitMatch: traitMatch.found,
+          hasKnowledgeMatch: knowledgeMatch.found,
+          relatedInventory: relatedInventory,
+          relevantTraits: relevantTraits,
+          accessibleKnowledge: accessibleKnowledge
+        },
+        matchConfidence: Math.max(
+          inventoryMatch.confidence,
+          traitMatch.confidence,
+          knowledgeMatch.confidence
+        )
+      };
+    } catch (err) {
+      console.error("RealityGrounder.ground() error:", err.message);
+      return {
+        entity,
+        characterId,
+        timestamp: new Date().toISOString(),
+        error: err.message,
+        groundedReality: null,
+        inventory: [],
+        traits: [],
+        knowledge: []
+      };
+    }
+  }
+
+  /**
+   * Query Claude's inventory from database
+   * @param {string} characterId 
+   * @returns {array} Array of inventory items with metadata
+   */
+  async queryInventory(characterId) {
+    try {
+      const query = `
+        SELECT 
+          ci.inventory_entry_id,
+          ci.object_id,
+          o.object_name,
+          o.description,
+          o.object_type,
+          o.rarity,
+          ci.acquisition_method,
+          ci.source_character_id,
+          ci.acquired_at
+        FROM character_inventory ci
+        JOIN objects o ON ci.object_id = o.object_id
+        WHERE ci.character_id = $1
+        ORDER BY ci.acquired_at DESC
+      `;
+
+      const result = await pool.query(query, [characterId]);
+      return result.rows;
+    } catch (err) {
+      console.error("RealityGrounder.queryInventory() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Query Claude's traits from database
+   * @param {string} characterId 
+   * @returns {array} Array of traits with percentile scores
+   */
+  async queryTraits(characterId) {
+    try {
+      const query = `
+        SELECT 
+          cts.trait_hex_color,
+          ch.trait_name,
+          ch.category,
+          cts.percentile_score,
+          cts.created_at,
+          cts.updated_at
+        FROM character_trait_scores cts
+        JOIN characteristics ch ON cts.trait_hex_color = ch.hex_color
+        WHERE cts.character_hex_id = $1
+        ORDER BY cts.percentile_score DESC
+        LIMIT 50
+      `;
+
+      const result = await pool.query(query, [characterId]);
+      return result.rows;
+    } catch (err) {
+      console.error("RealityGrounder.queryTraits() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Query Claude's knowledge domains from database
+   * @param {string} characterId 
+   * @returns {array} Array of knowledge domains with access percentages
+   */
+  async queryKnowledge(characterId) {
+    try {
+      const query = `
+        SELECT 
+          cksm.mapping_id,
+          cksm.slot_trait_hex_id,
+          cksm.domain_id,
+          kd.domain_name,
+          kd.description,
+          cksm.access_percentage,
+          cksm.assigned_at,
+          cksm.is_active
+        FROM character_knowledge_slot_mappings cksm
+        JOIN knowledge_domains kd ON cksm.domain_id = kd.domain_id
+        WHERE cksm.character_id = $1 AND cksm.is_active = true
+        ORDER BY cksm.access_percentage DESC
+      `;
+
+      const result = await pool.query(query, [characterId]);
+      return result.rows;
+    } catch (err) {
+      console.error("RealityGrounder.queryKnowledge() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Semantic matching: Does entity match anything in the list?
+   * Simple fuzzy match using string inclusion
+   * 
+   * @param {string} query - What user is asking about (e.g., "gifts")
+   * @param {array} items - Array of objects with field to match
+   * @param {string} field - Field name to match on (e.g., "object_name")
+   * @returns {object} { found, matches, confidence }
+   */
+  matchEntity(query, items, field) {
+    if (!query || !items || items.length === 0) {
+      return { found: false, matches: [], confidence: 0 };
+    }
+
+    const queryLower = query.toLowerCase();
+    const matches = items.filter(item => {
+      const fieldValue = item[field] ? item[field].toLowerCase() : "";
+      
+      // Exact match (highest confidence)
+      if (fieldValue === queryLower) return true;
+      
+      // Substring match (medium confidence)
+      if (fieldValue.includes(queryLower)) return true;
+      
+      // Reverse: does query contain the field value? (for "gifts" matching "gift")
+      if (queryLower.includes(fieldValue)) return true;
+      
+      return false;
+    });
+
+    let confidence = 0;
+    if (matches.length > 0) {
+      // Exact match = 1.0, substring match = 0.7, reverse match = 0.5
+      confidence = matches[0][field].toLowerCase() === queryLower ? 1.0 : 0.7;
+    }
+
+    return {
+      found: matches.length > 0,
+      matches: matches,
+      confidence: confidence
+    };
+  }
+
+  /**
+   * Generate a grounded statement based on what was found
+   * Used by ResponseAssembler to insert factual anchors into responses
+   * 
+   * @param {object} groundedContext - Output from ground()
+   * @returns {string} Natural language statement of what Claude actually has/knows
+   */
+  generateGroundedStatement(groundedContext) {
+    if (!groundedContext || !groundedContext.groundedReality) {
+      return "";
+    }
+
+    const { relatedInventory, relevantTraits, accessibleKnowledge } = groundedContext.groundedReality;
+    let statements = [];
+
+    // Inventory grounding
+    if (relatedInventory && relatedInventory.length > 0) {
+      const items = relatedInventory.slice(0, 2).map(i => i.object_name).join(" and ");
+      statements.push(`I carry ${items}.`);
+    }
+
+    // Knowledge grounding
+    if (accessibleKnowledge && accessibleKnowledge.length > 0) {
+      const domain = accessibleKnowledge[0];
+      const accessPct = domain.access_percentage;
+      
+      if (accessPct > 80) {
+        statements.push(`I've deeply studied ${domain.domain_name}.`);
+      } else if (accessPct > 50) {
+        statements.push(`I know something of ${domain.domain_name}, though there are gaps.`);
+      } else {
+        statements.push(`I'm still learning about ${domain.domain_name}.`);
+      }
+    }
+
+    // Trait grounding
+    if (relevantTraits && relevantTraits.length > 0) {
+      const trait = relevantTraits[0];
+      const score = trait.percentile_score;
+      
+      if (score > 80) {
+        statements.push(`This touches on something I'm strong in: ${trait.trait_name}.`);
+      } else if (score > 50) {
+        statements.push(`I'm working on my ${trait.trait_name}.`);
+      } else {
+        statements.push(`My ${trait.trait_name} is still developing.`);
+      }
+    }
+
+    return statements.join(" ");
+  }
+}

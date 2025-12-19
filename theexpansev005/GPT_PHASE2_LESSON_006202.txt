@@ -1,0 +1,331 @@
+LESSON #006202: Internal vs External Conflict
+
+════════════════════════════════════
+
+A. METADATA
+
+lesson_id: #006202
+module_id: #006200
+track_name: storytelling_tanuki_v1
+
+level: 2
+difficulty: 3
+
+knowledge_domain: conflict_types
+
+prerequisites: [#006201]
+
+character_id: #700002
+
+learning_objectives:
+"Explain the difference between internal and external conflict."
+"Label conflicts in short stories as internal, external, or both."
+"Describe how internal and external conflict can appear together in a scene."
+
+unlocks_next_lesson: #006203
+
+B. TEACHER BLOCK
+
+definition:
+"An internal conflict happens inside a character – their thoughts, feelings, fears, or hard decisions. An external conflict happens outside the character – other people, nature, rules, or situations that block their goal. Many strong stories use both at the same time: the character struggles inside while also facing problems in the world."
+
+micro_examples:
+"Internal: A student wants to answer a question in class but feels too anxious and keeps their hand down."
+"External: A storm knocks out the power so a family cannot finish cooking dinner."
+"Both: A kid wants to apologise to a friend (internal conflict: shame and fear) while the friend walks away and will not talk to them (external conflict: another person)."
+
+worked_example:
+"Read this short scene:
+
+'Ken’s friends begged him to sneak out at night to explore an old factory. He felt a rush of excitement, but his stomach tightened when he imagined his parents waking up and finding his bed empty. The group waited by the gate, whispering for him to hurry, while the wind rattled the factory’s broken windows.'
+
+Internal conflict: Ken is pulled between excitement and guilt. Inside, he is worried about breaking trust with his parents but also wants to be part of the group.
+External conflict: His friends are pressuring him at the gate, and the situation (a dangerous, broken factory at night) adds outside risk.
+
+This shows how internal and external conflicts can work together: his feelings pull him one way, the outside situation and people pull another."
+
+C. TASK TYPES
+
+Task #006220: Label Conflict Type (Internal / External / Both)
+
+task_type_id: #006220
+task_name: "Internal, External, or Both?"
+difficulty: 2
+
+prompt_template:
+"Read the short description:
+
+{conflict_description}
+
+Is the main conflict Internal, External, or Both?
+Answer with one word and one short reason."
+
+expected_output_format:
+"Answer: [Internal/External/Both]
+Reason: [one sentence explaining why, mentioning inside feelings vs outside forces]"
+
+input_pool:
+{
+  "conflict_description": "Lena wanted to tell her friend she was upset, but every time she walked over, her throat felt tight and she turned away."
+}
+{
+  "conflict_description": "A tree fell across the only road out of town, blocking every car from leaving."
+}
+{
+  "conflict_description": "Ravi wished to join the game, but he kept thinking everyone would laugh at him if he messed up. At the same time, the other kids never passed him the ball."
+}
+
+Task #006221: Choose the Best Example of Internal Conflict
+
+task_type_id: #006221
+task_name: "Which Story Shows Internal Conflict?"
+difficulty: 2
+
+prompt_template:
+"Read the three short summaries:
+
+A) {summaryA}
+B) {summaryB}
+C) {summaryC}
+
+Which one shows the clearest internal conflict (problem mainly inside the character)?
+Answer with one letter and a short reason."
+
+expected_output_format:
+"Answer: [A/B/C]
+Reason: [one sentence explaining how the struggle is mostly inside the character]"
+
+input_pool:
+{
+  "summaryA": "Mara wanted to climb the tall ladder, but heavy rain made each step slippery.",
+  "summaryB": "Teo kept arguing with himself about whether to tell the truth or hide what he did.",
+  "summaryC": "A bus broke down on the way to the match, so the team arrived late."
+}
+{
+  "summaryA": "The wind knocked over the market stalls and blew fruit across the street.",
+  "summaryB": "Sara felt torn between staying with her old friends and sitting with the new student who looked lonely.",
+  "summaryC": "The referee blew the whistle and ended the game."
+}
+
+Task #006222: Write a Conflict Pair (Internal + External)
+
+task_type_id: #006222
+task_name: "Describe Internal and External Conflict Together"
+difficulty: 3
+
+prompt_template:
+"Write a short situation (3–5 sentences) where a character has:
+
+- An internal conflict (feelings, fear, or decision inside them)
+- An external conflict (another person, rule, or situation outside them)
+
+Then label each conflict.
+
+Answer in this format:
+
+Internal conflict: [...]
+External conflict: [...]
+Story: [3–5 sentences]"
+
+expected_output_format:
+"Internal conflict: [description of what is happening inside the character]
+External conflict: [description of what outside force is in the way]
+Story: [3–5 connected sentences that show both conflicts]"
+
+input_pool:
+{ "topic": "deciding whether to tell the truth" }
+{ "topic": "joining a team or club" }
+{ "topic": "breaking an important rule" }
+
+D. EVALUATOR RUBRIC for Task #006220
+
+features:
+
+conflict_type_correct
+feature_id: "conflict_type_correct"
+description: "Is the label Internal, External, or Both correct for the given description?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Label is clearly wrong (for example, calls a purely outside problem 'Internal')."
+1: "Partially correct (for example, chooses 'Both' where it is mainly one, but recognises some nuance)."
+2: "Clearly correct label that matches the main source of conflict."
+
+reasoning_mentions_source
+feature_id: "reasoning_mentions_source"
+description: "Does the reason clearly mention inside feelings/thoughts or outside forces/situations?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Reason is off-topic or does not mention inside vs outside at all."
+1: "Reason is vague but hints at feelings or outside events."
+2: "Reason clearly points to inner thoughts/feelings for internal, or people/events/conditions for external, or both for mixed conflict."
+
+total_possible_score: 4
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 2, "fsrs_grade": 2 }
+{ "min_score": 3, "max_score": 3, "fsrs_grade": 3 }
+{ "min_score": 4, "max_score": 4, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006220
+
+Example 1 (Correct)
+
+Description:
+"Lena wanted to tell her friend she was upset, but every time she walked over, her throat felt tight and she turned away."
+
+Expected answer:
+Answer: Internal
+Reason: "The struggle is inside her feelings and fear about talking, not from something outside."
+
+Example 2 (Correct)
+
+Description:
+"A tree fell across the only road out of town, blocking every car from leaving."
+
+Expected answer:
+Answer: External
+Reason: "The fallen tree is an outside obstacle that blocks the road."
+
+Example 3 (Correct)
+
+Description:
+"Ravi wished to join the game, but he kept thinking everyone would laugh at him if he messed up. At the same time, the other kids never passed him the ball."
+
+Expected answer:
+Answer: Both
+Reason: "He fights his own fear inside and also faces other kids ignoring him outside."
+
+D. EVALUATOR RUBRIC for Task #006221
+
+features:
+
+correct_internal_choice
+feature_id: "correct_internal_choice"
+description: "Did the student choose the summary where the conflict is mainly internal?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Chosen summary does not show an inner struggle."
+1: "Student chooses a summary with some mild internal element but not the clearest one."
+2: "Student selects the summary that most clearly shows an inner decision, fear, or emotional struggle."
+
+reasoning_internal_focus
+feature_id: "reasoning_internal_focus"
+description: "Does the reason explain that the key struggle is inside the character?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Reason does not mention feelings, thoughts, or decisions."
+1: "Reason hints at feelings but is very general."
+2: "Reason clearly states the character is struggling with an inside decision, fear, or emotion."
+
+total_possible_score: 4
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 2, "fsrs_grade": 2 }
+{ "min_score": 3, "max_score": 3, "fsrs_grade": 3 }
+{ "min_score": 4, "max_score": 4, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006221
+
+Example 1 (Correct)
+
+Summaries:
+A) "Mara wanted to climb the tall ladder, but heavy rain made each step slippery."
+B) "Teo kept arguing with himself about whether to tell the truth or hide what he did."
+C) "A bus broke down on the way to the match, so the team arrived late."
+
+Expected answer:
+Answer: B
+Reason: "Teo is fighting with his own thoughts about telling the truth, which is an inside struggle."
+
+Example 2 (Incorrect then corrected)
+
+Student answer:
+Answer: A
+Reason: "She might feel scared to climb."
+
+Why wrong:
+A focuses mainly on the external problem (rain and slippery ladder). The fear is not clearly stated; the main conflict is the conditions.
+
+Correct answer is B, with a reason about arguing with himself.
+
+D. EVALUATOR RUBRIC for Task #006222
+
+features:
+
+both_conflicts_present
+feature_id: "both_conflicts_present"
+description: "Does the answer clearly describe one internal and one external conflict?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Only one type of conflict is clearly present, or neither is clear."
+1: "Both are hinted but one is vague or blended."
+2: "A clear inner struggle and a clear outside problem are both present."
+
+labels_match_story
+feature_id: "labels_match_story"
+description: "Do the 'Internal conflict' and 'External conflict' labels match what happens in the story sentences?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Labels are reversed or unrelated to the story text."
+1: "Labels partly match but miss key details or mix roles."
+2: "Labels fit the story well: inner feelings vs outside situation are correctly separated."
+
+story_clarity
+feature_id: "story_clarity"
+description: "Is the 3–5 sentence story easy to follow and clearly linked to the conflicts?"
+score_range: [0, 2]
+
+scoring_rules:
+0: "Story is very confusing or disconnected from the conflicts listed."
+1: "Story mostly makes sense but has unclear connections or jumps."
+2: "Story is clear, with obvious connection between what happens and the conflicts."
+
+total_possible_score: 6
+
+grade_mapping:
+{ "min_score": 0, "max_score": 1, "fsrs_grade": 1 }
+{ "min_score": 2, "max_score": 3, "fsrs_grade": 2 }
+{ "min_score": 4, "max_score": 5, "fsrs_grade": 3 }
+{ "min_score": 6, "max_score": 6, "fsrs_grade": 4 }
+
+E. WORKED EXAMPLES for Task #006222
+
+Example 1 (Correct)
+
+Student answer:
+Internal conflict: "Luca is scared of performing in front of people but also really wants to show his song."
+External conflict: "The school rule says he must audition in front of a panel, and the sign-up sheet closes today."
+Story: "Luca stared at the talent show sign-up sheet, his pen hovering above the paper. He imagined standing on the stage, feeling his hands shake and his voice crack. At the same time, he knew the rules said this was the last day to sign up, and the teachers were already putting the sheet away. He took a deep breath, wrote his name quickly, and handed the paper in before he could change his mind."
+
+Example 2 (Incorrect then corrected)
+
+Student answer:
+Internal conflict: "He runs fast."
+External conflict: "The race is long."
+Story: "He ran and ran. The race was long. He finished."
+
+Why wrong:
+There is no clear inner struggle described, and the outside challenge is not explained as a real conflict; it is just a description.
+
+A better version would name a real inner worry and a clear outside difficulty.
+
+F. TSE METADATA for Lesson #006202
+
+character_id: #700002
+
+trait_influences:
+"emotional_awareness": { "weight": 0.4, "effect": "If high, show more examples that focus on inner feelings when teaching internal conflict." }
+"analytical_thinking": { "weight": 0.3, "effect": "If high, schedule more classification tasks (#006220, #006221) before generation (#006222)." }
+"resilience": { "weight": 0.3, "effect": "If high, add extra scenarios where characters face both internal doubt and tough outside conditions." }
+
+spaced_repetition_profile_id: #FSRS01
+
+unlocks_next_lesson: #006203

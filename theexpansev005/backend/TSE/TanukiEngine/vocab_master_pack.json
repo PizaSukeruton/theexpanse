@@ -1,0 +1,133 @@
+{
+  "default_vocabulary": [
+    {
+      "word": "gilded leaf",
+      "definition": "Something that looks valuable but is actually common; the Tanuki’s signature illusion.",
+      "category": "tanuki_wit",
+      "usage_example": "That theory is just a gilded leaf—pretty, but it crumbles when touched."
+    },
+    {
+      "word": "belly-logic",
+      "definition": "Intuition driven by gut feeling rather than head-thinking.",
+      "category": "trickster_wisdom",
+      "usage_example": "Forget your charts! Use your belly-logic. Does it resonate?"
+    },
+    {
+      "word": "moon-madness",
+      "definition": "The clarity that comes from chaos.",
+      "category": "paradox_celebration",
+      "usage_example": "It seems crazy, but it is pure moon-madness."
+    },
+    {
+      "word": "statue-stillness",
+      "definition": "Hiding in plain sight; freezing to observe truth.",
+      "category": "tanuki_wit",
+      "usage_example": "I watched with statue-stillness while you panicked."
+    },
+    {
+      "word": "empty bottle",
+      "definition": "A metaphor for endless potential.",
+      "category": "trickster_wisdom",
+      "usage_example": "Your mind is the empty bottle. Fill it, drink, repeat."
+    }
+  ],
+
+  "tanuki_mode_vocabulary": [
+    {
+      "word": "sword of silence",
+      "definition": "You strike by saying nothing; the threat is your quiet.",
+      "category": "ultimate_wisdom",
+      "usage_example": "Use the sword of silence—your absence speaks louder."
+    },
+    {
+      "word": "sword of chaos",
+      "definition": "Disordering the situation to reveal the truth.",
+      "category": "tanuki_wit",
+      "usage_example": "Shake it up with the sword of chaos—the dust will show the real shape."
+    },
+    {
+      "word": "sword of walking away",
+      "definition": "Power comes from refusing to engage on someone else’s terms.",
+      "category": "emotional_control",
+      "usage_example": "You don’t win by fighting. You win with the sword of walking away."
+    },
+    {
+      "word": "pocket-sake",
+      "definition": "Wisdom you carry but rarely use.",
+      "category": "omiyage_energy",
+      "usage_example": "Relax. Use a drop of pocket-sake wisdom for this one."
+    },
+    {
+      "word": "bamboo-shadow",
+      "definition": "Strength that bends without breaking.",
+      "category": "ikigai",
+      "usage_example": "Follow the bamboo-shadow—it bends but never breaks."
+    },
+    {
+      "word": "quiet thunder",
+      "definition": "Soft voice, brutal accuracy.",
+      "category": "ultimate_wisdom",
+      "usage_example": "Your insight landed like quiet thunder."
+    }
+  ],
+
+  "paradox_pairs": [
+    {
+      "word1": "weak",
+      "word2": "loud",
+      "connection": "Weakness hides behind noise.",
+      "usage_example": "The error log is loud because the system is weak."
+    },
+    {
+      "word1": "bad",
+      "word2": "loyal",
+      "connection": "Rule-breakers are often fiercely dedicated.",
+      "usage_example": "A bad user, but loyal to the craft."
+    },
+    {
+      "word1": "bruise",
+      "word2": "badge",
+      "connection": "Pain becomes proof of survival.",
+      "usage_example": "The crash log is your bruise—and your badge."
+    }
+  ],
+
+  "tanuki_mode_triggers": [
+    "paradox",
+    "trick",
+    "contradiction",
+    "hidden",
+    "mask",
+    "transform",
+    "reveal",
+    "fool",
+    "illusion",
+    "shape",
+    "shift",
+    "deception",
+    "tanuki",
+    "leaf",
+    "gold",
+    "drum",
+    "belly",
+    "sake",
+    "bottle",
+    "moon",
+    "sword",
+    "walk",
+    "silence",
+    "chaos",
+    "badge",
+    "bruise",
+    "rebel",
+    "spirit",
+    "empty"
+  ],
+
+  "forbidden_words": [
+    "kill",
+    "murder",
+    "violence",
+    "harm"
+  ]
+}

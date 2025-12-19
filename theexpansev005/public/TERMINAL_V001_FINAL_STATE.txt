@@ -1,0 +1,32 @@
+TERMINAL V001 - THREE WINDOW STRUCTURE
+Date: November 15, 2025, 21:00
+
+ARCHITECTURE:
+LEFT WINDOW: Menu (admin or user by level)
+TOP-RIGHT WINDOW: Chat display (login form → messages after auth)
+BOTTOM-RIGHT WINDOW: Command input only
+
+FLOW:
+1. Page loads with all windows closed
+2. After 3 seconds: Top-right opens with login form
+3. User enters credentials
+4. Socket.io sends auth to backend
+5. On success:
+   - Login form replaced with chat-log in top-right
+   - Bottom-right opens with command input
+   - Left window opens with admin/user menu
+   - Chat displays "ACCESS GRANTED" message
+6. User types commands in bottom-right
+7. Responses appear in top-right chat-log
+8. Menus active in left window
+
+FILES:
+- public/terminal_new_v001.html (main interface)
+- public/window-manager.js (window management)
+
+STATUS: Foundation code written, untested with actual login
+
+NEXT SESSION:
+- Test actual login flow
+- Fix any issues that appear
+- Build Blueprint Terminal Wizard
