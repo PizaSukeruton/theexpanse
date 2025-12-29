@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Management System</title>
+    <link rel="stylesheet" href="/cms/css/cms-styles.css?v=3">
+</head>
+<body>
+    <div class="cms-container">
+        <section class="window" id="left-panel">
+            <div class="window-header">
+                <span class="window-title">CHARACTERS</span>
+                <span class="window-controls">▣ ▭ ✕</span>
+            </div>
+            <div class="window-inner" id="left-window-inner">
+                <button id="connect-db-btn" class="connect-button">CONNECT TO DATABASE</button>
+                <div id="character-list-container"></div>
+            </div>
+        </section>
+
+        <section class="window" id="right-panel">
+            <div class="top-right-window" id="top-right-window">
+                <div class="window-inner" id="top-right-window-inner">
+                    <div class="welcome-message">
+                        <h2>Character Management System</h2>
+                        <p>Click "CONNECT TO DATABASE" to load characters.</p>
+                        <p class="help-hint">Type <code>help</code> for available commands.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-right-window" id="bottom-right-window">
+                <div class="window-inner" id="bottom-right-window-inner">
+                    <div class="command-bar">
+                        <span class="prompt">&gt;</span>
+                        <input 
+                            type="text" 
+                            id="command-input" 
+                            class="command-input" 
+                            placeholder="Enter command..."
+                            autocomplete="off"
+                            spellcheck="false"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script type="module">
+        const connectBtn = document.getElementById('connect-db-btn');
+        const listContainer = document.getElementById('character-list-container');
+        const display = document.getElementById('top-right-window-inner');
+
+        connectBtn.addEventListener('click', async () => {
+            connectBtn.textContent = 'CONNECTING...';
+            connectBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/cms/characters');
+                const data = await response.json();
+
+                if (data.success && data.characters.length > 0) {
+                    connectBtn.style.display = 'none';
+                    
+                    const html = data.characters.map(char => `
+                        <div class="character-item" onclick="showCharacter('${char.character_id}')">
+                            <div class="character-name">${char.character_name}</div>
+                            <div class="character-category">${char.category || 'Unknown'}</div>
+                        </div>
+                    `).join('');
+                    
+                    listContainer.innerHTML = html;
+                    
+                    display.innerHTML = `
+                        <div class="success-message">
+                            <h2>✓ Database Connected</h2>
+                            <p>Loaded ${data.count} characters from database</p>
+                            <p>Select a character to view details</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error('No characters found');
+                }
+            } catch (error) {
+                connectBtn.textContent = 'CONNECTION FAILED - RETRY';
+                connectBtn.disabled = false;
+                
+                display.innerHTML = `
+                    <div class="error-message">
+                        <h2>✗ Connection Failed</h2>
+                        <p>Could not connect to database</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        });
+
+        window.showCharacter = async (characterId) => {
+            try {
+                const response = await fetch(`/api/cms/character/${characterId}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const char = data.character;
+                    display.innerHTML = `
+                        <div class="character-profile">
+                            <h2>${char.character_name}</h2>
+                            <p><strong>HEX ID:</strong> ${char.character_id}</p>
+                            <p><strong>Category:</strong> ${char.category}</p>
+                            <p><strong>Description:</strong> ${char.description || 'No description'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading character:', error);
+            }
+        };
+    </script>
+</body>
+</html>

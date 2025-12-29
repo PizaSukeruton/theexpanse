@@ -1,0 +1,37 @@
+import pool from "../../db/pool.js";
+
+export default class RelationshipGrounder {
+  async ground(entity, characterId) {
+    // Placeholder: current logs show all-false for objects; keep behavior simple for now.
+    return {
+      entity,
+      characterId,
+      groundedRelationships: {
+        hasOutgoingMatch: false,
+        hasIncomingMatch: false,
+        relatedOutgoing: [],
+        relatedIncoming: []
+      }
+    };
+  }
+}
+
+export function generateRelationshipStatement(relationshipContext) {
+  const gr = relationshipContext && relationshipContext.groundedRelationships;
+  if (!gr) return "";
+
+  const outgoing = gr.relatedOutgoing || [];
+  const incoming = gr.relatedIncoming || [];
+
+  if (gr.hasOutgoingMatch && outgoing.length) {
+    const names = outgoing.slice(0, 2).map(r => r.target_name || r.relationship_name || "someone");
+    return `I have bonds reaching toward ${names.join(" and ")}.`;
+  }
+
+  if (gr.hasIncomingMatch && incoming.length) {
+    const names = incoming.slice(0, 2).map(r => r.source_name || r.relationship_name || "someone");
+    return `${names.join(" and ")} are tied to my story.`;
+  }
+
+  return "";
+}

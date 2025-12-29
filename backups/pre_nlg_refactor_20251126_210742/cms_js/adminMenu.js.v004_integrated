@@ -1,0 +1,403 @@
+// Admin Menu System for CMS
+// Styled using cms/css/cms-styles.css
+
+// Global Data Store
+window.cmsData = {
+    characters: [],
+    selectedChar: null,
+    storyArcs: []
+};
+
+// ===== Helper: System Offline Placeholder =====
+const renderPlaceholder = (title, message = "Module initialization required.") => {
+    const display = document.getElementById('top-right-window-inner');
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>${title}</h2>
+            <div class="entity-info" style="text-align: center; padding: 40px;">
+                <h3 style="color: #666; margin-bottom: 10px;">[ SYSTEM OFFLINE ]</h3>
+                <p class="no-data">${message}</p>
+                <div style="margin-top: 20px; border-top: 1px solid #333; width: 50%; margin-left: auto; margin-right: auto;"></div>
+            </div>
+        </div>
+    `;
+};
+
+// ===== Main Menu Loader =====
+window.showAdminMenu = () => {
+    const leftPanel = document.getElementById('character-list-container');
+
+    leftPanel.innerHTML = `
+        <div class="admin-menu">
+            <div class="menu-section">
+                <h3 class="menu-header">CHARACTER MANAGEMENT</h3>
+                <button class="menu-button" onclick="loadCharacterList()">View All Characters</button>
+                <button class="menu-button" onclick="showCreateCharacter()">Create New Character</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">ENTITY MANAGEMENT</h3>
+                <button class="menu-button" onclick="showAllEntities()">View All Entities</button>
+                <button class="menu-button" onclick="showCreateEntity()">Create Entity</button>
+                <button class="menu-button" onclick="showKnowledgeEditor()">Knowledge Entity Editor</button>
+                <button class="menu-button" onclick="showEntityRelationships()">Entity Relationships</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">WORLD BUILDING</h3>
+                <button class="menu-button" onclick="showLocationsManager()">Locations Manager</button>
+                <button class="menu-button" onclick="showObjectsDatabase()">Objects Database</button>
+                <button class="menu-button" onclick="showKnowledgeDomains()">Knowledge Domains</button>
+                <button class="menu-button" onclick="showKnowledgeItems()">Knowledge Items</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">NARRATIVE SYSTEM</h3>
+                <button class="menu-button" onclick="showStoryArcs()">Story Arcs Manager</button>
+                <button class="menu-button" onclick="showNarrativeSegments()">Narrative Segments</button>
+                <button class="menu-button" onclick="showNarrativePaths()">Narrative Paths</button>
+                <button class="menu-button" onclick="showCharacterStoryAssign()">Character-Story Assignment</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">EVENTS SYSTEM</h3>
+                <button class="menu-button" onclick="showMultiverseEvents()">Multiverse Events Log</button>
+                <button class="menu-button" onclick="showPsychicEvents()">Psychic Events Monitor</button>
+                <button class="menu-button" onclick="showOmiyageEvents()">Omiyage (Gift) Events</button>
+                <button class="menu-button" onclick="showCreateEvent()">Create New Event</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">USER & SYSTEM</h3>
+                <button class="menu-button" onclick="showUserManagement()">User Management</button>
+                <button class="menu-button" onclick="showSystemSettings()">System Settings</button>
+                <button class="menu-button" onclick="showDatabaseHealth()">Database Health</button>
+                <button class="menu-button" onclick="showHexMonitor()">Hex ID Monitor</button>
+            </div>
+        </div>
+    `;
+};
+
+// ==========================================
+// 1. CHARACTER MANAGEMENT
+// ==========================================
+
+window.loadCharacterList = async () => {
+    try {
+        // Fetch from backend/routes/adminCharacters.js
+        const response = await fetch("/api/cms/characters");
+        const data = await response.json();
+
+        if (data.success) {
+            window.cmsData.characters = data.characters;
+            const listContainer = document.getElementById("character-list-container");
+
+            listContainer.innerHTML = data.characters.map(char => `
+                <div class="character-item" onclick="showCharacter('${char.character_id}')">
+                    <div class="character-name">${char.character_name}</div>
+                    <div class="character-category">${char.category || 'Unknown'}</div>
+                </div>
+            `).join("") + `
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #00ff75;">
+                    <button class="menu-button" onclick="showAdminMenu()">Return To Main Menu</button>
+                </div>
+            `;
+
+            document.getElementById("top-right-window-inner").innerHTML = `
+                <div class="admin-content">
+                    <h2>CHARACTER ROSTER</h2>
+                    <div class="entity-info">
+                        <div class="info-row"><span class="label">STATUS:</span><span class="value">ONLINE</span></div>
+                        <div class="info-row"><span class="label">COUNT:</span><span class="value">${data.characters.length} Records</span></div>
+                        <div class="section-divider"></div>
+                        <p>Select a designation from the left panel to initialize dashboard.</p>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        renderPlaceholder("Connection Error", "Failed to retrieve character roster.");
+    }
+};
+
+window.showCharacter = async (id) => {
+    // Try to find in cache first
+    let char = window.cmsData.characters.find(c => c.character_id === id);
+    window.cmsData.selectedChar = char;
+    
+    const display = document.getElementById("top-right-window-inner");
+    
+    // Fallback description
+    const description = char ? (char.description || "No biography available.") : "Loading...";
+
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>${char ? char.character_name : 'LOADING...'}</h2>
+            
+            <div class="entity-info">
+                <div class="info-row"><span class="label">HEX ID:</span><span class="value">${id}</span></div>
+                <div class="info-row"><span class="label">CATEGORY:</span><span class="value">${char ? (char.category || 'Unknown') : '...'}</span></div>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="color: #00ff75; margin-bottom:5px; display:block;">BIOGRAPHY</label>
+                <div class="terminal-textarea" style="background: #001100; color: #88ffAA; min-height: 100px;">${description}</div>
+            </div>
+
+            <div class="section-header" style="margin-top: 20px;">SUBSYSTEM ACCESS</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                <button class="action-button" onclick="showEditCharacter('${id}')">EDIT PROFILE</button>
+                <button class="action-button" onclick="showInventoryManager('${id}')">INVENTORY</button>
+                <button class="action-button" onclick="showTraitsManager('${id}')">TRAITS & PAD</button>
+            </div>
+
+            <div id="character-workspace" class="entity-details-container" style="border: 1px dashed #004422; min-height: 150px;">
+                <p class="no-data" style="text-align: center; padding-top: 60px;">Select a subsystem above.</p>
+            </div>
+        </div>
+    `;
+};
+
+window.showCreateCharacter = () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>INITIALIZE NEW CHARACTER</h2>
+            <form id="create-character-form" class="entity-form">
+                <div class="form-group"><label>Character Designation</label><input type="text" id="char-name" class="terminal-input" required></div>
+                <div class="form-group"><label>Archetype</label>
+                    <select id="char-category" class="terminal-select">
+                        <option>Angry Slice Of Pizza</option><option>Antagonist</option><option>B-Roll Chaos</option>
+                        <option>Council Of The Wise</option><option>Protagonist</option><option>Tanuki</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Biography</label><textarea id="char-description" class="terminal-textarea" rows="4"></textarea></div>
+                <div class="form-group"><label>Image URL (Optional)</label><input type="text" id="char-image" class="terminal-input" placeholder="http://..."></div>
+                <div class="form-actions"><button type="submit" class="action-button">INITIALIZE CHARACTER</button></div>
+            </form>
+        </div>`;
+
+    const form = document.getElementById("create-character-form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        btn.innerText = "PROCESSING...";
+        btn.disabled = true;
+
+        try {
+            const response = await fetch("/api/cms/characters", { // Changed URL to match router list
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    character_name: document.getElementById("char-name").value,
+                    category: document.getElementById("char-category").value,
+                    description: document.getElementById("char-description").value,
+                    image_url: document.getElementById("char-image").value
+                })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert("Character Created Successfully!");
+                loadCharacterList(); // Refresh list
+            } else {
+                alert("Error: " + result.message);
+                btn.innerText = "INITIALIZE CHARACTER";
+                btn.disabled = false;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Connection failed.");
+            btn.innerText = "INITIALIZE CHARACTER";
+            btn.disabled = false;
+        }
+    });
+};
+
+// ===== Character Sub-Tools =====
+
+window.showEditCharacter = (id) => {
+    const char = window.cmsData.selectedChar;
+    const workspace = document.getElementById('character-workspace');
+    
+    if (!char) { workspace.innerHTML = `<p class="error-message">Error: Character data not loaded.</p>`; return; }
+
+    workspace.innerHTML = `
+        <h3 class="section-header">EDIT PROFILE</h3>
+        <form id="edit-character-form" class="entity-form" style="margin:0;">
+             <div class="form-group"><label>Designation</label><input type="text" id="edit-name" class="terminal-input" value="${char.character_name}"></div>
+             <div class="form-group"><label>Category</label><input type="text" id="edit-category" class="terminal-input" value="${char.category || ''}"></div>
+             <div class="form-group"><label>Biography</label><textarea id="edit-description" class="terminal-textarea" rows="3">${char.description || ''}</textarea></div>
+             <div class="form-group"><label>Image URL</label><input type="text" id="edit-image" class="terminal-input" value="${char.image_url || ''}"></div>
+             <button type="submit" class="action-button">SAVE CHANGES</button>
+        </form>
+    `;
+    
+    document.getElementById('edit-character-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerText = "SAVING...";
+        
+        try {
+            // PUT /api/cms/characters/:id
+            const response = await fetch(`/api/cms/characters/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    character_name: document.getElementById("edit-name").value,
+                    category: document.getElementById("edit-category").value,
+                    description: document.getElementById("edit-description").value,
+                    image_url: document.getElementById("edit-image").value
+                })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert("Saved!");
+                loadCharacterList(); // Refresh global list
+                showCharacter(id);   // Refresh view
+            } else {
+                alert("Error: " + result.message);
+            }
+        } catch(e) { alert("Save failed: " + e.message); }
+        btn.innerText = "SAVE CHANGES";
+    });
+};
+
+window.showTraitsManager = async (id) => {
+    const workspace = document.getElementById('character-workspace');
+    workspace.innerHTML = `<div class="loading">ACCESSING TRAIT MATRIX...</div>`;
+
+    try {
+        // GET /api/traits/character/:id
+        const response = await fetch(`/api/traits/character/${id}`);
+        const data = await response.json();
+        
+        workspace.innerHTML = `
+            <h3 class="section-header">TRAIT MATRIX</h3>
+            <div style="max-height: 300px; overflow-y: auto; background: #001a0d; padding: 10px; font-family: monospace; font-size: 0.8em; border: 1px solid #00ff75;">
+                <pre style="color: #00ff75;">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    } catch(e) {
+        workspace.innerHTML = `<p class="error-message">Trait System Unreachable</p>`;
+    }
+};
+
+window.showInventoryManager = (id) => {
+    // We haven't found the backend file for this yet, so we keep the offline message
+    renderPlaceholder("INVENTORY MANAGER", "Inventory sub-module offline. Route not found.");
+};
+
+
+// ==========================================
+// 2. STORY ARCS (LORE) MANAGEMENT
+// ==========================================
+
+window.showStoryArcs = async () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `<div class="loading">LOADING STORY DATABASE...</div>`;
+
+    try {
+        // GET /api/lore/arcs
+        const response = await fetch("/api/lore/arcs?limit=20");
+        const data = await response.json();
+        
+        window.cmsData.storyArcs = data.items || [];
+
+        display.innerHTML = `
+            <div class="admin-content">
+                <h2>STORY ARCS MANAGER</h2>
+                <div class="entity-controls">
+                    <button class="action-button" onclick="showCreateStoryArc()">+ NEW STORY ARC</button>
+                </div>
+                <table class="entity-table">
+                    <thead><tr><th>ID</th><th>TITLE</th><th>SUMMARY</th><th>ACTIONS</th></tr></thead>
+                    <tbody>
+                        ${data.items.map(arc => `
+                            <tr>
+                                <td class="hex-id">${arc.arc_id}</td>
+                                <td>${arc.title}</td>
+                                <td style="font-size:0.8em;">${arc.summary.substring(0, 50)}...</td>
+                                <td>
+                                    <button class="mini-button" onclick="alert('Edit Arc UI Coming Soon')">EDIT</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } catch(e) {
+        console.error(e);
+        renderPlaceholder("STORY ARCS", "Connection to Lore Database failed.");
+    }
+};
+
+window.showCreateStoryArc = () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>NEW STORY ARC</h2>
+            <form id="create-arc-form" class="entity-form">
+                <div class="form-group"><label>Title</label><input type="text" id="arc-title" class="terminal-input" required></div>
+                <div class="form-group"><label>Summary</label><textarea id="arc-summary" class="terminal-textarea" rows="3" required></textarea></div>
+                <div class="form-group"><label>Tags (comma separated)</label><input type="text" id="arc-tags" class="terminal-input"></div>
+                <button type="submit" class="action-button">CREATE ARC</button>
+                <button type="button" class="cancel-button" onclick="showStoryArcs()">CANCEL</button>
+            </form>
+        </div>
+    `;
+
+    document.getElementById('create-arc-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("/api/lore/arcs", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: document.getElementById("arc-title").value,
+                    summary: document.getElementById("arc-summary").value,
+                    tags: document.getElementById("arc-tags").value
+                })
+            });
+            if(response.ok) {
+                alert("Arc Created!");
+                showStoryArcs();
+            } else {
+                alert("Failed to create arc.");
+            }
+        } catch(e) { alert("Error: " + e.message); }
+    });
+};
+
+
+// ==========================================
+// 3. OTHER SYSTEMS (INTEGRATIONS & PLACEHOLDERS)
+// ==========================================
+
+// Entity Manager Integration
+window.showAllEntities = () => EntityManager.showAllEntities();
+window.showCreateEntity = () => EntityManager.showCreateEntity();
+window.showKnowledgeEditor = () => EntityManager.showKnowledgeEditor();
+window.showEntityRelationships = () =>
+    EntityManager.manageRelationshipsSelector
+        ? EntityManager.manageRelationshipsSelector()
+        : EntityManager.showAllEntities();
+
+// Placeholders for other buttons
+window.showLocationsManager = () => renderPlaceholder("LOCATIONS MANAGER", "Geospatial database not connected.");
+window.showObjectsDatabase = () => renderPlaceholder("OBJECTS DATABASE", "Item registry offline.");
+window.showKnowledgeDomains = () => renderPlaceholder("KNOWLEDGE DOMAINS", "Ontology system initializing.");
+window.showKnowledgeItems = () => renderPlaceholder("KNOWLEDGE ITEMS", "Data fragments unreachable.");
+window.showNarrativeSegments = () => renderPlaceholder("NARRATIVE SEGMENTS", "Story blocks not loaded.");
+window.showNarrativePaths = () => renderPlaceholder("NARRATIVE PATHS", "Branching logic system offline.");
+window.showCharacterStoryAssign = () => renderPlaceholder("CHARACTER ASSIGNMENT", "Actor mapping service unavailable.");
+window.showMultiverseEvents = () => renderPlaceholder("MULTIVERSE LOG", "Timeline sensor disabled.");
+window.showPsychicEvents = () => renderPlaceholder("PSYCHIC MONITOR", "Psi-metrics stream offline.");
+window.showOmiyageEvents = () => renderPlaceholder("OMIYAGE EVENTS", "Transactional history unavailable.");
+window.showCreateEvent = () => renderPlaceholder("CREATE EVENT", "Event generator offline.");
+window.showUserManagement = () => renderPlaceholder("USER MANAGEMENT", "Admin privileges verification pending.");
+window.showSystemSettings = () => renderPlaceholder("SYSTEM SETTINGS", "Configuration panel locked.");
+window.showDatabaseHealth = () => renderPlaceholder("DATABASE HEALTH", "Diagnostics tools unavailable.");
+window.showHexMonitor = () => renderPlaceholder("HEX ID MONITOR", "Unique identifier tracking offline.");

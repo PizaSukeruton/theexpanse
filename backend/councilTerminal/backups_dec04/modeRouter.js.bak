@@ -1,0 +1,42 @@
+import cotwIntentMatcher from "./cotwIntentMatcher.js";
+
+async function detectMode(original, accessLevel, session) {
+  const input = original.trim().toLowerCase();
+  const isAdmin = accessLevel === 11;
+
+  const godPrefixes = ["god mode:", "god:"];
+  for (const p of godPrefixes) {
+    if (input.startsWith(p)) {
+      return {
+        mode: isAdmin ? "god" : "normal",
+        cleanCommand: original.slice(p.length).trim(),
+        original,
+        prefixUsed: true,
+        intentResult: await cotwIntentMatcher.matchIntent(original.slice(p.length).trim(), null, session)
+      };
+    }
+  }
+
+  const tanukiPrefixes = ["tanuki mode:", "tanuki:", "tm:"];
+  for (const p of tanukiPrefixes) {
+    if (input.startsWith(p)) {
+      return {
+        mode: isAdmin ? "tanuki" : "normal",
+        cleanCommand: original.slice(p.length).trim(),
+        original,
+        prefixUsed: true,
+        intentResult: await cotwIntentMatcher.matchIntent(original.slice(p.length).trim(), null, session)
+      };
+    }
+  }
+
+  return {
+    mode: "normal",
+    cleanCommand: original,
+    original,
+    prefixUsed: false,
+    intentResult: await cotwIntentMatcher.matchIntent(original, null, session)
+  };
+}
+
+export default { detectMode };

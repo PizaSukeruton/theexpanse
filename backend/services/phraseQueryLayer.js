@@ -1,0 +1,146 @@
+// backend/services/phraseQueryLayer.js
+// LTLM Voice System - Database Query Layer
+// Version: 2.0 (Added hexList filter for safe connectors)
+// Date: 2025-12-17
+
+import pool from '../db/pool.js';
+
+/**
+ * Fetches phrases from the conversational_phrases table.
+ * 
+ * @param {string} outcomeIntent - e.g., 'clarity', 'validation'
+ * @param {string} strategy - e.g., 'info', 'question'
+ * @param {object} options - Query options
+ * @param {string} options.role - 'opener', 'connector', 'closer', 'hedge'
+ * @param {string} options.tone - 'neutral', 'playful', 'factual'
+ * @param {string} options.formality - 'casual', 'formal'
+ * @param {number} options.limit - Max results
+ * @param {boolean} options.randomOrder - Randomize results
+ * @param {string[]} options.hexList - Filter to only these phrase IDs (NEW)
+ * @returns {object} - { found, phrases, count, outcomeIntent, strategy, filters }
+ */
+async function getPhrases(outcomeIntent, strategy, options = {}) {
+  const {
+    role = null,
+    tone = null,
+    formality = null,
+    limit = 10,
+    randomOrder = false,
+    hexList = null  // NEW: Filter for specific phrase hex IDs
+  } = options;
+
+  const client = await pool.connect();
+  try {
+    let query = `
+      SELECT 
+        phrase_hex_id,
+        text,
+        role,
+        outcome_intent,
+        strategy,
+        tone,
+        formality,
+        language,
+        tags,
+        created_by,
+        is_canonical,
+        created_at
+      FROM conversational_phrases
+      WHERE outcome_intent = $1 AND strategy = $2 AND is_canonical = true
+    `;
+
+    const params = [outcomeIntent, strategy];
+    let i = 3;
+
+    if (role) {
+      query += ` AND role = $${i}`;
+      params.push(role);
+      i++;
+    }
+
+    if (tone) {
+      query += ` AND tone = $${i}`;
+      params.push(tone);
+      i++;
+    }
+
+    if (formality) {
+      query += ` AND formality = $${i}`;
+      params.push(formality);
+      i++;
+    }
+
+    // NEW: Filter by hex ID list (for safe connector enforcement)
+    if (hexList && Array.isArray(hexList) && hexList.length > 0) {
+      query += ` AND phrase_hex_id = ANY($${i})`;
+      params.push(hexList);
+      i++;
+    }
+
+    query += randomOrder ? ' ORDER BY RANDOM()' : ' ORDER BY created_at ASC';
+    query += ` LIMIT $${i}`;
+    params.push(limit);
+
+    const result = await client.query(query, params);
+
+    return {
+      found: result.rows.length > 0,
+      phrases: result.rows,
+      count: result.rows.length,
+      outcomeIntent,
+      strategy,
+      filters: { role, tone, formality, hexList: hexList ? hexList.length : null }
+    };
+  } catch (error) {
+    console.error('[phraseQueryLayer] Error querying phrases:', error.message);
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Fetches a single phrase by hex ID.
+ */
+async function getPhraseById(hexId) {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(
+      'SELECT * FROM conversational_phrases WHERE phrase_hex_id = $1',
+      [hexId]
+    );
+    return result.rows[0] || null;
+  } catch (error) {
+    console.error(`[phraseQueryLayer] Error fetching phrase ${hexId}:`, error.message);
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Gets available filter options for debugging/admin.
+ */
+async function getFilterOptions() {
+  const client = await pool.connect();
+  try {
+    const result = await client.query(`
+      SELECT 
+        ARRAY_AGG(DISTINCT outcome_intent) as outcome_intents,
+        ARRAY_AGG(DISTINCT strategy) as strategies,
+        ARRAY_AGG(DISTINCT role) as roles,
+        ARRAY_AGG(DISTINCT tone) as tones,
+        ARRAY_AGG(DISTINCT formality) as formalities
+      FROM conversational_phrases
+      WHERE is_canonical = true
+    `);
+    return result.rows[0];
+  } catch (error) {
+    console.error('[phraseQueryLayer] Error fetching filter options:', error.message);
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+export { getPhrases, getPhraseById, getFilterOptions };

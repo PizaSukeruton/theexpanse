@@ -1,0 +1,82 @@
+import pool from '../db/pool.js';
+import generateHexId from '../utils/hexIdGenerator.js';
+
+class LearningCapturer {
+  async captureTeaching(userId, teachingData) {
+    const languageId = await generateHexId('cotw_language_id');
+    
+    const query = `
+      INSERT INTO cotw_user_language (
+        language_id,
+        user_id,
+        learned_phrase,
+        base_concept,
+        context,
+        pad_coordinates,
+        confidence_level,
+        date_learned
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+      RETURNING *
+    `;
+    
+    const values = [
+      languageId,
+      userId,
+      teachingData.phrase,
+      teachingData.baseConcept || null,
+      teachingData.context || null,
+      teachingData.padCoordinates ? JSON.stringify(teachingData.padCoordinates) : null,
+      1
+    ];
+    
+    const result = await pool.query(query, values);
+    
+    console.log(`[LearningCapturer] Stored teaching from user ${userId}: "${teachingData.phrase}"`);
+    
+    return result.rows[0];
+  }
+  
+  async getUserLearnedPhrases(userId, options = {}) {
+    let query = `
+      SELECT *
+      FROM cotw_user_language
+      WHERE user_id = $1
+        AND promoted_to_core = false
+    `;
+    
+    if (options.baseConcept) {
+      query += ` AND base_concept = $2`;
+    }
+    
+    query += ` ORDER BY confidence_level DESC, avg_score DESC NULLS LAST`;
+    
+    const values = options.baseConcept ? [userId, options.baseConcept] : [userId];
+    const result = await pool.query(query, values);
+    
+    return result.rows;
+  }
+  
+  async recordUsage(languageId, wasSuccessful, score) {
+    const query = `
+      UPDATE cotw_user_language
+      SET times_used = times_used + 1,
+          times_successful = times_successful + CASE WHEN $2 THEN 1 ELSE 0 END,
+          avg_score = CASE 
+            WHEN avg_score IS NULL THEN $3
+            ELSE (avg_score * times_used + $3) / (times_used + 1)
+          END,
+          last_used = NOW(),
+          confidence_level = CASE
+            WHEN times_successful >= 5 AND avg_score >= 4.0 THEN LEAST(confidence_level + 1, 5)
+            ELSE confidence_level
+          END
+      WHERE language_id = $1
+      RETURNING *
+    `;
+    
+    const result = await pool.query(query, [languageId, wasSuccessful, score]);
+    return result.rows[0];
+  }
+}
+
+export default new LearningCapturer();

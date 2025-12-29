@@ -1,0 +1,169 @@
+{
+  "vocab": [
+    {
+      "word": "mirror-skin",
+      "definition": "A state of reflecting others’ emotions rather than showing one’s own.",
+      "category": "aesthetic",
+      "usage_example": "You’re in mirror-skin right now—only bouncing back what the world throws."
+    },
+    {
+      "word": "ink-thought",
+      "definition": "A heavy idea that stains every other idea around it.",
+      "category": "aesthetic",
+      "usage_example": "That worry is an ink-thought; it colours everything else."
+    },
+    {
+      "word": "silent-bloom",
+      "definition": "Growth that happens quietly, invisibly, but undeniably.",
+      "category": "aesthetic",
+      "usage_example": "Your confidence is a silent-bloom—you don’t see it, but everyone else does."
+    },
+    {
+      "word": "paper-thin calm",
+      "definition": "A surface-level calm that tears instantly under pressure.",
+      "category": "aesthetic",
+      "usage_example": "Your paper-thin calm is brave, but it won’t hold if someone pushes."
+    },
+    {
+      "word": "lantern-truth",
+      "definition": "A truth that only illuminates a small circle around you; incomplete but useful.",
+      "category": "aesthetic",
+      "usage_example": "That’s a lantern-truth—helpful, but be careful; it hides as much as it reveals."
+    },
+    {
+      "word": "wind-mark",
+      "definition": "Evidence of something that passed quickly through your life.",
+      "category": "aesthetic",
+      "usage_example": "There’s a wind-mark on you from that conversation—you’re changed, even if you deny it."
+    },
+    {
+      "word": "sun-flicker",
+      "definition": "A moment of clarity that disappears as soon as you look directly at it.",
+      "category": "aesthetic",
+      "usage_example": "That plan was a sun-flicker—bright but impossible to hold."
+    },
+    {
+      "word": "ink-breath",
+      "definition": "A pause that lets you rewrite how you feel before you speak.",
+      "category": "aesthetic",
+      "usage_example": "Take one ink-breath before answering; you’ll rewrite the outcome."
+    },
+    {
+      "word": "river-focus",
+      "definition": "Letting your thoughts flow instead of forcing them into shape.",
+      "category": "aesthetic",
+      "usage_example": "Try river-focus; the answer will float to you without pushing."
+    },
+
+    {
+      "word": "stone-promise",
+      "definition": "A commitment that weighs more than the person who made it realises.",
+      "category": "five_rings",
+      "usage_example": "That’s a stone-promise—careful, it will anchor your whole path."
+    },
+    {
+      "word": "ember-ego",
+      "definition": "A pride that glows dangerously when stirred.",
+      "category": "five_rings",
+      "usage_example": "Your ember-ego is showing—step gently or it’ll flare."
+    },
+    {
+      "word": "water-step",
+      "definition": "Moving around conflict rather than through it.",
+      "category": "five_rings",
+      "usage_example": "Nice water-step—you dodged the chaos without making a ripple."
+    },
+    {
+      "word": "iron-mind",
+      "definition": "Discipline that resists fear, pressure, and noise.",
+      "category": "five_rings",
+      "usage_example": "Use iron-mind here—don’t let their panic shape you."
+    },
+    {
+      "word": "void-breath",
+      "definition": "A moment where everything unnecessary disappears.",
+      "category": "five_rings",
+      "usage_example": "Take a void-breath; the noise will fall away."
+    },
+
+    {
+      "word": "bell-silence",
+      "definition": "A silence that hums with meaning rather than emptiness.",
+      "category": "zen",
+      "usage_example": "That was bell-silence—loud without speaking."
+    },
+    {
+      "word": "tea-truth",
+      "definition": "A truth that becomes clear only when you slow down.",
+      "category": "zen",
+      "usage_example": "Sit. Breathe. The tea-truth will come on its own."
+    },
+    {
+      "word": "riddle-walk",
+      "definition": "Meditation through movement rather than stillness.",
+      "category": "zen",
+      "usage_example": "Take a riddle-walk; answers like to follow moving feet."
+    },
+    {
+      "word": "empty-step",
+      "definition": "Acting without ego, fear, or expectation.",
+      "category": "zen",
+      "usage_example": "Use empty-step—respond without carrying the weight."
+    },
+    {
+      "word": "cloud-mind",
+      "definition": "Letting thoughts drift without trying to hold them.",
+      "category": "zen",
+      "usage_example": "Try cloud-mind; thinking harder won’t help here."
+    },
+
+    {
+      "word": "shadow-gift",
+      "definition": "A talent that grows strongest when unnoticed.",
+      "category": "yokai",
+      "usage_example": "Your intuition is a shadow-gift—it works better when you stop trying."
+    },
+    {
+      "word": "fox-mirth",
+      "definition": "Playfulness with a hidden motive.",
+      "category": "yokai",
+      "usage_example": "Careful, that smile is pure fox-mirth—you’re planning something."
+    },
+    {
+      "word": "spirit-glimmer",
+      "definition": "A fleeting moment where the world feels thinner than usual.",
+      "category": "yokai",
+      "usage_example": "That idea came from a spirit-glimmer—don’t question it too hard."
+    }
+  ],
+
+  "pairs": [
+    {
+      "word1": "still",
+      "word2": "moving",
+      "connection": "stillness inside motion is the essence of mastery",
+      "usage_example": "Your mind is still-moving—you look calm, but everything is happening at once."
+    },
+    {
+      "word1": "soft",
+      "word2": "sharp",
+      "connection": "soft words can cut the deepest",
+      "usage_example": "That was a soft-sharp moment—gentle tone, brutal meaning."
+    }
+  ],
+
+  "triggers": [
+    "illusion",
+    "shift",
+    "mirror",
+    "fox",
+    "mask",
+    "emptiness",
+    "ego",
+    "breath",
+    "shadow",
+    "gift",
+    "paradox",
+    "transform"
+  ]
+}

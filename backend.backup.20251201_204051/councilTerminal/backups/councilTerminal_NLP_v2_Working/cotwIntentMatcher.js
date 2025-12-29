@@ -1,0 +1,393 @@
+import { searchEntityWithDisambiguation, searchEntityAllTiers } from "../utils/tieredEntitySearch.js";
+import { getAllEntitiesInRealm } from '../utils/entityHelpers.js';
+
+class CotwIntentMatcher {
+  constructor() {
+    // TIER 1: STRICT PATTERNS (High Confidence)
+    // REMOVED 'CAN' to allow loose matching to handle polite requests better.
+    this.intents = {
+      WHO: [
+        /^who is (.+?)$/i,
+        /^who are the (.+?)$/i,
+        /^tell me about (.+?)$/i,
+        /^identify (.+?)$/i,
+        /^show me (.+?)$/i
+      ],
+      WHAT: [
+        /^what is (.+?)$/i,
+        /^what are (.+?)$/i,
+        /^define (.+?)$/i,
+        /^explain (.+?)$/i
+      ],
+      WHEN: [
+        /^when did (.+?)$/i,
+        /^when was (.+?)$/i,
+        /^when will (.+?)$/i,
+        /^what time (.+?)$/i
+      ],
+      WHERE: [
+        /^where is (.+?)$/i,
+        /^where are (.+?)$/i,
+        /^where did (.+?)$/i,
+        /^location of (.+?)$/i
+      ],
+      WHY: [
+        /^why did (.+?)$/i,
+        /^why is (.+?)$/i,
+        /^why does (.+?)$/i,
+        /^reason for (.+?)$/i
+      ],
+      HOW: [
+        /^how does (.+?)$/i,
+        /^how did (.+?)$/i,
+        /^how to (.+?)$/i,
+        /^how is (.+?)$/i
+      ],
+      WHICH: [
+        /^which (?:character|person|entity|one) (?:is|has|was) (?:the |a |an )?(.+)$/i,
+        /^which (.+)$/i
+      ],
+      IS: [
+        /^is ([a-zA-Z0-9\s]+) (?:a|an|the) (.+?)$/i,
+        /^are ([a-zA-Z0-9\s]+) (.+?)$/i
+      ],
+      SEARCH: [
+        /^search for (.+?)$/i,
+        /^find (.+?)$/i,
+        /^lookup (.+?)$/i,
+        /^query (.+?)$/i
+      ]
+    };
+
+    // TIER 2: KEYWORD MAPPING (Loose Match)
+    this.keywordMap = {
+      'who': 'WHO',
+      'whom': 'WHO',
+      'identify': 'WHO',
+      'character': 'WHO',
+      'person': 'WHO',
+      
+      'what': 'WHAT',
+      'define': 'WHAT',
+      'explain': 'WHAT',
+      'meaning': 'WHAT',
+      'concept': 'WHAT',
+      
+      'where': 'WHERE',
+      'location': 'WHERE',
+      'located': 'WHERE',
+      'place': 'WHERE',
+      'position': 'WHERE',
+      
+      'when': 'WHEN',
+      'time': 'WHEN',
+      'date': 'WHEN',
+      
+      'why': 'WHY',
+      'reason': 'WHY',
+      'cause': 'WHY',
+      
+      'how': 'HOW',
+      'mechanism': 'HOW',
+      'method': 'HOW',
+      
+      'search': 'SEARCH',
+      'find': 'SEARCH',
+      'look': 'SEARCH',
+      'get': 'SEARCH'
+    };
+
+    // Conversational noise to strip before analyzing
+    this.noisePatterns = [
+      /^(?:can|could|would|will) (?:you|i) (?:please )?(?:tell me |show me |find |give me )?/i,
+      /^(?:please |kindly )/i,
+      /^(?:i want to know )/i,
+      /^(?:tell me )/i
+    ];
+
+    this.entityCache = new Map(); 
+    this.cacheTimestamps = new Map();
+    this.CACHE_TTL = 300000; 
+  }
+
+  getRealmFromAccessLevel(accessLevel, realmOverride = null) {
+    if (!accessLevel || accessLevel < 1 || accessLevel > 11) {
+      throw new Error(`Invalid access_level: ${accessLevel}. Must be 1-11.`);
+    }
+    
+    if (accessLevel === 11) {
+      return realmOverride || '#F00000';
+    }
+    
+    const realmNumber = accessLevel - 1;
+    const hexValue = realmNumber.toString(16).toUpperCase();
+    return `#F0000${hexValue}`;
+  }
+
+  async refreshEntityCache(realm_hex_id) {
+    const now = Date.now();
+    const lastUpdate = this.cacheTimestamps.get(realm_hex_id);
+    
+    if (this.entityCache.has(realm_hex_id) && lastUpdate && (now - lastUpdate) < this.CACHE_TTL) {
+      return; 
+    }
+
+    try {
+      const entities = await getAllEntitiesInRealm(realm_hex_id, null, 1000);
+      this.entityCache.set(realm_hex_id, entities);
+      this.cacheTimestamps.set(realm_hex_id, now);
+      console.log(`✅ Entity cache refreshed for ${realm_hex_id}: ${entities.length} entities`);
+    } catch (error) {
+      console.error(`Failed to refresh entity cache for ${realm_hex_id}:`, error);
+      this.entityCache.set(realm_hex_id, []);
+    }
+  }
+  
+  cleanQuery(query) {
+    return query
+      .toLowerCase()
+      .trim()
+      .replace(/[?!.,;:]+$/, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  matchLooseIntent(normalizedQuery) {
+    let workingQuery = normalizedQuery;
+
+    for (const pattern of this.noisePatterns) {
+      workingQuery = workingQuery.replace(pattern, '').trim();
+    }
+
+    const tokens = workingQuery.split(' ');
+    if (tokens.length === 0) return null;
+
+    const firstWord = tokens[0];
+    const intentType = this.keywordMap[firstWord];
+
+    if (intentType) {
+      let entityRaw = workingQuery.substring(firstWord.length).trim();
+      const connectorPattern = /^(?:is|are|was|were|does|did|the|a|an)\s+/i;
+      entityRaw = entityRaw.replace(connectorPattern, '').trim();
+
+      if (entityRaw.length > 0) {
+        return {
+          type: intentType,
+          entity: entityRaw,
+          confidence: 0.6 
+        };
+      }
+    }
+
+    return null;
+  }
+
+  async matchIntent(query, context = null, user = null, realmOverride = null) {
+    if (!user || !user.access_level) {
+      throw new Error('User object with access_level is required');
+    }
+
+    const realm_hex_id = this.getRealmFromAccessLevel(user.access_level, realmOverride);
+    const normalized = this.cleanQuery(query);
+    
+    await this.refreshEntityCache(realm_hex_id);
+    
+    const useGodMode = user.access_level === 11;
+    
+    // --- CONTEXT AWARE PRONOUNS ---
+    if (context && context.lastEntity) {
+      const pronounPatterns = /^(who|what|where|when|why|how|which|is) (?:is|was|are|were)? (?:he|she|it|they|that|this)$/i;
+      if (pronounPatterns.test(normalized)) {
+        const intentWord = normalized.match(/^(who|what|where|when|why|how|which|is)/i)[1].toUpperCase();
+        
+        let godModeData = null;
+        if (useGodMode) {
+          godModeData = await searchEntityAllTiers(context.lastEntity, realm_hex_id);
+        }
+
+        return {
+          type: intentWord,
+          entity: context.lastEntity,
+          confidence: 0.85,
+          original: query,
+          contextUsed: true,
+          godModeSearch: godModeData,
+          realm: realm_hex_id,
+          matcherMethod: 'context_memory' // Added for debug clarity
+        };
+      }
+    }
+
+    // --- CONFIRMATIONS ---
+    if (context && context.lastQueryType && context.conversationTurns > 0) {
+      const affirmative = /^(yes|yep|yeah|correct|that's it|that's right|yup|ya|yea)$/i;
+      const negative = /^(no|nope|wrong|not that|not it|nah|nay)$/i;
+      
+      if (affirmative.test(normalized)) {
+        const intentWord = context.lastQueryType;
+        let godModeData = null;
+        if (useGodMode) {
+          godModeData = await searchEntityAllTiers(context.lastEntity, realm_hex_id);
+        }
+        return {
+          type: intentWord,
+          entity: context.lastEntity,
+          confidence: 0.95,
+          original: query,
+          contextUsed: true,
+          confirmation: 'affirmed',
+          godModeSearch: godModeData,
+          realm: realm_hex_id,
+          matcherMethod: 'conversation_flow' // Added for debug clarity
+        };
+      }
+      
+      if (negative.test(normalized)) {
+        return {
+          type: 'SEARCH',
+          entity: normalized,
+          confidence: 0.5,
+          original: query,
+          contextUsed: false,
+          confirmation: 'rejected',
+          realm: realm_hex_id,
+          matcherMethod: 'conversation_flow' // Added for debug clarity
+        };
+      }
+    }
+
+    // --- IMAGES ---
+    if (normalized.match(/(?:show|display|see|view).*(?:picture|photo|image|pic|portrait|visual)/i)) {
+      const patterns = [
+        /(?:picture|photo|image|pic|portrait|visual)\s+(?:of|for)\s+(.+?)$/i,
+        /(.+?)(?:'s)?\s+(?:picture|photo|image|pic|portrait|visual)$/i,
+        /(?:show|display|see|view)\s+(?:me\s+)?(.+?)$/i
+      ];
+      
+      for (const pattern of patterns) {
+        const match = normalized.match(pattern);
+        if (match && match[1]) {
+          const entityName = match[1].trim();
+          
+          if (useGodMode) {
+            const allTiersResult = await searchEntityAllTiers(entityName, realm_hex_id);
+            return {
+              type: 'SHOW_IMAGE',
+              entity: entityName,
+              confidence: 0.7,
+              original: query,
+              godModeSearch: allTiersResult,
+              realm: realm_hex_id,
+              matcherMethod: 'visual_request'
+            };
+          }
+          
+          const searchResult = await searchEntityWithDisambiguation(entityName, realm_hex_id);
+          return {
+            type: 'SHOW_IMAGE',
+            entity: searchResult.action === 'single_match' ? searchResult.entity.entity_name : entityName,
+            entityData: searchResult.action === 'single_match' ? searchResult.entity : null,
+            confidence: searchResult.confidence || 0.7,
+            original: query,
+            searchResult: searchResult,
+            realm: realm_hex_id,
+            matcherMethod: 'visual_request'
+          };
+        }
+      }
+    }
+    
+    // --- STAGE 1: STRICT REGEX MATCHING ---
+    for (const [intentType, patterns] of Object.entries(this.intents)) {
+      for (const pattern of patterns) {
+        const match = normalized.match(pattern);
+        if (match) {
+          const entity = match[1] ? match[1].trim().replace(/[?!.,;:]+$/, '') : null;
+          if (entity) {
+            if (useGodMode) {
+              const allTiersResult = await searchEntityAllTiers(entity, realm_hex_id);
+              return {
+                type: intentType,
+                entity: entity,
+                confidence: 0.9, 
+                original: query,
+                godModeSearch: allTiersResult,
+                realm: realm_hex_id,
+                matcherMethod: 'strict_regex'
+              };
+            }
+            
+            const searchResult = await searchEntityWithDisambiguation(entity, realm_hex_id);
+            return {
+              type: intentType,
+              entity: searchResult.action === 'single_match' ? searchResult.entity.entity_name : entity,
+              entityData: searchResult.action === 'single_match' ? searchResult.entity : null,
+              confidence: searchResult.confidence || 0.9,
+              original: query,
+              searchResult: searchResult,
+              realm: realm_hex_id,
+              matcherMethod: 'strict_regex'
+            };
+          }
+        }
+      }
+    }
+    
+    // --- STAGE 2: LOOSE KEYWORD MATCHING ---
+    const looseMatch = this.matchLooseIntent(normalized);
+    if (looseMatch) {
+      if (useGodMode) {
+        const allTiersResult = await searchEntityAllTiers(looseMatch.entity, realm_hex_id);
+        return {
+          type: looseMatch.type,
+          entity: looseMatch.entity,
+          confidence: looseMatch.confidence,
+          original: query,
+          godModeSearch: allTiersResult,
+          realm: realm_hex_id,
+          matcherMethod: 'loose_keyword'
+        };
+      }
+
+      const searchResult = await searchEntityWithDisambiguation(looseMatch.entity, realm_hex_id);
+      return {
+        type: looseMatch.type,
+        entity: searchResult.action === 'single_match' ? searchResult.entity.entity_name : looseMatch.entity,
+        entityData: searchResult.action === 'single_match' ? searchResult.entity : null,
+        confidence: searchResult.confidence || looseMatch.confidence,
+        original: query,
+        searchResult: searchResult,
+        realm: realm_hex_id,
+        matcherMethod: 'loose_keyword'
+      };
+    }
+
+    // --- STAGE 3: FALLBACK SEARCH ---
+    if (useGodMode) {
+      const allTiersResult = await searchEntityAllTiers(normalized, realm_hex_id);
+      return {
+        type: 'SEARCH',
+        entity: normalized,
+        confidence: 0.5,
+        original: query,
+        godModeSearch: allTiersResult,
+        realm: realm_hex_id,
+        matcherMethod: 'fallback'
+      };
+    }
+    
+    const searchResult = await searchEntityWithDisambiguation(normalized, realm_hex_id);
+    return {
+      type: 'SEARCH',
+      entity: searchResult.action === 'single_match' ? searchResult.entity.entity_name : normalized,
+      entityData: searchResult.action === 'single_match' ? searchResult.entity : null,
+      confidence: searchResult.confidence || 0.5,
+      original: query,
+      searchResult: searchResult,
+      realm: realm_hex_id,
+      matcherMethod: 'fallback'
+    };
+  }
+}
+
+export default new CotwIntentMatcher();

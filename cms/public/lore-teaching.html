@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lore Teaching - The Expanse</title>
+    <!-- CSS removed: using inline styles only -->
+    <style>
+        .lore-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            color: #fff;
+        }
+        .lore-task {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #00d4ff;
+        }
+        .lore-task h3 {
+            color: #00d4ff;
+            margin-top: 0;
+        }
+        .task-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1a1a1a;
+            border: 1px solid #00d4ff;
+            color: #fff;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .task-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00d4ff;
+        }
+        textarea.task-input {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            flex: 1;
+            padding: 10px;
+            background: #00d4ff;
+            border: none;
+            color: #000;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #00a8cc;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result {
+            background: #3a3a3a;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid #00d4ff;
+        }
+        .result.success {
+            border-left-color: #00ff00;
+        }
+        .result.error {
+            border-left-color: #ff0000;
+        }
+        .score-badge {
+            display: inline-block;
+            background: #00d4ff;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .loading {
+            text-align: center;
+            color: #00d4ff;
+            padding: 20px;
+        }
+        .selector-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .selector {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        select {
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .category-badge {
+            display: inline-block;
+            background: #00d4ff;
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="lore-container">
+        <h1>🔮 Lore Teaching System</h1>
+        <p>Learn about the Piza Sukeruton Multiverse by answering questions about its characters and entities.</p>
+
+        <div class="selector-group">
+            <div class="selector">
+                <label for="categorySelect">Category:</label>
+                <select id="categorySelect" onchange="updateCharacterList()">
+                    <option value="">All Categories</option>
+                    <option value="Protagonist">Protagonist (2)</option>
+                    <option value="Antagonist">Antagonist (1)</option>
+                    <option value="Tanuki">Tanuki (1)</option>
+                    <option value="Council Of The Wise">Council Of The Wise (1)</option>
+                    <option value="B-Roll Chaos">B-Roll Chaos (4)</option>
+                    <option value="Angry Slice Of Pizza">Angry Slice Of Pizza (1)</option>
+                    <option value="Knowledge Entity">Knowledge Entity (8)</option>
+                </select>
+                <span class="category-badge" id="categoryBadge" style="display:none;"></span>
+            </div>
+
+            <div class="selector">
+                <label for="characterSelect">Character:</label>
+                <select id="characterSelect" onchange="changeCharacter()">
+                    <option value="">Loading...</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="taskContainer" class="lore-task">
+            <div id="loadingDiv" class="loading" style="display:none;">Loading task...</div>
+            <div id="taskDiv" style="display:none;">
+                <h3 id="taskInstructions"></h3>
+                <p id="taskInput" style="background:#3a3a3a; padding:15px; border-radius:4px; border-left:4px solid #00d4ff;"></p>
+                
+                <textarea id="answerInput" class="task-input" placeholder="Enter your answer here..."></textarea>
+                
+                <div class="button-group">
+                    <button onclick="submitAnswer()">Submit Answer</button>
+                    <button onclick="getNewTask()">Skip Task</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultContainer" style="display:none;">
+            <div id="resultDiv" class="result"></div>
+            <button onclick="clearResult()" style="margin-top:10px;">Close Result</button>
+        </div>
+
+        <div id="statsDiv" style="margin-top:30px; padding:20px; background:#2a2a2a; border-radius:8px;">
+            <h3>📊 Your Stats</h3>
+            <p>Total Responses: <span id="responseCount">0</span></p>
+            <p>Average Score: <span id="avgScore">--</span>/5</p>
+            <p>Current Character: <span id="currentCharName">Select a character</span></p>
+        </div>
+    </div>
+
+    <script>
+        let currentTask = null;
+        let characterId = null;
+        let allResponses = [];
+
+        const characterMap = {
+            '#700001': { name: 'Piza Sukeruton', category: 'Protagonist' },
+            '#700002': { name: 'Claude The Tanuki', category: 'Tanuki' },
+            '#700003': { name: 'Frankie Trouble', category: 'Council Of The Wise' },
+            '#700004': { name: 'Slicifer', category: 'Angry Slice Of Pizza' },
+            '#700005': { name: 'Chuckles The Monkey', category: 'B-Roll Chaos' },
+            '#700006': { name: 'NOFX', category: 'Knowledge Entity' },
+            '#700007': { name: 'Pokemon', category: 'Knowledge Entity' },
+            '#700009': { name: 'Pineapple Yurei', category: 'Antagonist' },
+            '#70000F': { name: 'Bagsy', category: 'B-Roll Chaos' },
+            '#700011': { name: 'The Dumpster Dive King', category: 'B-Roll Chaos' },
+            '#70001A': { name: 'CubeCube', category: 'B-Roll Chaos' },
+            '#70001C': { name: 'James The Learner Avatar', category: 'Protagonist' }
+        };
+
+        function updateCharacterList() {
+            const selectedCategory = document.getElementById('categorySelect').value;
+            const charSelect = document.getElementById('characterSelect');
+            
+            charSelect.innerHTML = '<option value="">Select a character...</option>';
+
+            for (const [id, data] of Object.entries(characterMap)) {
+                if (!selectedCategory || data.category === selectedCategory) {
+                    const option = document.createElement('option');
+                    option.value = id;
+                    option.textContent = data.name;
+                    charSelect.appendChild(option);
+                }
+            }
+
+            if (selectedCategory) {
+                document.getElementById('categoryBadge').textContent = selectedCategory;
+                document.getElementById('categoryBadge').style.display = 'inline-block';
+            } else {
+                document.getElementById('categoryBadge').style.display = 'none';
+            }
+        }
+
+        async function changeCharacter() {
+            const select = document.getElementById('characterSelect').value;
+            
+            if (!select) {
+                showResult('Please select a character', 'error');
+                return;
+            }
+
+            characterId = select;
+            document.getElementById('currentCharName').textContent = characterMap[characterId].name;
+            getNewTask();
+        }
+
+        async function getNewTask() {
+            if (!characterId) {
+                showResult('Please select a character first', 'error');
+                return;
+            }
+
+            document.getElementById('loadingDiv').style.display = 'block';
+            document.getElementById('taskDiv').style.display = 'none';
+            document.getElementById('answerInput').value = '';
+
+            try {
+                const response = await fetch('/api/lore-teaching/lore-task', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ characterId })
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch task');
+
+                const data = await response.json();
+                currentTask = data.task;
+
+                document.getElementById('taskInstructions').textContent = data.task.instructions;
+                document.getElementById('taskInput').textContent = data.task.input;
+                document.getElementById('loadingDiv').style.display = 'none';
+                document.getElementById('taskDiv').style.display = 'block';
+                document.getElementById('resultContainer').style.display = 'none';
+
+                loadStats();
+            } catch (error) {
+                showResult(`Error: ${error.message}`, 'error');
+                document.getElementById('loadingDiv').style.display = 'none';
+            }
+        }
+
+        async function submitAnswer() {
+            const answer = document.getElementById('answerInput').value.trim();
+            if (!answer) {
+                showResult('Please enter an answer', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/lore-teaching/evaluate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        task: currentTask,
+                        characterId,
+                        answer
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to evaluate answer');
+
+                const data = await response.json();
+                const eval = data.evaluation;
+
+                let resultHTML = `
+                    <h3>✅ Answer Evaluated</h3>
+                    <div class="score-badge">Score: ${eval.score}/5</div>
+                    <p><strong>Match Ratio:</strong> ${(eval.details.matchRatio * 100).toFixed(1)}%</p>
+                    <p><strong>Matched Keywords:</strong> ${eval.details.matchedKeywords.join(', ') || 'None'}</p>
+                    <p><strong>Missed Keywords:</strong> ${eval.details.missedKeywords.join(', ') || 'Perfect!'}</p>
+                `;
+
+                showResult(resultHTML, 'success');
+                allResponses.push(eval);
+                loadStats();
+            } catch (error) {
+                showResult(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        function showResult(html, type) {
+            const resultDiv = document.getElementById('resultDiv');
+            resultDiv.innerHTML = html;
+            resultDiv.className = `result ${type}`;
+            document.getElementById('resultContainer').style.display = 'block';
+        }
+
+        function clearResult() {
+            document.getElementById('resultContainer').style.display = 'none';
+            getNewTask();
+        }
+
+        function loadStats() {
+            document.getElementById('responseCount').textContent = allResponses.length;
+            
+            if (allResponses.length > 0) {
+                const avgScore = (allResponses.reduce((sum, r) => sum + r.score, 0) / allResponses.length).toFixed(1);
+                document.getElementById('avgScore').textContent = avgScore;
+            } else {
+                document.getElementById('avgScore').textContent = '--';
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            updateCharacterList();
+        });
+    </script>
+</body>
+</html>

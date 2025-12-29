@@ -1,0 +1,151 @@
+import pool from '../db/pool.js';
+
+export { isValidHexId } from './hexIdGenerator.js';
+
+export async function getCharacterProfile(characterId) {
+  const result = await pool.query(
+    'SELECT * FROM character_profiles WHERE character_id = $1',
+    [characterId]
+  );
+  return result.rows[0] || null;
+}
+
+export async function getCharacterKnowledgeSlotMappings(characterId) {
+  const result = await pool.query(
+    'SELECT * FROM character_knowledge_slot_mappings WHERE character_id = $1',
+    [characterId]
+  );
+  return result.rows;
+}
+
+export async function getDomainDetails(domainId) {
+  const result = await pool.query(
+    'SELECT * FROM knowledge_domains WHERE domain_id = $1',
+    [domainId]
+  );
+  return result.rows[0] || null;
+}
+
+export async function getCharacterAccessibleKnowledge(characterId, domainId) {
+  const character = await getCharacterProfile(characterId);
+  if (!character) {
+    throw new Error(`Character ${characterId} not found`);
+  }
+
+  const mappingResult = await pool.query(
+    `SELECT * FROM character_knowledge_slot_mappings
+     WHERE character_id = $1 AND domain_id = $2`,
+    [characterId, domainId]
+  );
+
+  if (mappingResult.rows.length === 0) {
+    throw new Error(`Character ${characterId} not mapped to domain ${domainId}`);
+  }
+
+  const mapping = mappingResult.rows[0];
+
+  const itemsResult = await pool.query(
+    `SELECT * FROM knowledge_items
+     WHERE domain_id = $1
+     ORDER BY created_at DESC`,
+    [domainId]
+  );
+
+  return {
+    character_id: characterId,
+    domain_id: domainId,
+    access_percentage: mapping.access_percentage,
+    slot_trait_hex_id: mapping.slot_trait_hex_id,
+    knowledge_items: itemsResult.rows
+  };
+}
+
+export async function assignCharacterToKnowledgeDomain(characterId, slotTraitHexId, domainId) {
+  const character = await getCharacterProfile(characterId);
+  if (!character) {
+    throw new Error(`Character ${characterId} not found`);
+  }
+
+  const result = await pool.query(
+    `INSERT INTO character_knowledge_slot_mappings
+     (character_id, slot_trait_hex_id, domain_id, access_percentage, is_active)
+     VALUES ($1, $2, $3, 100, true)
+     RETURNING *`,
+    [characterId, slotTraitHexId, domainId]
+  );
+
+  return result.rows[0];
+}
+
+export async function getKnowledgeByContentKey(contentKey) {
+  const result = await pool.query(
+    `
+    SELECT ki.knowledge_id,
+           ki.content,
+           ki.domain_id,
+           ki.source_type,
+           ki.acquisition_timestamp,
+           ki.concept
+    FROM content_catalog AS cc
+    JOIN content_permissions AS cp
+      ON cp.content_key = cc.content_key
+    JOIN knowledge_items AS ki
+      ON ki.knowledge_id = cc.knowledge_id
+    WHERE cc.content_key = $1
+      AND cp.is_enabled = TRUE
+    `,
+    [contentKey]
+  );
+
+  return result.rows;
+}
+
+// NEW: minimal domain-scoped text search for knowledge-first queries
+export async function searchKnowledgeItems(searchTerm, domainIds) {
+  if (!searchTerm || !Array.isArray(domainIds) || domainIds.length === 0) {
+    return [];
+  }
+
+  const normalized = searchTerm.trim().toLowerCase();
+  const likePattern = `%${normalized}%`;
+
+  const query = `
+    SELECT
+      ki.knowledge_id,
+      ki.domain_id,
+      ki.concept,
+      ki.content,
+      ki.source_type,
+      ki.acquisition_timestamp,
+      CASE
+        WHEN LOWER(ki.concept) = $2 THEN 0.95
+        WHEN LOWER(ki.concept) LIKE $3 THEN 0.75
+        WHEN LOWER(ki.content) LIKE $3 THEN 0.55
+        ELSE 0.25
+      END AS relevance_score
+    FROM knowledge_items AS ki
+    WHERE ki.domain_id = ANY($1)
+      AND (
+        LOWER(ki.concept) = $2
+        OR LOWER(ki.concept) LIKE $3
+        OR LOWER(ki.content) LIKE $3
+      )
+    ORDER BY relevance_score DESC, ki.acquisition_timestamp DESC
+    LIMIT 20
+  `;
+
+  const result = await pool.query(query, [domainIds, normalized, likePattern]);
+  return result.rows;
+}
+
+const knowledgeAccess = {
+  getCharacterProfile,
+  getCharacterKnowledgeSlotMappings,
+  getDomainDetails,
+  getCharacterAccessibleKnowledge,
+  assignCharacterToKnowledgeDomain,
+  getKnowledgeByContentKey,
+  searchKnowledgeItems
+};
+
+export default knowledgeAccess;

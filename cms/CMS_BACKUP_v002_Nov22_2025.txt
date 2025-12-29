@@ -1,0 +1,59 @@
+================================================================================
+CMS/EMS SYSTEM BACKUP v0.0.2
+November 22, 2025 1:08 PM AEST
+================================================================================
+
+STATUS: Phase 8 Foundation - UI Complete (4/6 files)
+TESTED: commandParser.js - 100% pass rate (8/8 patterns)
+LOCATION: ~/desktop/theexpanse/theexpansev004/cms/
+
+FILES COMPLETE:
+- public/index.html (working, terminal green theme)
+- css/cms-styles.css (3.2KB, bright typography system)
+- js/socketManager.js (2.1KB, WebSocket ready)
+- js/commandParser.js (11KB, 404 lines, TESTED)
+
+FILES PENDING:
+- js/characterDisplay.js - Profile renderer
+- js/cmsActions.js - Command executor
+
+UI STATUS: WORKING
+- Terminal green theme (#00ff75)
+- Black background (#000000)
+- 3-window layout (left sidebar, top-right 70%, bottom-right 30%)
+- Typography: 14px body, 16px headers (super bright)
+- CRT scanline effects
+- Command input functional
+- Socket.io connected
+
+TYPOGRAPHY SYSTEM:
+--font-body: 14px (all basic text)
+--font-header: 16px (headers, buttons, labels)
+All text: opacity 1.0 (super bright)
+
+SERVER ROUTES ADDED:
+GET /cms → serves index.html
+/cms/css → static CSS files
+/cms/js → static JS files
+
+NEXT STEPS:
+1. Create characterDisplay.js (entity rendering)
+2. Create cmsActions.js (command execution)
+3. Add backend API routes to server.js
+4. Test full integration with intent matcher
+
+DATABASE: pizasukerutondb (PostgreSQL 16.10)
+CHARACTERS: 10 records (#700001-#70000A)
+TABLES: 90 total (hex_relationships, character_profiles, etc.)
+
+RESTORE COMMANDS:
+cd ~/desktop/theexpanse/theexpansev004
+ls -lah cms/public/ cms/css/ cms/js/
+cat cms/css/cms-styles.css | head -20
+
+TEST COMMANDS:
+node server.js
+open http://localhost:3000/cms
+Type: help
+
+================================================================================

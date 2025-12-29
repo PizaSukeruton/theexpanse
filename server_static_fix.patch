@@ -1,0 +1,27 @@
+--- a/server.js
++++ b/server.js
+@@ -72,11 +72,6 @@ app.use(
+ );
+ 
+ app.use(cors());
+-app.use(express.static(path.join(__dirname, 'public')));
+-app.use('/dossiers', express.static(path.join(__dirname, 'dossiers')));
+-app.use('/wizard-uploads', express.static(path.join(__dirname, 'public/wizard-uploads')));
+-app.use('/api/images', imageRoutes);
+-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+ 
+ app.get('/', (req, res) => {
+   res.send('<h1 style="font-family: Courier New; color: #00ff00; background: black; text-align:center; padding: 50px;">🖥️ THE EXPANSE SERVER RUNNING</h1>');
+@@ -152,6 +147,12 @@ app.get("/api/cms/character/:characterId", async (req, res) => {
+   }
+ });
+ 
++// --- STATIC ROUTES MUST BE LAST ---
++app.use(express.static(path.join(__dirname, 'public')));
++app.use('/dossiers', express.static(path.join(__dirname, 'dossiers')));
++app.use('/wizard-uploads', express.static(path.join(__dirname, 'public/wizard-uploads')));
++app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
++app.use('/api/images', imageRoutes);
+ 
+ const httpServer = createServer(app);
+ const io = initializeWebSocket(httpServer, sessionMiddleware);

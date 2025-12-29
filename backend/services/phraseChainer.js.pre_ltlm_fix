@@ -1,0 +1,178 @@
+import { getPhrases } from './phraseQueryLayer.js';
+
+async function chainPhrases(outcomeIntent, strategy, options = {}) {
+  const {
+    tone = null,
+    formality = 'casual',
+    connectorCount = null,
+    randomOrder = true
+  } = options;
+
+  let numConnectors = connectorCount;
+  if (numConnectors === null) {
+    numConnectors = Math.floor(Math.random() * 2) + 1;
+  }
+
+  try {
+    const openerResult = await getPhrases(outcomeIntent, strategy, {
+      role: 'opener',
+      tone,
+      formality,
+      limit: 1,
+      randomOrder
+    });
+
+    if (!openerResult.found) {
+      throw new Error(
+        `No opener phrase found for ${outcomeIntent}/${strategy}${tone ? `/${tone}` : ''}`
+      );
+    }
+
+    const opener = openerResult.phrases[0];
+
+    const connectorResult = await getPhrases(outcomeIntent, strategy, {
+      role: 'connector',
+      tone,
+      formality,
+      limit: numConnectors,
+      randomOrder
+    });
+
+    const connectors = connectorResult.phrases.slice(0, numConnectors);
+
+    const closerResult = await getPhrases(outcomeIntent, strategy, {
+      role: 'closer',
+      tone,
+      formality,
+      limit: 1,
+      randomOrder
+    });
+
+    let closer = null;
+    if (closerResult.found) {
+      closer = closerResult.phrases[0];
+    }
+
+    const hedgeResult = await getPhrases(outcomeIntent, strategy, {
+      role: 'hedge',
+      tone,
+      formality,
+      limit: 1,
+      randomOrder
+    });
+
+    let hedge = null;
+    if (hedgeResult.found && Math.random() > 0.5) {
+      hedge = hedgeResult.phrases[0];
+    }
+
+    const chain = buildChain(opener, connectors, closer, hedge);
+
+    return {
+      success: true,
+      chain,
+      metadata: {
+        outcomeIntent,
+        strategy,
+        tone: tone || 'any',
+        formality,
+        phraseCount: {
+          opener: 1,
+          connectors: connectors.length,
+          closer: closer ? 1 : 0,
+          hedge: hedge ? 1 : 0,
+          total: 1 + connectors.length + (closer ? 1 : 0) + (hedge ? 1 : 0)
+        },
+        phraseIds: {
+          opener: opener.phrase_hex_id,
+          connectors: connectors.map(c => c.phrase_hex_id),
+          closer: closer ? closer.phrase_hex_id : null,
+          hedge: hedge ? hedge.phrase_hex_id : null
+        }
+      }
+    };
+
+  } catch (error) {
+    console.error(`Error chaining phrases:`, error.message);
+    throw error;
+  }
+}
+
+function buildChain(opener, connectors = [], closer = null, hedge = null) {
+  const parts = [];
+
+  parts.push(opener.text);
+
+  for (const connector of connectors) {
+    parts.push(connector.text);
+  }
+
+  if (hedge) {
+    parts.push(hedge.text);
+  }
+
+  if (closer) {
+    parts.push(closer.text);
+  }
+
+  const response = parts
+    .map(text => text.trim())
+    .filter(text => text.length > 0)
+    .join(' ');
+
+  return {
+    text: response,
+    parts: {
+      opener: opener.text,
+      connectors: connectors.map(c => c.text),
+      hedge: hedge ? hedge.text : null,
+      closer: closer ? closer.text : null
+    },
+    structureCode: generateStructureCode(opener, connectors, closer, hedge)
+  };
+}
+
+function generateStructureCode(opener, connectors, closer, hedge) {
+  const codes = [];
+  codes.push('O');
+  connectors.forEach(() => codes.push('C'));
+  if (hedge) codes.push('H');
+  if (closer) codes.push('CL');
+  return codes.join('-');
+}
+
+async function chainMultiStep(steps = []) {
+  try {
+    const chains = [];
+
+    for (const step of steps) {
+      const chainedStep = await chainPhrases(
+        step.outcomeIntent,
+        step.strategy,
+        {
+          tone: step.tone || 'neutral',
+          formality: step.formality || 'casual',
+          connectorCount: step.connectorCount || null
+        }
+      );
+      chains.push(chainedStep);
+    }
+
+    const fullResponse = chains
+      .map(c => c.chain.text)
+      .join(' ');
+
+    return {
+      success: true,
+      response: fullResponse,
+      steps: chains,
+      totalPhrases: chains.reduce((sum, c) => sum + c.metadata.phraseCount.total, 0)
+    };
+
+  } catch (error) {
+    console.error(`Error in multi-step chaining:`, error.message);
+    throw error;
+  }
+}
+
+export { chainPhrases, chainMultiStep, buildChain };

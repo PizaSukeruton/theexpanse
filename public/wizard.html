@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Wizard - With Image Gallery</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #00ff75;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+      gap: 0;
+    }
+    .left-panel {
+      width: 350px;
+      background: rgba(0, 0, 0, 0.9);
+      border-right: 2px solid #00ff75;
+      padding: 20px;
+      overflow-y: auto;
+      box-shadow: 0 0 20px rgba(0, 255, 117, 0.3);
+    }
+    .right-panel {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 20px;
+      overflow-y: auto;
+    }
+    h1, h2, h3 {
+      color: #00ff75;
+      text-shadow: 0 0 15px #00ff75, 0 0 25px #00ff75;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    h2 { 
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .input, textarea, select {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00ff75;
+      color: #00ff75;
+      padding: 8px;
+      margin: 8px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-radius: 4px;
+      text-shadow: 0 0 8px #00ff75;
+    }
+    input[type="color"] {
+      height: 40px;
+      cursor: pointer;
+    }
+    input[type="file"] {
+      border: 2px dashed #00ff75;
+      padding: 15px;
+      cursor: pointer;
+    }
+    select option {
+      background: #000;
+      color: #00ff75;
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .input::placeholder, textarea::placeholder {
+      color: rgba(0, 255, 117, 0.5);
+    }
+    .input:focus, textarea:focus, select:focus {
+      outline: none;
+      box-shadow: 0 0 15px rgba(0, 255, 117, 0.5);
+      text-shadow: 0 0 12px #00ff75;
+    }
+    .label {
+      display: block;
+      font-size: 12px;
+      color: #00ff75;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      text-shadow: 0 0 8px #00ff75;
+    }
+    .button {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #00ff75;
+      color: #00ff75;
+      padding: 10px;
+      margin: 8px 0;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      border-radius: 4px;
+      transition: all 0.3s;
+      text-shadow: 0 0 10px #00ff75;
+      font-weight: bold;
+    }
+    .button:hover {
+      background: rgba(0, 255, 117, 0.15);
+      box-shadow: 0 0 20px rgba(0, 255, 117, 0.6);
+      transform: scale(1.02);
+      text-shadow: 0 0 15px #00ff75, 0 0 25px #00ff75;
+    }
+    .button.danger {
+      border-color: #ff4444;
+      color: #ff4444;
+      text-shadow: 0 0 10px #ff4444;
+    }
+    .button.danger:hover {
+      background: rgba(255, 68, 68, 0.15);
+      box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+      text-shadow: 0 0 15px #ff4444;
+    }
+    .menu-item {
+      background: rgba(0, 30, 0, 0.6);
+      border-left: 3px solid #00ff75;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    .menu-item strong {
+      font-size: 16px;
+      text-shadow: 0 0 12px #00ff75, 0 0 20px #00ff75;
+    }
+    .menu-item:hover {
+      background: rgba(0, 255, 117, 0.1);
+      border-left-width: 5px;
+    }
+    .menu-item.selected {
+      background: rgba(0, 255, 117, 0.2);
+      border-left-width: 5px;
+      box-shadow: 0 0 15px rgba(0, 255, 117, 0.4);
+    }
+    .submenu-item {
+      margin-left: 20px;
+      padding: 8px;
+      border-left: 2px solid #00aa55;
+      background: rgba(0, 20, 0, 0.4);
+      margin-top: 5px;
+      font-size: 14px;
+      text-shadow: 0 0 8px #00ff75;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .submenu-item:hover {
+      background: rgba(0, 255, 117, 0.1);
+      border-left-width: 3px;
+    }
+    .status {
+      color: #ffaa00;
+      font-size: 14px;
+      margin: 10px 0;
+      padding: 8px;
+      background: rgba(255, 170, 0, 0.1);
+      border-left: 3px solid #ffaa00;
+      text-shadow: 0 0 10px #ffaa00;
+    }
+    .success {
+      color: #00ff75;
+      border-left-color: #00ff75;
+      background: rgba(0, 255, 117, 0.1);
+      text-shadow: 0 0 12px #00ff75;
+    }
+    .section {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #00ff75;
+      border-radius: 6px;
+      background: rgba(0, 255, 117, 0.05);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: rgba(0, 20, 0, 0.95);
+      border: 2px solid #00ff75;
+      border-radius: 8px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 30px rgba(0, 255, 117, 0.5);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      margin: 15px 0;
+    }
+    .gallery-item {
+      position: relative;
+      border: 2px solid #00ff75;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .gallery-item:hover {
+      border-color: #00ffff;
+      box-shadow: 0 0 15px rgba(0, 255, 117, 0.6);
+    }
+    .gallery-item.active {
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-item .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+    }
+    .gallery-item:hover .delete-btn {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <h1>⚙️ MENU WIZARD</h1>
+      
+      <div class="section">
+        <h2>CREATE NEW MENU</h2>
+        <input type="text" class="input" id="menuName" placeholder="Enter menu name (e.g., GOD MODE)">
+        <button class="button" onclick="createMenu()">+ CREATE MENU</button>
+      </div>
+
+      <div class="section">
+        <h2>🎨 MENU STYLE</h2>
+        <div class="label">Background Color</div>
+        <input type="color" class="input" id="styleBg" value="#001a00">
+        <div class="label">Font Color</div>
+        <input type="color" class="input" id="styleFont" value="#00ff75">
+        <div class="label">Border Color</div>
+        <input type="color" class="input" id="styleBorder" value="#00ff75">
+        <div class="label">Icon (Emoji)</div>
+        <input type="text" class="input" id="styleIcon" placeholder="📁" maxlength="2">
+        <button class="button" onclick="applyStyle()">APPLY TO SELECTED MENU</button>
+        <button class="button" onclick="exportCSS()">📋 EXPORT CSS</button>
+      </div>
+
+      <div class="section">
+        <h2>📥 DATABASE IMPORT</h2>
+        <button class="button" onclick="discoverTables()">🔍 DISCOVER TABLES</button>
+        <select class="input" id="tableSelect" style="display:none;">
+          <option value="">-- Select Table --</option>
+        </select>
+        <button class="button" id="importBtn" style="display:none;" onclick="importFromTable()">IMPORT SELECTED TABLE</button>
+        <div id="importStatus"></div>
+      </div>
+
+      <div class="section">
+        <h2>📋 YOUR MENUS</h2>
+        <div id="menusList"></div>
+      </div>
+
+      <div class="section" id="editSection" style="display:none;">
+        <h2>✏️ EDIT MENU</h2>
+        <input type="text" class="input" id="editLabel" placeholder="Menu label">
+        <button class="button" onclick="updateMenuLabel()">UPDATE LABEL</button>
+        <button class="button" onclick="addSubButton()">+ ADD SUB-BUTTON</button>
+        <button class="button" onclick="deleteMenu()">🗑️ DELETE MENU</button>
+      </div>
+
+      <div class="section">
+        <h2>💾 SAVE/LOAD</h2>
+        <button class="button" onclick="exportJSON()">EXPORT JSON</button>
+        <button class="button" onclick="importJSON()">IMPORT JSON</button>
+        <button class="button" onclick="syncToDatabase()">🔄 SYNC TO DATABASE</button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <h1>📺 LIVE PREVIEW</h1>
+      <div id="preview"></div>
+    </div>
+  </div>
+
+  <!-- Record Edit Modal with Gallery -->
+  <div id="charModal" class="modal">
+    <div class="modal-content">
+      <h2>✏️ EDIT RECORD</h2>
+      <input type="hidden" id="recordTable">
+      <input type="hidden" id="recordId">
+      
+      <div class="section">
+        <h3>🖼️ IMAGE GALLERY</h3>
+        <input type="file" id="imageUpload" accept="image/*" class="input">
+        <button class="button" onclick="uploadImage()">📤 UPLOAD IMAGE</button>
+        <div id="gallery" class="gallery"></div>
+      </div>
+      
+      <div id="editFields"></div>
+      <button class="button" onclick="saveRecord()">💾 SAVE CHANGES</button>
+      <button class="button danger" onclick="deleteRecord()">🗑️ DELETE RECORD</button>
+      <button class="button" onclick="closeModal()">CANCEL</button>
+      <div id="modalStatus"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api/wizard';
+    let menus = JSON.parse(localStorage.getItem('menus')) || [];
+    let selectedMenuIndex = null;
+    let availableTables = [];
+    let currentRecord = null;
+
+    function saveMenus() {
+      localStorage.setItem('menus', JSON.stringify(menus));
+      renderMenus();
+      renderPreview();
+    }
+
+    function createMenu() {
+      const name = document.getElementById('menuName').value.trim();
+      if (!name) return showStatus('Please enter a menu name', false);
+      
+      menus.push({
+        id: Date.now(),
+        label: name,
+        active: true,
+        subButtons: [],
+        style: {
+          bg: '#001a00',
+          font: '#00ff75',
+          border: '#00ff75',
+          icon: '📁'
+        }
+      });
+      
+      document.getElementById('menuName').value = '';
+      saveMenus();
+      showStatus(`Created menu: ${name}`, true);
+    }
+
+    function selectMenu(index) {
+      selectedMenuIndex = index;
+      const menu = menus[index];
+      document.getElementById('editSection').style.display = 'block';
+      document.getElementById('editLabel').value = menu.label;
+      
+      if (menu.style) {
+        document.getElementById('styleBg').value = menu.style.bg || '#001a00';
+        document.getElementById('styleFont').value = menu.style.font || '#00ff75';
+        document.getElementById('styleBorder').value = menu.style.border || '#00ff75';
+        document.getElementById('styleIcon').value = menu.style.icon || '📁';
+      }
+      
+      renderMenus();
+    }
+
+    function applyStyle() {
+      if (selectedMenuIndex === null) return showStatus('Select a menu first', false);
+      
+      menus[selectedMenuIndex].style = {
+        bg: document.getElementById('styleBg').value,
+        font: document.getElementById('styleFont').value,
+        border: document.getElementById('styleBorder').value,
+        icon: document.getElementById('styleIcon').value || '📁'
+      };
+      
+      saveMenus();
+      showStatus('✓ Style applied to menu', true);
+    }
+
+    function exportCSS() {
+      if (selectedMenuIndex === null) return showStatus('Select a menu first', false);
+      
+      const menu = menus[selectedMenuIndex];
+      const style = menu.style || {};
+      
+      const css = `
+/* Menu: ${menu.label} */
+.menu-${menu.label.toLowerCase().replace(/\s+/g, '-')} {
+  background: ${style.bg || '#001a00'};
+  color: ${style.font || '#00ff75'};
+  border-left: 3px solid ${style.border || '#00ff75'};
+  padding: 12px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+.menu-${menu.label.toLowerCase().replace(/\s+/g, '-')}:hover {
+  background: ${style.bg || '#001a00'};
+  filter: brightness(1.2);
+  border-left-width: 5px;
+}
+      `.trim();
+      
+      navigator.clipboard.writeText(css);
+      showStatus('✓ CSS copied to clipboard!', true);
+    }
+
+    function updateMenuLabel() {
+      if (selectedMenuIndex === null) return;
+      const newLabel = document.getElementById('editLabel').value.trim();
+      if (!newLabel) return;
+      
+      menus[selectedMenuIndex].label = newLabel;
+      saveMenus();
+      showStatus('Label updated', true);
+    }
+
+    function addSubButton() {
+      if (selectedMenuIndex === null) return showStatus('Select a menu first', false);
+      
+      const label = prompt('Enter sub-button label:');
+      if (!label) return;
+      
+      menus[selectedMenuIndex].subButtons.push({
+        id: Date.now(),
+        label: label,
+        type: 'button',
+        active: true
+      });
+      
+      saveMenus();
+      showStatus(`Added: ${label}`, true);
+    }
+
+    function deleteMenu() {
+      if (selectedMenuIndex === null) return;
+      if (!confirm('Delete this menu?')) return;
+      
+      menus.splice(selectedMenuIndex, 1);
+      selectedMenuIndex = null;
+      document.getElementById('editSection').style.display = 'none';
+      saveMenus();
+      showStatus('Menu deleted', true);
+    }
+
+    function discoverTables() {
+      showStatus('Discovering database tables...', false);
+      
+      fetch(`${API_URL}/tables`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          
+          availableTables = data.tables;
+          const select = document.getElementById('tableSelect');
+          select.innerHTML = '<option value="">-- Select Table --</option>' +
+            data.tables.map(t => `<option value="${t}">${t}</option>`).join('');
+          
+          select.style.display = 'block';
+          document.getElementById('importBtn').style.display = 'block';
+          showStatus(`✓ Found ${data.tables.length} tables`, true);
+        })
+        .catch(e => showStatus(`✗ Error: ${e.message}`, false));
+    }
+
+    function importFromTable() {
+      const tableName = document.getElementById('tableSelect').value;
+      if (!tableName) return showStatus('Select a table first', false);
+      if (selectedMenuIndex === null) return showStatus('Select a menu first', false);
+
+      showStatus(`Importing from ${tableName}...`, false);
+      
+      fetch(`${API_URL}/${tableName}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          
+          const records = data[tableName] || [];
+          const idField = Object.keys(records[0] || {}).find(k => k.includes('_id'));
+          const nameField = Object.keys(records[0] || {}).find(k => k.includes('name'));
+          
+          menus[selectedMenuIndex].subButtons = records.map(record => ({
+            id: record[idField],
+            label: record[nameField] || record[idField],
+            type: 'submenu',
+            active: true,
+            tableName: tableName,
+            data: record,
+            children: [
+              {
+                id: record[idField] + '_edit',
+                label: `Edit ${record[nameField] || 'Record'}`,
+                type: 'button'
+              }
+            ]
+          }));
+          
+          saveMenus();
+          showStatus(`✓ Imported ${records.length} records from ${tableName}`, true);
+        })
+        .catch(e => showStatus(`✗ Error: ${e.message}`, false));
+    }
+
+    function syncToDatabase() {
+      showStatus('Syncing to database...', false);
+      
+      fetch(`${API_URL}/menus/sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ menus })
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showStatus(`✓ Synced ${data.synced} menus to database`, true);
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showStatus(`✗ Sync failed: ${e.message}`, false));
+    }
+
+    function editRecord(menuIndex, subIndex) {
+      selectedMenuIndex = menuIndex;
+      const menu = menus[menuIndex];
+      const record = menu.subButtons[subIndex];
+      
+      if (!record.data) return;
+      
+      currentRecord = {
+        table: record.tableName,
+        id: record.id,
+        data: record.data
+      };
+      
+      document.getElementById('recordTable').value = record.tableName;
+      document.getElementById('recordId').value = record.id;
+      
+      const fieldsDiv = document.getElementById('editFields');
+      fieldsDiv.innerHTML = '';
+      
+      Object.keys(record.data).forEach(key => {
+        if (!key.includes('_at') && !key.includes('vector') && key !== 'image_gallery') {
+          const label = key.replace(/_/g, ' ').toUpperCase();
+          fieldsDiv.innerHTML += `
+            <label class="label">${label}</label>
+            <input type="text" class="input" id="field_${key}" value="${record.data[key] || ''}" data-field="${key}">
+          `;
+        }
+      });
+      
+      renderGallery(record.gallery);
+      document.getElementById('charModal').classList.add('active');
+    }
+
+    function renderGallery(gallery) {
+      const galleryDiv = document.getElementById('gallery');
+      
+      if (!gallery || gallery.length === 0) {
+        galleryDiv.innerHTML = '<div style="color: #666; font-size: 12px;">No images yet. Upload one!</div>';
+        return;
+      }
+      
+      let galleryArray = typeof gallery === 'string' ? JSON.parse(gallery) : gallery;
+      
+      galleryDiv.innerHTML = galleryArray.map((img, index) => `
+        <div class="gallery-item ${img.active ? 'active' : ''}" onclick="setActiveImage('${img.url}')">
+          <img src="${img.url}" alt="Image ${index + 1}">
+          <button class="delete-btn" onclick="event.stopPropagation(); deleteImage('${img.url}')">×</button>
+        </div>
+      `).join('');
+    }
+
+    function uploadImage() {
+      const fileInput = document.getElementById('imageUpload');
+      const file = fileInput.files[0];
+      
+      if (!file) return showModalStatus('Select an image first', false);
+      
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const table = document.getElementById('recordTable').value;
+      const recordId = document.getElementById('recordId').value;
+      
+      showModalStatus('Uploading image...', false);
+      
+      fetch(`${API_URL}/upload/${table}/${recordId}`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showModalStatus('✓ Image uploaded!', true);
+            renderGallery(data.gallery);
+            fileInput.value = '';
+            
+            // Refresh the record data
+            importFromTable();
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showModalStatus(`✗ Upload failed: ${e.message}`, false));
+    }
+
+    function setActiveImage(imageUrl) {
+      const table = document.getElementById('recordTable').value;
+      const recordId = document.getElementById('recordId').value;
+      
+      fetch(`${API_URL}/${table}/${recordId}/set-active-image`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl })
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showModalStatus('✓ Active image set', true);
+            renderGallery(data.gallery);
+            importFromTable();
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showModalStatus(`✗ Error: ${e.message}`, false));
+    }
+
+    function deleteImage(imageUrl) {
+      if (!confirm('Delete this image?')) return;
+      
+      const table = document.getElementById('recordTable').value;
+      const recordId = document.getElementById('recordId').value;
+      
+      fetch(`${API_URL}/${table}/${recordId}/image`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrl })
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showModalStatus('✓ Image deleted', true);
+            renderGallery(data.gallery);
+            importFromTable();
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showModalStatus(`✗ Error: ${e.message}`, false));
+    }
+
+    function closeModal() {
+      document.getElementById('charModal').classList.remove('active');
+      document.getElementById('modalStatus').textContent = '';
+      currentRecord = null;
+    }
+
+    function saveRecord() {
+      const table = document.getElementById('recordTable').value;
+      const recordId = document.getElementById('recordId').value;
+      const fields = document.querySelectorAll('#editFields input[data-field]');
+      
+      const updateData = {};
+      fields.forEach(field => {
+        updateData[field.dataset.field] = field.value;
+      });
+      
+      fetch(`${API_URL}/${table}/${recordId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData)
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showStatus(`✓ Updated record`, true);
+            importFromTable();
+            closeModal();
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showModalStatus(`Error: ${e.message}`, false));
+    }
+
+    function deleteRecord() {
+      if (!confirm('Delete this record from database?')) return;
+      
+      const table = document.getElementById('recordTable').value;
+      const recordId = document.getElementById('recordId').value;
+      
+      fetch(`${API_URL}/${table}/${recordId}`, {
+        method: 'DELETE'
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.success) {
+            showStatus(`✓ Deleted record`, true);
+            importFromTable();
+            closeModal();
+          } else {
+            throw new Error(data.error);
+          }
+        })
+        .catch(e => showModalStatus(`Error: ${e.message}`, false));
+    }
+
+    function exportJSON() {
+      const dataStr = JSON.stringify(menus, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'menu-wizard-export.json';
+      a.click();
+      showStatus('Exported to JSON', true);
+    }
+
+    function importJSON() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = event => {
+          try {
+            menus = JSON.parse(event.target.result);
+            saveMenus();
+            showStatus('Imported from JSON', true);
+          } catch (err) {
+            showStatus('Invalid JSON file', false);
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    function renderMenus() {
+      const list = document.getElementById('menusList');
+      list.innerHTML = menus.map((m, i) => `
+        <div class="menu-item ${selectedMenuIndex === i ? 'selected' : ''}" onclick="selectMenu(${i})">
+          <strong>${m.style?.icon || '📁'} ${m.label}</strong>
+          <div style="font-size: 14px; color: #00aa55; margin-top: 5px; text-shadow: 0 0 8px #00aa55;">
+            ${m.subButtons?.length || 0} items
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPreview() {
+      const preview = document.getElementById('preview');
+      preview.innerHTML = menus.map((m, mIndex) => {
+        const style = m.style || {};
+        return `
+        <div class="menu-item" style="
+          border-left: 5px solid ${style.border || '#00ff75'};
+          background: ${style.bg || 'rgba(0,30,0,0.6)'};
+          color: ${style.font || '#00ff75'};
+        ">
+          <strong style="
+            font-size: 16px; 
+            text-shadow: 0 0 15px ${style.font || '#00ff75'};
+            color: ${style.font || '#00ff75'};
+          ">
+            ${style.icon || '📁'} ${m.label}
+          </strong>
+          ${m.subButtons?.map((sub, sIndex) => `
+            <div class="submenu-item" onclick="editRecord(${mIndex}, ${sIndex})" style="
+              border-left-color: ${style.border || '#00aa55'};
+              color: ${style.font || '#00ff75'};
+            ">
+              ${style.icon || '📁'} ${sub.label}
+              ${sub.children?.map(child => `
+                <div style="margin-left: 15px; font-size: 14px; margin-top: 3px; text-shadow: 0 0 8px ${style.font || '#00ff75'};">
+                  • ${child.label}
+                </div>
+              `).join('') || ''}
+            </div>
+          `).join('') || '<div style="color: #666; font-size: 14px; margin-top: 8px;">No items - discover & import from database</div>'}
+        </div>
+      `;
+      }).join('') || '<div style="color: #666;">No menus created yet</div>';
+    }
+
+    function showStatus(message, success) {
+      const status = document.getElementById('importStatus');
+      status.className = success ? 'status success' : 'status';
+      status.textContent = message;
+      setTimeout(() => status.textContent = '', 5000);
+    }
+
+    function showModalStatus(message, success) {
+      const status = document.getElementById('modalStatus');
+      status.className = success ? 'status success' : 'status';
+      status.textContent = message;
+      setTimeout(() => status.textContent = '', 5000);
+    }
+
+    // Initialize
+    renderMenus();
+    renderPreview();
+  </script>
+</body>
+</html>

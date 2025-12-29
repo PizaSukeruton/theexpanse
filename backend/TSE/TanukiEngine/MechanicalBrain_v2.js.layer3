@@ -1,0 +1,189 @@
+import pool from "../../db/pool.js";
+import generateHexId from "../../utils/hexIdGenerator.js";
+
+import IntentDetector from "./IntentDetector.js";
+import VocabularySelector from "./VocabularySelector.js";
+import TanukiModeDetector from "./TanukiModeDetector.js";
+import TanukiLevelSystem from "./TanukiLevelSystem.js";
+import ForbiddenWordScrubber from "./ForbiddenWordScrubber.js";
+import ResponseAssembler from "./ResponseAssembler.js";
+import RealityGrounder from "./RealityGrounder.js";
+import RelationshipGrounder from "./RelationshipGrounder.js";
+import EventGrounder from "./EventGrounder.js";
+
+export default class MechanicalBrain_v2 {
+  constructor() {
+    this.intentDetector = new IntentDetector();
+    this.selector = new VocabularySelector();
+    this.modeDetector = new TanukiModeDetector();
+    this.levelSystem = new TanukiLevelSystem();
+    this.scrubber = new ForbiddenWordScrubber();
+    this.assembler = new ResponseAssembler();
+    this.grounder = new RealityGrounder();
+    this.relationshipGrounder = new RelationshipGrounder();
+    this.eventGrounder = new EventGrounder();
+
+    this.vocabCache = new Map();
+    this.profileCache = new Map();
+    this.CACHE_TTL_MS = 60000;
+  }
+
+  async loadVocabulary(characterId) {
+    const cached = this.vocabCache.get(characterId);
+    if (cached && cached.timestamp > Date.now() - this.CACHE_TTL_MS) {
+      return cached.data;
+    }
+
+    const query = `
+      SELECT vocabulary_json
+      FROM learning_vocabulary
+      WHERE character_id = $1
+      LIMIT 1
+    `;
+    const result = await pool.query(query, [characterId]);
+    if (result.rows.length === 0) return null;
+
+    const vocab = result.rows[0].vocabulary_json;
+    this.vocabCache.set(characterId, { data: vocab, timestamp: Date.now() });
+    return vocab;
+  }
+
+  async loadProfile(characterId) {
+    const cached = this.profileCache.get(characterId);
+    if (cached && cached.timestamp > Date.now() - this.CACHE_TTL_MS) {
+      return cached.data;
+    }
+
+    const query = `
+      SELECT *
+      FROM user_tanuki_profile
+      WHERE character_id = $1
+    `;
+    let result = await pool.query(query, [characterId]);
+
+    if (result.rows.length === 0) {
+      const insertQuery = `
+        INSERT INTO user_tanuki_profile 
+          (character_id, current_tanuki_level, conversation_type_preferences, total_interactions, preferred_rabbit_holes, created_at, updated_at)
+        VALUES ($1, 0.0, '{"factual":0,"playful":0,"philosophical":0}', 0, '{}', NOW(), NOW())
+        RETURNING *
+      `;
+      result = await pool.query(insertQuery, [characterId]);
+    }
+
+    const profile = result.rows[0];
+    this.profileCache.set(characterId, { data: profile, timestamp: Date.now() });
+    return profile;
+  }
+
+  async logVocabularyUsage(characterId, vocabItem, category, intent, level, taskRef = null) {
+    if (!vocabItem || !vocabItem.word) return;
+
+    const usageId = await generateHexId("vocabulary_usage_id");
+
+    const safeTaskRef =
+      typeof taskRef === "string" && /^#[0-9A-F]{6}$/i.test(taskRef)
+        ? taskRef.slice(0, 12)
+        : null;
+
+    const query = `
+      INSERT INTO vocabularyusagelogs
+        (usageid, characterid, vocabword, vocabcategory, detectedintent, tanukilevel, taskreference)
+      VALUES
+        ($1, $2, $3, $4, $5, $6, $7)
+    `;
+
+    const safeIntent = typeof intent === "string" ? intent.slice(0, 20) : String(intent?.type || "UNKNOWN").slice(0, 20);
+
+    await pool.query(query, [
+      usageId,
+      characterId,
+      vocabItem.word,
+      category,
+      safeIntent,
+      level,
+      safeTaskRef
+    ]);
+  }
+
+  async generateResponse(inputText, characterId, intent = {}, context = {}, task = null, knowledgeId = null) {
+    try {
+      const vocab = await this.loadVocabulary(characterId);
+      const profile = await this.loadProfile(characterId);
+
+      if (!vocab) return "I do not understand this task yet.";
+
+      const cotw_intent = intent?.type ? intent : this.intentDetector.detect(inputText);
+      const intentType = cotw_intent.type || 'SEARCH';
+      const entity = cotw_intent.entity || 'truth';
+      const baseLevel = Number(profile.current_tanuki_level || 0.0);
+
+      const allTriggers = vocab.tanuki_mode_triggers || [];
+      const overrides = profile.modeoverrides || null;
+
+      const level = this.modeDetector.computeLevel(
+        baseLevel,
+        cotw_intent,
+        allTriggers,
+        inputText,
+        overrides
+      );
+
+      const word1 = this.selector.getTanukiWord(vocab);
+      const word2 = this.selector.getDefaultWord(vocab);
+
+      if (word1)
+        await this.logVocabularyUsage(
+          characterId,
+          word1,
+          "tanuki_mode",
+          intent,
+          level,
+          task?.taskId || null
+        );
+
+      if (word2)
+        await this.logVocabularyUsage(
+          characterId,
+          word2,
+          "default_vocabulary",
+          intent,
+          level,
+          task?.taskId || null
+        );
+
+      // LAYER 1 INSERT: Ground response in Claude's actual state
+      const groundedContext = await this.grounder.ground(entity, characterId);
+      console.log(`[RealityGrounder] Entity: "${entity}", Grounded:`, groundedContext.groundedReality);
+
+      // LAYER 2 INSERT: Ground response in Claude's relationships
+      const relationshipContext = await this.relationshipGrounder.ground(entity, characterId);
+      console.log(`[RelationshipGrounder] Entity: "${entity}", Relationships:`, relationshipContext.groundedRelationships);
+
+      // LAYER 3 INSERT: Ground response in Claude's experienced events
+      const eventContext = await this.eventGrounder.ground(entity, characterId);
+      console.log(`[EventGrounder] Entity: "${entity}", Events:`, eventContext.groundedEvents);
+
+      const finalResponse = this.assembler.assemble(inputText, vocab, level, groundedContext, relationshipContext, eventContext);
+
+      if (level !== baseLevel) {
+        await this.levelSystem.updateLevel(
+          characterId,
+          baseLevel,
+          level,
+          "modeDetector"
+        );
+      }
+
+      return finalResponse;
+    } catch (err) {
+      console.error("MechanicalBrain_v2 Error:", err.message);
+      return "My thoughts shimmer too wildly to answer.";
+    }
+  }
+
+  clearCache() {
+    this.vocabCache.clear();
+    this.profileCache.clear();
+  }
+}

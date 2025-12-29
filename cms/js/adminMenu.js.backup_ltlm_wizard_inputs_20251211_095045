@@ -1,0 +1,892 @@
+// Admin Menu System for CMS
+// Styled using cms/css/cms-styles.css
+
+// Global Data Store
+window.cmsData = {
+    characters: [],
+    selectedChar: null,
+    storyArcs: []
+};
+
+// Base URLs
+const IMG_API = "/api/images"; 
+const ADMIN_API = "/api/admin/characters"; 
+
+// ===== Helper: System Offline Placeholder =====
+const renderPlaceholder = (title, message = "Module initialization required.") => {
+    const display = document.getElementById('top-right-window-inner');
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>${title}</h2>
+            <div class="entity-info" style="text-align: center; padding: 40px;">
+                <h3 style="color: #666; margin-bottom: 10px;">[ SYSTEM OFFLINE ]</h3>
+                <p class="no-data">${message}</p>
+                <div style="margin-top: 20px; border-top: 1px solid #333; width: 50%; margin-left: auto; margin-right: auto;"></div>
+            </div>
+        </div>
+    `;
+};
+
+// ===== Main Menu Loader =====
+window.showAdminMenu = () => {
+    const leftPanel = document.getElementById('character-list-container');
+
+    leftPanel.innerHTML = `
+        <div class="admin-menu">
+            <div class="menu-section">
+                <h3 class="menu-header">CHARACTER MANAGEMENT</h3>
+                <button class="menu-button" onclick="loadCharacterList()">View All Characters</button>
+                <button class="menu-button" onclick="showCreateCharacter()">Create New Character</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">ENTITY MANAGEMENT</h3>
+                <button class="menu-button" onclick="showAllEntities()">View All Entities</button>
+                <button class="menu-button" onclick="showCreateEntity()">Create Entity</button>
+                <button class="menu-button" onclick="showKnowledgeEditor()">Knowledge Entity Editor</button>
+                <button class="menu-button" onclick="showEntityRelationships()">Entity Relationships</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">WORLD BUILDING</h3>
+                <button class="menu-button" onclick="showLocationsManager()">Locations Manager</button>
+                <button class="menu-button" onclick="showObjectsDatabase()">Objects Database</button>
+                <button class="menu-button" onclick="showKnowledgeDomains()">Knowledge Domains</button>
+                <button class="menu-button" onclick="showKnowledgeItems()">Knowledge Items</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">NARRATIVE SYSTEM</h3>
+                <button class="menu-button" onclick="showStoryArcs()">Story Arcs Manager</button>
+                <button class="menu-button" onclick="showNarrativeSegments()">Narrative Segments</button>
+                <button class="menu-button" onclick="showNarrativePaths()">Narrative Paths</button>
+                <button class="menu-button" onclick="showCharacterStoryAssign()">Character-Story Assignment</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">EVENTS SYSTEM</h3>
+                <button class="menu-button" onclick="showMultiverseEvents()">Multiverse Events Log</button>
+                <button class="menu-button" onclick="showPsychicEvents()">Psychic Events Monitor</button>
+                <button class="menu-button" onclick="showOmiyageEvents()">Omiyage (Gift) Events</button>
+                <button class="menu-button" onclick="showCreateEvent()">Create New Event</button>
+            </div>
+            
+            <div class="menu-section">
+                <h3 class="menu-header">USER & SYSTEM</h3>
+                <button class="menu-button" onclick="showUserManagement()">User Management</button>
+                <button class="menu-button" onclick="showSystemSettings()">System Settings</button>
+                <button class="menu-button" onclick="showDatabaseHealth()">Database Health</button>
+                <button class="menu-button" onclick="showHexMonitor()">Hex ID Monitor</button>
+                    <button class="menu-button" onclick="showLTLMTrainingPanel()" style="margin-top: 10px;">LTLM Voice Training</button>
+            </div>
+            <div class="menu-section" style="margin-top: 30px; border-top: 2px solid #ff4444; padding-top: 15px;">
+                <button class="menu-button" onclick="handleLogoutClick()" style="background: rgba(255, 68, 68, 0.2); border: 2px solid #ff4444; color: #ff4444; width: 100%;">LOGOUT & SAVE SESSION</button>
+            </div>
+        </div>
+    `;
+};
+
+// ==========================================
+// 1. CHARACTER MANAGEMENT
+// ==========================================
+
+window.loadCharacterList = async () => {
+    try {
+        const response = await fetch("/api/cms/characters");
+        const data = await response.json();
+
+        if (data.success) {
+            window.cmsData.characters = data.characters;
+            const listContainer = document.getElementById("character-list-container");
+
+            listContainer.innerHTML = data.characters.map(char => `
+                <div class="character-item" onclick="showCharacter('${char.character_id}')">
+                    <div class="character-name">${char.character_name}</div>
+                    <div class="character-category">${char.category || 'Unknown'}</div>
+                </div>
+            `).join("") + `
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #00ff75;">
+                    <button class="menu-button" onclick="showAdminMenu()">Return To Main Menu</button>
+                </div>
+            `;
+
+            document.getElementById("top-right-window-inner").innerHTML = `
+                <div class="admin-content">
+                    <h2>CHARACTER ROSTER</h2>
+                    <div class="entity-info">
+                        <div class="info-row"><span class="label">STATUS:</span><span class="value">ONLINE</span></div>
+                        <div class="info-row"><span class="label">COUNT:</span><span class="value">${data.characters.length} Records</span></div>
+                        <div class="section-divider"></div>
+                        <p>Select a designation from the left panel to initialize dashboard.</p>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (err) {
+        console.error("Error:", err);
+        renderPlaceholder("Connection Error", "Failed to retrieve character roster.");
+    }
+};
+
+window.showCharacter = async (id) => {
+    let char = window.cmsData.characters.find(c => c.character_id === id);
+    window.cmsData.selectedChar = char;
+    
+    const display = document.getElementById("top-right-window-inner");
+    
+    // FETCH PROFILE IMAGE (Safe Encoding)
+    let imageUrl = char ? char.image_url : null;
+    try {
+        const encodedId = encodeURIComponent(id); 
+        const imgReq = await fetch(`${IMG_API}/character/${encodedId}`);
+        const imgData = await imgReq.json();
+        if(imgData.success && imgData.images.length > 0) {
+            const active = imgData.images.find(i => i.is_active);
+            if(active) imageUrl = active.url;
+        }
+    } catch(e) { console.log("Image fetch warning"); }
+
+    const description = char ? (char.description || "No biography available.") : "Loading...";
+    
+    const imgDisplay = imageUrl 
+        ? `<img id="main-profile-img" src="${imageUrl}" style="width:150px; height:150px; object-fit:cover; border:2px solid #00ff75; box-shadow: 0 0 15px rgba(0,255,117,0.3);">` 
+        : `<div id="main-profile-img" style="width:150px; height:150px; background:#001a0d; border:1px dashed #004422; display:flex; align-items:center; justify-content:center; color:#004422; font-size: 0.8em; text-align:center;">NO VISUAL<br>RECORD</div>`;
+
+    display.innerHTML = `
+        <div class="admin-content">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap: 20px;">
+                <div style="flex:1;">
+                    <h2 style="font-size: 2em; margin-bottom: 5px;">${char ? char.character_name : 'LOADING...'}</h2>
+                    <div class="entity-info" style="border:none; padding:0; background:none;">
+                        <div class="info-row"><span class="label">HEX ID:</span><span class="value" style="color: #00ff75;">${id}</span></div>
+                        <div class="info-row"><span class="label">CATEGORY:</span><span class="value">${char ? (char.category || 'Unknown') : '...'}</span></div>
+                    </div>
+                </div>
+                <div>
+                    ${imgDisplay}
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label style="color: #00ff75; margin-bottom:5px; display:block; letter-spacing:1px; border-bottom:1px solid #004422; padding-bottom:5px;">BIOGRAPHY & NOTES</label>
+                <div class="terminal-textarea" style="background: rgba(0,20,0,0.5); color: #88ffAA; min-height: 100px; padding: 15px; border-left: 3px solid #00ff75;">${description}</div>
+            </div>
+
+            <div class="section-header" style="margin-top: 30px;">SUBSYSTEM ACCESS</div>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
+                <button class="action-button" onclick="showEditCharacter('${id}')">EDIT</button>
+                <button class="action-button" onclick="showKnowledgeManager('${id}')">KNOWLEDGE</button>
+                <button class="action-button" onclick="showInventoryManager('${id}')">INVENTORY</button>
+                <button class="action-button" onclick="showTraitsManager('${id}')">TRAITS</button>
+            </div>
+
+            <div id="character-workspace" class="entity-details-container" style="border: 1px dashed #004422; min-height: 150px; background: rgba(0,0,0,0.2);">
+                <p class="no-data" style="text-align: center; padding-top: 60px;">Select a subsystem above to load module.</p>
+            </div>
+        </div>
+    `;
+};
+
+window.showCreateCharacter = () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>INITIALIZE NEW CHARACTER</h2>
+            <form id="create-character-form" class="entity-form">
+                <div class="form-group"><label>Character Designation</label><input type="text" id="char-name" class="terminal-input" required></div>
+                <div class="form-group"><label>Archetype</label>
+                    <select id="char-category" class="terminal-select">
+                        <option>Angry Slice Of Pizza</option><option>Antagonist</option><option>B-Roll Chaos</option>
+                        <option>Council Of The Wise</option><option>Protagonist</option><option>Tanuki</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Biography</label><textarea id="char-description" class="terminal-textarea" rows="4"></textarea></div>
+                <div class="form-actions"><button type="submit" class="action-button">INITIALIZE CHARACTER</button></div>
+            </form>
+        </div>`;
+
+    const form = document.getElementById("create-character-form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        btn.innerText = "PROCESSING...";
+        btn.disabled = true;
+
+        try {
+            const response = await fetch("/api/cms/character/create", { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    character_name: document.getElementById("char-name").value,
+                    category: document.getElementById("char-category").value,
+                    description: document.getElementById("char-description").value
+                })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert("Character Created Successfully!");
+                loadCharacterList(); 
+                showCharacter(result.character.character_id); 
+            } else {
+                alert("Error: " + result.message);
+                btn.innerText = "INITIALIZE CHARACTER";
+                btn.disabled = false;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Connection failed.");
+            btn.innerText = "INITIALIZE CHARACTER";
+            btn.disabled = false;
+        }
+    });
+};
+
+// ===== Character Sub-Tools =====
+
+// 1. EDIT PROFILE
+window.showEditCharacter = (id) => {
+    const char = window.cmsData.selectedChar;
+    const workspace = document.getElementById('character-workspace');
+    
+    if (!char) { workspace.innerHTML = `<p class="error-message">Error: Character data not loaded.</p>`; return; }
+
+    workspace.innerHTML = `
+        <h3 class="section-header">EDIT CONFIGURATION</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            
+            <div>
+                <form id="edit-character-form" class="entity-form" style="margin:0;">
+                    <div class="form-group"><label>Designation</label><input type="text" id="edit-name" class="terminal-input" value="${char.character_name}"></div>
+                    <div class="form-group"><label>Category</label><input type="text" id="edit-category" class="terminal-input" value="${char.category || ''}"></div>
+                    <div class="form-group"><label>Biography</label><textarea id="edit-description" class="terminal-textarea" rows="6">${char.description || ''}</textarea></div>
+                    <button type="submit" class="action-button" style="width:100%; margin-top:10px;">SAVE TEXT DATA</button>
+                </form>
+            </div>
+
+            <div style="background: rgba(0,20,0,0.3); padding: 15px; border: 1px solid #004422;">
+                <h4 style="color:#00ff75; border-bottom:1px solid #004422; margin-bottom:15px; padding-bottom: 5px;">VISUAL IDENTIFICATION</h4>
+                <input type="file" id="image-upload-input" style="display:none" accept="image/*">
+                <button class="menu-button" onclick="document.getElementById('image-upload-input').click()" style="text-align:center; margin-bottom:15px; border-style:dashed;">+ UPLOAD NEW SCAN</button>
+                <div id="image-gallery-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-height: 300px; overflow-y: auto;">
+                    <div class="loading">Loading assets...</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    loadCharacterImages(id);
+
+    document.getElementById('image-upload-input').onchange = async (e) => {
+        if(!e.target.files[0]) return;
+        const formData = new FormData();
+        formData.append('image', e.target.files[0]);
+        const galleryGrid = document.getElementById('image-gallery-grid');
+        galleryGrid.innerHTML = '<div class="loading">UPLOADING ASSET...</div>';
+        try {
+            const encodedId = encodeURIComponent(id);
+            const res = await fetch(`${IMG_API}/upload/${encodedId}`, { method: 'POST', body: formData });
+            const data = await res.json();
+            if(data.success) loadCharacterImages(id); 
+            else { alert("Upload failed: " + data.error); loadCharacterImages(id); }
+        } catch(err) { alert("Connection error during upload."); loadCharacterImages(id); }
+    };
+    
+    document.getElementById('edit-character-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        btn.innerText = "SAVING...";
+        try {
+            const encodedId = encodeURIComponent(id);
+            const response = await fetch(`${ADMIN_API}/${encodedId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    character_name: document.getElementById("edit-name").value,
+                    category: document.getElementById("edit-category").value,
+                    description: document.getElementById("edit-description").value,
+                    image_url: window.cmsData.selectedChar.image_url 
+                })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert("Text Data Updated.");
+                loadCharacterList(); 
+                window.cmsData.selectedChar.character_name = document.getElementById("edit-name").value;
+                window.cmsData.selectedChar.description = document.getElementById("edit-description").value;
+                btn.innerText = "SAVE TEXT DATA";
+            } else { alert("Error: " + result.message); btn.innerText = "SAVE TEXT DATA"; }
+        } catch(e) { alert("Save failed: " + e.message); btn.innerText = "SAVE TEXT DATA"; }
+    });
+};
+
+// 2. KNOWLEDGE MANAGER
+window.showKnowledgeManager = async (id) => {
+    const workspace = document.getElementById('character-workspace');
+    workspace.innerHTML = `<div class="loading">ACCESSING NEURAL LINK...</div>`;
+
+    try {
+        const encodedId = encodeURIComponent(id);
+        const response = await fetch(`/api/character/${encodedId}/knowledge`);
+        
+        if (!response.ok) throw new Error("Knowledge Link Offline");
+        
+        const data = await response.json();
+        const domains = data.mapped_domains_summary || [];
+
+        if (domains.length === 0) {
+             workspace.innerHTML = `
+                <h3 class="section-header">KNOWLEDGE BASE</h3>
+                <p class="no-data" style="text-align:center;">Subject has no mapped knowledge domains.</p>
+            `;
+            return;
+        }
+
+        workspace.innerHTML = `
+            <h3 class="section-header">KNOWLEDGE BASE</h3>
+            <div style="overflow-x:auto;">
+                <table class="entity-table" style="margin-top:0; width:100%;">
+                    <thead><tr><th>DOMAIN</th><th>ACCESS</th><th>SLOT ID</th></tr></thead>
+                    <tbody>
+                        ${domains.map(d => `
+                            <tr>
+                                <td style="color:#00ff75; font-weight:bold;">${d.domain_name}</td>
+                                <td>
+                                    <div style="background:#004422; height:10px; width:100px; display:inline-block; margin-right:10px; border-radius:2px;">
+                                        <div style="background:#00ff75; height:100%; width:${d.access_percentage}%;"></div>
+                                    </div>
+                                    ${d.access_percentage}%
+                                </td>
+                                <td style="font-family:monospace; font-size:0.8em; color:#888;">${d.slot_trait_hex_id}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } catch (e) { workspace.innerHTML = `<p class="error-message">Knowledge System Unreachable: ${e.message}</p>`; }
+};
+
+// 3. TRAITS MANAGER
+window.showTraitsManager = async (id) => {
+    const workspace = document.getElementById('character-workspace');
+    workspace.innerHTML = `<div class="loading">ACCESSING TRAIT MATRIX...</div>`;
+    try {
+        const encodedId = encodeURIComponent(id);
+        const response = await fetch(`/api/traits/character/${encodedId}`);
+        const data = await response.json();
+        workspace.innerHTML = `
+            <h3 class="section-header">TRAIT MATRIX</h3>
+            <div style="max-height: 300px; overflow-y: auto; background: #001a0d; padding: 10px; font-family: monospace; font-size: 0.8em; border: 1px solid #00ff75;">
+                <pre style="color: #00ff75;">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+        `;
+    } catch(e) { workspace.innerHTML = `<p class="error-message">Trait System Unreachable</p>`; }
+};
+
+// 4. INVENTORY MANAGER (FIXED)
+window.showInventoryManager = async (id) => {
+    const workspace = document.getElementById('character-workspace');
+    workspace.innerHTML = `<div class="loading">SCANNING CARGO MANIFEST...</div>`;
+
+    try {
+        // FIX: ENCODE THE ID
+        const encodedId = encodeURIComponent(id);
+        const response = await fetch(`/api/cms/character/${encodedId}/inventory`);
+        const data = await response.json();
+
+        if (!data.success) throw new Error("Inventory Fetch Failed");
+
+        if (data.inventory.length === 0) {
+            workspace.innerHTML = `
+                <h3 class="section-header">INVENTORY MANIFEST</h3>
+                <p class="no-data" style="text-align:center; padding:30px;">
+                    Subject is currently not carrying any tracked objects.
+                </p>
+            `;
+            return;
+        }
+
+        workspace.innerHTML = `
+            <h3 class="section-header">INVENTORY MANIFEST</h3>
+                ${window.renderLTLMAnalytics(data.rows)}
+            <table class="entity-table" style="width:100%; margin-top:0;">
+                <thead>
+                    <tr><th>OBJECT NAME</th><th>PAD SIGNATURE</th><th>ORIGIN</th></tr>
+                </thead>
+                <tbody>
+                    ${data.inventory.map(item => `
+                        <tr>
+                            <td style="color:#00ff75; font-weight:bold;">${item.object_name}</td>
+                            <td>
+                                <span style="color:#ff9900;" title="Pleasure">P:${item.p}</span> 
+                                <span style="color:#00ccff;" title="Arousal">A:${item.a}</span> 
+                                <span style="color:#ff3333;" title="Dominance">D:${item.d}</span>
+                            </td>
+                            <td style="font-size:0.8em; color:#888;">
+                                ${item.acquisition_method || 'Unknown'} 
+                                ${item.source_character_name ? `(via ${item.source_character_name})` : ''}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (e) {
+        console.error(e);
+        workspace.innerHTML = `<h3 class="section-header">INVENTORY MANIFEST</h3><p class="error-message">Database Connection Failed</p>`;
+    }
+};
+
+// Helpers for Image Gallery
+async function loadCharacterImages(id) {
+    const grid = document.getElementById('image-gallery-grid');
+    if(!grid) return;
+    try {
+        const encodedId = encodeURIComponent(id);
+        const res = await fetch(`${IMG_API}/character/${encodedId}`);
+        const data = await res.json();
+        if(data.success && data.images.length > 0) {
+            grid.innerHTML = data.images.map(img => `
+                <div style="position:relative; border: 2px solid ${img.is_active ? '#00ff75' : 'transparent'}; box-shadow: ${img.is_active ? '0 0 10px rgba(0,255,117,0.3)' : 'none'};">
+                    <img src="${img.url}" style="width:100%; height:80px; object-fit:cover; display:block; opacity: ${img.is_active ? '1' : '0.6'}; transition: opacity 0.2s;">
+                    <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.8); display:flex; justify-content:space-between; padding:2px;">
+                        ${!img.is_active ? 
+                            `<button onclick="setActiveImage('${img.gallery_entry_id}', '${id}', '${img.url}')" title="Set as Profile" style="background:none; border:none; color:#00ff75; cursor:pointer; font-size:14px; font-weight:bold;">★</button>` 
+                            : '<span style="color:#00ff75; font-size:10px; font-weight:bold; padding-left:4px;">ACTIVE</span>'}
+                        <button onclick="deleteImage('${img.gallery_entry_id}', '${id}')" title="Delete Asset" style="background:none; border:none; color:#ff3333; cursor:pointer; font-size:12px;">✖</button>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            grid.innerHTML = `<p style="grid-column: span 3; color:#666; text-align:center; font-size:0.8em; padding:20px;">No visual assets found.<br>Upload a file to begin.</p>`;
+        }
+    } catch(e) { grid.innerHTML = `<p class="error-message">Gallery Offline</p>`; }
+}
+
+window.setActiveImage = async (galleryId, charId, imgUrl) => {
+    try {
+        const encodedGallery = encodeURIComponent(galleryId);
+        await fetch(`${IMG_API}/set-active/${encodedGallery}`, { method: 'PUT' });
+        loadCharacterImages(charId); 
+        const mainImg = document.getElementById('main-profile-img');
+        if(mainImg) {
+            if(mainImg.tagName === 'IMG') mainImg.src = imgUrl;
+            else mainImg.parentElement.innerHTML = `<img id="main-profile-img" src="${imgUrl}" style="width:150px; height:150px; object-fit:cover; border:2px solid #00ff75; box-shadow: 0 0 15px rgba(0,255,117,0.3);">`;
+        }
+    } catch(e) { alert("Failed to set active image"); }
+};
+
+window.deleteImage = async (galleryId, charId) => {
+    if(!confirm("Delete this asset permanently?")) return;
+    try {
+        const encodedGallery = encodeURIComponent(galleryId);
+        await fetch(`${IMG_API}/${encodedGallery}`, { method: 'DELETE' });
+        loadCharacterImages(charId);
+    } catch(e) { alert("Failed to delete image"); }
+};
+
+// ==========================================
+// 2. STORY ARCS (LORE) MANAGEMENT
+// ==========================================
+
+window.showStoryArcs = async () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `<div class="loading">LOADING STORY DATABASE...</div>`;
+    try {
+        const response = await fetch("/api/lore/arcs?limit=20");
+        const data = await response.json();
+        window.cmsData.storyArcs = data.items || [];
+        display.innerHTML = `
+            <div class="admin-content">
+                <h2>STORY ARCS MANAGER</h2>
+                <div class="entity-controls"><button class="action-button" onclick="showCreateStoryArc()">+ NEW STORY ARC</button></div>
+                <table class="entity-table">
+                    <thead><tr><th>ID</th><th>TITLE</th><th>SUMMARY</th><th>ACTIONS</th></tr></thead>
+                    <tbody>
+                        ${data.items.map(arc => `
+                            <tr>
+                                <td class="hex-id">${arc.arc_id}</td>
+                                <td>${arc.title}</td>
+                                <td style="font-size:0.8em;">${arc.summary.substring(0, 50)}...</td>
+                                <td><button class="mini-button" onclick="alert('Edit Arc UI Coming Soon')">EDIT</button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } catch(e) { console.error(e); renderPlaceholder("STORY ARCS", "Connection to Lore Database failed."); }
+};
+
+window.showCreateStoryArc = () => {
+    const display = document.getElementById("top-right-window-inner");
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>NEW STORY ARC</h2>
+            <form id="create-arc-form" class="entity-form">
+                <div class="form-group"><label>Title</label><input type="text" id="arc-title" class="terminal-input" required></div>
+                <div class="form-group"><label>Summary</label><textarea id="arc-summary" class="terminal-textarea" rows="3" required></textarea></div>
+                <div class="form-group"><label>Tags (comma separated)</label><input type="text" id="arc-tags" class="terminal-input"></div>
+                <button type="submit" class="action-button">CREATE ARC</button>
+                <button type="button" class="cancel-button" onclick="showStoryArcs()">CANCEL</button>
+            </form>
+        </div>
+    `;
+    document.getElementById('create-arc-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch("/api/lore/arcs", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: document.getElementById("arc-title").value,
+                    summary: document.getElementById("arc-summary").value,
+                    tags: document.getElementById("arc-tags").value
+                })
+            });
+            if(response.ok) { alert("Arc Created!"); showStoryArcs(); } 
+            else { alert("Failed to create arc."); }
+        } catch(e) { alert("Error: " + e.message); }
+    });
+};
+
+// ==========================================
+// 3. OTHER SYSTEMS (INTEGRATIONS & PLACEHOLDERS)
+// ==========================================
+
+window.showAllEntities = () => EntityManager.showAllEntities();
+window.showCreateEntity = () => EntityManager.showCreateEntity();
+window.showKnowledgeEditor = () => EntityManager.showKnowledgeEditor();
+window.showEntityRelationships = () => EntityManager.manageRelationshipsSelector ? EntityManager.manageRelationshipsSelector() : EntityManager.showAllEntities();
+
+window.showLocationsManager = () => renderPlaceholder("LOCATIONS MANAGER", "Geospatial database not connected.");
+window.showObjectsDatabase = () => renderPlaceholder("OBJECTS DATABASE", "Item registry offline.");
+window.showKnowledgeDomains = () => renderPlaceholder("KNOWLEDGE DOMAINS", "Ontology system initializing.");
+window.showKnowledgeItems = () => renderPlaceholder("KNOWLEDGE ITEMS", "Data fragments unreachable.");
+window.showNarrativeSegments = () => renderPlaceholder("NARRATIVE SEGMENTS", "Story blocks not loaded.");
+window.showNarrativePaths = () => renderPlaceholder("NARRATIVE PATHS", "Branching logic system offline.");
+window.showCharacterStoryAssign = () => renderPlaceholder("CHARACTER ASSIGNMENT", "Actor mapping service unavailable.");
+window.showMultiverseEvents = () => renderPlaceholder("MULTIVERSE LOG", "Timeline sensor disabled.");
+window.showPsychicEvents = () => renderPlaceholder("PSYCHIC MONITOR", "Psi-metrics stream offline.");
+window.showOmiyageEvents = () => renderPlaceholder("OMIYAGE EVENTS", "Transactional history unavailable.");
+window.showCreateEvent = () => renderPlaceholder("CREATE EVENT", "Event generator offline.");
+window.showUserManagement = () => renderPlaceholder("USER MANAGEMENT", "Admin privileges verification pending.");
+window.showSystemSettings = () => renderPlaceholder("SYSTEM SETTINGS", "Configuration panel locked.");
+window.showDatabaseHealth = () => renderPlaceholder("DATABASE HEALTH", "Diagnostics tools unavailable.");
+window.showHexMonitor = () => renderPlaceholder("HEX ID MONITOR", "Unique identifier tracking offline.");
+
+window.handleLogoutClick = async () => {
+    console.log('[LOGOUT] Button clicked');
+    if (!confirm("Save session and logout?")) return;
+    
+    console.log('[LOGOUT] Confirmed. Checking socket:', window.cmsSocket, window.cmsSocket?.socket);
+    
+    if (!window.cmsSocket || !window.cmsSocket.socket) {
+        alert("Socket not connected. Please refresh and try again.");
+        return;
+    }
+
+    const sessionContext = {
+        entityHistory: window.sessionEntityHistory || [],
+        conversationTurns: window.conversationTurns || 0
+    };
+
+    console.log('[LOGOUT] Emitting user:logout');
+    window.cmsSocket.socket.emit('user:logout', { sessionContext });
+
+    window.cmsSocket.socket.once('logout:complete', (farewell) => {
+        console.log('[LOGOUT] Received logout:complete', farewell);
+        alert(farewell.message);
+        window.cmsSocket.socket.disconnect();
+        window.location.href = "/cms-login";
+    });
+
+    window.cmsSocket.socket.once('logout-error', (err) => {
+        console.error('[LOGOUT] Error:', err);
+        alert('Logout error: ' + err.error);
+    });
+};
+window.sessionEntityHistory = [];
+window.conversationTurns = 0;
+
+// ==========================================
+// LTLM TRAINING PANEL (GLOBAL ENTRY POINT)
+// ==========================================
+window.showLTLMTrainingPanel = async () => {
+
+    // Auto-load characters if cmsData is empty
+    if (!window.cmsData.characters || window.cmsData.characters.length === 0) {
+        try {
+            const res = await fetch("/api/cms/characters");
+            const data = await res.json();
+            if (data.success) { window.cmsData.characters = data.characters; }
+        } catch (e) { console.error("Failed to auto-load characters for LTLM:", e); }
+    }
+
+    setTimeout(() => window.populateLTLMCharacterDropdown(), 20);
+    setTimeout(() => window.selectCurrentLTLMCharacter(), 40);
+    const display = document.getElementById("top-right-window-inner");
+
+    display.innerHTML = `
+        <div class="admin-content">
+            <h2>LTLM VOICE TRAINING</h2>
+
+            <p style="color:#00ff75; margin-bottom:15px;">
+            <div style="margin-bottom:15px;">
+                <label style="color:#00ff75; display:block; margin-bottom:5px;">Select Character:</label>
+                <select id="ltlm-character-dropdown" class="terminal-select" style="width:100%; padding:5px; background:#001a0d; color:#00ff75; border:1px solid #004422;" onchange="showLTLMTraining(this.value)">
+                </select>
+            </div>
+            </p>
+
+            <div id="ltlm-panel-body" 
+                 style="border:1px dashed #004422; padding:15px; min-height:120px; background:rgba(0,0,0,0.3);">
+                 
+                <p class="no-data" style="text-align:center;">
+                    No character selected.<br>
+                    Choose a character from the roster to begin LTLM training.
+                </p>
+
+            </div>
+        </div>
+    `;
+
+    // If a character is already selected, preload LTLM for that character
+    if (window.cmsData?.selectedChar) {
+        showLTLMTraining(window.cmsData.selectedChar.character_id);
+    }
+};
+
+// ==========================================
+// LTLM TRAINING UI (PER CHARACTER)
+// ==========================================
+window.showLTLMTraining = async (characterId) => {
+    const panel = document.getElementById("ltlm-panel-body");
+    if (!panel) return;
+
+    panel.innerHTML = `<div class="loading">ACCESSING VOICE TRAINING DATA...</div>`;
+
+    try {
+        const res = await fetch(`/api/ltlm/training?character_id=${encodeURIComponent(characterId)}`);
+        const data = await res.json();
+
+        const existingRows = (data.rows || [])
+            .map(r => `
+                <tr>
+                    <td class="hex-id">${r.training_id}</td>
+                    <td>${r.template_text}</td>
+                    <td>${r.category}</td>
+                    <td>${r.pad_dominance}</td>
+                    <td>${r.appropriateness_score}</td>
+                </tr>
+            `).join("");
+
+        panel.innerHTML = `
+            <h3 class="section-header">VOICE ANCHORS FOR ${characterId}</h3>
+
+            ${window.renderLTLMAnalytics(data.rows)}
+
+            <table class="entity-table" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Template</th><th>Category</th><th>PAD</th><th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>${existingRows}</tbody>
+            </table>
+
+            <div class="section-header" style="margin-top:20px;">ADD NEW ANCHORS</div>
+
+            <textarea id="ltlm-bulk" class="terminal-textarea" rows="6" placeholder="One template per line. Must include <SUBJECT>."></textarea>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                <select id="ltlm-dialogue-code" class="terminal-input" style="flex:1;">
+                    <option value="discourse_structuring">discourse_structuring</option>
+                </select>
+                <select id="ltlm-speech-code" class="terminal-input" style="flex:1;">
+                    <option value="assertive">assertive</option>
+                </select>
+                <select id="ltlm-narrative-code" class="terminal-input" style="flex:1;">
+                    <option value="">— narrative not set —</option>
+                    <option value="structure_beats">structure_beats</option>
+                </select>
+                <input id="ltlm-outcome-intents" class="terminal-input" style="flex:1;" placeholder="Outcome intents CSV (optional)">
+            </div>
+
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+                <input id="ltlm-pad-pleasure" class="terminal-input" style="flex:1;" placeholder="PAD Pleasure (-1.0 to +1.0)">
+                <input id="ltlm-pad-arousal" class="terminal-input" style="flex:1;" placeholder="PAD Arousal (-1.0 to +1.0)">
+                <input id="ltlm-pad-dominance" class="terminal-input" style="flex:1;" placeholder="PAD Dominance (-1.0 to +1.0)">
+                <input id="ltlm-created" class="terminal-input" style="flex:1;" placeholder="Created By">
+            </div>
+
+            <button class="action-button" onclick="submitLTLM('${characterId}')"
+                style="margin-top:15px; width:100%;">SUBMIT NEW TRAINING ROWS</button>
+        `;
+    } catch (e) {
+        panel.innerHTML = `<p class="error-message">LTLM Module Offline</p>`;
+    }
+};
+
+window.buildLTLMTrainingLines = (templates, characterId) => {
+    const dialogueCode  = document.getElementById("ltlm-dialogue-code")?.value || "discourse_structuring";
+    const speechCode    = document.getElementById("ltlm-speech-code")?.value || "assertive";
+    const narrativeRaw  = document.getElementById("ltlm-narrative-code")?.value || "";
+    const intentsCsv    = (document.getElementById("ltlm-outcome-intents")?.value || "").trim();
+
+    const padPInput = parseFloat(document.getElementById("ltlm-pad-pleasure")?.value);
+    const padAInput = parseFloat(document.getElementById("ltlm-pad-arousal")?.value);
+    const padDInput = parseFloat(document.getElementById("ltlm-pad-dominance")?.value);
+
+    const safeP = isNaN(padPInput) ? 0.0 : padPInput;
+    const safeA = isNaN(padAInput) ? 0.0 : padAInput;
+    const safeD = isNaN(padDInput) ? 0.0 : padDInput;
+
+    const padPStr = safeP.toFixed(1);
+    const padAStr = safeA.toFixed(1);
+    const padDStr = safeD.toFixed(1);
+
+    const narrativeField = narrativeRaw === "" ? "NULL" : narrativeRaw;
+
+    return templates.map(utterance =>
+        `${utterance}|${dialogueCode}|${speechCode}|${narrativeField}|${intentsCsv}|${padPStr}|${padAStr}|${padDStr}`
+    );
+};
+
+
+window.submitLTLM = async (characterId) => {
+    const templates = document.getElementById("ltlm-bulk").value
+        .split("\n")
+        .map(x => x.trim())
+        .filter(x => x.length > 0);
+
+    const payload = {
+        mode: "batch",
+        speaker_character_id: characterId,
+        created_by: document.getElementById("ltlm-created").value || "cms_ltlm",
+    		lines: buildLTLMTrainingLines(templates, characterId)
+    };
+
+    const res = await fetch(`/api/ltlm/training`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Training rows inserted: " + data.inserted);
+        showLTLMTraining(characterId);
+    } else {
+        alert("Error: " + data.message);
+    }
+};
+
+// ==========================================
+// LTLM Character Filter (exclude non-speaking categories)
+// ==========================================
+window.getLTLMEligibleCharacters = () => {
+    try {
+        const allChars = window.cmsData.characters || [];
+        return allChars.filter(c =>
+            c.category !== 'Knowledge Entity' &&
+            c.category !== 'Machines' &&
+            c.is_active !== false
+        );
+    } catch (e) {
+        console.error("LTLM filter error:", e);
+        return [];
+    }
+};
+
+// ==========================================
+// LTLM Dropdown Population Override
+// ==========================================
+window.populateLTLMCharacterDropdown = () => {
+    const dropdown = document.getElementById("ltlm-character-dropdown");
+    if (!dropdown) return;
+
+    const eligible = window.getLTLMEligibleCharacters();
+    dropdown.innerHTML = eligible.map(c =>
+        `<option value="${c.character_id}">${c.character_name} (${c.category})</option>`
+    ).join("");
+};
+
+// ==========================================
+// LTLM: Auto-select currently viewed character
+// ==========================================
+window.selectCurrentLTLMCharacter = () => {
+    try {
+        const dropdown = document.getElementById("ltlm-character-dropdown");
+        if (!dropdown) return;
+
+        const eligible = window.getLTLMEligibleCharacters();
+        const active = window.cmsData.selectedChar;
+
+        if (!active) return;
+
+        const match = eligible.find(c => c.character_id === active.character_id);
+        if (match) {
+            dropdown.value = match.character_id;
+        }
+    } catch (e) {
+        console.error("LTLM auto-select error:", e);
+    }
+};
+
+// ==========================================
+// LTLM ANALYTICS SUMMARY HELPER
+// ==========================================
+window.renderLTLMAnalytics = (rows) => {
+    if (!rows || rows.length === 0) return "";
+
+    const total = rows.length;
+
+    // Count categories
+    const categoryCounts = {};
+    const padCounts = { high: 0, neutral: 0, low: 0 };
+    const scoreCounts = { "1": 0, "0": 0, "-1": 0 };
+
+    for (const r of rows) {
+        // Category
+        categoryCounts[r.category] = (categoryCounts[r.category] || 0) + 1;
+
+        // PAD dominance
+        if (r.pad_dominance > 0.3) padCounts.high++;
+        else if (r.pad_dominance < -0.3) padCounts.low++;
+        else padCounts.neutral++;
+
+        // Appropriateness score
+        scoreCounts[r.appropriateness_score] =
+            (scoreCounts[r.appropriateness_score] || 0) + 1;
+    }
+
+    const catList = Object.entries(categoryCounts)
+        .map(([k, v]) => `<div>${k}: <b>${v}</b></div>`)
+        .join("");
+
+    return `
+        <div class="section-header" style="margin-top:15px;">DATA SUMMARY</div>
+        <div style="display:flex; gap:40px; margin-bottom:10px;">
+            <div>
+                <div><b>Total Anchors:</b> ${total}</div>
+                <div class="mini-divider"></div>
+                <div><b>PAD High:</b> ${padCounts.high}</div>
+                <div><b>PAD Neutral:</b> ${padCounts.neutral}</div>
+                <div><b>PAD Low:</b> ${padCounts.low}</div>
+            </div>
+            <div>
+                <div><b>Score +1:</b> ${scoreCounts["1"] || 0}</div>
+                <div><b>Score 0:</b> ${scoreCounts["0"] || 0}</div>
+                <div><b>Score -1:</b> ${scoreCounts["-1"] || 0}</div>
+            </div>
+            <div>
+                <b>Categories:</b>
+                ${catList}
+            </div>
+        </div>
+    `;
+};
+

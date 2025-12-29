@@ -1,0 +1,17 @@
+@@ -475,11 +475,11 @@
+ 
+ // Make functions available globally for onclick handlers
+-window.showAllEntities = () => EntityManager.showAllEntities();
+-window.showCreateEntity = () => EntityManager.showCreateEntity();
+-window.showKnowledgeEditor = () => EntityManager.showAllEntities();
+-window.showEntityRelationships = () => EntityManager.showAllEntities();
+-window.EntityManager = EntityManager;
++window.showAllEntities = () => EntityManager.showAllEntities();
++window.showCreateEntity = () => EntityManager.showCreateEntity();
++window.showKnowledgeEditor = () => EntityManager.showKnowledgeEditor();
++window.showEntityRelationships = () => EntityManager.showRelationshipSelector();
++window.EntityManager = EntityManager;
+ 
+ // Initialize on load
+ document.addEventListener('DOMContentLoaded', () => {
+ 

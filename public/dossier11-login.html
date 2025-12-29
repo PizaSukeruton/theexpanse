@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C_O_T_W Dossier System — Council Of The Wise</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --accent: #00ff75;
+      --fg: #00ff75;
+      --shadow: 0 0 24px rgba(0,255,0,0.25), 0 0 64px rgba(0,255,0,0.1);
+      --radius: 16px;
+      --gap: 16px;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Courier New", "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.2px;
+      overflow: hidden;
+    }
+
+    .crt { position: relative; filter: contrast(1.05) saturate(1.1); text-shadow: 0 0 1px rgba(0,255,0,0.45), 0 0 8px rgba(0,255,0,0.12); }
+    .crt::after { content:""; pointer-events:none; position:absolute; inset:0;
+      background: repeating-linear-gradient(to bottom, rgba(0,255,0,0.06) 0 2px, transparent 2px 4px);
+      mix-blend-mode: screen;
+    }
+
+    .app { display:grid; grid-template-columns:1fr 1.1fr; gap:var(--gap); height:100vh; padding:16px; box-sizing:border-box; }
+
+    .panel {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      background: rgba(0,32,0,0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel { position: relative; }
+    .dossier-stack { display:none; }
+
+    .panel-box { position: relative; border: 1px solid var(--accent); border-radius: 12px; padding: 0; box-shadow: var(--shadow); background: rgba(0,16,0,0.25); }
+    .portrait-wrap { height: 220px; }
+    .portrait { width: 100%; height:100%; object-fit: contain; object-position: center 30%; border-radius: 12px; filter: grayscale(20%) contrast(1.05); }
+
+    .info-box { padding:12px; }
+    .info-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+    .info-k {}
+    .info-v { font-weight: bold; }
+    .summary { margin-top: 10px; }
+
+    .right-panel { display:flex; flex-direction:column; gap:12px; }
+    .hud { padding:10px 14px; border:1px solid var(--accent); border-radius:12px; background: rgba(0,255,0,0.04); font-weight:600; }
+    .hud small { font-weight:400; opacity:1; }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      gap: 20px;
+    }
+
+    .login-form {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .login-input {
+      background: rgba(0,16,0,0.25);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      outline: none;
+      color: var(--fg);
+      padding: 12px 14px;
+      font: inherit;
+      box-shadow: var(--shadow);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .login-button {
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--fg);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font: inherit;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .login-button:hover {
+      background: rgba(0,255,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .login-message {
+      text-align: center;
+      min-height: 20px;
+    }
+
+    .error { color: #ff4444; }
+    .success { color: #00ff75; }
+
+    .chat-interface {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .chat-interface.active {
+      display: flex;
+    }
+
+    .chat-log { 
+      border: 1px solid var(--accent); 
+      border-radius: 12px; 
+      padding: 12px; 
+      background: rgba(0,16,0,0.25); 
+      box-shadow: var(--shadow); 
+      overflow-y: auto; 
+      flex: 1; 
+    }
+
+    .line { white-space: pre-wrap; word-break: break-word; margin: 6px 0; }
+    .line.error { color: #ff4444; }
+    .line.success { color: #00ff75; }
+    .line.granted { font-weight: bold; }
+
+    .chat-input-bar { display: flex; gap: 8px; }
+    #chat-input {
+      background: rgba(0,16,0,0.25); 
+      border: 1px solid var(--accent); 
+      border-radius: 12px; 
+      outline: none; 
+      color: var(--fg); 
+      padding: 12px 14px; 
+      font: inherit; 
+      box-shadow: var(--shadow);
+      flex: 1;
+      min-width: 0;
+    }
+
+    button { 
+      background: transparent; 
+      border: 1px solid var(--accent); 
+      color: var(--fg); 
+      padding: 8px 16px; 
+      border-radius: 12px; 
+      font: inherit; 
+      cursor: pointer; 
+      box-shadow: var(--shadow); 
+      transition: transform 80ms ease, background 120ms ease; 
+      font-size: 13px; 
+      white-space: nowrap; 
+    }
+
+    button:hover { 
+      transform: translateY(-1px); 
+      background: rgba(0,255,0,0.06); 
+    }
+
+    .dossier-cover {
+      position: absolute; 
+      inset: 0;
+      display: grid; 
+      place-items: center;
+      pointer-events: auto;
+      background: linear-gradient(180deg, rgba(0,14,0,0.98), rgba(0,0,0,1)), radial-gradient(90% 60% at 50% 35%, rgba(0,255,0,0.10), transparent 60%);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      box-shadow: 0 0 22px rgba(0,255,117,0.28), inset 0 0 18px rgba(0,255,117,0.18);
+      transform: translateY(0);
+      transition: transform .7s ease-in-out;
+      z-index: 9;
+    }
+
+    .dossier-cover::before {
+      content: "";
+      position: absolute; 
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, rgba(0,255,0,0.18) 0 2px, rgba(0,0,0,0.0) 2px 4px), linear-gradient(180deg, rgba(0,255,0,0.10), rgba(0,0,0,0) 35%, rgba(0,0,0,0.35) 85%, rgba(0,0,0,0.9) 100%);
+      mix-blend-mode: screen;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .dossier-cover.open { 
+      transform: translateY(-104%); 
+      pointer-events: none; 
+    }
+
+    .dossier-cover.open ~ .dossier-stack { 
+      display: grid; 
+      grid-template-rows: auto auto; 
+      gap: 12px; 
+      position: relative; 
+    }
+
+    .cover-inner { text-align: center; padding: 28px 18px; }
+    .cover-title { font-weight: 900; font-size: 28px; letter-spacing: 2px; }
+    .cover-sub { margin-top: 8px; font-weight: 800; font-size: 18px; }
+    .cover-instr { margin-top: 20px; font-weight: 800; font-size: 14px; line-height: 1.5; }
+
+    @media (max-width: 1000px) {
+      .app { grid-template-columns: 1fr; overflow-y: auto; height: auto; min-height: 100vh; }
+      body { overflow: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app crt" id="app">
+    <section class="panel left-panel" id="dossier-panel" aria-live="polite">
+      <div class="dossier-stack">
+        <div class="panel-box portrait-wrap">
+          <img src="" alt="Agent Portrait" class="portrait" id="agent-portrait" />
+        </div>
+        <div class="panel-box">
+          <div class="info-box">
+            <div class="info-grid">
+              <div class="info-k">NAME</div><div class="info-v" id="f-name"></div>
+              <div class="info-k">ENTITY</div><div class="info-v" id="f-entity"></div>
+              <div class="info-k">DEPARTMENT</div><div class="info-v" id="f-dept"></div>
+              <div class="info-k">SECURITY LEVEL</div><div class="info-v" id="f-sec"></div>
+            </div>
+            <div class="summary" id="summary"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="dossier-cover" class="dossier-cover" aria-hidden="false">
+        <div class="cover-inner">
+          <div class="cover-title">COUNCIL OF THE WISE</div>
+          <div class="cover-sub">EYES ONLY</div>
+          <div class="cover-instr">AUTHENTICATE CREDENTIALS<br>TO ACCESS</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel right-panel" id="chat-panel">
+      <div class="hud">TERMINAL :: AUTHENTICATION <small>SECURE LOGIN</small></div>
+
+      <div class="login-container" id="loginContainer">
+        <div class="login-form">
+          <input type="text" id="login-username" class="login-input" placeholder="Username" autocomplete="username" />
+          <input type="password" id="login-password" class="login-input" placeholder="Password" autocomplete="current-password" />
+          <button type="button" id="login-submit" class="login-button">LOGIN</button>
+          <div id="login-message" class="login-message"></div>
+        </div>
+      </div>
+
+      <div class="chat-interface" id="chatInterface">
+        <div class="chat-log" id="chat-log" role="log" aria-live="polite"></div>
+        <div class="chat-input-bar">
+          <input id="chat-input" type="text" placeholder="> Enter command" autocomplete="off" />
+          <button id="send-btn" type="button">Send</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io();
+      
+      const loginContainer = document.getElementById('loginContainer');
+      const chatInterface = document.getElementById('chatInterface');
+      const loginUsername = document.getElementById('login-username');
+      const loginPassword = document.getElementById('login-password');
+      const loginSubmit = document.getElementById('login-submit');
+      const loginMessage = document.getElementById('login-message');
+      
+      const chatInput = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('send-btn');
+      const chatLog = document.getElementById('chat-log');
+      const cover = document.getElementById('dossier-cover');
+      
+      window.currentUser = null;
+
+      function showMessage(text, type = '') {
+        loginMessage.textContent = text;
+        loginMessage.className = 'login-message ' + type;
+      }
+
+      function addLine(text, cls = '') {
+        const line = document.createElement('div');
+        line.className = 'line ' + cls;
+        line.textContent = text;
+        chatLog.appendChild(line);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      function switchToCommandInterface() {
+        loginContainer.style.display = 'none';
+        chatInterface.classList.add('active');
+        chatInput.focus();
+      }
+
+      function typeText(elementId, text, delay = 50) {
+        const elem = document.getElementById(elementId);
+        elem.textContent = '';
+        let index = 0;
+        (function addChar() {
+          if (index < text.length) {
+            elem.textContent += text[index++];
+            setTimeout(addChar, delay);
+          }
+        })();
+      }
+
+      function populateDossier(data) {
+        const char = data.character || {};
+        document.getElementById('agent-portrait').src = char.portrait || '';
+        setTimeout(() => typeText('f-name', char.name || '', 60), 100);
+        setTimeout(() => typeText('f-entity', char.entity || '', 60), 500);
+        setTimeout(() => typeText('f-dept', char.department || '', 60), 900);
+        setTimeout(() => typeText('f-sec', char.access_level || '', 60), 1400);
+        setTimeout(() => typeText('summary', char.summary || '', 60), 1800);
+      }
+
+      loginSubmit.addEventListener('click', () => {
+        const username = loginUsername.value.trim();
+        const password = loginPassword.value;
+        
+        if (!username || !password) {
+          showMessage('Please enter both username and password', 'error');
+          return;
+        }
+        
+        showMessage('Authenticating...', '');
+        socket.emit('terminal-auth', { username, password });
+      });
+
+      loginUsername.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') loginPassword.focus();
+      });
+
+      loginPassword.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') loginSubmit.click();
+      });
+
+      socket.on('auth-response', (data) => {
+        if (data.success) {
+          showMessage('ACCESS GRANTED', 'success');
+          window.currentUser = data.user;
+          
+          try { localStorage.setItem('terminal_user', data.user.username); } catch(e){}
+          if (data.token) { 
+            try { localStorage.setItem('admin_token', data.token); } catch(e){} 
+          }
+
+          setTimeout(() => {
+            switchToCommandInterface();
+            addLine('SYSTEM: ' + data.message, 'granted');
+            
+            if (!data.user.last_login) {
+              const script = document.createElement("script"); 
+              script.src = "first-login-onboarding.js"; 
+              script.onload = () => setTimeout(() => showFirstLoginOnboarding(), 100); 
+              document.body.appendChild(script);
+            } else {
+              setTimeout(() => { 
+                if (data.user.access_level >= 11 && typeof initAdminPanel === 'function') 
+                  initAdminPanel(); 
+              }, 500);
+              
+              setTimeout(() => { 
+                if (data.user.access_level < 11) { 
+                  loadUserMenuByLevel(data.user.access_level); 
+                  setTimeout(() => { 
+                    if (typeof initUserPanel === 'function') 
+                      initUserPanel(); 
+                  }, 100); 
+                } 
+              }, 500);
+            }
+          }, 1000);
+          
+        } else {
+          showMessage('ACCESS DENIED: ' + data.message, 'error');
+          loginPassword.value = '';
+          loginPassword.focus();
+        }
+      });
+
+      socket.on('command-response', (data) => {
+        if (data.error) {
+          addLine('SYSTEM: ' + data.error, 'error');
+          return;
+        }
+        if (data.clear) {
+          chatLog.innerHTML = '';
+          return;
+        }
+        if (data.logout) {
+          addLine('SYSTEM: ' + data.output);
+          setTimeout(() => location.reload(), 1000);
+          return;
+        }
+
+        addLine(data.output || ('SYSTEM: ' + data.message) || '', '');
+
+        if (data.image) {
+          const imgDiv = document.createElement('div');
+          imgDiv.className = 'terminal-image';
+          const img = document.createElement('img');
+          img.src = data.image;
+          img.alt = 'Character Image';
+          img.style.maxWidth = '300px';
+          img.style.margin = '10px 0';
+          imgDiv.appendChild(img);
+          chatLog.appendChild(imgDiv);
+        }
+
+        if (data.type === 'dossier-request' && data.name) {
+          socket.emit('get-dossier', { name: data.name });
+        }
+      });
+
+      socket.on('dossier-data', (data) => {
+        if (data.success) {
+          addLine('SYSTEM: Opening dossier...', '');
+          cover.classList.add('open');
+          populateDossier(data);
+        } else if (data.message) {
+          addLine(data.output || ('SYSTEM: ' + data.message), '');
+        } else if (data.error) {
+          addLine('SYSTEM: ' + data.error, 'error');
+        }
+      });
+
+      socket.on('new-message', (data) => {
+        addLine(`[${data.username}]: ${data.message}`, '');
+      });
+
+      function submitCommand() {
+        const val = chatInput.value.trim();
+        if (!val) return;
+        
+        addLine('> ' + val, '');
+        socket.emit('terminal-command', { command: val });
+        chatInput.value = '';
+      }
+
+      chatInput.addEventListener('keydown', (e) => { 
+        if (e.key === 'Enter') submitCommand(); 
+      });
+      
+      sendBtn.addEventListener('click', submitCommand);
+
+      loginUsername.focus();
+    });
+  </script>
+  <script src="admin-menu.js"></script>
+  <script>
+    function loadUserMenuByLevel(accessLevel) {
+      const script = document.createElement("script");
+      
+      if (accessLevel >= 11) {
+        initAdminPanel();
+        return;
+      } else if (accessLevel === 10) {
+        script.src = "user-menu-level10.js";
+      } else if (accessLevel === 9) {
+        script.src = "user-menu-level9.js";
+      } else if (accessLevel === 8) {
+        script.src = "user-menu-level8.js";
+      } else if (accessLevel === 7) {
+        script.src = "user-menu-level7.js";
+      } else if (accessLevel === 6) {
+        script.src = "user-menu-level6.js";
+      } else if (accessLevel === 5) {
+        script.src = "user-menu-level5.js";
+      } else if (accessLevel === 4) {
+        script.src = "user-menu-level4.js";
+      } else if (accessLevel === 3) {
+        script.src = "user-menu-level3.js";
+      } else if (accessLevel === 2) {
+        script.src = "user-menu-level2.js";
+      } else {
+        script.src = "user-menu-level1.js";
+      }
+      
+      document.body.appendChild(script);
+    }
+  </script>
+</body>
+</html>

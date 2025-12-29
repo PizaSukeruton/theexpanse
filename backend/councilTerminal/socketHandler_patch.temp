@@ -1,0 +1,26 @@
+      case "STANDARD":
+        console.log(\`[Socket] STANDARD mode. Calling Intent Matcher...\`);
+
+        const intentResult = await cotwIntentMatcher.matchIntent(
+          modeResult.cleanCommand,
+          session.context,
+          {
+            userid: session.id,
+            username: session.username,
+            accesslevel: session.accessLevel
+          }
+        );
+
+        console.log("[Socket] Intent Matcher Output:", intentResult);
+
+        if (!intentResult || !intentResult.type || !intentResult.entity) {
+          output = "I couldn't understand that query.";
+          break;
+        }
+
+        output = await runStandardQuery(
+          intentResult,
+          session,
+          modeResult.cleanCommand
+        );
+        break;

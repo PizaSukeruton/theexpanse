@@ -1,0 +1,84 @@
+import cotwQueryEngine from "./cotwQueryEngine.js";
+import knowledgeAccess from "../utils/knowledgeAccess.js";
+
+export default async function runStandardQuery(intentResult, session, cleanCommand) {
+  const nested = intentResult.entityData || {};
+
+  const resolvedType =
+    intentResult.entityType ||
+    nested.entity_type ||
+    null;
+
+  const resolvedId =
+    intentResult.entityId ||
+    nested.entity_id ||
+    null;
+
+  const resolvedName =
+    intentResult.entity ||
+    nested.entity_name ||
+    null;
+
+  const enginePayload = {
+    queryType: intentResult.type,
+    ...intentResult,
+    entityType: resolvedType,
+    entityId: resolvedId,
+    entity: resolvedName
+  };
+
+  console.log(
+    `[DEBUG] runStandardQuery → ${enginePayload.queryType} | Entity: '${enginePayload.entity}' | Type: ${enginePayload.entityType} | ID: ${enginePayload.entityId}`
+  );
+
+  if (enginePayload.queryType === "HOW" && enginePayload.entity && enginePayload.entity.toLowerCase().includes("pad")) {
+    try {
+      const padRows = await knowledgeAccess.getKnowledgeByContentKey("pad_theory_basics");
+      if (padRows && padRows.length > 0) {
+        const padContent = JSON.parse(padRows[0].content);
+        return {
+          output: `The PAD (Pleasure-Arousal-Dominance) system works as follows:\n\n${padContent.description}\n\nDimensions:\n- Pleasure: ${padContent.dimensions.pleasure}\n- Arousal: ${padContent.dimensions.arousal}\n- Dominance: ${padContent.dimensions.dominance}`,
+          success: true,
+          entityUsed: "PAD_Model",
+          queryType: enginePayload.queryType,
+          source: "pad_theory_basics"
+        };
+      }
+    } catch (err) {
+      console.error("PAD knowledge fetch error:", err);
+    }
+  }
+
+  if (!enginePayload.entityType && enginePayload.queryType !== "chat") {
+    return {
+      output: "Unable to process query (Entity Resolution Failed)",
+      success: false,
+      entityUsed: enginePayload.entity,
+      queryType: enginePayload.queryType
+    };
+  }
+
+  try {
+    const queryResponse = await cotwQueryEngine.executeQuery(enginePayload, session);
+
+    if (!queryResponse) {
+      return {
+        output: "Unable to process query (Engine returned null)",
+        success: false,
+        entityUsed: enginePayload.entity,
+        entityType: enginePayload.entityType,
+        queryType: enginePayload.queryType
+      };
+    }
+
+    return queryResponse;
+
+  } catch (err) {
+    console.error("Standard Query Execution Error:", err);
+    return {
+      output: "System Error during query execution.",
+      success: false,
+      error: err.message
+    };
+  }
+}

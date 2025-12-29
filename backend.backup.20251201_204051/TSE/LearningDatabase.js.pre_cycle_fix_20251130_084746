@@ -1,0 +1,106 @@
+import pool from "../db/pool.js";
+import generateHexId from "../utils/hexIdGenerator.js";
+
+export default class LearningDatabase {
+  constructor() {
+    console.log("[LearningDatabase] Ready");
+  }
+
+  async initialize() {
+    console.log("[LearningDatabase] initialize() called — no-op");
+  }
+
+  async createCycle(characterId, knowledgeId) {
+    try {
+      // ✔ use your official hex generator
+      const logId = await generateHexId("tse_review_log_id");
+
+      await pool.query(
+        `INSERT INTO knowledge_review_logs (
+            log_id,
+            character_id,
+            knowledge_id,
+            grade
+        ) VALUES ($1,$2,$3,$4)`,
+        [logId, characterId, knowledgeId, 0]
+      );
+
+      return { success: true, logId };
+    } catch (err) {
+      console.error("[LearningDB.createCycle] ERROR:", err);
+      throw err;
+    }
+  }
+
+  async updateKnowledgeState(characterId, knowledgeId, updatedState) {
+    try {
+      await pool.query(
+        `INSERT INTO character_knowledge_state (
+            character_id,
+            knowledge_id,
+            difficulty,
+            stability,
+            current_retrievability,
+            grade_history,
+            last_review_timestamp,
+            next_review_timestamp
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+         ON CONFLICT (character_id, knowledge_id)
+         DO UPDATE SET 
+            difficulty = EXCLUDED.difficulty,
+            stability = EXCLUDED.stability,
+            current_retrievability = EXCLUDED.current_retrievability,
+            grade_history = EXCLUDED.grade_history,
+            last_review_timestamp = EXCLUDED.last_review_timestamp,
+            next_review_timestamp = EXCLUDED.next_review_timestamp`,
+        [
+          characterId,
+          knowledgeId,
+          updatedState.difficulty,
+          updatedState.stability,
+          updatedState.current_retrievability,
+          JSON.stringify(updatedState.grade_history),
+          updatedState.last_review_timestamp,
+          updatedState.next_review_timestamp
+        ]
+      );
+
+      return { success: true };
+    } catch (err) {
+      console.error("[LearningDB.updateKnowledgeState] ERROR:", err);
+      throw err;
+    }
+  }
+
+  async logReview(characterId, knowledgeId, reviewData) {
+    try {
+      await pool.query(
+        `INSERT INTO knowledge_review_logs (
+            log_id,
+            character_id,
+            knowledge_id,
+            review_timestamp,
+            grade,
+            previous_interval,
+            new_interval,
+            retrievability_at_review
+         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+        [
+          reviewData.logId,
+          characterId,
+          knowledgeId,
+          reviewData.review_timestamp,
+          reviewData.grade,
+          reviewData.previous_interval,
+          reviewData.new_interval,
+          reviewData.retrievability_at_review
+        ]
+      );
+
+      return { success: true };
+    } catch (err) {
+      console.error("[LearningDB.logReview] ERROR:", err);
+      throw err;
+    }
+  }
+}

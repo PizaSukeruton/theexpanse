@@ -1,0 +1,138 @@
+import cotwQueryEngine from "./cotwQueryEngine.js";
+import { searchEntityAllTiers } from "../utils/tieredEntitySearch.js";
+
+/**
+ * GodModeDebugger
+ * --------------------------------------------------------------
+ * Centralized, production-ready God Mode inspector.
+ * 
+ * Requirements:
+ *   - User MUST be level 11
+ *   - Command MUST start with "God Mode:"
+ * 
+ * Output:
+ * {
+ *   mode: "god",
+ *   output: "<clean user-facing summary>",
+ *   debugLog: "<full dev log>",
+ *   entityUsed,
+ *   entityType,
+ *   queryType,
+ *   image
+ * }
+ * 
+ * Returns null if:
+ *   - User not level 11
+ *   - Prefix not used
+ */
+export default async function GodModeDebugger(intent, user, command, session) {
+  if (!user || user.access_level !== 11) {
+    return null;
+  }
+
+  const lower = command.toLowerCase();
+  if (!lower.startsWith("god mode:")) {
+    return null;
+  }
+
+  const cleanCommand = command.replace(/god mode\s*:?\s*/i, "").trim();
+
+  let debugLog = "";
+  let finalEntityUsed = null;
+  let finalEntityType = null;
+  let finalImage = null;
+
+  try {
+    debugLog += "===== GOD MODE DEBUGGER =====\n";
+    debugLog += `Original: ${command}\n`;
+    debugLog += `Cleaned: ${cleanCommand}\n`;
+    debugLog += `Intent Type: ${intent.type}\n`;
+    debugLog += `Matcher Method: ${intent.matcherMethod}\n`;
+    debugLog += `Entity: ${intent.entity}\n`;
+    debugLog += `Confidence: ${intent.confidence}\n\n`;
+
+    const realm = intent.realm;
+    debugLog += `Realm: ${realm}\n\n`;
+
+    // ===== Tiered Search =====
+    debugLog += "===== TIERED SEARCH =====\n";
+
+    const tierData = await searchEntityAllTiers(
+      intent.entity || cleanCommand,
+      realm
+    );
+
+    debugLog += `Query: ${tierData.query}\n`;
+    debugLog += `Latency: ${tierData.total_latency_ms}ms\n\n`;
+
+    const tiers = [
+      { label: "TIER 1 (Exact)", data: tierData.tier1 },
+      { label: "TIER 2 (Phonetic)", data: tierData.tier2 },
+      { label: "TIER 3 (Fuzzy)", data: tierData.tier3 }
+    ];
+
+    for (const t of tiers) {
+      debugLog += `--- ${t.label} ---\n`;
+      if (t.data && t.data.count > 0) {
+        debugLog += `Count: ${t.data.count}\nMethod: ${t.data.method}\n`;
+        for (const m of t.data.matches) {
+          debugLog += `- ${m.entity_name} (${m.entity_type}) [${m.entity_id}]\n`;
+        }
+      } else {
+        debugLog += "No matches.\n";
+      }
+      debugLog += "\n";
+    }
+
+    debugLog += "===== USER-FACING RESULT =====\n";
+
+    // Pick best match for the user
+    const best =
+      tierData.tier1?.matches?.[0] ||
+      tierData.tier2?.matches?.[0] ||
+      tierData.tier3?.matches?.[0] ||
+      null;
+
+    if (!best) {
+      return {
+        mode: "god",
+        output: `No matches found for "${intent.entity}".`,
+        debugLog
+      };
+    }
+
+    const userIntent = {
+      type: intent.type,
+      entity: best.entity_name,
+      entityData: best,
+      realm,
+      original: command
+    };
+
+    // Execute the real query
+    const userResult = await cotwQueryEngine.executeQuery(userIntent, user);
+
+    finalEntityUsed = best.entity_name;
+    finalEntityType = best.entity_type;
+
+    let cleanOutput = userResult.message || "(no summary)";
+    finalImage = userResult.data?.image_url || userResult.image || null;
+
+    return {
+      mode: "god",
+      output: cleanOutput,
+      debugLog,
+      entityUsed: finalEntityUsed,
+      entityType: finalEntityType,
+      queryType: intent.type,
+      image: finalImage
+    };
+  } catch (err) {
+    return {
+      mode: "god",
+      output: "God Mode failed to process.",
+      error: err.message,
+      debugLog
+    };
+  }
+}

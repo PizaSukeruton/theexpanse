@@ -1,0 +1,571 @@
+import dotenv from "dotenv";
+dotenv.config();
+import express from 'express';
+import fs from "fs";
+import helmet from 'helmet';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import pool from './backend/db/pool.js';
+import expanseRoutes from './backend/expanse/index.js';
+import { registerRoute } from './backend/utils/routeLogger.js';
+import characterRouter from './backend/api/character.js';
+import ltlmRouter from './backend/api/ltlm.js';
+import characterKnowledgeRouter from './backend/api/character-knowledge.js';
+import generateHexId from './backend/utils/hexIdGenerator.js';
+import narrativeRouter from './backend/api/narrative-router.js';
+import askRouter from './backend/routes/ask.js';
+// import authRoutes from './backend/routes/auth.js';
+const __filename = fileURLToPath(import.meta.url);
+import adminRoutes from './backend/routes/admin.js';
+import psychicAdminRoutes from './backend/routes/psychic-admin.js';
+import adminCharactersRoutes from './backend/routes/adminCharacters.js';
+import godModeRoutes from "./backend/routes/god-mode.js";
+import qaExtractorRouter from "./backend/api/qa-extractor.js";
+import padEstimator from './backend/services/padEstimator.js';
+import ngramSurprisal from './backend/services/ngramSurprisal.js';
+import metaphorDetector from './backend/services/metaphorDetector.js';
+import semanticEmbedder from './backend/services/SemanticEmbedder.js';
+
+async function trainLearningModels() {
+  try {
+    console.log('[Learning System] Training models...');
+    await Promise.all([
+      padEstimator.train(),
+      ngramSurprisal.train(),
+      metaphorDetector.train(),
+      semanticEmbedder.train()
+    ]);
+    console.log('[Learning System] All models trained successfully');
+  } catch (error) {
+    console.error('[Learning System] Training failed:', error);
+  }
+}
+const __dirname = dirname(__filename);
+
+// Session management
+import cookieParser from 'cookie-parser';
+import { sessionMiddleware } from './config/session.js';
+import authRoutes from './backend/routes/auth.js';
+
+const app = express();
+import loreAdminRoutes from "./backend/routes/lore-admin.js";
+import loreTechingRoutes from "./backend/routes/lore-teaching.js";
+import knowledgeManagerRoutes from "./backend/routes/knowledge-manager.js";
+import tseRouter from './backend/api/tseRouter.js';
+import terminalRoutes from "./backend/routes/terminal.js";
+import wizardRoutes from "./backend/routes/wizard/index.js";
+import imageRoutes from "./backend/routes/image-manager.js";
+import traitsRouter from './backend/traits/index.js';
+import { createServer } from "http";
+import initializeWebSocket from "./backend/councilTerminal/socketHandler.js";
+import initializeRegistrationSockets from "./backend/councilTerminal/registrationSocketHandler.js";
+
+const PORT = process.env.PORT || 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// Trust proxy for Render.com (needed for secure cookies)
+app.set('trust proxy', 1);
+
+// Session and cookie middleware
+app.use(cookieParser());
+app.use(sessionMiddleware);
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.socket.io"],
+        "style-src": ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "data:", "blob:"],
+        "connect-src": ["ws://localhost:3000","ws://localhost:3000/socket.io","ws://localhost:3000/terminal","'self'","ws:","wss:", "https://cdn.socket.io"],
+        "font-src": ["'self'", "https:", "data:"],
+        "media-src": ["'self'", "blob:", "data:"],
+        "object-src": ["'none'"]
+      }
+    },
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+  })
+);
+
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/dossiers', express.static(path.join(__dirname, 'dossiers')));
+app.use('/wizard-uploads', express.static(path.join(__dirname, 'public/wizard-uploads')));
+// app.use("/cms", express.static(path.join(__dirname, "cms/public")));
+app.use('/api/images', imageRoutes);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.get('/', (req, res) => {
+  res.send('<h1 style="font-family: Courier New; color: #00ff00; background: black; text-align:center; padding: 50px;">🖥️ THE EXPANSE SERVER RUNNING</h1>');
+});
+
+app.use("/api/lore", loreAdminRoutes);
+app.use("/api/lore-teaching", loreTechingRoutes);
+app.use("/api/knowledge-manager", knowledgeManagerRoutes);
+registerRoute("/api/knowledge-manager", "Knowledge Manager");
+registerRoute("/api/lore-teaching", "Lore Teaching");
+app.use('/auth', authRoutes);
+registerRoute('/auth', 'Authentication');
+registerRoute("/api/lore", "Lore Admin");
+app.use("/api/expanse", expanseRoutes);
+registerRoute("/api/expanse", "Expanse API");
+app.use('/api/character', characterRouter);
+app.use('/api/ltlm', ltlmRouter);
+registerRoute("/api/character", "Character API");
+app.use('/api/character', characterKnowledgeRouter);
+registerRoute("/api/character/:id/knowledge", "Knowledge API");
+app.use('/api/narrative', narrativeRouter);
+app.use('/api/ask', askRouter);
+registerRoute("/api/narrative", "Narrative System");
+app.use("/api/terminal", terminalRoutes);
+// registerRoute("/api/auth", "Authentication");
+registerRoute("/api/terminal", "Terminal API");
+app.use('/api/admin', adminRoutes);
+app.use('/api/psychic', psychicAdminRoutes);
+registerRoute("/api/psychic", "Psychic Engine Admin");
+registerRoute("/api/admin", "Admin API");
+app.use('/api/admin/characters', adminCharactersRoutes);
+app.use('/api/god-mode', godModeRoutes);
+registerRoute("/api/god-mode", "God Mode Admin");registerRoute("/api/admin/characters", "Admin Characters");
+
+app.use('/api/tse', tseRouter);
+registerRoute("/api/tse", "TSE Pipeline");
+app.use('/api/traits', traitsRouter);
+app.use('/api/qa', qaExtractorRouter);
+app.use('/api/wizard', wizardRoutes);
+registerRoute('/api/images', 'Image Manager');
+registerRoute("/api/qa", "Q&A Extractor");
+registerRoute("/api/traits", "Traits System");
+
+app.post('/save-dossier', express.json({limit: '2mb'}), (req, res) => {
+  const { fileName, content } = req.body;
+  if (!fileName || !content) return res.status(400).send('Missing file or content');
+  const filePath = path.join(__dirname, 'dossiers', fileName.replace(/[^a-zA-Z0-9\-_\.]/g, '_'));
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  
+  const cleanContent = content
+    .replace(/<input[^>]*type=["']file["'][^>]*>/gi, "")
+    .replace(/<button[^>]*id=["']commitBtn["'][^>]*>.*?<\/button>/gis, "")
+    .replace(/<div[^>]*class=["']editor-only["'][^>]*>.*?<\/div>/gis, "");
+  fs.writeFileSync(filePath, cleanContent);
+
+  res.send('ok');
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+app.get("/cms-login", (req, res) => {
+  res.sendFile(__dirname + "/cms/public/cms-login.html");
+});
+
+app.get("/cms", (req, res) => {
+  console.log("[CMS] 🌐 GET /cms - Checking authentication");
+  if (!req.session || !req.session.userId) {
+    console.log("[CMS] ❌ Not authenticated - redirecting to login");
+    return res.redirect("/cms-login");
+  }
+  console.log("[CMS] ✓ Authenticated user:", req.session.username, "Level:", req.session.accessLevel);
+  res.sendFile(__dirname + "/cms/public/index.html");
+});
+app.use('/cms/css', express.static(__dirname + '/cms/css'));
+app.use('/cms/js', express.static(__dirname + '/cms/js'));
+
+app.get('/api/cms/characters', async (req, res) => {
+  console.log('[CMS API] 📋 Fetching all characters');
+  try {
+    const result = await pool.query(`
+      SELECT 
+        character_id,
+        character_name,
+        category,
+        description,
+        created_at
+      FROM character_profiles
+      WHERE category != 'Knowledge Entity'
+      ORDER BY character_id ASC
+    `);
+    
+    res.json({
+      success: true,
+      characters: result.rows,
+      count: result.rows.length
+    });
+  } catch (error) {
+    console.error('CMS API Error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Database error'
+    });
+  }
+});
+
+app.get('/api/cms/character/:characterId', async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    
+    const result = await pool.query(`
+      SELECT 
+        character_id,
+        character_name,
+        category,
+        description,
+        created_at,
+        updated_at
+      FROM character_profiles
+      WHERE character_id = $1
+    `, [characterId]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Character not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      character: result.rows[0]
+    });
+  } catch (error) {
+    console.error('CMS API Error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Database error'
+    });
+  }
+});
+
+
+
+// Set character profile image
+app.put('/api/cms/character/:characterId/profile-image', async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    const { image_url } = req.body;
+    
+    await pool.query(
+      'UPDATE character_profiles SET image_url = $1 WHERE character_id = $2',
+      [image_url, characterId]
+    );
+    
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Profile image error:', error);
+    res.status(500).json({ success: false, error: 'Database error' });
+  }
+});
+
+// Get character inventory with PAD values and acquisition info
+app.get("/api/cms/character/:characterId/inventory", async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    
+    const result = await pool.query(`
+      SELECT 
+        ci.object_id,
+        o.object_name,
+        o.p,
+        o.a,
+        o.d,
+        ci.acquisition_method,
+        ci.source_character_id,
+        cp.character_name as source_character_name
+      FROM character_inventory ci
+      JOIN objects o ON ci.object_id = o.object_id
+      LEFT JOIN character_profiles cp ON ci.source_character_id = cp.character_id
+      WHERE ci.character_id = $1
+      ORDER BY o.object_name
+    `, [characterId]);
+    
+    res.json({
+      success: true,
+      inventory: result.rows
+    });
+  } catch (error) {
+    console.error("Inventory error:", error);
+    res.status(500).json({ success: false, error: "Database error" });
+  }
+});
+
+// Get character events
+app.get("/api/cms/character/:characterId/events", async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    
+    const result = await pool.query(`
+      SELECT 
+        event_id,
+        timestamp,
+        realm,
+        location,
+        event_type,
+        outcome,
+        notes
+      FROM multiverse_events
+      WHERE involved_characters::jsonb @> to_jsonb(ARRAY[$1])
+      ORDER BY timestamp DESC
+      LIMIT 20
+    `, [characterId]);
+    
+    res.json({
+      success: true,
+      events: result.rows
+    });
+  } catch (error) {
+    console.error("Events fetch error:", error);
+    res.status(500).json({ success: false, error: "Database error" });
+  }
+});
+
+// Get character narrative segments
+app.get("/api/cms/character/:characterId/narratives", async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    
+    const result = await pool.query(`
+      SELECT 
+        segment_id,
+        title,
+        segment_type,
+        summary
+      FROM narrative_segments
+      WHERE $1 = ANY(associated_character_ids)
+      ORDER BY created_at DESC
+    `, [characterId]);
+    
+    res.json({
+      success: true,
+      narratives: result.rows
+    });
+  } catch (error) {
+    console.error("Narratives fetch error:", error);
+    res.status(500).json({ success: false, error: "Database error" });
+  }
+});
+
+// Get character story arcs
+app.get("/api/cms/character/:characterId/story-arcs", async (req, res) => {
+  try {
+    const { characterId } = req.params;
+    
+    const result = await pool.query(`
+      SELECT 
+        sa.arc_id,
+        sa.title,
+        ac.role_in_arc
+      FROM arc_characters ac
+      JOIN story_arcs sa ON ac.arc_id = sa.arc_id
+      WHERE ac.character_id = $1
+      ORDER BY sa.created_at DESC
+    `, [characterId]);
+    
+    res.json({
+      success: true,
+      storyArcs: result.rows
+    });
+  } catch (error) {
+    console.error("Inventory error:", error);
+    res.status(500).json({ success: false, error: "Database error" });
+  }
+});
+
+const httpServer = createServer(app);
+const io = initializeWebSocket(httpServer, sessionMiddleware);
+initializeRegistrationSockets(io);
+
+trainLearningModels();
+httpServer.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
+
+// Create new character with Knowledge Entity
+/* =========================
+   RESTORE CHARACTER
+   ========================= */
+
+app.post('/api/cms/character/:characterId/restore', async (req, res) => {
+    const client = await pool.connect();
+    const { characterId } = req.params;
+
+    try {
+        await client.query('BEGIN');
+
+        const check = await client.query(
+            "SELECT character_name, category FROM character_profiles WHERE character_id = $1",
+            [characterId]
+        );
+
+        if (check.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.json({ success: false, error: "Character not found" });
+        }
+
+        let name = check.rows[0].character_name;
+        let category = check.rows[0].category;
+
+        if (name.startsWith('DELETED:')) {
+            name = name.replace('DELETED:', '');
+        }
+
+        if (category === 'Deleted') {
+            category = 'B-Roll Chaos';
+        }
+
+        await client.query(
+            "UPDATE character_profiles SET character_name = $1, category = $2, is_active = TRUE, updated_at = NOW() WHERE character_id = $3",
+            [name, category, characterId]
+        );
+
+        await client.query('COMMIT');
+
+        res.json({
+            success: true,
+            message: "Character restored",
+            character_id: characterId,
+            restored_name: name,
+            restored_category: category
+        });
+
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error("RESTORE ERROR:", err);
+        res.status(500).json({ success: false, error: "Failed to restore character" });
+    } finally {
+        client.release();
+    }
+});
+     // SAFE DELETE CHARACTER (soft-delete)n
+app.post('/api/cms/character/:characterId/delete', async (req, res) => {
+    const client = await pool.connect();
+    const { characterId } = req.params;
+    const { password } = req.body;
+
+    try {
+        // Basic password check (admin password in ENV)
+        if (!password || password !== process.env.ADMIN_PASSWORD) {
+            return res.json({ success: false, error: "Invalid admin password" });
+        }
+
+        await client.query('BEGIN');
+
+        // Check existence
+        const check = await client.query(
+            `SELECT character_name FROM character_profiles WHERE character_id = $1`,
+            [characterId]
+        );
+
+        if (check.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.json({ success: false, error: "Character not found" });
+        }
+
+        // Soft-deactivate, keep category intact
+        await client.query(
+            `UPDATE character_profiles
+             SET is_active = FALSE,
+                 updated_at = NOW()
+             WHERE character_id = $1`,
+            [characterId]
+        );
+
+        await client.query('COMMIT');
+
+        return res.json({
+            success: true,
+            message: "Character safely deactivated",
+            character_id: characterId
+        });
+
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error("SAFE DELETE ERROR:", err);
+        return res.json({ success: false, error: "Failed to delete character" });
+
+    } finally {
+        client.release();
+    }
+});
+app.post("/api/cms/character/create", async (req, res) => {
+    const { character_name } = req.body;
+    try {
+      const check = await pool.query("SELECT character_id FROM character_profiles WHERE LOWER(character_name) = LOWER($1) LIMIT 1", [character_name]);
+      if (check.rows.length > 0) {
+        return res.json({ success: false, error: "Character name already exists" });
+      }
+    } catch (err) {
+      console.error("Duplicate check error:", err);
+      return res.status(500).json({ success: false, error: "Server error during duplicate name check" });
+    }
+  try {
+    // Check if user is logged in
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ success: false, error: "Not authenticated" });
+    }
+    
+    const { character_name, category, description, password } = req.body;
+    
+    // Validate required fields
+    if (!character_name || !category) {
+      return res.status(400).json({ success: false, error: "Name and category required" });
+    }
+    
+    // TODO: Add password verification here
+    
+    // Generate hex IDs
+    const characterId = await generateHexId("character_id");
+    const knowledgeEntityId = await generateHexId("character_id");
+    
+    // Determine if B-Roll Chaos or Machines (needs is_b_roll_autonomous)
+    const isBRollOrMachine = ["B-Roll Chaos", "Machines"].includes(category);
+    
+    await pool.query("BEGIN");
+    
+    try {
+      // Create the character
+      await pool.query(`
+        INSERT INTO character_profiles (character_id, character_name, category, description, is_b_roll_autonomous)
+        VALUES ($1, $2, $3, $4, $5)
+      `, [characterId, character_name, category, description || null, isBRollOrMachine ? false : null]);
+      
+      // Create the Knowledge Entity (never needs is_b_roll_autonomous)
+      await pool.query(`
+        INSERT INTO character_profiles (character_id, character_name, category, description, is_b_roll_autonomous)
+        VALUES ($1, $2, $3, $4, NULL)
+      `, [knowledgeEntityId, character_name + " Knowledge", "Knowledge Entity", "System knowledge about " + character_name]);
+      
+      await pool.query("COMMIT");
+      
+      res.json({
+        success: true,
+        character: {
+          character_id: characterId,
+          character_name: character_name,
+          category: category
+        },
+        knowledge_entity: {
+          character_id: knowledgeEntityId,
+          character_name: character_name + " Knowledge"
+        }
+      });
+    } catch (err) {
+      await pool.query("ROLLBACK");
+      throw err;
+    }
+  } catch (error) {
+    console.error("Character creation error:", error);
+    res.status(500).json({ success: false, error: "Failed to create character" });
+  }
+});
+
+
+import tanukiRouter from "./backend/api/tanuki.js";
+app.use("/api/tanuki", tanukiRouter);
+

@@ -1,0 +1,215 @@
+import { TSE_CURRICULUM } from "./tse_curriculum.js";
+import traitManager from "../traits/TraitManager.js"; 
+import generateHexId from "../utils/hexIdGenerator.js";
+import KnowledgeResponseEngine from "./helpers/KnowledgeResponseEngine.js";
+import NaturalLanguageGenerator from "./helpers/NaturalLanguageGenerator.js";
+
+export default class TeacherComponent {
+  // CHANGE 1: Accept learningDB in constructor
+  constructor(learningDB) {
+    this.learningDB = learningDB; 
+    
+    this.nodeId = Math.floor(Math.random() * 256)
+      .toString(16)
+      .toUpperCase()
+      .padStart(2, "0");
+
+    this.nlg = new NaturalLanguageGenerator();
+    this.responseEngine = new KnowledgeResponseEngine();
+  }
+
+  async initialize() {
+    return true;
+  }
+
+  getNodeId() {
+    return this.nodeId;
+  }
+
+  async getDueKnowledgeIds(characterId) {
+    try {
+      if (!this.learningDB || !this.learningDB.pool) return [];
+      const result = await this.learningDB.pool.query(`
+        SELECT knowledge_id
+        FROM character_knowledge_state
+        WHERE character_id = $1
+          AND next_review_timestamp <= NOW()
+        ORDER BY next_review_timestamp ASC
+        LIMIT 3
+      `, [characterId]);
+      return result.rows.map(r => r.knowledge_id);
+    } catch (e) {
+      console.warn(`[TeacherComponent] getDueKnowledgeIds error for ${characterId}:`, e.message);
+      return [];
+    }
+  }
+
+  async teach(characterId, query, context) {
+    const baseDifficulty = await this._computeTraitDifficulty(characterId);
+    const difficulty = await this._applyAdaptiveDifficulty(characterId, baseDifficulty);
+
+    const dueIds = await this.getDueKnowledgeIds(characterId);
+    if (dueIds.length > 0) {
+      console.log(`[TeacherComponent] ${dueIds.length} knowledge items due for review for ${characterId}`);
+    }
+
+    const candidates = TSE_CURRICULUM.filter((t) => t.difficulty === difficulty);
+    // Fallback if no tasks match difficulty
+    const selectedCandidates = candidates.length > 0 ? candidates : TSE_CURRICULUM;
+    const selected = selectedCandidates[Math.floor(Math.random() * selectedCandidates.length)];
+
+    const taskId = await generateHexId("tse_task_id");
+
+    return {
+      taskId,
+      taskType: selected.taskType,
+      instructions: selected.instructions,
+      input: selected.input,
+      expectedFormat: selected.expectedFormat,
+      difficulty,
+      characterId,
+      metadata: {
+        teacherNode: this.nodeId,
+        difficulty,
+        traitDifficulty: baseDifficulty,
+        context
+      }
+    };
+  }
+
+  async generateFollowUpTask(originalTask, evaluation) {
+
+  async teachLore(characterId, query) {
+    try {
+      if (!this.learningDB || !this.learningDB.pool) {
+        console.warn("[TeacherComponent] No learningDB for lore teaching");
+        return null;
+      }
+
+      const loreItems = await this.learningDB.pool.query(`
+        SELECT knowledge_id, entity_name, description
+        FROM lore_knowledge_graph
+        ORDER BY RANDOM()
+        LIMIT 3
+      `);
+
+      if (loreItems.rows.length === 0) {
+        console.warn("[TeacherComponent] No lore items available");
+        return null;
+      }
+
+      const item = loreItems.rows[0];
+      const taskId = await generateHexId("tse_task_id");
+
+      const taskTypes = [
+        {
+          type: "lore_character_question",
+          instructions: "Answer a question about " + item.entity_name + " from the Piza Sukeruton Multiverse.",
+          input: "Who is " + item.entity_name + " and what is their role?",
+          expectedFormat: "A clear answer describing their character and significance."
+        },
+        {
+          type: "lore_category_identify",
+          instructions: "Identify the category/type of " + item.entity_name,
+          input: "What type of character is " + item.entity_name + "?",
+          expectedFormat: "The character category with a brief explanation."
+        }
+      ];
+
+      const chosen = taskTypes[Math.floor(Math.random() * taskTypes.length)];
+
+      return {
+        taskId,
+        taskType: chosen.type,
+        instructions: chosen.instructions,
+        input: chosen.input,
+        expectedFormat: chosen.expectedFormat,
+        difficulty: 1,
+        characterId,
+        knowledgeId: item.knowledge_id,
+        metadata: {
+          teacherNode: this.nodeId,
+          difficulty: 1,
+          loreEntity: item.entity_name,
+          context: { sessionStep: 1 }
+        }
+      };
+    } catch (e) {
+      console.error("[TeacherComponent] teachLore error:", e.message);
+      return null;
+    }
+  }
+    const taskId = await generateHexId("tse_task_id");
+    const score = evaluation?.score ?? 0;
+
+    let followType = originalTask.taskType;
+    let difficulty = originalTask.difficulty;
+
+    if (score >= 4) difficulty = Math.min(3, difficulty + 1);
+    if (score <= 2) difficulty = Math.max(1, difficulty - 1);
+
+    const candidates = TSE_CURRICULUM.filter(
+      (t) => t.taskType === followType && t.difficulty === difficulty
+    );
+
+    if (candidates.length === 0) return null;
+
+    const selected = candidates[Math.floor(Math.random() * candidates.length)];
+
+    return {
+      taskId,
+      taskType: selected.taskType,
+      instructions: selected.instructions,
+      input: selected.input,
+      expectedFormat: selected.expectedFormat,
+      difficulty,
+      characterId: originalTask.characterId,
+      metadata: {
+        teacherNode: this.nodeId,
+        chainFrom: originalTask.taskId,
+        difficulty
+      }
+    };
+  }
+
+  async _computeTraitDifficulty(characterId) {
+    const traits = await traitManager.getTraitVector(characterId);
+    let difficulty = 1;
+    const inquisitive = traits["#00005A"] || 50;
+    const overwhelmed = traits["#000012"] || 50;
+
+    if (inquisitive > 65) difficulty++;
+    if (inquisitive > 85) difficulty++;
+    if (overwhelmed > 65) difficulty--;
+    if (overwhelmed > 85) difficulty--;
+
+    if (difficulty < 1) difficulty = 1;
+    if (difficulty > 3) difficulty = 3;
+
+    return difficulty;
+  }
+
+  async _applyAdaptiveDifficulty(characterId, baseDifficulty) {
+    // CHANGE 2: Check if learningDB exists before using it
+    if (!this.learningDB) {
+        console.warn("TeacherComponent: learningDB not initialized, skipping adaptive difficulty.");
+        return baseDifficulty;
+    }
+
+    try {
+        const scores = await this.learningDB.getRecentScores(characterId);
+        if (!scores || scores.length === 0) return baseDifficulty;
+
+        const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+        let difficulty = baseDifficulty;
+        if (avg >= 4) difficulty++;
+        if (avg <= 2) difficulty--;
+        if (difficulty < 1) difficulty = 1;
+        if (difficulty > 3) difficulty = 3;
+        return difficulty;
+    } catch (e) {
+        console.error("Adaptive difficulty error:", e);
+        return baseDifficulty;
+    }
+  }
+}

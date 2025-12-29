@@ -1,0 +1,3 @@
+perl -0777 -pi -e '
+  s|(await pool\.query)|console.log("\n--- PRE-INSERT AUDIT ---");\nconst debugCheck = (label, value, maxLen) => {\n  const str = String(value);\n  const length = str.length;\n  if (length > maxLen) {\n    console.error(`[CRITICAL OVERFLOW] ${label} is too long!`);\n    console.error(`Value: "${str}"`);\n    console.error(`Length: ${length}`);\n    console.error(`Hex Dump:`, Buffer.from(str).toString("hex"));\n    console.error(`Type:`, typeof value);\n    throw new Error(`DB Guard: ${label} overflow`);\n  }\n};\ndebugCheck("usageId", usageId, 7);\ndebugCheck("characterId", characterId, 7);\n$1|s;
+' ~/desktop/theexpanse/theexpansev005/backend/TSE/TanukiEngine/MechanicalBrain_v2.js

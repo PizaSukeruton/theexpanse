@@ -1,0 +1,31 @@
+window.handleLogoutClick = async () => {
+    console.log('[LOGOUT] Button clicked');
+    if (!confirm("Save session and logout?")) return;
+    
+    console.log('[LOGOUT] Confirmed. Checking socket:', window.cmsSocket, window.cmsSocket?.socket);
+    
+    if (!window.cmsSocket || !window.cmsSocket.socket) {
+        alert("Socket not connected. Please refresh and try again.");
+        return;
+    }
+
+    const sessionContext = {
+        entityHistory: window.sessionEntityHistory || [],
+        conversationTurns: window.conversationTurns || 0
+    };
+
+    console.log('[LOGOUT] Emitting user:logout');
+    window.cmsSocket.socket.emit('user:logout', { sessionContext });
+
+    window.cmsSocket.socket.once('logout:complete', (farewell) => {
+        console.log('[LOGOUT] Received logout:complete', farewell);
+        alert(farewell.message);
+        window.cmsSocket.socket.disconnect();
+        window.location.href = "/cms-login";
+    });
+
+    window.cmsSocket.socket.once('logout-error', (err) => {
+        console.error('[LOGOUT] Error:', err);
+        alert('Logout error: ' + err.error);
+    });
+};
