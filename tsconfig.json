@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noImplicitAny": false,               // ← silence implicit any
+    "strictNullChecks": false,            // ← allow null/undefined more freely
+    "noImplicitThis": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "checkJs": false,                     // ← most important: stop checking .js files
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "backend/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.tmp.js",
+    "**/*.end.tmp.js",
+    "**/*.new.tmp.js",
+    "**/*.no_close.tmp.js",
+    "**/tse_backup_*",
+    "**/backups_*"
+  ]
+}
