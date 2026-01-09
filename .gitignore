@@ -104,3 +104,8 @@ coverage/
 ########################################
 node_modules/.bin/
 
+# Generated curriculum / dossier data
+cotw_dossier_*.json
+pad_emotional_state_knowledge_base.json
+tse_curriculum_knowledge_items_FINAL.json
+
