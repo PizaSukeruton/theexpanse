@@ -1,0 +1,106 @@
+########################################
+# Node / JS
+########################################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+########################################
+# Environment / Secrets
+########################################
+.env
+.env.*
+*.pem
+*.key
+*.crt
+cookies.txt
+cookies_*.txt
+
+########################################
+# OS / Editor junk
+########################################
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+
+########################################
+# Logs
+########################################
+logs/
+*.log
+tse_overnight.log
+
+########################################
+# Database dumps / backups
+########################################
+db-backup-*.sql
+database_backups/
+*.dump
+*.sql.bak
+*.db
+
+########################################
+# Tarballs / archives
+########################################
+*.tar.gz
+*.zip
+*.7z
+
+########################################
+# Backup directories (CRITICAL)
+########################################
+backups/
+backend.backup.*/
+backend_backup*/
+backend_backups*/
+cms_backups*/
+code_backups*/
+patch_backup*/
+patch_archive*/
+tse_backup*/
+tse_backups*/
+backend/TSE/backups/
+backend/TSE_backup*/
+backend/utils/backups/
+
+########################################
+# Generated / transient runtime files
+########################################
+runtime_files.txt
+runtime_deps.json
+trace_runtime.cjs
+
+########################################
+# Test artifacts
+########################################
+test-output/
+coverage/
+
+########################################
+# Temporary / working copies
+########################################
+*.working
+*.fix
+*.learning
+*.dup
+*.patch
+*.pre
+*.post
+
+########################################
+# IDE
+########################################
+.vscode/
+.idea/
+
+########################################
+# Ignore node binaries accidentally modified
+########################################
+node_modules/.bin/
+
