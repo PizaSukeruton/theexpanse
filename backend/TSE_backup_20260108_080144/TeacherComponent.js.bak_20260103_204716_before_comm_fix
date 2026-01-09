@@ -1,0 +1,413 @@
+import traitManager from "../traits/TraitManager.js"; 
+import generateHexId from "../utils/hexIdGenerator.js";
+import KnowledgeResponseEngine from "./helpers/KnowledgeResponseEngine.js";
+import { getNaturalLanguageGenerator } from './helpers/NaturalLanguageGeneratorSingleton.js';
+import pool from "../db/pool.js";
+
+export default class TeacherComponent {
+  constructor(learningDB) {
+    console.trace('[TRACE] TeacherComponent.js constructed');
+    this.learningDB = learningDB; 
+   
+    this.nodeId = Math.floor(Math.random() * 256)
+      .toString(16)
+      .toUpperCase()
+      .padStart(2, "0");
+
+    this.nlg = getNaturalLanguageGenerator();
+    this.responseEngine = new KnowledgeResponseEngine();
+  }
+
+  async initialize() {
+    return true;
+  }
+
+  getNodeId() {
+    return this.nodeId;
+  }
+
+  /**
+   * teach() - Main task generation entry point
+   * @param {string} characterId - Hex ID of character
+   * @param {string} query - User query/context (e.g., "communication", "tanuki", "piza")
+   * @param {object} context - Contains { sessionStep, domainId }
+   * @returns {object} Task object with taskId, taskType, input, expectedFormat, difficulty, metadata
+   */
+  async teach(characterId, query, context) {
+    const baseDifficulty = await this._computeTraitDifficulty(characterId);
+    const difficulty = await this._applyAdaptiveDifficulty(characterId, baseDifficulty);
+
+    let task = null;
+
+    // COMMUNICATION TASK SELECTOR
+    if (query && query.toLowerCase().includes('communication')) {
+      task = await this._generateCommunicationTask(characterId, query, difficulty, context);
+      // if (task) return task;
+    }
+
+    // LORE/DOMAIN TASK SELECTOR (uses domain context)
+    if (context?.domainId) {
+      task = await this._generateDomainTask(characterId, context.domainId, difficulty, context);
+      if (task) return task;
+    }
+
+    // FALLBACK: Lore-specific query matching
+    if (query && (query.toLowerCase().includes('piza') || query.toLowerCase().includes('expanse'))) {
+      task = await this._teachLoreFact(characterId, query, difficulty, context);
+      if (task) return task;
+    }
+
+    // FINAL FALLBACK: Generic task (should not reach here in normal operation)
+    task = await this._generateGenericTask(characterId, difficulty, context);
+    return task;
+  }
+
+  /**
+   * _generateCommunicationTask() - Creates communication_quality task
+   * Routes to domain if available, otherwise uses generic communication prompt
+   */
+  async _generateCommunicationTask(characterId, query, difficulty, context) {
+    try {
+      let input = "Explain what you know about this topic in a friendly way.";
+
+      // If domain context provided, use domain-specific prompt
+      if (context?.domainId) {
+        const domainItem = await this._getRandomKnowledgeItem(context.domainId, difficulty);
+        if (domainItem && domainItem.content) {
+          const content = typeof domainItem.content === 'string' 
+            ? JSON.parse(domainItem.content) 
+            : domainItem.content;
+          input = `Explain: ${content.statement || domainItem.content}`;
+        }
+      }
+
+      const taskId = await generateHexId("tse_task_id");
+
+      return {
+        taskId,
+        taskType: 'communication_quality',
+        instructions: 'Answer this question in your own words, with warmth and clarity.',
+        input,
+        expectedFormat: 'A friendly explanation with personal touches.',
+        difficulty,
+        characterId,
+        metadata: {
+          teacherNode: this.nodeId,
+          difficulty,
+          context,
+          domainId: context?.domainId || null,
+          target_outcome_intent: "explain warmly and clearly",
+          target_outcome_intent: "explain warmly and clearly",
+        }
+      };
+    } catch (err) {
+      console.error("[TeacherComponent] Communication task generation failed:", err.message);
+      return null;
+    }
+  }
+
+  /**
+   * _generateDomainTask() - Creates task from knowledge_items in specified domain
+   * Uses FSRS scheduling to select items due for review
+   */
+  async _generateDomainTask(characterId, domainId, difficulty, context) {
+    try {
+      // Get knowledge item due for review (or unreviewed)
+      const knowledgeItem = await this._getKnowledgeItemForReview(characterId, domainId, difficulty);
+
+      if (!knowledgeItem) {
+        console.log(`[TeacherComponent] No knowledge items found for domain ${domainId}`);
+        return null;
+      }
+
+      const content = typeof knowledgeItem.content === 'string' 
+        ? JSON.parse(knowledgeItem.content) 
+        : knowledgeItem.content;
+
+      const taskId = await generateHexId("tse_task_id");
+      const taskType = this._selectTaskType(difficulty);
+
+      return {
+        taskId,
+        taskType,
+        knowledgeId: knowledgeItem.knowledge_id,
+        instructions: `Learn about this concept: ${knowledgeItem.concept || 'domain knowledge'}`,
+        input: content.statement || content.text || knowledgeItem.content,
+        expectedFormat: this._getExpectedFormat(taskType),
+        difficulty: difficulty,
+        characterId,
+        metadata: {
+          teacherNode: this.nodeId,
+          difficulty,
+          context,
+          domainId,
+          sourceKnowledge: knowledgeItem.knowledge_id,
+          complexityScore: knowledgeItem.complexity_score || 0.5,
+          target_outcome_intent: "explain warmly and clearly",
+        }
+      };
+    } catch (err) {
+      console.error("[TeacherComponent] Domain task generation failed:", err.message);
+      return null;
+    }
+  }
+
+  /**
+   * _getKnowledgeItemForReview() - FSRS-aware selection
+   * Returns knowledge items that:
+   * 1. Belong to specified domain
+   * 2. Match difficulty (or are unreviewed)
+   * 3. Are due for review (next_review_timestamp <= now)
+   */
+  async _getKnowledgeItemForReview(characterId, domainId, difficulty) {
+    try {
+      const now = new Date().toISOString();
+
+      // Query: Find knowledge items in domain that are due for review
+      const result = await pool.query(`
+        SELECT 
+          ki.knowledge_id,
+          ki.content,
+          ki.concept,
+          ki.complexity_score,
+          ki.domain_id,
+          cks.next_review_timestamp,
+          cks.difficulty as fsrs_difficulty
+        FROM knowledge_items ki
+        LEFT JOIN character_knowledge_state cks 
+          ON ki.knowledge_id = cks.knowledge_id 
+          AND cks.character_id = $1
+        WHERE ki.domain_id = $2
+          AND ki.source_type = 'admin_entry'
+          AND (
+            cks.next_review_timestamp IS NULL 
+            OR cks.next_review_timestamp <= $3
+          )
+        ORDER BY 
+          cks.next_review_timestamp ASC NULLS FIRST,
+          ki.complexity_score ASC
+        LIMIT 1
+      `, [characterId, domainId, now]);
+
+      if (result.rows.length === 0) {
+        return null;
+      }
+
+      return result.rows[0];
+    } catch (err) {
+      console.error("[TeacherComponent] FSRS knowledge selection failed:", err.message);
+      return null;
+    }
+  }
+
+  /**
+   * _getRandomKnowledgeItem() - Non-FSRS fallback for communication tasks
+   * Returns random item from domain matching difficulty
+   */
+  async _getRandomKnowledgeItem(domainId, difficulty) {
+    try {
+      const result = await pool.query(`
+        SELECT 
+          knowledge_id,
+          content,
+          concept,
+          complexity_score,
+          domain_id
+        FROM knowledge_items
+        WHERE domain_id = $1
+          AND source_type = 'admin_entry'
+        ORDER BY RANDOM()
+        LIMIT 1
+      `, [domainId]);
+
+      if (result.rows.length === 0) {
+        return null;
+      }
+
+      return result.rows[0];
+    } catch (err) {
+      console.error("[TeacherComponent] Random knowledge selection failed:", err.message);
+      return null;
+    }
+  }
+
+  /**
+   * _selectTaskType() - Routes to appropriate transformation based on difficulty
+   */
+  _selectTaskType(difficulty) {
+    const taskTypes = [
+      'cause_effect_rewrite',
+      'sentence_clarity_rewrite',
+      'summarize_core_point',
+      'communication_quality'
+    ];
+
+    // Higher difficulty → communication tasks
+    if (difficulty >= 4) {
+      return 'communication_quality';
+    }
+
+    // Medium difficulty → varied
+    if (difficulty >= 2) {
+      return taskTypes[Math.floor(Math.random() * (taskTypes.length - 1))];
+    }
+
+    // Low difficulty → clarity/cause-effect
+    return taskTypes[Math.floor(Math.random() * 2)];
+  }
+
+  /**
+   * _getExpectedFormat() - Returns format string for task type
+   */
+  _getExpectedFormat(taskType) {
+    const formats = {
+      cause_effect_rewrite: 'Rewrite using causal connectors (because, therefore, so).',
+      sentence_clarity_rewrite: 'Break into clear, simple sentences.',
+      summarize_core_point: 'Summarize the main point in ~50% of original length.',
+      communication_quality: 'Explain in your own words with warmth and clarity.',
+      lore_comprehension: 'Answer thoughtfully, connecting to broader context.',
+      clarification: 'Expand on your previous answer with more detail.'
+    };
+    return formats[taskType] || 'Provide a thoughtful response.';
+  }
+
+  /**
+   * _teachLoreFact() - Original lore query logic, preserved for backward compatibility
+   */
+  async _teachLoreFact(characterId, query, difficulty, context) {
+    try {
+      const result = await pool.query(`
+        SELECT k.knowledge_id, k.content
+        FROM knowledge_items k
+        WHERE k.source_type = 'admin_entry'
+        AND (
+          k.content::text ILIKE $1 
+          OR k.content::text ILIKE $2
+        )
+        LIMIT 1
+      `, [`%${query}%`, '%piza%']);
+
+      if (result.rows.length === 0) {
+        console.log("[TeacherComponent] No lore facts found for query:", query);
+        return null;
+      }
+
+      const fact = result.rows[0];
+      const content = typeof fact.content === 'string' ? JSON.parse(fact.content) : fact.content;
+
+      const taskId = await generateHexId("tse_task_id");
+
+      console.log("[TeacherComponent] Teaching lore fact:", fact.knowledge_id);
+
+      return {
+        taskId,
+        taskType: "lore_comprehension",
+        instructions: `Answer this lore question based on your knowledge of the Piza Sukeruton Multiverse:`,
+        input: `Question: ${content.statement}`,
+        expectedFormat: "Provide a thoughtful answer connecting this fact to the broader multiverse.",
+        difficulty: content.difficulty === 'hard' ? 3 : content.difficulty === 'medium' ? 2 : 1,
+        characterId,
+        knowledgeId: fact.knowledge_id,
+        canonicalAnswer: content.statement,
+        metadata: {
+          teacherNode: this.nodeId,
+          difficulty,
+          taskType: "lore_comprehension",
+          sourceKnowledge: fact.knowledge_id,
+          context
+        }
+      };
+    } catch (err) {
+      console.error("[TeacherComponent] Lore query failed:", err.message);
+      return null;
+    }
+  }
+
+  /**
+   * _generateGenericTask() - Fallback task when no domain/query context available
+   */
+  async _generateGenericTask(characterId, difficulty, context) {
+    const taskId = await generateHexId("tse_task_id");
+    const taskType = this._selectTaskType(difficulty);
+
+    const genericInputs = {
+      cause_effect_rewrite: "The wizard cast a spell and the tower shattered and everything changed.",
+      sentence_clarity_rewrite: "The path was dark and winding and dangerous and nobody wanted to go there.",
+      summarize_core_point: "The ancient kingdom fell because of internal conflict. The people fled to neighboring lands. Years passed and the kingdom was forgotten.",
+      communication_quality: "Explain what you think makes a good story."
+    };
+
+    return {
+      taskId,
+      taskType,
+      instructions: `Practice: ${taskType}`,
+      input: genericInputs[taskType] || "Provide a thoughtful response.",
+      expectedFormat: this._getExpectedFormat(taskType),
+      difficulty,
+      characterId,
+      metadata: {
+        teacherNode: this.nodeId,
+        difficulty,
+        context,
+        taskType: 'generic_fallback'
+      }
+    };
+  }
+
+  /**
+   * _computeTraitDifficulty() - Determines base difficulty from character traits
+   */
+  async _computeTraitDifficulty(characterId) {
+    try {
+      const traits = await traitManager.getTraitVector(characterId);
+      if (traits && traits.intelligence) {
+        return Math.max(1, Math.min(5, Math.ceil(traits.intelligence / 20)));
+      }
+    } catch (err) {
+      console.warn("[TeacherComponent] Trait lookup failed:", err.message);
+    }
+    return 2;
+  }
+
+  /**
+   * _applyAdaptiveDifficulty() - Adjusts difficulty based on recent performance
+   */
+  async _applyAdaptiveDifficulty(characterId, baseDifficulty) {
+    try {
+      if (this.learningDB && this.learningDB.pool) {
+        const result = await this.learningDB.pool.query(
+          `SELECT AVG(CAST(score AS NUMERIC)) as avgPerf FROM tse_task_attempts 
+           WHERE character_id = $1 LIMIT 10`,
+          [characterId]
+        );
+        const avgPerf = result.rows[0]?.avgperf || 0.5;
+        if (avgPerf > 0.7) return Math.min(5, baseDifficulty + 1);
+        if (avgPerf < 0.3) return Math.max(1, baseDifficulty - 1);
+      }
+    } catch (err) {
+      console.warn("[TeacherComponent] Adaptive difficulty failed:", err.message);
+    }
+    return baseDifficulty;
+  }
+
+  /**
+   * generateFollowUpTask() - Creates follow-up task if initial score is low
+   */
+  async generateFollowUpTask(previousTask, evaluation) {
+    if (evaluation.score >= 4) {
+      return null;
+    }
+    return {
+      taskId: await generateHexId("tse_task_id"),
+      taskType: "clarification",
+      instructions: "Let's revisit this. Can you expand on your answer?",
+      input: previousTask.input,
+      expectedFormat: "More detailed explanation",
+      difficulty: previousTask.difficulty,
+      metadata: {
+        chainFrom: previousTask.taskId,
+        feedback: evaluation.feedback
+      }
+    };
+  }
+}

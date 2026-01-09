@@ -1,11 +1,37 @@
-import TSELoopManager from './TSE/TSELoopManager.js';
-import pool from './db/pool.js';
+import { getTSELoopManager } from '../TSE/TSELoopManagerSingleton.js';
+const tseManager = getTSELoopManager();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 async function testClaudeLearning() {
     let client;
     try {
         console.log('[TEST] Initializing TSELoopManager...');
-        const tseLoopManager = new TSELoopManager(pool);
+        const tseLoopManager = getTSELoopManager();
         await tseLoopManager.initialize();
         console.log('[TEST] ✅ TSELoopManager initialized\n');
 

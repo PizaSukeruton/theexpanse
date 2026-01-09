@@ -1,0 +1,14 @@
+Checkpoint: Deferred Learning Injection (Option C)
+
+- Deferred learning is session-scoped
+- Replay gated by:
+  - PAD delta stabilization
+  - Route cooldown (no empathy/identity repair)
+  - Topical continuity
+  - Turn-based delay
+- No probabilistic logic
+- No generative AI
+- Deterministic, auditable flow
+
+Next step:
+Introduce explicit Deferred Learning Evaluator step in ClaudeBrain.processQuery

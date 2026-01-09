@@ -1,8 +1,8 @@
 import express from 'express';
-import TerminalCore from '../../../terminalCore.cjs';
+import ClaudeBrain from "../councilTerminal/ClaudeBrain.js";
 
 const router = express.Router();
-const terminal = new TerminalCore();
+const claudeBrain = ClaudeBrain;
 
 const looksLikeCouncilIntent = (s) => {
   const lower = s.toLowerCase().trim();

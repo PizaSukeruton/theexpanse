@@ -1,0 +1,41 @@
+import generateHexId from "../../utils/hexIdGenerator.js";
+
+export default class KnowledgeAcquisitionEngine {
+    constructor() {
+        console.log("[KnowledgeAcquisitionEngine] Initialized with JavaScript semantic search");
+    }
+
+    async deriveConcept(query) {
+        if (!query) return "unknown";
+
+        const cleaned = query
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s]/g, "");
+
+        const words = cleaned.split(/\s+/);
+
+        for (let w of words) {
+            if (w.length > 3) return w;
+        }
+
+        return cleaned || "unknown";
+    }
+
+    async deriveDomainId() {
+        return await generateHexId("domain_id");
+    }
+
+    async prepareKnowledgeItem(query) {
+        const concept = await this.deriveConcept(query);
+        const domainId = await this.deriveDomainId();
+
+        return {
+            knowledgeId: await generateHexId("knowledge_item_id"),
+            concept,
+            domainId,
+            content: query,
+            sourceType: "tse_cycle"
+        };
+    }
+}

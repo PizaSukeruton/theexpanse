@@ -196,11 +196,11 @@ class CotwIntentMatcher {
     this.conversationalMappings = {
       GREETING: {
         dialogueFunction: 'social_obligations_management.greet',
-        speechAct: 'assertive.describe'
+        speechAct: 'social.greet'
       },
       FAREWELL: {
         dialogueFunction: 'social_obligations_management.farewell',
-        speechAct: 'assertive.describe'
+        speechAct: 'social.greet'
       },
       GRATITUDE: {
         dialogueFunction: 'social_obligations_management.thank',
@@ -212,7 +212,7 @@ class CotwIntentMatcher {
       },
       SELF_INQUIRY: {
         dialogueFunction: 'expressive.self_disclosure',
-        speechAct: 'assertive.describe',
+        speechAct: 'social.greet',
         usesIdentityModule: true,
         preventLearning: true,
         blocksKnowledgeSearch: true
@@ -390,6 +390,7 @@ class CotwIntentMatcher {
       console.log('[IntentMatcher] Conversational intent detected: ' + conversationalMatch.type);
       return {
         type: conversationalMatch.type,
+        subtype: conversationalMatch.subtype,
         dialogueFunction: conversationalMatch.dialogueFunction,
         speechAct: conversationalMatch.speechAct,
         confidence: conversationalMatch.confidence,

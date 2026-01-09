@@ -2,7 +2,7 @@ import pool from '../db/pool.js';
 import { validateHexId } from '../utils/hexUtils.js';
 import CharacterEngine from './CharacterEngine_TEST.js';
 import KnowledgeResponseEngine from '../TSE/helpers/KnowledgeResponseEngine.js';
-import NaturalLanguageGenerator from '../TSE/helpers/NaturalLanguageGenerator.js';
+import { getNaturalLanguageGenerator } from '../TSE/helpers/NaturalLanguageGeneratorSingleton.js';
 import narrativeEngine from '../utils/narrativeEngine.js';
 import narrativeAccess from '../utils/narrativeAccess.js';
 
@@ -10,7 +10,7 @@ class StorytellerContextAssembler {
     constructor(dbPool = null) {
         this.pool = dbPool || pool;
         this.knowledgeResponseEngine = new KnowledgeResponseEngine(this.pool);
-        this.nlg = new NaturalLanguageGenerator();
+        this.nlg = getNaturalLanguageGenerator();
         console.log('[StorytellerContextAssembler] Initialized');
     }
 

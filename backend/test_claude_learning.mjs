@@ -1,10 +1,33 @@
-import pool from './db/pool.js';
-import TSELoopManager from './TSE/TSELoopManager.js';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import LearningDatabase from './TSE/LearningDatabase.js';
 
 async function testClaudeLearning() {
     const learningDb = new LearningDatabase(pool);
-    const tseManager = new TSELoopManager(pool);
     
     try {
         await tseManager.initialize();

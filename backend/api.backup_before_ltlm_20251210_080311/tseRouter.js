@@ -3,7 +3,7 @@ import TSELoopManager from "../TSE/TSELoopManager.js";
 
 const router = express.Router();
 // Instantiating a local instance for the API
-const tseManager = new TSELoopManager();
+const tseManager = getTSELoopManager();
 
 // Initialize the manager (loads sub-components)
 // Note: In a real prod app, you might want to await this at server startup,

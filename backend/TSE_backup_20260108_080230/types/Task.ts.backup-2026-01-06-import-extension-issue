@@ -1,0 +1,71 @@
+import { VALID_CATEGORIES, type TaskCategory } from '../constants/TaskCategories.ts';
+
+/**
+ * Known task types produced by TeacherComponent.
+ * Add new literals here when a genuinely new taskType appears in production.
+ * This is kept as a union (not enum) for maximum flexibility and string literal inference.
+ */
+export type TaskType =
+  | "Generate initial knowledge"
+  | "Improve clarity"
+  | "Enhance professionalism"
+  | "Rewrite for tone"
+  | "Evaluate communication quality"
+  | "Apply to new scenario"
+  | "Recall and explain"
+  | "Review correctness"
+  // Add more only when they actually appear in TeacherComponent logic
+  // Examples of future possibles:
+  // | "Summarize key points"
+  // | "Generate practice question"
+  // | "Critique reasoning"
+  ;
+
+type TaskId = string & { __brand?: 'TaskId' };
+type AttemptId = string & { __brand?: 'AttemptId' };
+type CharacterId = string & { __brand?: 'CharacterId' };
+
+/**
+ * Standardized Task shape produced by TeacherComponent and consumed by Student & Evaluator.
+ * Enforces strict contract across the entire TSE loop.
+ */
+export interface Task {
+  taskId: TaskId;
+  taskType: TaskType;
+  taskCategory: TaskCategory;
+  knowledgeId?: string;
+  input: {
+    instructions: string;
+    content?: string;
+    expectedFormat?: string;
+    tone?: string;
+    maxLength?: number;
+  };
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  characterId: CharacterId;
+  metadata: Record<string, unknown>;
+}
+
+/**
+ * Standardized attempt shape returned by StudentComponent.
+ */
+export interface Attempt {
+  attemptId: AttemptId;
+  taskId: TaskId;
+  characterId: CharacterId;
+  knowledgeId?: string;
+  attemptText: string;
+  metadata: Record<string, unknown>;
+}
+
+/**
+ * Standardized evaluation shape returned by EvaluatorComponent.
+ */
+export interface Evaluation {
+  score: 1 | 2 | 3 | 4 | 5;          // 1 = very poor, 5 = excellent
+  fsrsGrade?: 1 | 2 | 3 | 4 | 5;     // mapped for FSRS spaced-repetition update
+  feedback: string;
+  processHint?: string;
+  selfRegPrompt?: string;
+  masteryDelta?: number;             // typically -1.0 to +1.0, positive = improvement
+}

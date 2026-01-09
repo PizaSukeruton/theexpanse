@@ -1,0 +1,18 @@
+import { getTSELoopManager } from './TSE/TSELoopManagerSingleton.js';
+const tseManager = getTSELoopManager();
+
+const { default: pool } = await import('./db/pool.js');
+const { default: TSELoopManager } = await import('./tse/TSELoopManager.js');
+
+const manager = getTSELoopManager();
+await manager.initialize();
+
+const result = await manager.startKnowledgeCycle({
+  characterId: '#700002',
+  query: null,
+  domain: 'story_sense'
+});
+
+console.log('Story Sense cycle result:');
+console.log(JSON.stringify(result, null, 2));
+process.exit(0);

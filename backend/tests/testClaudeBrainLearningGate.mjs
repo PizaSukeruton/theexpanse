@@ -1,0 +1,47 @@
+import ClaudeBrain from '../councilTerminal/ClaudeBrain.js';
+
+// Minimal stubs (no sockets, no server)
+const brain = ClaudeBrain;
+
+const session = {
+  id: 'test_session_1',
+  context: {}
+};
+
+const user = {
+  access_level: 1,
+  userid: '#D00001',
+  owned_character_id: '#D00001',
+  username: 'Tester'
+};
+
+// A phrase that previously could trigger learning
+const inputs = [
+  { label: 'NEUTRAL_HIGH_NGRAM', text: 'This sentence exhibits unusually structured lexical novelty.' },
+  { label: 'DISTRESSED', text: 'I feel really sad and overwhelmed by this concept.' }
+];
+
+async function run() {
+  for (const t of inputs) {
+    console.log(`\n--- ${t.label} ---`);
+    // === FORCED DEFERRED LEARNING TEST ===
+    session.context.deferred_learning = {
+      phrase: "Can you help me understand what you mean by that?",
+      score: 0.75,
+      pressures: {},
+      deferReason: "forced_test",
+      timestamp: Date.now()
+    };
+    const result = await brain.processQuery(t.text, session, user);
+    console.log({
+      source: result.source,
+      learningActive: session.context.learning_active || false,
+      outputPreview: (result.output || '').slice(0, 120)
+    });
+  }
+}
+
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

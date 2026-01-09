@@ -1,0 +1,167 @@
+import pool from "../db/pool.js";
+import generateHexId from "../utils/hexIdGenerator.js";
+
+class LearningDatabase {
+  constructor() {
+    console.log("[LearningDatabase] Ready");
+  }
+
+  async initialize() {
+    console.log("[LearningDatabase] initialize() called \u2014 no-op");
+  }
+
+  /**
+   * Create or register a knowledge cycle:
+   * - Insert a new knowledge_items row (if this is fresh knowledge)
+   * - Upsert character_knowledge_state for this character + knowledge
+   * - Return a cycle object the TSE loop can use
+   *
+   * @param {string} characterId - hex character_id (e.g. "#700002")
+   * @param {Object} preparedItem - from KnowledgeAcquisitionEngine.prepareKnowledgeItem
+   *   { knowledgeId, concept, domainId, content, sourceType }
+   * @param {string} teacherNodeId
+   * @param {string} studentNodeId
+   */
+  async createCycle(characterId, preparedItem, teacherNodeId, studentNodeId) {
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+
+      const now = new Date();
+      const initialRetrievability = 1.0;
+      const initialStability = 0.4;
+      const initialDifficulty = 5.0;
+
+      const nextReview = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+      const knowledgeId = preparedItem.knowledgeId || (await generateHexId("knowledge_item_id"));
+      const domainId = preparedItem.domainId;
+      const sourceType = preparedItem.sourceType || "tse_cycle";
+      const content = preparedItem.content;
+      const concept = preparedItem.concept || "unknown";
+
+      console.log("[LearningDB.createCycle] Starting cycle with:", {
+        characterId,
+        knowledgeId,
+        domainId,
+        sourceType,
+        concept,
+      });
+
+      // 1) Insert into knowledge_items with correct column order:
+      // knowledge_id | content | semantic_embedding | domain_id | source_type
+      // | acquisition_timestamp | initial_character_id | initial_strength
+      // | complexity_score | concept
+      await client.query(
+        `
+        INSERT INTO knowledge_items (
+          knowledge_id,
+          content,
+          semantic_embedding,
+          domain_id,
+          source_type,
+          initial_character_id,
+          initial_strength,
+          complexity_score,
+          concept
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        ON CONFLICT (knowledge_id) DO NOTHING
+      `,
+        [
+          knowledgeId,
+          content,
+          null,
+          domainId,
+          sourceType,
+          characterId,
+          1.0,
+          0.5,
+          concept,
+        ]
+      );
+
+      // 2) Upsert into character_knowledge_state
+      await client.query(
+        `
+        INSERT INTO character_knowledge_state (
+          character_id,
+          knowledge_id,
+          current_retrievability,
+          stability,
+          difficulty,
+          last_review_timestamp,
+          next_review_timestamp,
+          grade_history,
+          acquisition_method,
+          current_expertise_score,
+          is_mastered,
+          is_forgotten
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+        ON CONFLICT (character_id, knowledge_id)
+        DO UPDATE SET
+          current_retrievability = EXCLUDED.current_retrievability,
+          stability = EXCLUDED.stability,
+          difficulty = EXCLUDED.difficulty,
+          last_review_timestamp = EXCLUDED.last_review_timestamp,
+          next_review_timestamp = EXCLUDED.next_review_timestamp,
+          grade_history = EXCLUDED.grade_history,
+          acquisition_method = EXCLUDED.acquisition_method
+      `,
+        [
+          characterId,
+          knowledgeId,
+          initialRetrievability,
+          initialStability,
+          initialDifficulty,
+          now,
+          nextReview,
+          JSON.stringify([]),
+          "tse_cycle",
+          0.0,
+          false,
+          false,
+        ]
+      );
+
+      // 3) Optionally we could log a first "virtual" review later via EvaluatorComponent.
+      // For now, LearningDatabase only seeds the state.
+
+      await client.query("COMMIT");
+
+      const cycle = {
+        success: true,
+        cycleId: null,
+        characterId,
+        knowledgeId,
+        concept,
+        domainId,
+        sourceType,
+        nextReview,
+        teacherNodeId,
+        studentNodeId,
+      };
+
+      console.log("[LearningDB.createCycle] Cycle created:", {
+        characterId,
+        knowledgeId,
+        domainId,
+        nextReview,
+      });
+
+      return cycle;
+    } catch (error) {
+      await client.query("ROLLBACK");
+      console.error("[LearningDB.createCycle] ERROR:", error);
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
+
+  /**
+   * Placeholder for future FSRS review logging if needed here.
+   * EvaluatorComponent currently handles review logs and state updates.
+   */
+}
+
+export default new LearningDatabase();

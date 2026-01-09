@@ -1,0 +1,212 @@
+import pool from "../../db/pool.js";
+
+/**
+ * RelationshipGrounder - Layer 2: Query Claude's relationships and known characters
+ * 
+ * When Claude is asked "Do you know X?" or "What do you think of Y?"
+ * this class queries his actual relationships to ground the response in reality.
+ */
+export default class RelationshipGrounder {
+  constructor() {
+    this.CLAUDE_CHARACTER_ID = "#700002"; // Fixed: Claude's hex ID
+  }
+
+  /**
+   * Main entry point: Ground a response in Claude's relationships
+   * @param {string} entity - Character name or hex ID to find relationships with
+   * @param {string} characterId - Character asking (usually "#700002" for Claude)
+   * @returns {object} Grounded relationships context
+   */
+  async ground(entity, characterId = this.CLAUDE_CHARACTER_ID) {
+    try {
+      // Query outgoing relationships (Claude knows someone)
+      const outgoingRelationships = await this.queryOutgoingRelationships(characterId);
+      
+      // Query incoming relationships (Someone knows Claude)
+      const incomingRelationships = await this.queryIncomingRelationships(characterId);
+      
+      // Get all relationship types for reference
+      const relationshipTypes = await this.getRelationshipTypes();
+
+      // Find matches for the entity
+      const relatedCharacters = this.matchCharacters(entity, outgoingRelationships, incomingRelationships);
+
+      return {
+        entity,
+        characterId,
+        timestamp: new Date().toISOString(),
+        outgoingRelationships: outgoingRelationships,
+        incomingRelationships: incomingRelationships,
+        relationshipTypes: relationshipTypes,
+        groundedRelationships: {
+          hasOutgoingMatch: relatedCharacters.outgoing.length > 0,
+          hasIncomingMatch: relatedCharacters.incoming.length > 0,
+          relatedOutgoing: relatedCharacters.outgoing,
+          relatedIncoming: relatedCharacters.incoming
+        },
+        matchConfidence: Math.max(
+          relatedCharacters.outgoing.length > 0 ? 0.8 : 0,
+          relatedCharacters.incoming.length > 0 ? 0.6 : 0
+        )
+      };
+    } catch (err) {
+      console.error("RelationshipGrounder.ground() error:", err.message);
+      return {
+        entity,
+        characterId,
+        timestamp: new Date().toISOString(),
+        error: err.message,
+        groundedRelationships: null,
+        outgoingRelationships: [],
+        incomingRelationships: [],
+        relationshipTypes: []
+      };
+    }
+  }
+
+  /**
+   * Query relationships where Claude is the source (Claude knows someone)
+   * @param {string} characterId 
+   * @returns {array} Array of outgoing relationships with target character info
+   */
+  async queryOutgoingRelationships(characterId) {
+    try {
+      const query = `
+        SELECT 
+          hr.relationship_id,
+          hr.source_hex,
+          hr.target_hex,
+          hr.relationship_type,
+          hr.metadata,
+          hr.created_at,
+          cp.character_name,
+          cp.category
+        FROM hex_relationships hr
+        LEFT JOIN character_profiles cp ON hr.target_hex = cp.character_id
+        WHERE hr.source_hex = $1
+        ORDER BY hr.created_at DESC
+      `;
+
+      const result = await pool.query(query, [characterId]);
+      return result.rows;
+    } catch (err) {
+      console.error("RelationshipGrounder.queryOutgoingRelationships() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Query relationships where someone knows Claude (incoming relationships)
+   * @param {string} characterId 
+   * @returns {array} Array of incoming relationships with source character info
+   */
+  async queryIncomingRelationships(characterId) {
+    try {
+      const query = `
+        SELECT 
+          hr.relationship_id,
+          hr.source_hex,
+          hr.target_hex,
+          hr.relationship_type,
+          hr.metadata,
+          hr.created_at,
+          cp.character_name,
+          cp.category
+        FROM hex_relationships hr
+        LEFT JOIN character_profiles cp ON hr.source_hex = cp.character_id
+        WHERE hr.target_hex = $1
+        ORDER BY hr.created_at DESC
+      `;
+
+      const result = await pool.query(query, [characterId]);
+      return result.rows;
+    } catch (err) {
+      console.error("RelationshipGrounder.queryIncomingRelationships() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Get all relationship types for reference
+   * @returns {array} Array of relationship types
+   */
+  async getRelationshipTypes() {
+    try {
+      const query = `
+        SELECT type_name, description
+        FROM relationship_types
+        ORDER BY type_name
+      `;
+
+      const result = await pool.query(query);
+      return result.rows;
+    } catch (err) {
+      console.error("RelationshipGrounder.getRelationshipTypes() error:", err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Match entity against known characters
+   * @param {string} query - Character name or hex to search for
+   * @param {array} outgoing - Outgoing relationships
+   * @param {array} incoming - Incoming relationships
+   * @returns {object} { outgoing: [], incoming: [] } matches
+   */
+  matchCharacters(query, outgoing, incoming) {
+    if (!query) {
+      return { outgoing: [], incoming: [] };
+    }
+
+    const queryLower = query.toLowerCase();
+
+    const outgoingMatches = outgoing.filter(rel => {
+      const name = rel.character_name ? rel.character_name.toLowerCase() : "";
+      const hexId = rel.target_hex ? rel.target_hex.toLowerCase() : "";
+      
+      return name.includes(queryLower) || hexId.includes(queryLower);
+    });
+
+    const incomingMatches = incoming.filter(rel => {
+      const name = rel.character_name ? rel.character_name.toLowerCase() : "";
+      const hexId = rel.source_hex ? rel.source_hex.toLowerCase() : "";
+      
+      return name.includes(queryLower) || hexId.includes(queryLower);
+    });
+
+    return {
+      outgoing: outgoingMatches,
+      incoming: incomingMatches
+    };
+  }
+
+  /**
+   * Generate grounded statement about relationships
+   * @param {object} groundedContext - Output from ground()
+   * @returns {string} Natural language statement about relationships
+   */
+  generateGroundedStatement(groundedContext) {
+    if (!groundedContext || !groundedContext.groundedRelationships) {
+      return "";
+    }
+
+    const { relatedOutgoing, relatedIncoming } = groundedContext.groundedRelationships;
+    let statements = [];
+
+    // Outgoing relationships (Claude knows someone)
+    if (relatedOutgoing && relatedOutgoing.length > 0) {
+      const rel = relatedOutgoing[0];
+      const relType = rel.relationship_type.toLowerCase().replace(/_/g, ' ');
+      statements.push(`I know ${rel.character_name} as a ${relType}.`);
+    }
+
+    // Incoming relationships (Someone knows Claude)
+    if (relatedIncoming && relatedIncoming.length > 0) {
+      const rel = relatedIncoming[0];
+      const relType = rel.relationship_type.toLowerCase().replace(/_/g, ' ');
+      statements.push(`${rel.character_name} regards me as a ${relType}.`);
+    }
+
+    return statements.join(" ");
+  }
+}

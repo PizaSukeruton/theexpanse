@@ -1,0 +1,134 @@
+import pool from "../../db/pool.js";
+
+export default class EventGrounder {
+  async ground(entity, characterId) {
+    try {
+      const multiverse = await pool.query(
+        `SELECT
+           me.event_id,
+           me.realm,
+           me.location,
+           me.event_type,
+           me.threat_level,
+           me.involved_characters,
+           me.outcome,
+           me.notes
+         FROM multiverse_events me
+         WHERE me.involved_characters ? $1
+         ORDER BY me.event_id DESC
+         LIMIT 10`,
+        [characterId]
+      );
+
+      const psychic = await pool.query(
+        `SELECT
+           pe.event_id,
+           pe.source_character,
+           pe.target_character,
+           pe.delta_p,
+           pe.delta_a,
+           pe.delta_d
+         FROM psychic_events pe
+         WHERE pe.source_character = $1
+            OR pe.target_character = $1
+         ORDER BY pe.event_id DESC
+         LIMIT 10`,
+        [characterId]
+      );
+
+      const omiyage = await pool.query(
+        `SELECT
+           me.event_id,
+           me.realm,
+           me.location,
+           me.event_type,
+           me.threat_level,
+           me.involved_characters,
+           me.outcome,
+           me.notes
+         FROM multiverse_events me
+         WHERE me.involved_characters ? $1
+           AND me.event_type = 'gift_exchange'
+         ORDER BY me.event_id DESC
+         LIMIT 10`,
+        [characterId]
+      );
+
+      const hasMultiverseMatch = this.matchEvent(entity, multiverse.rows, ["event_type", "location", "realm", "outcome", "notes"]);
+      const hasPsychicMatch = this.matchEvent(entity, psychic.rows, ["delta_p", "delta_a", "delta_d"]);
+      const hasOmiyageMatch = this.matchEvent(entity, omiyage.rows, ["event_type", "location", "realm", "outcome", "notes"]);
+
+      return {
+        entity,
+        characterId,
+        groundedEvents: {
+          hasMultiverseMatch,
+          hasOmiyageMatch,
+          hasPsychicMatch,
+          relatedMultiverse: multiverse.rows,
+          relatedOmiyage: omiyage.rows,
+          relatedPsychic: psychic.rows
+        },
+        timestamp: new Date().toISOString()
+      };
+    } catch (err) {
+      console.error("EventGrounder error:", err.message);
+      return {
+        entity,
+        characterId,
+        groundedEvents: {
+          hasMultiverseMatch: false,
+          hasOmiyageMatch: false,
+          hasPsychicMatch: false,
+          relatedMultiverse: [],
+          relatedOmiyage: [],
+          relatedPsychic: []
+        },
+        error: err.message
+      };
+    }
+  }
+
+  matchEvent(query, items, fields) {
+    if (!query || !items || !items.length) return false;
+    const q = String(query).toLowerCase();
+    const fieldList = Array.isArray(fields) ? fields : [fields];
+    return items.some(item =>
+      fieldList.some(f => {
+        const value = item[f];
+        if (value == null) return false;
+        const s = typeof value === "string" ? value : JSON.stringify(value);
+        return s.toLowerCase().includes(q);
+      })
+    );
+  }
+}
+
+export function generateEventStatement(eventContext) {
+  const ge = eventContext && eventContext.groundedEvents;
+  if (!ge) return "";
+
+  const multi = ge.relatedMultiverse || [];
+  const omiyage = ge.relatedOmiyage || [];
+  const psychic = ge.relatedPsychic || [];
+
+  if (ge.hasMultiverseMatch && multi.length) {
+    const e = multi[0];
+    const label = e.event_type || "a multiverse event";
+    return `I was there when ${label} unfolded.`;
+  }
+
+  if (ge.hasOmiyageMatch && omiyage.length) {
+    const e = omiyage[0];
+    const label = e.event_type || "an omiyage moment";
+    return `An omiyage shaped me: ${label}.`;
+  }
+
+  if (ge.hasPsychicMatch && psychic.length) {
+    const e = psychic[0];
+    const label = `P:${e.delta_p}, A:${e.delta_a}, D:${e.delta_d}`;
+    return `A psychic echo still lingers from a PAD shift of ${label}.`;
+  }
+
+  return "";
+}

@@ -71,6 +71,13 @@ const HEX_RANGES = {
     narrative_beat_play_log_id: { start: 0xE10000, end: 0xE1FFFF },
     onboarding_audit_id: { start: 0xE20000, end: 0xE2FFFF },
     wisdom_reference_id: { start: 0xE50000, end: 0xE5FFFF },
+    conversation_state_id: { start: 0xE60000, end: 0xE6FFFF },
+    qud_id: { start: 0xE70000, end: 0xE7FFFF },
+    adjacency_pair_id: { start: 0xE80000, end: 0xE8FFFF },
+    identity_anchor_id: { start: 0xBA0000, end: 0xBAFFFF },
+    relationship_state_id: { start: 0xBC0000, end: 0xBCFFFF },
+    episodic_anchor_id: { start: 0xBE0000, end: 0xBEFFFF },
+    intention_id: { start: 0xBF0000, end: 0xBFFFFF },
 };
 
 async function generateHexId(idType) {

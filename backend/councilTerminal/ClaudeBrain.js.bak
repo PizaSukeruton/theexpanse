@@ -1,3 +1,31 @@
+import { getTSELoopManager } from '../TSE/TSELoopManagerSingleton.js';
+const tseManager = getTSELoopManager();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * ClaudeBrain.js — Unified Orchestrator for Claude the Tanuki
  * 
@@ -31,16 +59,15 @@ import knowledgeQueryLayer from '../services/knowledgeQueryLayer.js';
 // Voice/LTLM
 import { buildStorytellerResponse } from '../services/storytellerWrapper.js';
 import { selectLtlmUtteranceForBeat } from '../services/ltlmUtteranceSelector.js';
-import { findSemanticUtterances } from '../services/ltlmUtteranceSelector.js';
-
+import { findSemanticUtterances } from '../services/findSemanticUtterances.js';
 // Singletons (ONE instance each)
-import NaturalLanguageGenerator from '../TSE/helpers/NaturalLanguageGenerator.js';
+import { getNaturalLanguageGenerator } from '../TSE/helpers/NaturalLanguageGeneratorSingleton.js';
 import SpacedRepetitionScheduler from '../knowledge/SpacedRepetitionScheduler.js';
 import KnowledgeAcquisitionEngine from '../knowledge/KnowledgeAcquisitionEngine.js';
 
 // Database
 import pool from '../db/pool.js';
-import TSELoopManager from '../TSE/TSELoopManager.js';
+
 import generateHexId from '../utils/hexIdGenerator.js';
 
 // Learning System
@@ -49,6 +76,16 @@ import learningCapturer from '../services/learningCapturer.js';
 
 // PAD Awareness System
 import DrClaudeModule from '../services/DrClaudeModule.js';
+import identityModule from '../services/IdentityModule.js';
+
+// Conversational Competence (OBSERVE MODE)
+import ConversationStateManager from '../services/ConversationStateManager.js';
+import AdjacencyPairHandler from '../services/AdjacencyPairHandler.js';
+import RepairHandler from '../services/RepairHandler.js';
+
+// NOTE: These modules MUST NOT alter response flow.
+
+// OBSERVE ONLY — no enforcement, no mutation.
 // === POLICY RULES ===
 // All decision logic is defined here and NOWHERE else
 
@@ -98,11 +135,12 @@ const POLICY_RULES = {
 
 class ClaudeBrain {
   constructor() {
+    console.trace('[TRACE] ClaudeBrain.js constructed');
     console.log('[ClaudeBrain] Initializing unified orchestrator...');
     
     // === SINGLETON INSTANCES ===
-    this.nlg = new NaturalLanguageGenerator();
-    this.tseManager = new TSELoopManager();
+    this.nlg = getNaturalLanguageGenerator();
+    this.tseManager = getTSELoopManager();
     this.scheduler = new SpacedRepetitionScheduler();
     this.acquisitionEngine = new KnowledgeAcquisitionEngine();
     
@@ -111,6 +149,11 @@ class ClaudeBrain {
     
     // === PREFERENCE CACHE ===
     this.preferenceCache = new Map();
+
+    // === CONVERSATIONAL COMPETENCE (OBSERVE MODE) ===
+    this.conversationStateManager = ConversationStateManager;
+    this.adjacencyHandler = AdjacencyPairHandler;
+    this.repairHandler = RepairHandler;
     
     console.log('[ClaudeBrain] Unified orchestrator initialized.');
   }
@@ -119,7 +162,85 @@ class ClaudeBrain {
   // MAIN ENTRY POINT
   // ==========================================
   
+
+// BEGIN deferred learning gate
+
+evaluateDeferredLearning(session) {
+  const d = session.context?.deferred_learning;
+  if (!d) return { state: "NONE" };
+
+  const now = Date.now();
+  const ageMs = now - d.timestamp;
+
+  const pad = session.context?.userPad;
+  if (pad) {
+    if (pad.p < 0 || Math.abs(pad.a) > 0.2) {
+      return {
+        state: "PENDING",
+        reason: "pad_not_stable",
+        ageMs,
+        phrase: d.phrase,
+        score: d.score
+      };
+    }
+  }
+  const currentTurn = session.context?.turn_index || 0;
+
+
+  const lastSafetyTurn = session.context?.last_safety_turn;
+  if (typeof lastSafetyTurn === "number") {
+    if ((currentTurn - lastSafetyTurn) < 2) {
+      return {
+        state: "PENDING",
+        reason: "route_cooldown",
+        ageMs,
+        phrase: d.phrase,
+        score: d.score
+      };
+    }
+  }
+  const deferredAtTurn = d.deferred_at_turn;
+
+  if (typeof deferredAtTurn !== "number") {
+    return {
+      state: "PENDING",
+      reason: "turn_index_missing",
+      ageMs,
+      phrase: d.phrase,
+      score: d.score
+    };
+  }
+
+  const turnsSince = currentTurn - deferredAtTurn;
+
+  if (turnsSince < 2) {
+    return {
+      state: "PENDING",
+      reason: d.deferReason || "unspecified",
+      ageMs,
+      phrase: d.phrase,
+      score: d.score
+    };
+  }
+
+  return {
+    state: "REPLAYABLE",
+    reason: "gates_passed",
+    ageMs,
+    phrase: d.phrase,
+    score: d.score
+  };
+}
+
+// END deferred learning gate
   async processQuery(command, session, user) {
+
+    // === DEFERRED LEARNING EVALUATION (non-mutating) ===
+    const deferredEval = this.evaluateDeferredLearning(session);
+    if (deferredEval.state !== "NONE") {
+      console.log("[ClaudeBrain] Deferred learning eval:", deferredEval);
+    }
+
     const result = {
       success: false,
       output: null,
@@ -136,6 +257,35 @@ class ClaudeBrain {
       if (user.access_level === 11) {
         return await this.handleGodMode(command, session, user);
       }
+
+      // ==========================================
+      // STEP 1.5: CONVERSATION STATE INITIALIZATION
+      // ==========================================
+      let conversationState = null;
+      try {
+        // Ensure conversation_id exists in session
+        if (!session.context) {
+          session.context = {};
+        }
+        if (!session.context.conversation_id) {
+          // Generate or use session ID as conversation ID
+          session.context.conversation_id = session.id || `conv_${Date.now()}`;
+        }
+        
+        // Get or create conversation state
+        conversationState = await this.conversationStateManager.getOrCreateState(
+          session.context.conversation_id,
+          user.userid || user.user_id || '#D00001'
+        );
+        
+        // Track turn index
+        session.context.turn_index = (session.context.turn_index || 0) + 1;
+        
+        console.log(`[ClaudeBrain] Conversation state: id=${session.context.conversation_id}, turn=${session.context.turn_index}`);
+      } catch (stateError) {
+        console.error('[ClaudeBrain] State initialization error (non-fatal):', stateError.message);
+      }
+
 
       // ==========================================
       // STEP 2: LOAD USER PREFERENCES
@@ -163,51 +313,142 @@ class ClaudeBrain {
       }
 
       // ==========================================
-      // STEP 2.75: EMOTIONAL RESPONSE GATE
+      // STEP 2.75: EMOTIONAL RESPONSE GATE (v3)
       // ==========================================
-      if (userPad && (userPad.p < 0 || userPad.a > 0.35)) {
+      // STEP 2.65: CONVERSATIONAL STRUCTURE OBSERVATION (OBSERVE MODE)
+      // - Repair detection (heuristic)
+      // - Adjacency expectation presence check
+      // - NO behavioral changes
+      // ==========================================
+      let conversationObservation = {
+        repairDetected: false,
+        repairType: null,
+        repairConfidence: null,
+        adjacencyExpectationActive: false,
+        expectedSpp: null,
+        observationOnly: true
+      };
+
+      try {
+        // --- Repair detection (other-initiated) ---
+        const repairSignal = this.repairHandler.detectOtherInitiatedRepair(command);
+        if (repairSignal && repairSignal.isRepair) {
+          conversationObservation.repairDetected = true;
+          conversationObservation.repairType = repairSignal.repairType;
+          conversationObservation.repairConfidence = repairSignal.confidence;
+
+          console.log(
+            `[ClaudeBrain] OBSERVE: Repair detected → type=${repairSignal.repairType}, confidence=${repairSignal.confidence}`
+          );
+        }
+
+        // --- Adjacency expectation presence (NO evaluation) ---
+        if (session?.context?.conversation_id) {
+          const state = await this.conversationStateManager.getState(
+            session.context.conversation_id
+          );
+
+          if (state?.pending_fpp) {
+            conversationObservation.adjacencyExpectationActive = true;
+            conversationObservation.expectedSpp = state.expected_spp;
+
+            console.log(
+              `[ClaudeBrain] OBSERVE: Adjacency expectation active → expected ${state.expected_spp}`
+            );
+          }
+        }
+
+        // Attach observation to session context (observe only)
+        session.context = session.context || {};
+        session.context.conversationObservation = conversationObservation;
+
+      } catch (observeError) {
+        console.error(
+          '[ClaudeBrain] Observation error (non-fatal):',
+          observeError.message
+        );
+      }
+
+      // ==========================================
+      // STEP 2.66: RECORD USER MOVE (Phase 1 Telemetry)
+      // ==========================================
+      try {
+        if (session.context?.conversation_id) {
+          const userActType = session.context.conversationObservation?.repairDetected 
+            ? 'repair_initiation' 
+            : 'unknown';
+          
+          await this.conversationStateManager.recordMove(
+            session.context.conversation_id,
+            {
+              speaker: 'user',
+              turnIndex: session.context.turn_index || 1,
+              actType: userActType,
+              content: command.substring(0, 100),
+              timestamp: new Date().toISOString()
+            }
+          );
+          console.log('[ClaudeBrain] Recorded user move: turn=' + session.context.turn_index + ', actType=' + userActType);
+        }
+      } catch (moveError) {
+        console.error('[ClaudeBrain] User move recording error (non-fatal):', moveError.message);
+      }
+
+      // ==========================================
+      const negativeKeywords = /\b(sad|upset|down|depressed|unhappy|lonely|hurt|crying|anxious|scared|worried|angry|frustrated|terrible|awful|miserable|hopeless|bad|pain|fear|panic)\b/i;
+      const positiveKeywords = /\b(happy|excited|exciting|great|wonderful|amazing|fantastic|thrilled|joyful|elated|grateful|blessed|awesome|ecstatic|overjoyed|good|glad|love|proud|relieved|cheerful|delighted|content|happiness|excite|thrilling|loved|loving|proudly|relief)\b/i;
+      
+      const hasNegativeKeyword = negativeKeywords.test(command);
+      const hasPositiveKeyword = positiveKeywords.test(command);
+      const hasEmotionalKeyword = hasNegativeKeyword || hasPositiveKeyword;
+      
+      const isNegativeEmotion = userPad && userPad.p < -0.05;
+      const isStrongPositive = userPad && userPad.p > 0.25;
+      const isHighArousal = userPad && userPad.a > 0.4;
+
+      if (hasEmotionalKeyword || isNegativeEmotion || isStrongPositive || isHighArousal) {
         let emotionalParams = null;
         let responseType = null;
 
-        // Strong negative emotion - empathy/comfort
-        if (userPad.p < 0.1) {
-          responseType = 'negative_support';
+        // Priority 1: Mixed emotions (both positive and negative keywords)
+        if (hasPositiveKeyword && hasNegativeKeyword) {
+          responseType = 'mixed_support';
           emotionalParams = {
-            speechActCode: 'expressive.comfort',
-            dialogueFunctionCode: 'expressive.comfort',
-            outcomeIntentCode: 'emotional_outcomes.reduce_distress'
-          };
-          console.log('[ClaudeBrain] Detected negative emotion (P=' + userPad.p.toFixed(2) + ') - routing to empathy');
-        }
-        // High arousal distress - calm/contain
-        else if (userPad.p < 0 && userPad.a > 0.4) {
-          responseType = 'contain_distress';
-          emotionalParams = {
-            speechActCode: 'expressive.comfort',
-            dialogueFunctionCode: 'expressive.comfort',
+            speechActCode: 'expressive',
+            dialogueFunctionCode: 'expressive.empathize',
             outcomeIntentCode: 'emotional_outcomes.contain_affect'
           };
-          console.log('[ClaudeBrain] Detected high-arousal distress (P=' + userPad.p.toFixed(2) + ', A=' + userPad.a.toFixed(2) + ') - routing to contain');
+          console.log('[ClaudeBrain] Mixed emotion route triggered (keywords=positive+negative)');
         }
-        // Strong positive emotion - celebrate/share joy
-        else if (userPad.p > 0.35) {
+        // Priority 2: Positive emotion (keyword or strong PAD)
+        else if (hasPositiveKeyword || isStrongPositive) {
           responseType = 'positive_support';
           emotionalParams = {
-            speechActCode: 'expressive.praise',
-            dialogueFunctionCode: 'expressive.praise',
+            speechActCode: 'expressive',
+            dialogueFunctionCode: 'expressive.celebrate',
             outcomeIntentCode: 'emotional_outcomes.validate_experience'
           };
-          console.log('[ClaudeBrain] Detected positive emotion (P=' + userPad.p.toFixed(2) + ') - routing to celebrate');
+          console.log('[ClaudeBrain] Celebration route triggered (P=' + (userPad?.p?.toFixed(2) || 'N/A') + ' | keyword=' + hasPositiveKeyword + ')');
         }
-        // High arousal (excitement/intensity) - acknowledge
-        else if (userPad.a > 0.4) {
-          responseType = 'acknowledge_intensity';
+        // Priority 3: Negative emotion (keyword or negative PAD)
+        else if (hasNegativeKeyword || (userPad && userPad.p < 0)) {
+          responseType = 'negative_support';
           emotionalParams = {
-            speechActCode: 'expressive.encourage',
-            dialogueFunctionCode: 'expressive.encourage',
-            outcomeIntentCode: 'emotional_outcomes.validate_experience'
+            speechActCode: 'expressive',
+            dialogueFunctionCode: 'expressive.empathize',
+            outcomeIntentCode: 'emotional_outcomes.reduce_distress'
           };
-          console.log('[ClaudeBrain] Detected high arousal (A=' + userPad.a.toFixed(2) + ') - acknowledging intensity');
+          console.log('[ClaudeBrain] Empathy route triggered (P=' + (userPad?.p?.toFixed(2) || 'N/A') + ' | keyword=' + hasNegativeKeyword + ')');
+        }
+        // Priority 4: High arousal catch-all
+        else if (userPad && userPad.a > 0.35) {
+          responseType = 'arousal_regulation';
+          emotionalParams = {
+            speechActCode: 'expressive.reassure',
+            dialogueFunctionCode: 'expressive.reassure',
+            outcomeIntentCode: 'emotional_outcomes.contain_affect'
+          };
+          console.log('[ClaudeBrain] High arousal route triggered (A=' + userPad.a.toFixed(2) + ')');
         }
 
         if (emotionalParams) {
@@ -217,10 +458,12 @@ class ClaudeBrain {
               speechActCode: emotionalParams.speechActCode,
               dialogueFunctionCode: emotionalParams.dialogueFunctionCode,
               outcomeIntentCode: emotionalParams.outcomeIntentCode,
-              targetPad: { pleasure: userPad.p, arousal: userPad.a, dominance: userPad.d }
+              targetPad: { pleasure: userPad?.p || 0, arousal: userPad?.a || 0, dominance: userPad?.d || 0 }
             });
 
             if (emotionalUtterance && emotionalUtterance.utteranceText) {
+
+              session.context.last_safety_turn = session.context.turn_index;
               return {
                 success: true,
                 output: emotionalUtterance.utteranceText.replace(/<SUBJECT>/g, user.username || 'friend'),
@@ -236,6 +479,27 @@ class ClaudeBrain {
         }
       }
 
+
+
+
+
+
+      
+
+      // ==========================================
+      // STEP 2.8: IDENTITY CONTEXT LOADING
+      // ==========================================
+      let identityContext = null;
+      try {
+        identityContext = await identityModule.buildIdentityContext(
+          this.CLAUDE_CHARACTER_ID,
+          user.user_id || '#D00001',
+          { userInput: command, pad: userPad }
+        );
+        console.log('[ClaudeBrain] Identity loaded: ' + identityContext.anchors.length + ' anchors, trust=' + (identityContext.relationship?.trustScore?.toFixed(2) || 'N/A'));
+      } catch (identityError) {
+        console.error('[ClaudeBrain] Identity load failed:', identityError.message);
+      }
 
       // ==========================================
       // STEP 3: GET CLAUDE'S MOOD
@@ -268,6 +532,104 @@ class ClaudeBrain {
       if (intentResult.isConversational) {
         console.log('[ClaudeBrain] Handling conversational intent: ' + intentResult.type);
         
+        // ==========================================
+        // STEP 4.26: SELF-INQUIRY HANDLING (Identity)
+        // ==========================================
+        if (intentResult.type === 'SELF_INQUIRY') {
+          console.log('[ClaudeBrain] Self-inquiry detected, subtype: ' + intentResult.subtype);
+          
+          try {
+            const identitySummary = await identityModule.getIdentitySummary(this.CLAUDE_CHARACTER_ID);
+            const subtype = intentResult.subtype || 'IDENTITY';
+            
+            // Select response based on subtype
+            let response;
+            let anchorTypeUsed;
+            
+            switch (subtype) {
+              case 'IDENTITY':
+                anchorTypeUsed = 'core_trait';
+                response = this.selectUniqueAnchor(identitySummary.whoIAm, session, "identity") || "I am Claude the Tanuki.";
+                break;
+                
+              case 'CAPABILITY':
+                anchorTypeUsed = 'role';
+                response = this.selectUniqueAnchor(identitySummary.whatIDo, session, "capability") || "I bridge human curiosity and spirit realm wisdom.";
+                break;
+                
+              case 'RULES':
+                anchorTypeUsed = 'constraint';
+                response = this.selectUniqueAnchor(identitySummary.whatIDoNot, session, "rules") || "My powers serve playfulness, never malice.";
+                break;
+                
+              case 'ORIGIN':
+                anchorTypeUsed = 'core_trait (origin)';
+                response = "I dwell in the Earth Realm, drawn here during the Cheese Wars. My roots lie in the spirit world, among the yokai.";
+                break;
+                
+              case 'NATURE':
+                anchorTypeUsed = 'core_trait (nature)';
+                const natureAnchor = identitySummary.whoIAm.find(a => 
+                  a.includes('bake-danuki') || a.includes('yokai')
+                );
+                response = natureAnchor || identitySummary.whoIAm[Math.floor(Math.random() * identitySummary.whoIAm.length)] || "I am a bake-danuki — a yokai known for transformation and playful mischief.";
+                break;
+                
+              case 'NAME':
+                anchorTypeUsed = 'core_trait (name)';
+                response = "I am Claude the Tanuki.";
+                break;
+                
+              case 'THIRD_PERSON':
+                anchorTypeUsed = 'core_trait (third-person)';
+                const thirdPerson = identitySummary.whoIAm[0]?.replace(/^I am/i, 'Claude is').replace(/\bI\b/g, 'he');
+                response = thirdPerson || "Claude is a shapeshifting Tanuki who dwells in the Earth Realm.";
+                break;
+                
+              case 'ASSERTION':
+                anchorTypeUsed = 'constraint/safety';
+                response = identitySummary.whatIDoNot[0] || "I am who I am — no more, no less.";
+                break;
+                
+              case 'DEEPER':
+                anchorTypeUsed = 'core_trait + constraint';
+                const core = identitySummary.whoIAm[Math.floor(Math.random() * identitySummary.whoIAm.length)] || "";
+                const constraint = identitySummary.whatIDoNot[Math.floor(Math.random() * identitySummary.whatIDoNot.length)] || "";
+                response = core + (constraint ? ". " + constraint : "");
+                break;
+                
+              default:
+                anchorTypeUsed = 'core_trait (default)';
+                response = identitySummary.whoIAm[Math.floor(Math.random() * identitySummary.whoIAm.length)] || "I am Claude the Tanuki.";
+            }
+            
+            return {
+              success: true,
+              output: response,
+              confidence: 0.95,
+              source: 'identity',
+              isIdentityResponse: true,
+              intentType: 'SELF_INQUIRY',
+              subtype: subtype,
+              anchorTypeUsed: anchorTypeUsed,
+              conversational: true,
+              context: session.context,
+              identitySummary: user.access_level === 11 ? identitySummary : undefined
+            };
+          } catch (identityError) {
+            console.error('[ClaudeBrain] Identity summary failed:', identityError.message);
+            return {
+              success: true,
+              output: "I am Claude the Tanuki, a guide through this realm.",
+              confidence: 0.7,
+              source: 'identity_fallback',
+              conversational: true,
+              context: session.context
+            };
+          }
+        }
+
+
         const utterance = await selectLtlmUtteranceForBeat({
           speakerCharacterId: '700002',
           speechActCode: intentResult.speechAct,
@@ -322,12 +684,25 @@ class ClaudeBrain {
 
 
       // ==========================================
+      // Deferred learning replay (evaluator-driven)
+      if (deferredEval.state === "REPLAYABLE" && !session.context.learning_active) {
+        delete session.context.deferred_learning;
+
+        return {
+          success: true,
+          output: deferredEval.phrase,
+          source: "deferred_learning",
+          confidence: deferredEval.score || 0.6,
+          learningDeferred: true,
+          context: session.context
+        };
+      }
       // STEP 5: CONFIDENCE ROUTING
       // ==========================================
       const searchResult = intentResult.searchResult;
 
       if (!searchResult || searchResult.action === 'not_found') {
-        return await this.handleNoEntityFound(intentResult, session, user, responseStyle, userPad, mood);
+        return await this.handleNoEntityFound(intentResult, session, user, responseStyle, userPad, mood, identityContext);
       }
 
       if (searchResult.action === 'confirm') {
@@ -418,6 +793,43 @@ class ClaudeBrain {
       // ==========================================
       // STEP 10: UPDATE CONTEXT
       // ==========================================
+
+      // ==========================================
+      // STEP 10.5: RECORD CLAUDE MOVE (Phase 1 Telemetry)
+      // ==========================================
+      try {
+        if (session.context?.conversation_id) {
+
+          const claudeActType =
+            intentResult?.intentType ||
+            intentResult?.type ||
+            styledResponse?.intentType ||
+            styledResponse?.source ||
+            'unknown';
+
+          await this.conversationStateManager.recordMove(
+            session.context.conversation_id,
+            {
+              speaker: 'claude',
+              turnIndex: session.context.turn_index || 1,
+              actType: claudeActType,
+              outcomeIntent: intentResult?.outcomeIntent || styledResponse?.outcomeIntent || null,
+              content: (styledResponse.output || '').substring(0, 100),
+              timestamp: new Date().toISOString()
+            }
+          );
+
+          console.log(
+            '[ClaudeBrain] Recorded Claude move: turn=' +
+              session.context.turn_index +
+              ', actType=' +
+              claudeActType
+          );
+        }
+      } catch (moveError) {
+        console.error('[ClaudeBrain] Claude move recording error (non-fatal):', moveError.message);
+      }
+
       styledResponse.context = this.updateContext(session, intentResult, styledResponse);
 
       return styledResponse;
@@ -629,6 +1041,23 @@ class ClaudeBrain {
     }
 
     return modified;
+  }
+
+  selectUniqueAnchor(anchors, session, anchorType) {
+    if (!session.context) session.context = {};
+    const lastKey = `last${anchorType.charAt(0).toUpperCase() + anchorType.slice(1)}Anchor`;
+    const lastAnchor = session.context[lastKey];
+    
+    const available = lastAnchor 
+      ? anchors.filter(a => a !== lastAnchor)
+      : anchors;
+    
+    const chosen = available.length > 0 
+      ? available[Math.floor(Math.random() * available.length)]
+      : anchors[0];
+    
+    session.context[lastKey] = chosen;
+    return chosen;
   }
 
   // ==========================================
@@ -1091,7 +1520,8 @@ class ClaudeBrain {
         return {
           ...response,
           output: styledOutput,
-          storytellerMeta: storytellerResult.storytellerMeta
+          storytellerMeta: storytellerResult.storytellerMeta,
+          source: "LTLM"
         };
       }
 
@@ -1160,7 +1590,7 @@ class ClaudeBrain {
     };
   }
 
-  async handleNoEntityFound(intentResult, session, user, responseStyle, userPad, mood) {
+  async handleNoEntityFound(intentResult, session, user, responseStyle, userPad, mood, identityContext = null) {
     const knowledgeResult = await knowledgeQueryLayer.queryClaudeKnowledge(
       intentResult.entity,
       intentResult.type,
@@ -1173,11 +1603,17 @@ class ClaudeBrain {
       let output = this.formatKnowledgeItem(item, responseStyle.verbosity);
       output += `\n\n${responseStyle.morePrompt}`;
 
+      
+      // Check if this is an identity response
+      const isIdentity = knowledgeResult.isIdentityResponse || false;
+      const source = isIdentity ? 'identity' : 'lore';
+
       return {
         success: true,
         output,
-        source: 'lore',
-        confidence: 0.7,
+        source,
+        isIdentityResponse: isIdentity,
+        confidence: isIdentity ? 0.95 : 0.7,
         knowledgeResult,
         storeContext: {
           lastDomains: knowledgeResult.domains || [],
@@ -1188,6 +1624,21 @@ class ClaudeBrain {
       };
     }
 
+    // Identity gate for learning
+    if (identityContext) {
+      try {
+        const canLearnCheck = await identityModule.canLearn(this.CLAUDE_CHARACTER_ID, {
+          content: intentResult.original || intentResult.entity
+        });
+        if (!canLearnCheck.allowed) {
+          console.log('[ClaudeBrain] Learning blocked by identity:', canLearnCheck.reason);
+          session.context.learning_mode_disabled = true;
+        }
+      } catch (learnGateErr) {
+        console.error('[ClaudeBrain] Learning gate error:', learnGateErr.message);
+      }
+    }
+
     if (user.access_level !== 11 && !session.context.learning_mode_disabled) {
       try {
         const learningSignal = await learningDetector.detectLearningOpportunity(
@@ -1195,7 +1646,14 @@ class ClaudeBrain {
           user.owned_character_id
         );
         
-        if (learningSignal.shouldAsk && !session.context.learning_active) {
+        const allowLearningAsk = (
+          learningSignal.shouldAsk &&
+          (learningSignal.pressures.padCoverage > 0.4 ||
+           learningSignal.pressures.ngramCoverage > 0.4) &&
+          (!userPad || userPad.p >= 0)
+        );
+        // Student role + empathy/distress gating will be enforced here
+        if (allowLearningAsk && !session.context.learning_active) {
           session.context.learning_active = true;
           session.context.learning_phrase = learningSignal.phrase;
           session.context.learning_signal = learningSignal;
@@ -1228,78 +1686,29 @@ class ClaudeBrain {
             context: session.context
           };
         }
+        else if (learningSignal.shouldAsk) {
+          session.context.deferred_learning = {
+            phrase: learningSignal.phrase,
+            score: learningSignal.score,
+            pressures: learningSignal.pressures,
+            deferReason: "role_gate_blocked",
+            timestamp: Date.now()
+          };
+        }
       } catch (learningError) {
         console.error('[ClaudeBrain] Learning detection error:', learningError);
       }
     }
 
-    // ==========================================
-    // SEMANTIC FALLBACK (before giving up)
-    // ==========================================
-    try {
-      const semanticResults = await findSemanticUtterances(
-        intentResult.original || intentResult.entity,
-        {
-          topK: 3,
-          targetPad: { p: userPad?.p || 0, a: userPad?.a || 0, d: userPad?.d || 0 }
-        }
-      );
-
-      if (semanticResults.results && semanticResults.results.length > 0 && semanticResults.coverage > 0.3) {
-        const best = semanticResults.results[0];
-        console.log('[ClaudeBrain] Semantic fallback found:', {
-          similarity: best.similarity.toFixed(3),
-          utterance: best.utterance_text?.substring(0, 50) + '...'
-        });
-
-        return {
-          success: true,
-          output: best.utterance_text.replace(/<SUBJECT>/g, user?.username || 'friend'),
-          source: 'semantic_fallback',
-          confidence: best.similarity,
-          context: {
-            semantic: true,
-            coverage: semanticResults.coverage
-          }
-        };
-      }
-    } catch (semError) {
-      console.error('[ClaudeBrain] Semantic fallback error:', semError.message);
-    }
-
-    // ==========================================
-    // FINAL FALLBACK: LTLM clarification utterance
-    // ==========================================
-    try {
-      const clarificationUtterance = await selectLtlmUtteranceForBeat({
-        speakerCharacterId: this.CLAUDE_CHARACTER_ID.replace('#', ''),
-        speechActCode: 'directive.request',
-        dialogueFunctionCode: 'allo_feedback.request_clarification',
-        outcomeIntentCode: 'cognitive_outcomes.clarify_confusion',
-        targetPad: this.blendPadForResponse(userPad, mood)
-      });
-
-      if (clarificationUtterance?.utteranceText) {
-        return {
-          success: true,
-          output: clarificationUtterance.utteranceText.replace(/<SUBJECT>/g, user?.username || 'friend'),
-          source: 'clarification_request',
-          confidence: 0.5,
-          context: session.context
-        };
-      }
-    } catch (clarifyError) {
-      console.error('[ClaudeBrain] Clarification fallback error:', clarifyError.message);
-    }
-
-    // Absolute last resort (should rarely hit this)
     return {
       success: false,
-      output: "I'm not sure I follow. Could you tell me more about what you mean?",
+      output: `I couldn't find anything about "${intentResult.entity}" in this realm. Can you tell me more about what you're looking for?`,
       source: 'none',
       confidence: 0
     };
   }
+
+  // ==========================================
   // GOD MODE
   // ==========================================
 

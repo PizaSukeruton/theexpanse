@@ -1,6 +1,6 @@
 import express from 'express';
-import TeacherComponent from '../tse/TeacherComponent.js';
-import LoreAnswerEvaluator from "../tse/LoreAnswerEvaluator.js";
+import TeacherComponent from '../TSE/TeacherComponent.js';
+import LoreAnswerEvaluator from "../TSE/LoreAnswerEvaluator.js";
 import pool from '../db/pool.js';
 
 const router = express.Router();

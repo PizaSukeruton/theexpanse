@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import pool from '../db/pool.js';
-import TSELoopManager from './TSELoopManager.js';
+import TSELoopManager from './TSELoopManagerSingleton.js';
 import BeltProgressionManager from './BeltProgressionManager.js';
 import PerformanceMonitor from './PerformanceMonitor.js';
 import KnowledgeResponseEngine from './helpers/KnowledgeResponseEngine.js';
@@ -10,7 +10,7 @@ import KnowledgeResponseEngine from './helpers/KnowledgeResponseEngine.js';
 const knowledgeEngine = new KnowledgeResponseEngine(pool);
 await knowledgeEngine.initialize();
 
-const tseManager = new TSELoopManager(pool);
+const tseManager = getTSELoopManager();
 await tseManager.initialize();
 
 router.get('/', (req, res) => {

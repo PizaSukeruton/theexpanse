@@ -33,7 +33,7 @@ import { buildStorytellerResponse } from '../services/storytellerWrapper.js';
 import { selectLtlmUtteranceForBeat } from '../services/ltlmUtteranceSelector.js';
 
 // Singletons (ONE instance each)
-import NaturalLanguageGenerator from '../TSE/helpers/NaturalLanguageGenerator.js';
+import { getNaturalLanguageGenerator } from './helpers/NaturalLanguageGeneratorSingleton.js';
 import SpacedRepetitionScheduler from '../knowledge/SpacedRepetitionScheduler.js';
 import KnowledgeAcquisitionEngine from '../knowledge/KnowledgeAcquisitionEngine.js';
 
@@ -100,8 +100,8 @@ class ClaudeBrain {
     console.log('[ClaudeBrain] Initializing unified orchestrator...');
     
     // === SINGLETON INSTANCES ===
-    this.nlg = new NaturalLanguageGenerator();
-    this.tseManager = new TSELoopManager();
+    this.nlg = getNaturalLanguageGenerator();
+    this.tseManager = getTSELoopManager();
     this.scheduler = new SpacedRepetitionScheduler();
     this.acquisitionEngine = new KnowledgeAcquisitionEngine();
     

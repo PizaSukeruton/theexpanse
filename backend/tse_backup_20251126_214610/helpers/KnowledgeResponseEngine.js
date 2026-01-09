@@ -12,7 +12,7 @@ class KnowledgeResponseEngine {
     constructor(pool = null) {
         this.pool = pool;
         this.cognitiveLoadManager = new CognitiveLoadManager();
-        this.nlg = new NaturalLanguageGenerator();
+        this.nlg = getNaturalLanguageGenerator();
         this.knowledgeAcquisitionEngine = new KnowledgeAcquisitionEngine();
         
         this.traitInfluenceMatrix = this.buildInfluenceMatrix();
