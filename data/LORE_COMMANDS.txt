@@ -1,0 +1,27 @@
+LORE SYSTEM - QUICK COMMANDS
+
+SEED LORE DATA:
+cd ~/desktop/theexpanse/theexpansev005/backend/tse
+node seed-lore.js
+
+TEST LORE TEACHING:
+node test-lore-teaching.js
+
+CHECK DATABASE:
+psql -U pizasukerutondb -d pizasukerutondb
+SELECT COUNT(*) FROM lore_knowledge_graph;
+SELECT entity_name, knowledge_type FROM lore_knowledge_graph LIMIT 5;
+
+START SERVER:
+cd ~/desktop/theexpanse/theexpansev005
+npm start
+
+TEST API (in another terminal):
+curl -X POST http://localhost:3000/api/lore-teaching/lore-task \
+  -H "Content-Type: application/json" \
+  -d '{"characterId":"#70001C"}'
+
+GET ALL ENTITIES:
+curl http://localhost:3000/api/lore-teaching/lore-entities
+
+ALL DONE - SYSTEM IS LIVE

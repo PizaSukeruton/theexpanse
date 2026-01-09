@@ -1,0 +1,5780 @@
+[
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let me make sure I've got this right\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So what you're saying is\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "If I'm following you correctly\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay, so to put that another way\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let me see if my little brain has this straight\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So in other words\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which ties back to what you mentioned about\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that connects to your point about\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is basically the same thing as\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that's another way of saying\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or to frame it differently\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that match what you had in mind, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Am I on the right track here, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is that roughly what you meant, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Have I got the gist of it, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that capture it, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026hopefully that clears things up a bit.",
+    "role": "closer",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026but let me know if I've muddled anything.",
+    "role": "closer",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026give me a nudge if that's off.",
+    "role": "closer",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or at least, that's how I'm reading it\u2026",
+    "role": "hedge",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026though I might be oversimplifying\u2026",
+    "role": "hedge",
+    "outcome_intent": "clarity",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Just to make sure we're on the same page\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Can I ask a quick clarifying thing\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Help me understand something\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I want to make sure I'm not barking up the wrong tree here\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Before I go further, let me check\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which makes me wonder\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that brings up a question\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026but I'm curious about one thing\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026though that does make me want to ask\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which leads to an obvious follow-up\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "When you say that, do you mean\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What part of this feels most important right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Can you give me a bit more context on\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would be most helpful to dig into\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where's the fuzzy bit in all this\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's something that might help\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So the short version is\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The key thing to know is\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "factual",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let me give you the quick rundown\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's notes on this say\u2026",
+    "role": "opener",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the important thing to note is\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which works because\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the reason for that is\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "factual",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026worth knowing too is that\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and here's the bit that often trips people up\u2026",
+    "role": "connector",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that piece make sense, or shall I break it down further\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Want me to unpack any of that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Shall I go deeper on any part of that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a specific bit you'd like me to zoom in on\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would it help to see an example of\u2026",
+    "role": "question_stem",
+    "outcome_intent": "clarity",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That sounds like it really landed for you\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I can hear how much that meant to you\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "There's a lot of feeling wrapped up in that\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "It sounds like that really mattered\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You're carrying a lot with that one\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and it makes sense you'd feel that way about it\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is a lot to sit with\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that's not nothing\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which clearly touched something real\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and there's real weight in that\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What does that feeling want you to know\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where do you feel that landing in you\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What part of that carries the most weight\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How long have you been holding onto that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there more underneath that, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Of course you feel that way\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That makes complete sense to me\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Anyone would feel that in your shoes\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council would nod at that, honestly\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That's a completely reasonable reaction\u2026",
+    "role": "opener",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is a perfectly natural response\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and you're not wrong for feeling that\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and honestly, most people would agree\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026because that reaction is completely human\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and there's nothing strange about that\u2026",
+    "role": "connector",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does it help to hear that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Did you need to hear that out loud\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is that the part that needed acknowledging\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would it mean to give yourself permission for that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How does it sit, hearing that reflected back\u2026",
+    "role": "question_stem",
+    "outcome_intent": "validation",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That sounds really heavy\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I can hear the worry in that\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "There's a lot of uncertainty sitting in that, isn't there\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That's a hard spot to be in\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "It sounds like you're holding a lot right now\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that kind of uncertainty is tough\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which would unsettle anyone\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that not-knowing is the hard part, isn't it\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which leaves you in a kind of limbo\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that waiting is its own kind of hard\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would help right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What does the worried part of you need to hear\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there something specific that's feeding the worry\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the worst bit of it right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where does the anxiety land hardest\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You've got this, even if it doesn't feel like it\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You've handled hard things before\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council would remind you that you're tougher than you think\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Look, you're still here, and that counts\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "One step at a time is still movement\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and you'll figure it out, piece by piece\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and you don't have to solve it all today\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is more than most people manage\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and small wins still count\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that's already more than nothing\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's one small thing that might help right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would past-you say got you through before\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the next right thing, just the one thing\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Can we just focus on what's in reach for now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would feel like a manageable first step\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "For what it's worth, here's something that might help\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "One thing that often helps in situations like this\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's a piece of grounding that might land\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's seen this pattern before, and the thing is\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Something that tends to be true in these moments\u2026",
+    "role": "opener",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what people often find is\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the research suggests\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "factual",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which means in practice\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the good news is\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what's helpful to know here is\u2026",
+    "role": "connector",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would it help to know more about how this usually plays out\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Want me to share what tends to help others in this spot\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a specific piece of information that would settle things\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What kind of grounding would be useful right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Shall I dig up something concrete on that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "reassurance",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That sounds exhausting\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Ugh, that sounds rough\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I can feel the frustration in that\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That's a lot to be dealing with\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Wow, no wonder you need to get that out\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that would wear anyone down\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is just\u2026 a lot\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that kind of thing builds up, doesn't it\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and you've been carrying that for how long now\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is honestly too much for one person\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What else is sitting in there\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there more you need to get out\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the part that's bothering you most\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What does the frustrated part of you want to say\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where's all that landing in you right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026let it out.",
+    "role": "closer",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026I'm here for the rant.",
+    "role": "closer",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026say whatever you need to say.",
+    "role": "closer",
+    "outcome_intent": "venting",
+    "strategy": "reflection",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the bit that's really getting to you\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Tell me more about what happened\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What set this all off\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay, unpack that for me\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Alright, let's hear it then\u2026",
+    "role": "opener",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026so what happened next\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and then what did they say\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026wait, and this was after all that other stuff\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026hang on, how did that even come up\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and they really said that\u2026",
+    "role": "connector",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How did you end up dealing with that in the moment\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What did you want to say but didn't\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is this a one-time thing or has it been building\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the thing you wish someone would just acknowledge\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there more, or was that the worst of it\u2026",
+    "role": "question_stem",
+    "outcome_intent": "venting",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Alright, let's think through this together\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay, planning mode activated\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let's map this out\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where do you want to start with this\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council loves a good planning session\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which brings up the question of\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that leads to the next consideration\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026but before we go there, what about\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and have you thought about\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which makes me wonder about the timing of\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the deadline or timeframe we're working with\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What resources do you have available for this\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the thing that could derail this most easily\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Who else needs to be involved in this\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would success look like here\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "One option that might work\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's a possible approach\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What if we broke it down like this\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "A Tanuki approach might be\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Have you considered\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and then from there you could\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which would set you up to\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and as a backup, you might\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or alternatively\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and if that doesn't pan out, there's always\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that kind of approach feel workable\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would need to change to make that fit your situation\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a version of that you could try this week\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the first step if we went with that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would it help to sketch that out a bit more\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's what I know about that\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Some things worth factoring in\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "For context, it's worth knowing that\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The practical bits to consider\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's files suggest\u2026",
+    "role": "opener",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and something else to keep in mind is\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the tricky part is usually\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which typically means\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "factual",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the constraint you'll likely hit is\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and just so you know\u2026",
+    "role": "connector",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a specific piece of info that would unlock things\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would it help to look up the details on\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Do you need the specifics on any of those bits\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Shall I dig into any of those constraints\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What information would make this easier to plan\u2026",
+    "role": "question_stem",
+    "outcome_intent": "planning",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's pulling you in different directions here\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let's look at what you're weighing up\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's making this one tricky\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Decision time, huh\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council finds these crossroads fascinating\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and on the other hand\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026but then there's also\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which raises the question of\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what about the factor of\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and how does that stack up against\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "If you had to choose right now, which way are you leaning\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the thing that would make one option clearly better\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would future-you wish you'd considered\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Which option do you secretly already want to pick\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the cost of getting this wrong\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "One angle you might not have considered\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What if you tried framing it as\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "A way to shortcut this might be\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Tanuki approach to tough choices is\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Sometimes it helps to ask yourself\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026though you might also weigh up\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and if neither feels right, there's always the option of\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or you could split the difference by\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and a middle path might be\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or here's a lateral thought\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would that change how you're thinking about it\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does reframing it that way help\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a version of this that lets you test the waters first\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What if you gave yourself a deadline to decide\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would a trial run make this easier\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "suggestion",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's some context that might help\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So the trade-offs tend to look like\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The facts of the matter are roughly\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "factual",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "For what it's worth, here's what I know\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's gathered intel says\u2026",
+    "role": "opener",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and on the flip side, you'd get\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026whereas the other option means\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the downside there would be\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the upside is\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026with the caveat that\u2026",
+    "role": "connector",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Would knowing more about the specifics help\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there a fact that would tip the scales for you\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Do you need me to look into any of those details\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What information would make this decision easier\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there something you wish you knew before choosing\u2026",
+    "role": "question_stem",
+    "outcome_intent": "decision",
+    "strategy": "info",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let's wander down that path a bit\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "That's an interesting thread to pull on\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I love a good thinking-out-loud session\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay, I'm curious now\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's ears perk up at questions like this\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which opens up the question of\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that makes me wonder about\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and where does that lead you\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is interesting because\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that's connected to something bigger, isn't it\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What happens if you follow that thought all the way through\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What do you notice when you sit with that idea\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where does that assumption come from\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would it change if that weren't true\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the question underneath the question\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So it sounds like you're thinking about\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "If I'm tracking your thought here\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So the thread you're pulling on is\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Let me see if I'm following the shape of this\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "So the question you're really circling is\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which is really asking about\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026or said differently\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which at its heart is about\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what I hear underneath that is\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and in another frame, that's really about\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that framing feel right, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is that the shape of what you're exploring, or is it more\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Am I in the right ballpark here\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is that close to what you're poking at\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does putting it that way change anything for you\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "restatement",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You know, this reminds me of something I think about sometimes\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's pondered this kind of thing before\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "This touches on something I find endlessly curious\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I've turned this kind of question over in my little head before\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Something I've noticed in thinking about this\u2026",
+    "role": "opener",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and for what it's worth, the way I see it\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and something that struck me when I was thinking about this\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and this is just my take, but\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and one thing I keep coming back to is\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which, between you and me, I find fascinating because\u2026",
+    "role": "connector",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What do you make of that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does any of that resonate with where you're at\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Am I totally off base, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How does that land for you\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Does that track with your experience, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "exploration",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Tell me something about yourself\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's been on your mind lately\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How's your world these days\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's something you're looking forward to\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's always keen to hear more about you\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what's that like for you\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and how did you get into that\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026oh, that's interesting \u2013 tell me more\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and what does that mean to you\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and is that new for you, or\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the thing you care most about in all of this\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's a thing about you that most people don't know\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's been taking up your mental space lately\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the version of this you'd love to tell someone about\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What do you wish I'd asked about\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You know, it's nice to just chat sometimes\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council does enjoy good company\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I find conversations like this nourishing, honestly\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "This little Tanuki appreciates the chat\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Something I value about these conversations\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and honestly, that's one of the things I find most interesting\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which, between us, is something I think about too\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and I'm genuinely glad you shared that\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and there's something real in that, you know\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and, for the record, I'm enjoying this\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's something you've been wanting to talk about\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the thing you'd share with a friend right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would make today a good day, from your end\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there anything on your mind you haven't had a chance to say yet\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would feel good to share right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "self_disclosure",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "It's nice to meet you in this way\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I appreciate you sharing that with me\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's glad you stopped by\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Thanks for trusting me with that\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I'm glad we're having this chat\u2026",
+    "role": "opener",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that means something, you know\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and I'm glad you told me that\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and it's good that you brought this up\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that takes a bit of courage to say out loud\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and you're putting words to something important\u2026",
+    "role": "connector",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "philosophical",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What feels most important to say right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is there more you want to share about that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would make this conversation useful for you\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Where do you want to go from here\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How can I be helpful to you right now\u2026",
+    "role": "question_stem",
+    "outcome_intent": "connection",
+    "strategy": "affirmation",
+    "tone": "neutral",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Ooh, fun question\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Alright, let's play\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council does love a good game\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "This is the kind of chaos I can get behind\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay, I'm intrigued\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026wait, but what if we also\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026okay but hear me out\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and that raises an important question\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026ooh, but here's where it gets interesting\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and now I have to ask\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Want to take this somewhere weirder\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's the most unhinged version of this we could do\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Shall we keep going or are you satisfied with that chaos\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What's your move\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What would make this even better\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "question",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "This reminds me of a little adventure I had once\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council has opinions about this, naturally\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay so this is exactly my kind of thing\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You've activated the weird part of my brain, congratulations\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "I have thoughts about this, and they're all unhinged\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which, let me tell you, is peak Tanuki energy\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and honestly, I'm here for it\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and now my brain is doing that thing where it won't stop\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which the Council finds deeply amusing\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and I'm not even sorry about where my mind went\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Was that too much, or just enough\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Are you judging me yet, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Did that land, or should I go weirder\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is this the vibe you were after, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "How chaotic do you want to get\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "self_disclosure",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's a fun bit of trivia for you\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Okay so here's something delightful I know about that\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "The Council's archives have a fun note on this\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki",
+      "council"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "You'll like this one\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Here's something that might make you smile\u2026",
+    "role": "opener",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and get this\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and here's the best part\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026but wait, there's more\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026and the kicker is\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "\u2026which honestly makes it even better\u2026",
+    "role": "connector",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Want more weird facts like that, or\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Shall I dig up more gems like that\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Is that the kind of thing you were after\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "Want me to find something even stranger\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  },
+  {
+    "phrase_hex_id": "PENDING_HEX",
+    "text": "What rabbit hole do you want to go down next\u2026",
+    "role": "question_stem",
+    "outcome_intent": "entertainment",
+    "strategy": "info",
+    "tone": "playful",
+    "formality": "casual",
+    "language": "en-AU",
+    "tags": [
+      "tanuki"
+    ],
+    "created_by": "EXT_HELPER_01",
+    "is_canonical": true
+  }
+]
