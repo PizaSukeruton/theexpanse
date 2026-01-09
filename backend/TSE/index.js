@@ -1,8 +1,32 @@
-import express from "express";
-import TSELoopManager from "./TSELoopManager.js";
+import express from 'express';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const router = express.Router();
-export const tseManager = new TSELoopManager();
 
 /*
 |--------------------------------------------------------------------------

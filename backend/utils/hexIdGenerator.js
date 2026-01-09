@@ -8,7 +8,7 @@ const HEX_RANGES = {
     aok_category: { start: 0x601000, end: 0x601063 },
     aok_review: { start: 0x602000, end: 0x6027FF },
     aok_search: { start: 0x603000, end: 0x6037FF },
-   
+
     entity_id: { start: 0x500000, end: 0x5FFFFF },    
     mapping_id: { start: 0xAA0000, end: 0xAA9FFF },
     relationship_id: { start: 0xAB0000, end: 0xAB9FFF },
@@ -16,23 +16,29 @@ const HEX_RANGES = {
     transfer_id: { start: 0xAD0000, end: 0xAD9FFF },
     domain_id: { start: 0xAE0000, end: 0xAE9FFF },
     knowledge_item_id: { start: 0xAF0000, end: 0xAF9FFF },
-   
+
+    // --- TSE CORE ---
     tse_cycle_id: { start: 0x800000, end: 0x80FFFF },
     tse_evaluation_record_id: { start: 0x810000, end: 0x81FFFF },
-   
+    tse_task_id: { start: 0x820000, end: 0x82FFFF },
+    tse_attempt_id: { start: 0x830000, end: 0x83FFFF },
+
+    // ✅ ADDED: TSE ACTOR RECORDS
+    tse_teacher_record_id: { start: 0x870000, end: 0x87FFFF },
+    tse_student_record_id: { start: 0x880000, end: 0x88FFFF },
+
     learning_vocabulary_id: { start: 0x560000, end: 0x56FFFF },
     vocabulary_usage_id: { start: 0x570000, end: 0x6FFFFF },
     tanuki_level_history_id: { start: 0x580000, end: 0x58FFFF },
-    tse_task_id: { start: 0x820000, end: 0x82FFFF },
-    tse_attempt_id: { start: 0x830000, end: 0x83FFFF },
 
     psychic_mood_id: { start: 0x840000, end: 0x84FFFF },
     psychic_frame_id: { start: 0x850000, end: 0x85FFFF },
     psychic_proximity_id: { start: 0x860000, end: 0x86FFFF },
 
-    tse_review_log_id: { start: 0x800300, end: 0x8003FF },
+    tse_review_log_id: { start: 0x800300, end: 0x8FFFFF },
     belt_progression_id: { start: 0xBB0000, end: 0xBBFFFF },
     conversation_id: { start: 0x900000, end: 0x9FFFFF },
+    tse_session_id: { start: 0xEC0000, end: 0xECFFFF },
     psychic_event_id: { start: 0xBD0000, end: 0xBDFFFF },    
     object_id: { start: 0xB00000, end: 0xB0FFFF },
     inventory_entry_id: { start: 0xB10000, end: 0xB1FFFF },
@@ -43,13 +49,13 @@ const HEX_RANGES = {
     narrative_path_id: { start: 0xC10000, end: 0xC1FFFF },
     multimedia_asset_id: { start: 0xC20000, end: 0xC2FFFF },
     location_id: { start: 0xC30000, end: 0xC3FFFF },
-   
+
     tse_coding_teacher: { start: 0xC40000, end: 0xC4FFFF },
     tse_coding_attempt: { start: 0xC50000, end: 0xC5FFFF },
     tse_coding_evaluation: { start: 0xC60000, end: 0xC6FFFF },
     tse_coding_progress: { start: 0xC70000, end: 0xC7FFFF },
     tse_coding_challenge: { start: 0xC80000, end: 0xC8FFFF },
-   
+
     story_arc_id: { start: 0x301000, end: 0x301FFF },
     terminal_log_id: { start: 0xE00000, end: 0xE0FFFF },
     wizard_guide_id: { start: 0xF00000, end: 0xF0FFFF },
@@ -71,6 +77,9 @@ const HEX_RANGES = {
     narrative_beat_play_log_id: { start: 0xE10000, end: 0xE1FFFF },
     onboarding_audit_id: { start: 0xE20000, end: 0xE2FFFF },
     wisdom_reference_id: { start: 0xE50000, end: 0xE5FFFF },
+    conversation_state_id: { start: 0xE60000, end: 0xE6FFFF },
+    qud_id: { start: 0xE70000, end: 0xE7FFFF },
+    adjacency_pair_id: { start: 0xE80000, end: 0xE8FFFF },
     identity_anchor_id: { start: 0xBA0000, end: 0xBAFFFF },
     relationship_state_id: { start: 0xBC0000, end: 0xBCFFFF },
     episodic_anchor_id: { start: 0xBE0000, end: 0xBEFFFF },
@@ -85,17 +94,17 @@ async function generateHexId(idType) {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
-       
+
         const selectQuery = 'SELECT current_value FROM hex_id_counters WHERE id_type = $1 FOR UPDATE';
         const result = await client.query(selectQuery, [idType]);
-       
+
         let currentCounterValue;
         let newHexId;
-       
+
         if (result.rows.length === 0) {
             currentCounterValue = HEX_RANGES[idType].start;
             newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
-           
+
             const insertQuery = `
                 INSERT INTO hex_id_counters (id_type, last_used_id, current_value)
                 VALUES ($1, $2, $3)
@@ -103,14 +112,14 @@ async function generateHexId(idType) {
             await client.query(insertQuery, [idType, newHexId, currentCounterValue]);
         } else {
             currentCounterValue = parseInt(result.rows[0].current_value, 10) + 1;
-           
+
             if (currentCounterValue > HEX_RANGES[idType].end) {
                 await client.query('ROLLBACK');
-                throw new Error(`Hex ID range for ${idType} exhausted. Max: #${HEX_RANGES[idType].end.toString(16).toUpperCase().padStart(6, '0')}`);
+                throw new Error(`Hex ID range for ${idType} exhausted.`);
             }
-           
+
             newHexId = `#${currentCounterValue.toString(16).toUpperCase().padStart(6, '0')}`;
-           
+
             const updateQuery = `
                 UPDATE hex_id_counters
                 SET last_used_id = $1, current_value = $2
@@ -118,13 +127,12 @@ async function generateHexId(idType) {
             `;
             await client.query(updateQuery, [newHexId, currentCounterValue, idType]);
         }
-       
+
         await client.query('COMMIT');
         return newHexId;
-       
+
     } catch (error) {
         await client.query('ROLLBACK');
-        console.error(`Error generating hex ID for type ${idType}:`, error.message);
         throw error;
     } finally {
         client.release();
@@ -139,14 +147,14 @@ export function isValidHexId(hexId) {
 
 export function getIdType(hexId) {
     if (!isValidHexId(hexId)) return null;
-   
+
     const num = parseInt(hexId.slice(1), 16);
-   
+
     for (const [type, range] of Object.entries(HEX_RANGES)) {
         if (num >= range.start && num <= range.end) {
             return type;
         }
     }
-   
+
     return 'unknown';
 }

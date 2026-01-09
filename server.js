@@ -50,6 +50,16 @@ import { sessionMiddleware } from './config/session.js';
 import authRoutes from './backend/routes/auth.js';
 
 const app = express();
+
+/*
+  DEBUG NOTE (Node.js ESM):
+  - process.moduleLoadList ONLY contains Node internal bindings
+  - It NEVER lists user project files in ESM
+  - There is NO require.cache equivalent in ESM by design
+  - To see actually loaded project files, use:
+      node --inspect server.js
+    then open chrome://inspect → Sources → filter /theexpansev006/
+*/
 import loreAdminRoutes from "./backend/routes/lore-admin.js";
 import loreTechingRoutes from "./backend/routes/lore-teaching.js";
 import knowledgeManagerRoutes from "./backend/routes/knowledge-manager.js";
@@ -177,6 +187,19 @@ app.get("/cms", (req, res) => {
 });
 app.use('/cms/css', express.static(__dirname + '/cms/css'));
 app.use('/cms/js', express.static(__dirname + '/cms/js'));
+app.get("/cotw-login", (req, res) => {
+  res.sendFile(__dirname + "/COTW_user_dossier/public/cotw-login.html");
+});
+
+app.get("/cotw-dossier", (req, res) => {
+  if (!req.session || !req.session.userId) return res.redirect("/cotw-login");
+  let html = fs.readFileSync(__dirname + "/COTW_user_dossier/public/cotw-dossier.html", "utf8");
+  html = html.replace('<span class="window-title">CHARACTERS</span>', `<span class="window-title">${req.session.username.toUpperCase()}</span>`);
+  html = html.replace("▣ ▭ ✕", "");
+  res.send(html);
+});
+app.use("/cotw/css", express.static(__dirname + "/COTW_user_dossier/css"));
+app.use("/cotw/js", express.static(__dirname + "/COTW_user_dossier/js"));
 
 app.get('/api/cms/characters', async (req, res) => {
   console.log('[CMS API] 📋 Fetching all characters');

@@ -2,6 +2,7 @@
 
 class NaturalLanguageGenerator {
     constructor() {
+  console.trace('[TRACE] NaturalLanguageGenerator constructed');
         this.sentencePatterns = this.buildSentencePatterns();
         this.transitionPhrases = this.buildTransitionPhrases();
         this.toneModifiers = this.buildToneModifiers();

@@ -6,13 +6,14 @@ import CharacterEngine from '../../engines/CharacterEngine_TEST.js';
 import CognitiveLoadManager from '../../knowledge/CognitiveLoadManager.js';
 import KnowledgeAcquisitionEngine from '../../knowledge/KnowledgeAcquisitionEngine.js';
 import pool from '../../db/pool.js';
-import NaturalLanguageGenerator from './NaturalLanguageGenerator.js';
+import { getNaturalLanguageGenerator } from './NaturalLanguageGeneratorSingleton.js';
 
 class KnowledgeResponseEngine {
     constructor(pool = null) {
+    console.trace('[TRACE] KnowledgeResponseEngine.js constructed');
         this.pool = pool;
         this.cognitiveLoadManager = new CognitiveLoadManager();
-        this.nlg = new NaturalLanguageGenerator();
+        this.nlg = getNaturalLanguageGenerator();
         this.knowledgeAcquisitionEngine = new KnowledgeAcquisitionEngine();
         
         this.traitInfluenceMatrix = this.buildInfluenceMatrix();

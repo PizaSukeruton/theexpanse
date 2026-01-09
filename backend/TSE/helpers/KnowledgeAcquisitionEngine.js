@@ -42,6 +42,7 @@ export default class KnowledgeAcquisitionEngine {
                 ...existing,
                 reused: true,
                 characterId,
+                knowledge_id: existing.knowledge_id
             };
         }
 
